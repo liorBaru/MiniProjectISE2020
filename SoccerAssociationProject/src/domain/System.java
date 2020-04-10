@@ -17,7 +17,11 @@ public class System
         SystemManager systemManager = new SystemManager(userName,password,name);
         system=getInstance();
         system.systemManagers.add(systemManager);
-
+        //TODO:
+        // Using try\catch to announce the user if some problem occurs.
+        // 1.connect to DB
+        // 2.connect to accounting IFA
+        // 3.connect to tax law
 
     }
 
