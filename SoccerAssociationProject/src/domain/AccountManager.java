@@ -1,9 +1,6 @@
-package controllers;
+package domain;
 
 import java.util.TreeMap;
-import domain.Account;
-import domain.Fan;
-import domain.User;
 
 public class AccountManager
 {
