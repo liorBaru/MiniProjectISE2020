@@ -5,7 +5,6 @@ import java.util.List;
 public class IFA extends User
 
 {
-    private static List<League> leagues;
     private static List<Refree> refrees;
 
 

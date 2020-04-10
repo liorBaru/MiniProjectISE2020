@@ -6,6 +6,7 @@ public abstract class User extends Guest
     protected String name;
     protected Account account;
     protected PriorityQueue<Notification> notifications;
+    protected System system;
 
 
     public User (String name, Account account)

@@ -30,4 +30,6 @@ public class Complaint
     {
         return answer;
     }
+
+    public User getUser(){return this.user;}
 }

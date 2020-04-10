@@ -5,7 +5,8 @@ import java.util.List;
 public class SystemManager extends User
 {
     private static List<Complaint> complaints;
-    private static List<Team> closedTeames;
+    private static List<Team> closedTeams;
+
 
 
 

@@ -4,7 +4,6 @@ public class StaffMember extends User
 {
 
     private String job;
-
     private Team team;
 
 

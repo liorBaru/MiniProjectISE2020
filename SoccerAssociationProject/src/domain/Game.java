@@ -9,8 +9,8 @@ public class Game extends Subject
     private GameEventLog eventsLog;
     private SeasonInfo league;
     private String field;
-    private Date date;
-    private GameStatus status;
+    private Date startDate;
+    private Date finishDate;
     private int hScore;
     private int gScore;
     Refree lineReferee1;
@@ -26,9 +26,4 @@ public class Game extends Subject
 
 
 
-}
-
-enum GameStatus
-{
-    Active, Cancel, Finish, NotStarted
 }

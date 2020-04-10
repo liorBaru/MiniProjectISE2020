@@ -3,7 +3,7 @@ package domain;
 import java.util.List;
 import java.util.TreeMap;
 
-public class Team
+public class Team implements pageable
 {
     private String name;
     private Page page;
