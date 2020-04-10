@@ -21,6 +21,7 @@ public class SystemManager extends User
 
     @Override
     public String showPersonalDetails() {
+       int a;
         return null;
     }
 
