@@ -1,6 +1,6 @@
 package domain;
 
-public class StaffMember extends User
+public abstract class StaffMember extends User implements Asset
 {
 
     private String job;
@@ -17,6 +17,15 @@ public class StaffMember extends User
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    @Override
+    public abstract String getType();
+
+    @Override
+    public void removeTeam() {
+        team.removeAsset(this);
+            this.team=null;
     }
 
     public Team getTeam() {

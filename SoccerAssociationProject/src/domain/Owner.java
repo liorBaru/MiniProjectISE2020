@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Owner extends BoardMember implements Asset
+public class Owner extends BoardMember
 {
         private ArrayList<StaffMember> anotherJob;
 
@@ -20,6 +20,11 @@ public class Owner extends BoardMember implements Asset
 
         public String getType(){
                 return "Owner";
+        }
+
+        public void addAsset(Asset asset){
+                this.getTeam().addAsset(asset);
+                asset.setTeam(this.getTeam());
         }
 
 

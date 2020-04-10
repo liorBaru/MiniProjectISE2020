@@ -12,4 +12,5 @@ public abstract class  BoardMember extends StaffMember
         super(userName, password, name, job, team);
         this.boss = boss;
     }
+
 }

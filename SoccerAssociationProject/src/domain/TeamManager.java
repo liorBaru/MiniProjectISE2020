@@ -2,7 +2,7 @@ package domain;
 
 import java.util.List;
 
-public class TeamManager extends BoardMember implements Asset
+public class TeamManager extends BoardMember
 {
     private double salary;
 
@@ -14,5 +14,9 @@ public class TeamManager extends BoardMember implements Asset
     @Override
     public String getType() {
         return "Team Manager: "+this.name;
+    }
+
+    @Override
+    public void removeTeam() {
     }
 }

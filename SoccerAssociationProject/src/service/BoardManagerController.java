@@ -7,14 +7,10 @@ public class BoardManagerController {
      public BoardManagerController()
         {
         }
-
-        public void addAssets(Asset asset, User user) {
-            Team ownerTeam=((Owner)user).getTeam();
-            ownerTeam.addAsset(asset);
-            if(asset instanceof TeamManager || asset instanceof TeamMember )
-                ((TeamMember)asset).setTeam(ownerTeam);
-
-
+        public void addAssets(Asset asset, Owner owner) {
+         if(owner==null || asset==null)
+             throw new ArithmeticException("arguments are not valid");
+             owner.addAsset(asset);
         }
 
         public void removeAssets(Asset asset, User user)

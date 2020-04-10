@@ -2,7 +2,7 @@ package domain;
 
 import java.util.TreeMap;
 
-public abstract class TeamMember extends StaffMember implements Asset
+public abstract class TeamMember extends StaffMember
 {
     private int contract;
     private double salary;
@@ -12,5 +12,7 @@ public abstract class TeamMember extends StaffMember implements Asset
         this.contract = contract;
         this.salary = salary;
     }
+
+
 }
 
