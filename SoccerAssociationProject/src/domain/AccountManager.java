@@ -4,47 +4,40 @@ import java.util.TreeMap;
 
 public class AccountManager
 {
-    TreeMap <String, Account> userNames;
+    private TreeMap <String, Account> userNames;
 
-    public User login(String userName, String password)
+    public AccountManager ()
     {
-        if(userName!=null && password!=null)
+        userNames=new TreeMap<>();
+    }
+
+    public boolean containsUserName(String userName)
+    {
+        return this.userNames.containsKey(userName);
+    }
+
+    public User getUser(String userName, String password)
+    {
+        if(userNames.containsKey(userName))
         {
-            if(userNames.containsKey(userName))
+            Account account =userNames.get(userName);
+            if(account.accountVerification(password))
             {
-                Account account =userNames.get(userName);
-                if(account.accountVerification(password))
-                {
-                    return account.getUser();
-                }
+                return account.getUser();
             }
         }
+        // throw nor good password or user name
         return null;
     }
 
-    public User register(String userName, String password,String name)
+
+    public boolean addAcount(String userName, Account account)
     {
-        if(userName!=null&& password!=null && name!=null)
+        if(account!=null && userName!=null)
         {
-            if(userName.length()<6 || password.length()<6)
-            {
-                return null;
-            }
-            else
-            {
-                if(userNames.containsKey(userName))
-                {
-                    return null;
-                }
-                else
-                {
-                    Account account = new Account(userName,password);
-                    userNames.put(userName,account);
-                    User user = new Fan(name,account);
-                    return user;
-                }
-            }
+            userNames.put(userName,account);
+            return true;
         }
-        return null;
+        return false;
     }
 }

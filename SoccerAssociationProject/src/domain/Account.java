@@ -12,6 +12,8 @@ public class Account
         this.password=password;
     }
 
+
+
     public boolean accountVerification(String password)
     {
         if(password!=null && password==this.password )

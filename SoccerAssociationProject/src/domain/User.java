@@ -9,12 +9,11 @@ public abstract class User extends Guest
     protected System system;
 
 
-    public User (String userName, String password, String name)
+    public User (Account account, String name)
     {
-        Account account = new Account(userName,password);
         this.account=account;
         this.name=name;
-        system=system.getSystem();
+        system=system.getInstance();
         notifications=new PriorityQueue<>();
     }
 

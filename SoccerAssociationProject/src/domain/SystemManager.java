@@ -11,9 +11,9 @@ public class SystemManager extends User
 
 
 
-    public SystemManager (String userName, String password, String name)
+    public SystemManager (Account account, String name)
     {
-        super(userName,password,name);
+        super(account,name);
     }
     public void answerComplaint (Complaint complaint, String answer ){}
     public List<Complaint> watchComplaints(){return  null;}
