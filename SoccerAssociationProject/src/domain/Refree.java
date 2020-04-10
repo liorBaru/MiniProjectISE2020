@@ -9,10 +9,10 @@ public abstract class Refree extends User
     private Game activeGame;
 
 
-    public Refree(String name, String trainig, Account account)
+    public Refree(String name, String training, Account account)
     {
         super(name,account);
-        this.trainig=trainig;
+        this.trainig=training;
     }
     public List<Game> showGames(){return null;}
     public boolean addEventToGame(){return false;}

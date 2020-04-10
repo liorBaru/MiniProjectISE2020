@@ -18,7 +18,7 @@ public class Team implements pageable
     public Team (List<Owner> owners,String name){
         owners=new ArrayList<>();
         this.name=name;
-        assetsOfTeam =new ArrayList<>();
+        this.assetsOfTeam =new ArrayList<>();
     }
 
     public void addAsset(Asset asset)
@@ -37,6 +37,10 @@ public class Team implements pageable
             throw new ArithmeticException("the asset doesnt exists");
         this.assetsOfTeam.remove(asset);
         //TODO: write to logger
+    }
+
+    public ArrayList<Asset> getAssetsOfTeam() {
+        return assetsOfTeam;
     }
 
     public void uploadDataToPage(String data){}
