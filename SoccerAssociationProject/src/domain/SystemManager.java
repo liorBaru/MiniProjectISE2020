@@ -11,8 +11,10 @@ public class SystemManager extends User
 
 
 
-
-
+    public SystemManager (String userName, String password, String name)
+    {
+        super(userName,password,name);
+    }
     public void answerComplaint (Complaint complaint, String answer ){}
     public List<Complaint> watchComplaints(){return  null;}
     public boolean removeUser (User user){return false;}
