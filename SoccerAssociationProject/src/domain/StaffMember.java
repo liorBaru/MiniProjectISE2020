@@ -11,8 +11,18 @@ public class StaffMember extends User
         this.job = job;
         this.team = team;
     }
+    public String getJob() {
+        return job;
+    }
 
-    @Override
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+        @Override
     public String showPersonalDetails() {
         return null;
     }

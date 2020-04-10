@@ -26,8 +26,18 @@ public class Team implements pageable
         if(asset==null)
             throw new ArithmeticException("missed asset");
         this.assetsOfTeam.add(asset);
+        //TODO: write to logger
     }
 
+    public void removeAsset(Asset asset)
+    {
+        if(asset==null)
+            throw new ArithmeticException("missed asset");
+        if(!assetsOfTeam.contains(asset))
+            throw new ArithmeticException("the asset doesnt exists");
+        this.assetsOfTeam.remove(asset);
+        //TODO: write to logger
+    }
 
     public void uploadDataToPage(String data){}
 

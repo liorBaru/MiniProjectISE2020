@@ -9,6 +9,7 @@ public class System
     private static System system;
     private List<League> leagues;
     private List<Team> teams;
+    private List<Asset> assetsExists;
     private List<SystemManager> systemManagers;
 
 
