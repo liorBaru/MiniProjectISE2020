@@ -1,5 +1,5 @@
 package service;
 
 public class BoardManagerController {
-    //test need to delete
+    int newTest=0;//test need to delete
 }
