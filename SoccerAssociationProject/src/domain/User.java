@@ -15,6 +15,10 @@ public abstract class User extends Guest
         this.name=name;
         notifications=new PriorityQueue<>();
     }
+    public User(String name, Account account){
+        this.account=account;
+        this.name=name;
+    }
 
 
 

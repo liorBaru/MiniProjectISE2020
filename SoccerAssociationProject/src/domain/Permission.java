@@ -1,6 +1,6 @@
 package domain;
 
-public abstract class Premission
+public  class Permission
 {
 
 }

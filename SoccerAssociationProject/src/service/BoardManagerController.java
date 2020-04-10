@@ -23,8 +23,10 @@ public class BoardManagerController {
             ownerTeam.removeAsset(asset);
             if(asset instanceof TeamManager || asset instanceof TeamMember )
                 ((StaffMember)asset).setTeam(null);
-        };
-        public void removeAssets(Asset asset)
-        {};
+        }
+        public void appointment(User newAppointment){
+
+        }
+
 
 }
