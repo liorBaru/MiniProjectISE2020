@@ -7,7 +7,9 @@ public class IFA extends User
 {
     private static List<Refree> refrees;
 
-
+    public IFA(String userName, String password, String name) {
+        super(userName, password, name);
+    }
 
 
     public boolean createNewLeugue(String name, int level){return false;}

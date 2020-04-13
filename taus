@@ -1,0 +1,22 @@
+[33mcommit d1b691c469f472e9cfc64548a0074ce85d81cfe1[m[33m ([m[1;36mHEAD -> [m[1;32mDavidBranch[m[33m, [m[1;31morigin/DavidBranch[m[33m)[m
+Author: David <davidzal@post.bgu.ac.il>
+Date:   Fri Apr 10 11:51:13 2020 +0300
+
+    David initial commit
+
+[33mcommit 80e53cac28a4f7c4f5193e8d6f1273a2d87f7129[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: galborabia <49067563+galborabia@users.noreply.github.com>
+Date:   Fri Apr 10 10:30:19 2020 +0300
+
+    changes
+    
+    design changes
+
+[33mcommit d4b905eead0d43283ef5f5674bdf25f07b5d4794[m
+Author: galborabia <49067563+galborabia@users.noreply.github.com>
+Date:   Wed Apr 8 17:26:08 2020 +0300
+
+    start Project
+    
+    hellow,
+    i open all the class in most of them i write relevent function and start connect the classes. use  Version 1 to more relevent function (menshaki)

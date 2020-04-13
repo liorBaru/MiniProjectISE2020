@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -12,12 +13,35 @@ public class Team implements pageable
     private List<StaffMember> staffMembers;
     private TreeMap<Integer, Game> games;
     private TreeMap<Season, TeamInfo> seasons;
+    private ArrayList<Asset> assetsOfTeam;
 
+    public Team (List<Owner> owners,String name){
+        owners=new ArrayList<>();
+        this.name=name;
+        this.assetsOfTeam =new ArrayList<>();
+    }
 
-    public Team (List<Owner> owners,String name){}
+    public void addAsset(Asset asset)
+    {
+        if(asset==null)
+            throw new ArithmeticException("missed asset");
+        this.assetsOfTeam.add(asset);
+        //TODO: write to logger
+    }
 
+    public void removeAsset(Asset asset)
+    {
+        if(asset==null)
+            throw new ArithmeticException("missed asset");
+        if(!assetsOfTeam.contains(asset))
+            throw new ArithmeticException("the asset doesnt exists");
+        this.assetsOfTeam.remove(asset);
+        //TODO: write to logger
+    }
 
-
+    public ArrayList<Asset> getAssetsOfTeam() {
+        return assetsOfTeam;
+    }
 
     public void uploadDataToPage(String data){}
 
