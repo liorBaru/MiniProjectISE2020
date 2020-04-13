@@ -4,7 +4,7 @@ public abstract class StaffMember extends User implements Asset
 {
 
     private String job;
-    private Team team;
+    protected Team team;
 
     public StaffMember(String userName, String password, String name, String job, Team team) {
         super(userName, password, name);
@@ -22,11 +22,6 @@ public abstract class StaffMember extends User implements Asset
     @Override
     public abstract String getType();
 
-    @Override
-    public void removeTeam() {
-        team.removeAsset(this);
-            this.team=null;
-    }
 
     public Team getTeam() {
         return team;

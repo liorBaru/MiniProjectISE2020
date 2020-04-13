@@ -22,6 +22,17 @@ public class Owner extends BoardMember
                 return "Owner";
         }
 
+        @Override
+        public void removeTeam() {
+                if(this.getTeam().getOwners().size()==1)
+                        try {
+                                throw new Exception("You are the only owner");
+                        } catch (Exception e) {
+                                e.printStackTrace();
+                        }
+                super.removeTeam();
+        }
+
         public void addAsset(Asset asset){
                 this.getTeam().addAsset(asset);
                 asset.setTeam(this.getTeam());

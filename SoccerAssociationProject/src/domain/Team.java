@@ -45,7 +45,7 @@ public class Team implements pageable
 
     public void uploadDataToPage(String data){}
 
-
-
-
+    public List<Owner> getOwners() {
+        return owners;
+    }
 }

@@ -13,6 +13,12 @@ public abstract class TeamMember extends StaffMember
         this.salary = salary;
     }
 
-
+    @Override
+    public void removeTeam() {
+        if(team!=null) {
+            this.team.removeAsset(this);
+            team=null;
+        }
+    }
 }
 
