@@ -8,4 +8,12 @@ public class Notification
     Date date;
 
 
+
+    public Notification (String details)
+    {
+        this.details=details;
+        date = new Date();
+    }
+
+
 }

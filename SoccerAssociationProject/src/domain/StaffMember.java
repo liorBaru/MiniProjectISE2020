@@ -2,26 +2,36 @@ package domain;
 
 public abstract class StaffMember extends User implements Asset
 {
-
-    private String job;
     protected Team team;
+    protected BoardMember boss;
 
-    public StaffMember(String userName, String password, String name, String job, Team team) {
-        super(userName, password, name);
-        this.job = job;
-        this.team = team;
-    }
-    public String getJob() {
-        return job;
+    public StaffMember(Account account, String name,Team team, BoardMember boardMember)
+    {
+        super(name,account);
+        this.team=team;
+        this.boss=boardMember;
     }
 
-    public void setTeam(Team team) {
+    public StaffMember (Account account, String name, Team team)
+    {
+        super(name,account);
+        this.team=team;
+    }
+
+
+    public void setTeam(Team team)
+    {
         this.team = team;
     }
 
     @Override
     public abstract String getType();
 
+    @Override
+    public void removeUser()
+    {
+        removeTeam(team);
+    }
 
     public Team getTeam() {
         return team;

@@ -1,18 +1,21 @@
 package domain;
 
-public class Coach extends TeamMember implements pageable
-{
-    private Page page;
-    private String training;
+import java.util.Date;
 
+public class Coach extends TeamMember
+{
+
+    private String training;
+    private String job;
+
+    public Coach (Account account, String name, Team team, Date contract , double salary, String training)
+    {
+        super(account,name,team,contract,salary);
+        this.training=training;
+    }
 
     public void uploadDataToPage(String data){}
 
-    public Coach(String userName, String password, String name, String job, Team team, int contract, double salary, Page page, String training) {
-        super(userName, password, name, job, team, contract, salary);
-        this.page = page;
-        this.training = training;
-    }
 
 
     @Override

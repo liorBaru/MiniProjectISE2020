@@ -4,22 +4,41 @@ import java.util.List;
 
 public class SystemManager extends User
 {
-    private static List<Complaint> complaints;
-    private static List<Team> closedTeams;
 
-
-
-
-
-    public SystemManager (Account account, String name)
+    public SystemManager (String name,Account account)
     {
-        super(account,name);
+        super(name,account);
     }
-    public void answerComplaint (Complaint complaint, String answer ){}
-    public List<Complaint> watchComplaints(){return  null;}
-    public boolean removeUser (User user){return false;}
-    public boolean closeTeam (Team team){return false;}
+
+    public List<Complaint> watchComplaints()
+    {
+        return system.getComplaints();
+    }
+
+    public boolean removeUserFromSystem (String userName)
+    {
+        return system.removeUser(userName);
+    }
+
+    public void removeUser()
+    {
+        // throw exception
+    }
+
+    public boolean closeTeam (String teamName)
+    {
+        return system.closeTeamBySystemManager(teamName);
+    }
+
     public void watchInformation(){};
+
+    public void answerComplaint (Complaint complaint, String answer )
+    {
+        if(complaint!=null && answer.isEmpty()==false)
+        {
+            system.ansComplaint(complaint,answer);
+        }
+    }
 
     @Override
     public String showPersonalDetails() {
@@ -31,6 +50,8 @@ public class SystemManager extends User
     public void updateDetailes() {
 
     }
+
+
 
 
 }
