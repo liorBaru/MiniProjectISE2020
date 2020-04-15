@@ -13,7 +13,7 @@ public class SystemManager extends User
 
     public SystemManager (Account account, String name)
     {
-        super(account,name);
+        super(name,account);
     }
     public void answerComplaint (Complaint complaint, String answer ){}
     public List<Complaint> watchComplaints(){return  null;}

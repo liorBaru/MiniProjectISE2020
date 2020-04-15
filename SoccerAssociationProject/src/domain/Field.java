@@ -24,6 +24,11 @@ public class Field implements Asset {
     }
 
     @Override
+    public void removeTeam() {
+
+    }
+
+    @Override
     public String getType() {
         return "Field: " +this.fieldName;
     }
