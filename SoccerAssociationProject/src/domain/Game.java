@@ -20,10 +20,13 @@ public class Game extends Subject
     Refree[] varReferees;
 
 
-
-
-
-
-
-
+    @Override
+    public boolean addFollwer(User user)
+    {
+        if(finishDate==null)
+        {
+            return super.addFollwer(user);
+        }
+        return false;
+    }
 }

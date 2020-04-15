@@ -12,7 +12,9 @@ public class Account
         this.password=password;
     }
 
-
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public boolean accountVerification(String password)
     {

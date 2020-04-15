@@ -7,31 +7,42 @@ public abstract class User extends Guest
     protected Account account;
     protected PriorityQueue<Notification> notifications;
 
-
-    public User (String userName, String password, String name)
+    public User ( String name,Account account)
     {
-        Account account = new Account(userName,password);
         this.account=account;
+        account.setUser(this);
         this.name=name;
         notifications=new PriorityQueue<>();
     }
-    public User(String name, Account account){
-        this.account=account;
-        this.name=name;
+
+    public abstract void removeUser();
+
+    public void logout() {};
+    public String showPersonalDetails(){return this.name;}
+    public void updateDetailes(){}
+
+    public void addNotification(Notification notification)
+    {
+        if(notification!=null)
+        {
+            notifications.add(notification);
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public PriorityQueue<Notification> readNotification()
+    {
+        return notifications;
     }
 
 
 
-    public void logout(){};
-    public String showPersonalDetails(){return this.name;}
-    public void updateDetailes(){}
-    public void addNotification(Notification notification){}
-    public PriorityQueue<Notification> readNotification(){return null;}
-
-
-
-
-
-
+//--------------------------lior add
+    public Account getAccount() {
+        return account;
+    }
 
 }

@@ -15,11 +15,19 @@ public class Complaint
     {
         this.user=user;
         this.details=details;
+        status=true;
+        createdDate=new Date();
+    }
+
+    public boolean getStatus() {
+        return status;
     }
 
     public void setAnswer (String answer)
     {
         this.answer=answer;
+        status=false;
+        answerDate=new Date();
     }
     public String getDetails()
     {

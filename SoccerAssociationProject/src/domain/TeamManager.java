@@ -1,14 +1,17 @@
 package domain;
 
 import java.util.List;
+import java.util.TreeMap;
 
 public class TeamManager extends BoardMember
 {
     private double salary;
 
-    public TeamManager(String userName, String password, String name, String job, Team team, BoardMember boss, double salary) {
-        super(userName, password, name, job, team, boss);
-        this.salary = salary;
+    public TeamManager(Account account, String name, Team team, BoardMember boss, double salary, List<String> premissions)
+    {
+        super(account,name,team,boss);
+        this.salary=salary;
+        setPermissions(premissions);
     }
 
     @Override
@@ -16,7 +19,12 @@ public class TeamManager extends BoardMember
         return "Team Manager: "+this.name;
     }
 
-    @Override
-    public void removeTeam() {
+    private void setPermissions(List<String>permissions)
+    {
+        for (String permission:permissions)
+        {
+            premission premission= Enum.valueOf(premission.class, permission);
+            this.permissions.put(premission,true);
+        }
     }
 }
