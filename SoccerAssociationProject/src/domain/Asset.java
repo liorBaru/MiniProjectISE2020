@@ -1,5 +1,7 @@
 package domain;
 
 public interface Asset {
-    public String getType();
+     String getType();
+     void setTeam(Team team);
+     void removeTeam();
 }

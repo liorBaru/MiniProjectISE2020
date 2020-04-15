@@ -1,6 +1,8 @@
 package domain;
 
-public  class Permission
+public interface  Permission
 {
+    void doAction(BoardMember boardMember);
 
 }
+
