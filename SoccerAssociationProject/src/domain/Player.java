@@ -3,18 +3,37 @@ package domain;
 import java.util.Date;
 import java.util.List;
 
-public class Player extends TeamMember implements pageable
+public class Player extends TeamMember
 {
-    private Page page;
     Date birthDay;
     List<PlayerPosition> positions;
     double salary;
     int goals;
     int games;
 
+    public Player(Account account,String name, Date birthDay)
+    {
+        super(account,name);
+        this.page = new Page(this);
+        this.birthDay = birthDay;
+        this.salary = salary;
+    }
 
+    @Override
+    public void removeUser()
+    {
+        if(team!=null)
+        {
+            team.removeStaffMember(this);
+            this.team=null;
+        }
+    }
 
     public void uploadDataToPage(String data){}
+
+    public String getType(){
+    return "Player: "+this.name;
+    }
 }
 
 enum PlayerPosition

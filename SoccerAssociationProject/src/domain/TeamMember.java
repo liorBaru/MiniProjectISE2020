@@ -1,16 +1,54 @@
 package domain;
 
-import java.util.TreeMap;
+import java.util.Date;
 
-public class TeamMember extends StaffMember
+
+public abstract class TeamMember extends StaffMember implements pageable
 {
+    protected Date contract;
+    protected double salary;
+    protected Page page;
 
-    private int contract;
-    private double salary;
-    private TreeMap<Integer, Team> teams;
+    public TeamMember(Account account, String name,Team team, Date contract, double salary)
+    {
+        super(account, name, team);
+        this.contract = contract;
+        this.salary = salary;
+    }
+    public TeamMember(Account account, String name)
+    {
+        super(account, name);
+        this.salary = 0;
+    }
+
+    public void setTeam(Team team, Date contract, double salary)
+    {
+        this.team=team;
+        this.contract=contract;
+        this.salary=salary;
+    }
 
 
+    @Override
+    public void removeTeam(Team team)
+    {
+        if(this.team.getName()==team.getName())
+        {
+            team.removeAsset(this);
+            team.removeStaffMember(this);
+            this.team=null;
+        }
+    }
 
+    @Override
+    public void uploadDataToPage(String data)
+    {
+        if(data.isEmpty()==false)
+        {
+            page.addDataToPage(data);
+        }
+    }
 
 
 }
+
