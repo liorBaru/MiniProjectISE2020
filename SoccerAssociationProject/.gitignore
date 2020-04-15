@@ -9,6 +9,8 @@
 .idea/**/shelf
 .idea/workspace.xml
 .idea/misc.xml
+.idea/vcs.xml
+.idea/*
 
 # Generated files
 .idea/**/contentModel.xml
