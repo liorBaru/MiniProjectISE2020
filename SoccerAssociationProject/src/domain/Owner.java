@@ -39,4 +39,10 @@ public class Owner extends BoardMember
         }
 
 
+        public void closeTeam() {
+                if(team==null)
+                        throw new ArithmeticException("arguments are not valid");
+                this.team.setStatus(false);
+                ///TODO
+        }
 }
