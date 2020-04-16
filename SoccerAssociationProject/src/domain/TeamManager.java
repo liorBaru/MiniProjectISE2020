@@ -13,6 +13,11 @@ public class TeamManager extends BoardMember
         this.salary=salary;
         setPermissions(premissions);
     }
+    public TeamManager(User user,Team team,List<String>permissionList,double salary){
+        super(user.account,user.name,team);
+        this.salary=salary;
+        setPermissions(permissionList);
+    }
 
     @Override
     public String getType() {

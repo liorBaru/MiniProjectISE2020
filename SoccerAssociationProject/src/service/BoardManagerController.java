@@ -2,6 +2,8 @@ package service;
 
 import domain.*;
 
+import java.util.List;
+
 public class BoardManagerController {
 
      public BoardManagerController()
@@ -50,11 +52,51 @@ public class BoardManagerController {
     /**
      * @author matan
      * @param owner
+     * @param removeOwner
+     * remove appoint of a owner to the time's owner UC 6.3
+     */
+    public void removeOwnerAppointment(Owner owner,Owner removeOwner){
+        owner.removeOwner(removeOwner);
+    }
+
+    /**
+     *@author matan
+     * @param owner
+     * @param user
+     * appoint team manger to owner's team UC 6.4
+     */
+    public void appointTeamManger(Owner owner, User user, List<String>permissionList,double salary ){
+        owner.appointTeamManger(user,permissionList,salary);
+
+    }
+
+    /**
+     * @author matan
+     * @param owner
+     * @param teamManager
+     * remove team manger from owner's team UC 6.5
+     */
+    public void removeTeamManger(Owner owner,TeamManager teamManager){
+        owner.removeTeamManger(teamManager);
+    }
+
+    /**
+     * @author matan
+     * @param owner
      * Close team's owner UC 6.6
      */
         public void closeTime(Owner owner){
          owner.closeTeam();
+        }
 
+    /**
+     * @author matan
+     * @param owner
+     * @param financialAction
+     * Report of income or outcome of the owner's team UC 6.7
+     */
+        public void reportIncomeOrOutcome(Owner owner,FinancialAction financialAction){
+            owner.reportIncomeOrOutcome(financialAction);
         }
 
 

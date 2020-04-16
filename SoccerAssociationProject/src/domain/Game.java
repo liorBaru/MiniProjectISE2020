@@ -13,6 +13,7 @@ public class Game extends Subject
     private Date finishDate;
     private int hScore;
     private int gScore;
+
     Refree lineReferee1;
     Refree lineReferee2;
     Refree mainReferee;

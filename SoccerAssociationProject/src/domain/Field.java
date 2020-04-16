@@ -26,12 +26,13 @@ public class Field implements Asset {
     }
 
     @Override
-    public void removeTeam(Team team)
-    {
-        if(team!=null && teams.contains(team))
-        {
+    public void removeTeam(Team team) {
+        if (team != null && teams.contains(team)) {
             teams.remove(team);
         }
+    }
+    public void removeTeam() {
+
     }
 
     @Override
