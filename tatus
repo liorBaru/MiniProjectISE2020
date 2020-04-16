@@ -1,0 +1,219 @@
+[33mcommit 6342297b1b75d9141b279340cc86d10a4ed0b39e[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 794a40f a06597e
+Author: galborabia <49067563+galborabia@users.noreply.github.com>
+Date:   Wed Apr 15 22:06:11 2020 +0300
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       SoccerAssociationProject/src/domain/Account.java
+    #       SoccerAssociationProject/src/domain/AccountManager.java
+    #       SoccerAssociationProject/src/domain/Coach.java
+    #       SoccerAssociationProject/src/domain/Guest.java
+    #       SoccerAssociationProject/src/domain/IFA.java
+    #       SoccerAssociationProject/src/domain/LineRefree.java
+    #       SoccerAssociationProject/src/domain/Refree.java
+    #       SoccerAssociationProject/src/domain/StaffMember.java
+    #       SoccerAssociationProject/src/domain/System.java
+    #       SoccerAssociationProject/src/domain/SystemManager.java
+    #       SoccerAssociationProject/src/domain/TeamMember.java
+    #       SoccerAssociationProject/src/domain/User.java
+    #       SoccerAssociationProject/src/domain/VarRefree.java
+
+[33mcommit 794a40fe6e9e003ff74a3b2135130e43ff19b452[m
+Author: galborabia <49067563+galborabia@users.noreply.github.com>
+Date:   Wed Apr 15 22:04:59 2020 +0300
+
+    init system
+    user register
+    user login
+
+[33mcommit a06597eef9270bd111da7fead2303f69f256425a[m
+Author: liorBaru <62611078+liorBaru@users.noreply.github.com>
+Date:   Wed Apr 15 21:52:45 2020 +0300
+
+    add obj by ifa part 1
+
+[33mcommit 1170e6848170a1dc26d03b7c259c26b0adc56a2f[m
+Author: matan230g <57503498+matan230g@users.noreply.github.com>
+Date:   Wed Apr 15 17:00:05 2020 +0300
+
+    Delete SoccerAssociationProject.iml
+
+[33mcommit 3dd64ace50c784910e7c5dd7f94e20f2e0991afb[m
+Author: matan230g <57503498+matan230g@users.noreply.github.com>
+Date:   Wed Apr 15 16:59:54 2020 +0300
+
+    Delete encodings.xml
+
+[33mcommit 4d116c498502cfc003e3eb1a78b2d905ca4da626[m
+Author: matan230g <57503498+matan230g@users.noreply.github.com>
+Date:   Wed Apr 15 16:59:47 2020 +0300
+
+    Delete misc.xml
+
+[33mcommit f255f5043d6271f456c6b8aff42f562a8b44d255[m
+Author: matan230g <57503498+matan230g@users.noreply.github.com>
+Date:   Wed Apr 15 16:59:41 2020 +0300
+
+    Delete modules.xml
+
+[33mcommit 522e164be8f611dfc60521ea00dea148a50defa4[m
+Author: matan230g <57503498+matan230g@users.noreply.github.com>
+Date:   Wed Apr 15 16:59:33 2020 +0300
+
+    Delete uiDesigner.xml
+
+[33mcommit bb6f9c7a5afcce09a4ad57235112fea4adaadebb[m
+Author: matan230g <57503498+matan230g@users.noreply.github.com>
+Date:   Wed Apr 15 16:59:24 2020 +0300
+
+    Delete vcs.xml
+
+[33mcommit 0cbff9a78a365e7d9a450b3c4ee94c0cbc9f39c2[m
+Author: matan230g <57503498+matan230g@users.noreply.github.com>
+Date:   Wed Apr 15 16:58:41 2020 +0300
+
+    Delete workspace.xml
+
+[33mcommit f17edf61fcd1661c0a47a925a8df953a1ecb5e44[m
+Merge: 62a2b5a a75b977
+Author: galborabia <49067563+galborabia@users.noreply.github.com>
+Date:   Wed Apr 15 16:14:00 2020 +0300
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       SoccerAssociationProject/.idea/misc.xml
+    #       SoccerAssociationProject/src/service/BoardManagerController.java
+
+[33mcommit 62a2b5a14c574939c30e1cf3079f70329ffbf28f[m
+Merge: b20fcfe 6115f69
+Author: galborabia <49067563+galborabia@users.noreply.github.com>
+Date:   Mon Apr 13 17:01:46 2020 +0300
+
+    Merge branch 'master' of https://github.com/davidZal1992/MiniProjectISE2020
+    
+    # Conflicts:
+    #       SoccerAssociationProject/.idea/workspace.xml
+    #       SoccerAssociationProject/src/domain/System.java
+    #       SoccerAssociationProject/src/domain/User.java
+
+[33mcommit a75b97749f1f8598e9bf1f1e6137b832af81ec7e[m
+Author: matan gadasi <matan230g@gmail.com>
+Date:   Mon Apr 13 16:55:53 2020 +0300
+
+    change
+
+[33mcommit a6c13821589cd422d60824140cb66a1d5553b60a[m
+Author: matan gadasi <matan230g@gmail.com>
+Date:   Mon Apr 13 16:54:12 2020 +0300
+
+     change
+
+[33mcommit 0f8fe5bf9f31713602ca4959b86c611b7c192d7e[m
+Author: matan gadasi <matan230g@gmail.com>
+Date:   Mon Apr 13 16:51:43 2020 +0300
+
+    add Permission
+
+[33mcommit 4e618a89e79a8a6097e7fecbc6ad09e0f35f0624[m
+Author: David <davidzal@post.bgu.ac.il>
+Date:   Fri Apr 10 19:10:13 2020 +0300
+
+    change the assets insert and remove
+
+[33mcommit 6115f693e029c002c918b20defc71838db9e13df[m
+Merge: 2f6b69e fa6ba01
+Author: matan gadasi <matan230g@gmail.com>
+Date:   Fri Apr 10 18:03:46 2020 +0300
+
+    fix merge
+
+[33mcommit 2f6b69e9eab9cb9c0e5c1432cc31b0eaafeebdf4[m
+Author: matan gadasi <matan230g@gmail.com>
+Date:   Fri Apr 10 17:59:41 2020 +0300
+
+    merge branch
+
+[33mcommit fa6ba0184760e969dc4de6744a7a4a9ee49c30c8[m
+Author: matan gadasi <matan230g@gmail.com>
+Date:   Fri Apr 10 17:56:14 2020 +0300
+
+    add test to add Assets, fix Constructor for user refree
+
+[33mcommit 13470f272804b08d118fec90a2816bc062ca7cf0[m
+Author: matan gadasi <matan230g@gmail.com>
+Date:   Fri Apr 10 17:52:48 2020 +0300
+
+    add test to add Assets, fix Constructor for user refree
+
+[33mcommit 99365c6cce30e8a096cf9ae71b96dbc7162ca31c[m
+Author: David <davidzal@post.bgu.ac.il>
+Date:   Fri Apr 10 17:07:09 2020 +0300
+
+    asset insert and remove done
+
+[33mcommit 64b23b3aaf0f210681a2bbad63012d2ca31b839e[m
+Author: David <davidzal@post.bgu.ac.il>
+Date:   Fri Apr 10 14:53:56 2020 +0300
+
+    Fix bugs , create Asset interface , and implement all classes that are defined as assets
+
+[33mcommit 5ccce21802dae882fb09c31212f53eab0e0e2c63[m
+Merge: d1b691c 3ee931a
+Author: David <davidzal@post.bgu.ac.il>
+Date:   Fri Apr 10 12:17:48 2020 +0300
+
+    inital commit
+
+[33mcommit b20fcfe681a1a56ebd45f71cd93a7a4ae3a43a56[m
+Author: galborabia <49067563+galborabia@users.noreply.github.com>
+Date:   Fri Apr 10 12:15:22 2020 +0300
+
+    register/ login
+    
+    add register and login functionality
+
+[33mcommit 3ee931a5583152e55e26a9656d4ce1814c60a77f[m
+Author: matan230g <57503498+matan230g@users.noreply.github.com>
+Date:   Fri Apr 10 12:02:18 2020 +0300
+
+    remove file jetbrains
+
+[33mcommit 0d7b57c82738e5e76767a5f5ece85b757712caca[m
+Author: matan gadasi <matan230g@gmail.com>
+Date:   Fri Apr 10 11:53:40 2020 +0300
+
+    add gitignore file
+
+[33mcommit d1b691c469f472e9cfc64548a0074ce85d81cfe1[m
+Author: David <davidzal@post.bgu.ac.il>
+Date:   Fri Apr 10 11:51:13 2020 +0300
+
+    David initial commit
+
+[33mcommit 9b8968c08926e8ae83f7b2c53cab47c0f0d07fb3[m
+Author: galborabia <49067563+galborabia@users.noreply.github.com>
+Date:   Fri Apr 10 11:37:48 2020 +0300
+
+    initSystem
+    
+    use case 1 - init system
+
+[33mcommit 80e53cac28a4f7c4f5193e8d6f1273a2d87f7129[m
+Author: galborabia <49067563+galborabia@users.noreply.github.com>
+Date:   Fri Apr 10 10:30:19 2020 +0300
+
+    changes
+    
+    design changes
+
+[33mcommit d4b905eead0d43283ef5f5674bdf25f07b5d4794[m
+Author: galborabia <49067563+galborabia@users.noreply.github.com>
+Date:   Wed Apr 8 17:26:08 2020 +0300
+
+    start Project
+    
+    hellow,
+    i open all the class in most of them i write relevent function and start connect the classes. use  Version 1 to more relevent function (menshaki)

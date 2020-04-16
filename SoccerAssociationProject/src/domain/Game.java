@@ -13,12 +13,14 @@ public class Game extends Subject
     private Date finishDate;
     private int hScore;
     private int gScore;
+
     Refree lineReferee1;
     Refree lineReferee2;
     Refree mainReferee;
     Refree extraRefree;
     Refree[] varReferees;
 
+<<<<<<< HEAD
 
     @Override
     public boolean addFollwer(User user)
@@ -29,4 +31,6 @@ public class Game extends Subject
         }
         return false;
     }
+=======
+>>>>>>> davidBranch
 }

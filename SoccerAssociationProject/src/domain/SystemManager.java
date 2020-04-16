@@ -27,7 +27,11 @@ public class SystemManager extends User
 
     public boolean closeTeam (String teamName)
     {
+<<<<<<< HEAD
         return system.closeTeamBySystemManager(teamName);
+=======
+        super(name,account);
+>>>>>>> davidBranch
     }
 
     public void watchInformation(){};
