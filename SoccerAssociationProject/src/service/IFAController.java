@@ -49,7 +49,16 @@ public class IFAController {
         }
         return false;
     }
-
+    public boolean addTeam(IFA ifaManager, String teamName, String password, String userName)
+    {
+        if(ifaManager!=null && ifaName!=null && password!=null && userName!=null){
+            if( isPassAndUserNIsLegal(password, userName) )
+            {
+                ifaManager.addNewIFA( ifaName, password, userName);
+            }
+        }
+        return false;
+    }
 
     /**
      * chech if the user nane and password is legal
@@ -65,6 +74,5 @@ public class IFAController {
         }
         return false;
     }
-
 
 }//class

@@ -108,43 +108,5 @@ public class IFA extends User
     }
 
 
-
-/*
-    public boolean addTeamMemberToTeam(String userName, String name, Date birthDate, int contract, double salary, Team team)
-    {
-        Account account =system.getTeamMemberAccount(userName);
-        if(account!=null)
-        {
-            User user =account.getUser();
-            if(user==null)
-            {
-                Player player = new Player(account,name,team,contract,salary,birthDate);
-                system.addPlayer(player);
-                team.addAsset(player);
-                team.addStaffMember(player);
-                return true;
-            }
-            else if(user instanceof Player)
-            {
-                ((Player)user).setTeam(team,contract,salary);
-                team.addStaffMember((Player)user);
-                team.addAsset((Player)user);
-                return true;
-            }
-            else if(user instanceof Owner)
-            {
-                Owner owner =(Owner)user;
-                if(owner.getTeam()==team)
-                {
-                    // to do
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-*/
-
-
 }//lass
 

@@ -17,29 +17,41 @@ public class Team implements pageable
     private ArrayList<Asset> assetsOfTeam;
     private Set<FinancialAction> financialActions;
 
-    public String getName() {
-        return name;
-    }
-
-    public boolean addFinancialAction(FinancialAction financialAction)
-    {
-        if(financialAction!=null)
-        {
-            if(financialActions.contains(financialAction)==false)
-            {
-                financialActions.add(financialAction);
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Team (List<Owner> owners, String name){
         owners=new ArrayList<>();
         this.name=name;
         this.assetsOfTeam =new ArrayList<>();
     }
 
+    //--------------------------------------------------------------------------------geeters
+
+    public String getName() {
+        return name;
+    }
+    public Page getPage()
+    {
+        return page;
+    }
+
+    public List<Owner> getOwners() {
+        return owners;
+    }
+    public ArrayList<Asset> getAssetsOfTeam()
+    {
+        return assetsOfTeam;
+    }
+    //--------------------------------------------------------------------------------setters
+    public void setClose(Notification notification)
+    {
+        this.status=false;
+
+        for (StaffMember member:staffMembers)
+        {
+            member.addNotification(notification);
+        }
+    }
+
+    //-----------------------------------------------------------------------------------add
     public void addAsset(Asset asset)
     {
         if(asset==null)
@@ -55,22 +67,20 @@ public class Team implements pageable
             staffMembers.add(member);
         }
     }
-
-    public void setClose(Notification notification)
+    public boolean addFinancialAction(FinancialAction financialAction)
     {
-        this.status=false;
-
-        for (StaffMember member:staffMembers)
+        if(financialAction!=null)
         {
-            member.addNotification(notification);
+            if(financialActions.contains(financialAction)==false)
+            {
+                financialActions.add(financialAction);
+                return true;
+            }
         }
+        return false;
     }
 
-    public Page getPage()
-    {
-        return page;
-    }
-
+    //-----------------------------------------------------------------------------------------remove
     public void removeStaffMember(StaffMember member)
     {
         if(member!=null && staffMembers.contains(member))
@@ -89,11 +99,7 @@ public class Team implements pageable
         //TODO: write to logger
     }
 
-    public ArrayList<Asset> getAssetsOfTeam()
-    {
-        return assetsOfTeam;
-    }
-
+    //---------------------------------------------------------------------------------------------update
     public void uploadDataToPage(String data)
     {
         if(data.isEmpty()==false)
@@ -102,7 +108,4 @@ public class Team implements pageable
         }
     }
 
-    public List<Owner> getOwners() {
-        return owners;
-    }
-}
+}//class
