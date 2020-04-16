@@ -9,24 +9,20 @@ public class System
     private static System system;
     private List<League> leagues;
     private List<Team> teams;
-<<<<<<< HEAD
     private List<Page> pages;
     private List<Asset> assetsExists;
     private List<Player> players;
-=======
     private List<Season> seasons;
 
     public List<Season> getSeasons() {
         return seasons;
     }
 
-    private List<Asset> assetsExists;
 
     public List<League> getLeagues() {
         return leagues;
     }
 
->>>>>>> davidBranch
     private List<SystemManager> systemManagers;
     private AccountManager accountManager;
     private List<Complaint> complaints;
@@ -34,21 +30,21 @@ public class System
     private List<Refree> refrees;
 
 
-    public Account addBoardMember(String userName)
+    private System ()
     {
-<<<<<<< HEAD
+        leagues = new LinkedList<>();
+        teams = new LinkedList<>();
+        systemManagers= new LinkedList<>();
+        accountManager = new AccountManager(this);
+    }
+
+
+    public Account addBoardMember(String userName,String password, String name) {
+        SystemManager systemManager = new SystemManager(name,new Account(userName, password));
+        system = getInstance();
+        system.systemManagers.add(systemManager);
         return accountManager.getAccount(userName);
     }
-=======
-        SystemManager systemManager = new SystemManager(new Account(userName,password),name);
-        system=getInstance();
-        system.systemManagers.add(systemManager);
-        //TODO:
-        // Using try\catch to announce the user if some problem occurs.
-        // 1.connect to DB
-        // 2.connect to accounting IFA
-        // 3.connect to tax law
->>>>>>> davidBranch
 
     public void addRefree(Refree refree)
     {
@@ -114,14 +110,6 @@ public class System
         //throw new Exception("cant connect to dataBase");
     }
 
-    private System ()
-    {
-        leagues = new LinkedList<>();
-        teams = new LinkedList<>();
-        systemManagers= new LinkedList<>();
-<<<<<<< HEAD
-        accountManager = new AccountManager(this);
-    }
 
     public boolean closeTeamBySystemManager(String teamName)
     {
@@ -137,9 +125,6 @@ public class System
             }
         }
         return false;
-=======
-        seasons=new LinkedList<>();
->>>>>>> davidBranch
     }
 
     public static System getInstance()

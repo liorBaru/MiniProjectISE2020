@@ -20,7 +20,6 @@ public class Game extends Subject
     Refree extraRefree;
     Refree[] varReferees;
 
-<<<<<<< HEAD
 
     @Override
     public boolean addFollwer(User user)
@@ -31,6 +30,4 @@ public class Game extends Subject
         }
         return false;
     }
-=======
->>>>>>> davidBranch
 }

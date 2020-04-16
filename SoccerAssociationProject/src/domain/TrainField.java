@@ -27,7 +27,17 @@ public class TrainField implements Asset {
     }
 
     @Override
-    public void removeTeam() {
+    public int hashCode() {
+        return super.hashCode();
+    }
 
+    @Override
+    public void removeTeam(Team team) {
+
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }

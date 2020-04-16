@@ -19,6 +19,7 @@ public class Owner extends BoardMember
                 this.anotherJob = user;
                 setPremissions();
         }
+
         private void setPremissions()
         {
                 for (premission premission:premission.values())
@@ -67,9 +68,9 @@ public class Owner extends BoardMember
                 }
         }
 
-        public boolean addManagerToTeam(String userName, String name, double salary , List<String> premissions)
+        public boolean addManagerToTeam(String userName, String password ,String name, double salary , List<String> premissions)
         {
-                Account account = system.addBoardMember(userName);
+                Account account = system.addBoardMember(userName,password, name);
                 if(account!=null && account.getUser()==null)
                 {
                         BoardMember manger = new TeamManager(account,name,team,this,salary,premissions);
@@ -82,9 +83,9 @@ public class Owner extends BoardMember
                 return false;
         }
 
-        public boolean addOwnerToTeam(String userName, String name)
+        public boolean addOwnerToTeam(String userName,String passowrd ,String name)
         {
-                Account account = system.addBoardMember(userName);
+                Account account = system.addBoardMember(userName , passowrd , name);
                 if(account!=null)
                 {
                         BoardMember owner;

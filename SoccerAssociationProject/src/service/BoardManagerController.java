@@ -18,21 +18,21 @@ public class BoardManagerController
          boardMember.addAssets(name);
      }
 
-     public boolean addManager(String userName,String name, double salary, List<String> premissions)
+     public boolean addManager(String userName,String name,String password, double salary, List<String> premissions)
      {
          if(boardMember instanceof  Owner)
          {
-             return ((Owner) boardMember).addManagerToTeam(userName,name,salary,premissions);
+             return ((Owner) boardMember).addManagerToTeam(userName,password,name,salary,premissions);
 
          }
          return false;
      }
 
-     public boolean addOwner(String userName, String name)
+     public boolean addOwner(String userName, String password,String name)
      {
          if(boardMember instanceof Owner)
          {
-             return ((Owner) boardMember).addOwnerToTeam(userName,name);
+             return ((Owner) boardMember).addOwnerToTeam(userName,password,name);
          }
          return false;
      }
