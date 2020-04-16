@@ -8,5 +8,9 @@ public class Season
     private boolean start;
     private TreeMap<League, SeasonInfo> teams;
 
-
+    public Season(int year, boolean start) {
+        this.year = year;
+        this.start = start;
+        teams=new TreeMap<>();
+    }
 }

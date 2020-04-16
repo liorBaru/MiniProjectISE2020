@@ -7,16 +7,26 @@ public class Player extends TeamMember
 {
     Date birthDay;
     List<PlayerPosition> positions;
-    double salary;
     int goals;
     int games;
 
-    public Player(Account account,String name, Date birthDay)
+    public Player(Account account,String name,Team team ,Date birthDay,double salary)
+    {
+        super(account,name,team,birthDay,salary);
+        this.page = new Page(this);
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public Player(Account account,String name,Date birthDay)
     {
         super(account,name);
         this.page = new Page(this);
         this.birthDay = birthDay;
-        this.salary = salary;
     }
 
     @Override

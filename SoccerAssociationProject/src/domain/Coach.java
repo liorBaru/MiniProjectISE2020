@@ -7,19 +7,24 @@ public class Coach extends TeamMember
 
     private String training;
     private String job;
-    Date birthDay;
 
-    public Coach (Account account, String name, Team team, Date contract , double salary, String training, Date birthDay)
+    public Coach (Account account, String name, Team team, Date contract , double salary, String training)
     {
         super(account,name,team,contract,salary);
         this.training=training;
-        this.birthDay = birthDay;
     }
-    public Coach (Account cAccount, String cName, Date birthDay)
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public Coach (Account account, String name)
     {
-        super(cAccount,cName);
-        this.birthDay = birthDay;
+        super(account,name);
     }
+
     public void uploadDataToPage(String data){}
 
 

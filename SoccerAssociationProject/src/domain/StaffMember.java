@@ -17,9 +17,17 @@ public abstract class StaffMember extends User implements Asset
         super(name,account);
         this.team=team;
     }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
     public StaffMember (Account account, String name)
     {
         super(name,account);
+        this.team=team;
     }
 
 

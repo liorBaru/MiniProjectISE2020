@@ -5,9 +5,9 @@ import java.util.List;
 public class SystemManager extends User
 {
 
-    public SystemManager (String userName, String password,String name)
+    public SystemManager (String name,Account account)
     {
-        super(account,name);
+        super(name,account);
     }
 
     public List<Complaint> watchComplaints()

@@ -16,6 +16,12 @@ public class Account
         this.user = user;
     }
 
+    /**
+     * gal
+     * check if the password is correct
+     * @param password
+     * @return
+     */
     public boolean accountVerification(String password)
     {
         if(password!=null && password==this.password )
@@ -25,10 +31,13 @@ public class Account
         return false;
     }
 
-
-
     public User getUser() {
         return user;
     }
-
+    public String getUserName() {
+        return userName;
+    }
+    public String getPassword() {
+        return password;
+    }
 }

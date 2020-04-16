@@ -5,20 +5,24 @@ import java.util.TreeMap;
 public class AccountManager
 {
     private TreeMap <String, Account> userNames;
+    private System system;
 
 
-    public AccountManager ()
+    public AccountManager (System system)
     {
+        this.system=system;
         userNames=new TreeMap<>();
     }
 
-    public boolean containsUserName(String userName)
-    {
-        return this.userNames.containsKey(userName);
-    }
-
-    public boolean createAccount(String userName , String password)
-    {
+    /**
+     * gal
+     * create new account
+     * @param userName
+     * @param password
+     * @return new Account
+     * @throws Exception
+     */
+    public Account createAccount(String userName, String password) throws Exception {
         if(userName!=null && password!=null)
         {
             if(userName.length()>6 && userNames.containsKey(userName)==false)
@@ -27,13 +31,22 @@ public class AccountManager
                 {
                     Account account = new Account(userName,password);
                     userNames.put(userName,account);
-                    return true;
+                    return account;
                 }
+                throw new Exception("Invalid password");
             }
+            throw new Exception("Invalid username");
         }
-        return false;
+        return null;
     }
 
+
+    /**
+     * gal
+     * check if the account password is legal
+     * @param password
+     * @return
+     */
     private boolean checkPassword(String password)
     {
         if(password!=null && password.length()>=8)
@@ -68,6 +81,8 @@ public class AccountManager
         return false;
     }
 
+
+
     public Account getAccount(String userName)
     {
         if(userNames.containsKey(userName))
@@ -77,7 +92,15 @@ public class AccountManager
         return null;
     }
 
-    public User getUser(String userName, String password)
+    /**
+     * gal,
+     * find the relevant user in login and return the user
+     * @param userName
+     * @param password
+     * @return user
+     * @throws Exception
+     */
+    public User login(String userName, String password) throws Exception
     {
         if(userNames.containsKey(userName))
         {
@@ -87,18 +110,7 @@ public class AccountManager
                 return account.getUser();
             }
         }
-        // throw nor good password or user name
-        return null;
+        throw new  Exception(" wrong userName or password, please try again");
     }
 
-
-    public boolean addAcount(String userName, Account account)
-    {
-        if(account!=null && userName!=null)
-        {
-            userNames.put(userName,account);
-            return true;
-        }
-        return false;
-    }
 }

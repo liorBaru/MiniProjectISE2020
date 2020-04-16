@@ -4,15 +4,20 @@ import java.util.Date;
 
 public class MainRefree extends Refree
 {
-    public MainRefree(String name, String trainig, Account account) {
 
-        super(name, trainig, account);
+    public MainRefree(String name, String training, Account account) {
+
+        super(name, training,account );
     }
 
-
-    public MainRefree(String name, Account account, Date birthDay) {
-
-        super(name, account, birthDay);
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public MainRefree(String name, Account account) {
+        super(name,account );
     }
 
     public boolean editGameEvent(){return false;}

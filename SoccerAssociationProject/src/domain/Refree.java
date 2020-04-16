@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,7 +8,7 @@ public abstract class Refree extends User
     private List<Game> games;
     private String trainig;
     private Game activeGame;
-    Date birthDay;
+
 
     public Refree(String name, String training, Account account)
     {
@@ -18,11 +17,16 @@ public abstract class Refree extends User
         this.trainig=training;
     }
 
-    public Refree(String rName, Account rAccount, Date birthDay)
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public Refree(String name, Account account)
     {
-        super(rName,rAccount);
+        super(name,account);
         games = new LinkedList<>();
-        this.birthDay = birthDay;
     }
 
     @Override

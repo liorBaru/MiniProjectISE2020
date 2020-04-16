@@ -18,40 +18,45 @@ public class Team implements pageable
     private Set<FinancialAction> financialActions;
 
     public Team (List<Owner> owners, String name){
-        owners=new ArrayList<>();
+        this.owners= owners;
         this.name=name;
         this.assetsOfTeam =new ArrayList<>();
     }
 
-    //--------------------------------------------------------------------------------geeters
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public Team (Owner owners, String name){
+        this.owners = new ArrayList<>();
+        String userName = owners.getAccount().getUserName();
+        String pass = owners.getAccount().getPassword();
+        owners.addOwnerToTeam(userName, pass, name);
+        this.name=name;
+        this.assetsOfTeam =new ArrayList<>();
+    }
 
     public String getName() {
         return name;
     }
-    public Page getPage()
-    {
-        return page;
-    }
 
-    public List<Owner> getOwners() {
-        return owners;
-    }
-    public ArrayList<Asset> getAssetsOfTeam()
+    public boolean addFinancialAction(FinancialAction financialAction)
     {
-        return assetsOfTeam;
-    }
-    //--------------------------------------------------------------------------------setters
-    public void setClose(Notification notification)
-    {
-        this.status=false;
-
-        for (StaffMember member:staffMembers)
+        if(financialAction!=null)
         {
-            member.addNotification(notification);
+            if(financialActions.contains(financialAction)==false)
+            {
+                financialActions.add(financialAction);
+                return true;
+            }
         }
+        return false;
     }
 
-    //-----------------------------------------------------------------------------------add
+
+
     public void addAsset(Asset asset)
     {
         if(asset==null)
@@ -67,20 +72,22 @@ public class Team implements pageable
             staffMembers.add(member);
         }
     }
-    public boolean addFinancialAction(FinancialAction financialAction)
+
+    public void setClose(Notification notification)
     {
-        if(financialAction!=null)
+        this.status=false;
+
+        for (StaffMember member:staffMembers)
         {
-            if(financialActions.contains(financialAction)==false)
-            {
-                financialActions.add(financialAction);
-                return true;
-            }
+            member.addNotification(notification);
         }
-        return false;
     }
 
-    //-----------------------------------------------------------------------------------------remove
+    public Page getPage()
+    {
+        return page;
+    }
+
     public void removeStaffMember(StaffMember member)
     {
         if(member!=null && staffMembers.contains(member))
@@ -99,7 +106,11 @@ public class Team implements pageable
         //TODO: write to logger
     }
 
-    //---------------------------------------------------------------------------------------------update
+    public ArrayList<Asset> getAssetsOfTeam()
+    {
+        return assetsOfTeam;
+    }
+
     public void uploadDataToPage(String data)
     {
         if(data.isEmpty()==false)
@@ -108,4 +119,7 @@ public class Team implements pageable
         }
     }
 
-}//class
+    public List<Owner> getOwners() {
+        return owners;
+    }
+}

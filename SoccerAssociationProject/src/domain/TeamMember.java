@@ -15,12 +15,19 @@ public abstract class TeamMember extends StaffMember implements pageable
         this.contract = contract;
         this.salary = salary;
     }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
     public TeamMember(Account account, String name)
     {
         super(account, name);
-        this.salary = 0;
+        this.contract = contract;
+        this.salary = salary;
     }
-
     public void setTeam(Team team, Date contract, double salary)
     {
         this.team=team;

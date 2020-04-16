@@ -52,61 +52,70 @@ public class IFA extends User
         }
         return false;
     }
+    //------------------------------------------------------------------------------------------------lior part
 
-    //---------------------------------------------------------------------------------------------------
-    public void addPlayer(String pName, Date birthDay,String password, String userName){
-        Account pAccount = new Account(userName, password);
-        Player player= new Player(pAccount,pName, birthDay);
-
-        pAccount.setUser(player);
-        system.addPlayer(player);
-    }
-    public void addCoach(String cName, Date birthDay,String password, String userName){
-        Account cAccount = new Account(userName, password);
-        Coach coach= new Coach( cAccount,cName, birthDay);
-
-        cAccount.setUser(coach);
-        system.addCoach(coach);
-    }
-    public void addNewIFA( String ifaName, String password, String userName){
-        Account ifaAccount =system.getIFAAccount(userName);
-        if(ifaAccount==null){
-            ifaAccount = new Account(userName, password);
-        }
-        IFA ifa= new IFA( ifaName,ifaAccount);
-
-        ifaAccount.setUser(ifa);
-        system.addIFA(ifa);
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void addPlayer(String pName, Date birthDay,String password, String userName)throws Exception{
+        system.createNewPlayerUser(pName, birthDay,password, userName);
     }
 
-    public boolean addRefree(String rName,Date birthDay,String password, String userName, String type)
-    {
-        Account rAccount =system.getRefreeAccount(userName);
-        if(rAccount==null){
-            rAccount = new Account(userName, password);
-        }
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void addCoach(String cName,String password, String userName)throws Exception{
+        system.createNewCoachUser(cName,password, userName);
+    }
 
-        if(type=="Main")
-        {
-            Refree refree = new MainRefree(rName,rAccount, birthDay);
-            rAccount.setUser(refree);
-            system.addRefree(refree);
-        }
-        else if(type=="Var")
-        {
-            Refree refree = new VarRefree(rName,rAccount, birthDay);
-            rAccount.setUser(refree);
-            system.addRefree(refree);
-        }
-        else
-        {
-            Refree refree = new LineRefree(rName,rAccount, birthDay);
-            rAccount.setUser(refree);
-            system.addRefree(refree);
-        }
-        return true;
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void addNewIFA( String ifaName, String password, String userName) throws Exception{
+        system.createNewIFAUser(ifaName, password, userName);
+    }
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void addRefree(String rName,String password, String userName, String type) throws Exception{
+        system.createNewRefreeUser(rName, password, userName, type);
+
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void addOwner(String oName,String password, String userName)throws Exception{
+        system.createNewOwnerUser(oName,password, userName);
     }
 
 
-}//lass
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void addTeam(Owner owner, String TName)throws Exception{
+        system.addTeam(owner, TName);
+    }
 
+    public Account getAccount(){
+        return account;
+    }
+}//class

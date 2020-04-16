@@ -1,5 +1,6 @@
 package domain;
-
+import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,42 +13,81 @@ public class System
     private List<Page> pages;
     private List<Asset> assetsExists;
     private List<Player> players;
+    private List<Season> seasons;
     private List<SystemManager> systemManagers;
     private AccountManager accountManager;
     private List<Complaint> complaints;
     private List<Team> closedTeams;
     private List<Refree> refrees;
-    private List<Coach> Coaches;
-    //////////////////////////////////lior add
+
     private List<IFA> IFAes;
-
-    public Account addBoardMember(String userName)
-    {
-        return accountManager.getAccount(userName);
-    }
-
-    public static void initSystem(String userName, String password, String name)
-    {
-        AccountManager accountManager = new AccountManager();
-        accountManager.createAccount();
-        SystemManager systemManager = new SystemManager(userName,password,name);
-        system=getInstance();
-        system.systemManagers.add(systemManager);
-        //TODO:
-        // Using try\catch to announce the user if some problem occurs.
-        // 1.connect to DB
-        // 2.connect to accounting IFA
-        // 3.connect to tax law
-
-    }
+    private List<Coach> Coaches;
+    private List<Owner> Owners;
 
     private System ()
     {
         leagues = new LinkedList<>();
         teams = new LinkedList<>();
         systemManagers= new LinkedList<>();
+        accountManager = new AccountManager(this);
         IFAes = new LinkedList<>();
+        Coaches = new LinkedList<>();
+        Owners = new LinkedList<>();
     }
+
+
+    public Account addBoardMember(String userName,String password, String name) {
+        SystemManager systemManager = new SystemManager(name,new Account(userName, password));
+        system = getInstance();
+        system.systemManagers.add(systemManager);
+        return accountManager.getAccount(userName);
+    }
+
+
+    public void createNewFanUser(String name, String userName,String password)throws Exception
+    {
+         Account account = accountManager.createAccount(userName,password);
+         User newUser = new Fan(name,account);
+         account.setUser(newUser);
+    }
+
+    public User login (String username, String password) throws Exception
+    {
+        return accountManager.login(username,password);
+    }
+
+    public static void initSystem(String userName, String password, String name) throws Exception {
+        try {
+            system=getInstance();
+            system.connectToDB();
+            Account account = system.accountManager.createAccount(userName,password);
+            SystemManager systemManager = new SystemManager(name,account);
+            system.systemManagers.add(systemManager);
+            system.connectToIFA();
+            system.connectToTaxLaW();
+        }
+        catch (Exception e)
+        {
+            system=null;
+            throw e;
+        }
+    }
+
+    private void connectToIFA() throws Exception {
+      // throw new Exception("cant connect to IFA systems");
+    }
+
+    private void connectToTaxLaW() throws Exception
+    {
+
+        //throw new Exception("cant connect to tax law system");
+
+    }
+    private void connectToDB () throws Exception {
+
+        //throw new Exception("cant connect to dataBase");
+    }
+
 
     public boolean closeTeamBySystemManager(String teamName)
     {
@@ -67,14 +107,61 @@ public class System
 
     public static System getInstance()
     {
-        if(system!=null)
-        {
-            return system;
+    if(system!=null)
+    {
+        return system;
+    }
+    else
+    {
+        return system=new System();
+    }
+}
+
+    /**
+     * @author: David Zaltsman
+     * @desc: add new league to system. USECASE 9.1 -> if wrong deatials return appropriate message.
+     * @param name - name of league
+     * @param level - level of the league
+     */
+    public League addLeague(String name, int level)
+    {
+        if(level<0 || checkLeagueExist(level) ){
+            throw new InputMismatchException("Wrong input");
         }
-        else
-        {
-            return system=new System();
+        League league=new League(name,level);
+        this.leagues.add(league);
+        return league;
+    }
+
+    /**
+     * @author: David Zaltsman
+     * @desc: add new Season to system. USECASE 9.2.1 -> if wrong deatials return appropriate message.
+     * @param year- year of the season
+     * @param start- if start ture so we cant modify and changes at seasoninfo
+     */
+    public Season addSeason(int year, Boolean start)
+    {
+        if(year<1995 ){
+            throw new InputMismatchException("Wrong input");
         }
+        Season season=new Season(year,start);
+        this.seasons.add(season);
+        return season;
+    }
+
+    /**
+     * @author: David Zaltsman
+     * @desc: private function => check if the league is already exists
+     * @param level- level of leage
+     */
+    //check if the league is alreay exits
+    private boolean checkLeagueExist(int level) {
+        for (League league: this.leagues)
+        {
+            if(league.getLevel()==level)
+                return true;
+        }
+        return false;
     }
 
     public void closeTeam(Notification notification)
@@ -84,6 +171,7 @@ public class System
             systemManager.addNotification(notification);
         }
     }
+
 
     public List<Page> findPage(String pageName)
     {
@@ -149,7 +237,127 @@ public class System
         assetsExists.add(field);
         return field;
     }
+    //---------------------------------------------------------------------------------------------lior part
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void createNewPlayerUser(String pName, Date birthDay, String password, String userName)throws Exception {
+        Account pAccount = accountManager.createAccount(userName,password);
+        User newUser = new Player(pAccount,pName, birthDay);
+        pAccount.setUser(newUser);
+        system.addPlayer( (Player) newUser);
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void createNewCoachUser(String cName,String password, String userName)throws Exception {
+        Account cAccount = accountManager.createAccount(userName,password);
+        User newUser = new Coach(cAccount,cName);
+        cAccount.setUser(newUser);
+        system.addCoach( (Coach) newUser);
+
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void createNewRefreeUser(String rName,String password, String userName, String type)throws Exception {
+        Account rAccount =system.getRefreeAccount(userName);
+        if(rAccount==null){
+            rAccount = accountManager.createAccount(userName,password);
+        }
+
+        if(type=="Main")
+        {
+            User newUser = new MainRefree(rName,rAccount);
+            rAccount.setUser(newUser);
+            system.addRefree( (Refree) newUser);
+        }
+        else if(type=="Var")
+        {
+            User newUser = new VarRefree(rName,rAccount);
+            rAccount.setUser(newUser);
+            system.addRefree( (Refree)newUser);
+        }
+        else
+        {
+            User newUser = new LineRefree(rName,rAccount);
+            rAccount.setUser(newUser);
+            system.addRefree( (Refree)newUser);
+        }
+    }
+
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void createNewIFAUser(String ifaName, String password, String userName)throws Exception {
+        Account ifaAccount =system.getIFAAccount(userName);
+        if(ifaAccount==null){
+            ifaAccount = accountManager.createAccount(userName,password);
+        }
+        User newUser = new IFA( ifaName,ifaAccount);
+        ifaAccount.setUser(newUser);
+        system.addIFA( (IFA)newUser);
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void createNewOwnerUser(String oName,String password, String userName)throws Exception {
+        Account ownerAccount =system.getOwnerAccount(userName);
+        if(ownerAccount==null){
+            ownerAccount = accountManager.createAccount(userName,password);
+        }
+        User newUser = new Owner( ownerAccount, oName);
+        ownerAccount.setUser(newUser);
+        system.addOwner( (Owner)newUser);
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void addTeam(Owner owner, String Tname)throws Exception {
+        Team tean = new Team(owner, Tname);
+        owner.addTeam(tean);
+        system.addTeam( tean );
+    }
     //--------------------------------------------------------------------------------- getters
+
+    public List<Season> getSeasons() {
+        return seasons;
+    }
+
+
+    public List<League> getLeagues() {
+        return leagues;
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
     public Player getPlayer(String name)
     {
         for (Player player:players)
@@ -161,16 +369,30 @@ public class System
         }
         return null;
     }
+
+
     public Account getTeamMemberAccount(String userName)
     {
         return accountManager.getAccount(userName);
     }
 
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
     public Account getRefreeAccount(String userName)
     {
         return accountManager.getAccount(userName);
     }
 
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
     public Account getIFAAccount(String name)
     {
         for (IFA ifa:IFAes)
@@ -182,7 +404,32 @@ public class System
         }
         return null;
     }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public Account getOwnerAccount(String name)
+    {
+        for (Owner owner:Owners)
+        {
+            if(owner.getName()==name)
+            {
+                return owner.getAccount();
+            }
+        }
+        return null;
+    }
     //-----------------------------------------------------------------------------------  add
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
     public void addPlayer(Player player)
     {
         if(player!=null)
@@ -190,6 +437,13 @@ public class System
             players.add(player);
         }
     }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
     public void addCoach(Coach coach)
     {
         if(coach!=null)
@@ -197,6 +451,13 @@ public class System
             Coaches.add(coach);
         }
     }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
     public void addRefree(Refree refree)
     {
         if(refree!=null)
@@ -204,6 +465,13 @@ public class System
             refrees.add(refree);
         }
     }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
     public void addIFA(IFA ifa)
     {
         if(ifa!=null)
@@ -212,4 +480,31 @@ public class System
         }
     }
 
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void addOwner(Owner owner)
+    {
+        if(owner!=null)
+        {
+            Owners.add(owner);
+        }
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void addTeam(Team team)
+    {
+        if(team!=null)
+        {
+            teams.add(team);
+        }
+    }
 }//class
