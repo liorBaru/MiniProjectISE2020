@@ -35,12 +35,23 @@ public class BoardManagerController {
            owner.getTeam().removeAsset(asset);
 
         }
-        public void appointment(Owner owner,User newAppointment){
-            if(newAppointment==null ||owner==null)
-                throw new ArithmeticException("arguments are not valid");
-            ///TODO
 
+    /**
+     * @author matan
+     * @param owner
+     * @param newOwner
+     * appoint a new owner to the time's owner UC 6.2
+     */
+        public void appointmentNewOwner(Owner owner,Owner newOwner){
+            if(newOwner==null ||owner==null)
+                throw new ArithmeticException("arguments are not valid");
+            owner.appointmentNewOwner(newOwner);
         }
+    /**
+     * @author matan
+     * @param owner
+     * Close team's owner UC 6.6
+     */
         public void closeTime(Owner owner){
          owner.closeTeam();
 

@@ -9,10 +9,15 @@ public class Event
     private TeamMember teamMember;
     private EventType type;
 
-    public Event (TeamMember teamMember, EventType type, int minute, Date date)
+    public Event (TeamMember teamMember, EventType type, int minute)
     {
-
+        this.teamMember=teamMember;
+        this.type=type;
+        this.minute=minute;
+        time=new Date();
     }
+
+
 
 
 

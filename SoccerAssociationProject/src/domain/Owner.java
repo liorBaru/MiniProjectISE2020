@@ -38,6 +38,14 @@ public class Owner extends BoardMember
                 asset.setTeam(this.getTeam());
         }
 
+        public void appointmentNewOwner(Owner newOwner){
+                if(newOwner.team!=null){
+                        throw new ArithmeticException("The owner already has a team");
+                }
+                team.getOwners().add(newOwner);
+                this.appointments.add(newOwner);
+        }
+
 
         public void closeTeam() {
                 if(team==null)
