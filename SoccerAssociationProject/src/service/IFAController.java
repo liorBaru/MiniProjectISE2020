@@ -43,9 +43,19 @@ public class IFAController {
      * @param league - the league that we want to add her season
      * @param season - the season that we want to add
      */
-    public void newSeason(League league, Season season) {
+    public void addSeasonToLeague(League league, Season season) {
         //TODO:
         // 1.add to U.C 9.2.2 the funcionallity of adding seasonInfo
+        try {
+            league.addSeasonToLeague(league, season);
+        } catch (InputMismatchException e) {
+            throw new InputMismatchException("Wrong input");
+        }
+    }
+
+    public void updatePolicyToLeague(League league, Season season , LeagueCalcolator leaguePolicy) {
+        //TODO:
+        // 1.add to U.C 9.5 paramater to function : Season season , LeagueCalculator leaguePolicy
         try {
             league.addSeasonToLeague(league, season);
         } catch (InputMismatchException e) {

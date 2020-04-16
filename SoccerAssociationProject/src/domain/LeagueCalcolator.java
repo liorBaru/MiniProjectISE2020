@@ -4,5 +4,7 @@ import java.util.List;
 
 public interface LeagueCalcolator
 {
-    public List <TeamInfo> calculatePoints (SeasonInfo season);
+  public int addPointsPerWin();
+  public int addPonintsDraw();
+  public int addPointsLose();
 }
