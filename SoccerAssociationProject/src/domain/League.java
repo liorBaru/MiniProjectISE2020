@@ -8,7 +8,7 @@ public class League
 {
     private String name;
     private int level;
-    private List<Refree> refrees;
+    List<Refree> refrees;
     private TreeMap<Season, SeasonInfo> seasons;
 
     public League(String name, int level) {
@@ -16,6 +16,7 @@ public class League
         this.level = level;
 
     }
+
     public String getName() {
         return name;
     }
