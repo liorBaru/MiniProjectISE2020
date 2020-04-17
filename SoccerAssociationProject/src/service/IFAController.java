@@ -5,34 +5,8 @@ import domain.System;
 import java.util.InputMismatchException;
 
 
-import domain.*;
-import domain.System;
-import java.util.Date;
-
-/**
- * lior class
- */
 public class IFAController {
-
-    System system;
-
-
-    /**
-     * chech if the user nane and password is legal
-     * @param password
-     * @param userName
-     * @return
-     */
-    public boolean isPassAndUserNIsLegal(String password, String userName){
-        if(password!=null && userName!=null){
-            if(userName.length()>=6 && password.length()>=8 ){ //add pass contain capital small and number ??
-                return true;
-            }
-        }
-        return false;
-    }
-
-
+    System system=System.getInstance();
 
     /**
      * @author: David Zaltsman
@@ -83,7 +57,7 @@ public class IFAController {
         //TODO:
         // 1.add to U.C 9.5 paramater to function : Season season , LeagueCalculator leaguePolicy
         try {
-            league.addSeasonToLeague(league, season);
+            league.updatePolicyToLeague(league, season,leaguePolicy);
         } catch (InputMismatchException e) {
             throw new InputMismatchException("Wrong input");
         }

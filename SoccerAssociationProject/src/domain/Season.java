@@ -30,4 +30,5 @@ public class Season
         seasoninfos.put(league,seasonInfo);
         return this;
     }
+
 }
