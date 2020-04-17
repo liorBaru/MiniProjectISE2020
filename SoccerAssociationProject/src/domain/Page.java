@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Page extends Subject
     {
         messages.add(data);
         String details = pageName +" add new notification";
-        Notification notification =new Notification(details);
+        Notification notification =new Notification(details,new Date());
         notifyObservers(notification);
     }
 
