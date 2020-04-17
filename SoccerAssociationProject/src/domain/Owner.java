@@ -8,7 +8,7 @@ public class Owner extends BoardMember
         private ArrayList<StaffMember> anotherJob;
 
         public Owner(String userName, String password, String name, String job, Team team, BoardMember boss, ArrayList<StaffMember> anotherJob) {
-                super( new Account(userName,password),name,team,boss);
+                super(userName,password,name,job,team,boss);
                 this.anotherJob = new ArrayList<>();
         }
 

@@ -5,20 +5,20 @@ import java.util.List;
 public abstract class  BoardMember extends StaffMember
 {
     private BoardMember boss;
-    private List<StaffMember> appointments;
+    protected List<StaffMember> appointments;
 
 
     public BoardMember(String userName, String password, String name, String job, Team team, BoardMember boss) {
-        super(userName, password, name, job, team);
+        super(new Account(userName,password),name,team);
         this.boss = boss;
+    }
+    public BoardMember(Account account,String name,String job,Team team,BoardMember boss){
+        super(account,name,team,boss);
     }
 
     @Override
-    public void removeTeam() {
-        for (StaffMember appoint:appointments) {
-            appoint.removeTeam();
-        }
-        this.getTeam().removeAsset(this);
-        setTeam(null);
+    public void removeTeam(Team team) {
+        team.removeAsset(this);
     }
+
 }

@@ -7,14 +7,14 @@ public class TeamManager extends BoardMember
 {
     private double salary;
 
-    public TeamManager(Account account, String name, Team team, BoardMember boss, double salary, List<String> premissions)
+    public TeamManager(Account account, String name, Team team,String job, BoardMember boss, double salary, List<String> permissions)
     {
-        super(account,name,team,boss);
+        super(account,name,job,team,boss);
         this.salary=salary;
-        setPermissions(premissions);
+        setPermissions(permissions);
     }
-    public TeamManager(User user,Team team,List<String>permissionList,double salary){
-        super(user.account,user.name,team);
+    public TeamManager(User user,Team team,String job,List<String>permissionList,double salary,BoardMember boss){
+        super(user.account,user.name,job,team,boss);
         this.salary=salary;
         setPermissions(permissionList);
     }
@@ -28,7 +28,7 @@ public class TeamManager extends BoardMember
     {
         for (String permission:permissions)
         {
-            premission premission= Enum.valueOf(premission.class, permission);
+             premission= Enum.valueOf(premission.class, permission);
             this.permissions.put(premission,true);
         }
     }

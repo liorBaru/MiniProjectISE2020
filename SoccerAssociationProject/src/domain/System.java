@@ -1,4 +1,5 @@
 package domain;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.List;
@@ -118,7 +119,7 @@ public class System
             if(team.getName()==teamName)
             {
                 String details ="Team : "+teamName+" has been closed by the systemManager";
-                Notification notification = new Notification(details);
+                Notification notification = new Notification(details,new Date());
                 team.setClose(notification);
                 closedTeams.add(team);
                 return true;
