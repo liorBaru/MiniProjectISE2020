@@ -1,42 +1,48 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Team implements pageable {
     private String name;
     private Page page;
 
-    private boolean status;
+    private boolean status=true;// the team is active
 
     private List<Owner> owners;
-    private List<StaffMember> staffMembers;
+
+    private List<StaffMember> staffMembers=new ArrayList<>();
     private TreeMap<Integer, Game> games;
     private TreeMap<Season, TeamInfo> seasons;
     private ArrayList<Asset> assetsOfTeam;
     private Set<FinancialAction> financialActions;
-
     public List<StaffMember> getStaffMembers() {
         return staffMembers;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setStatus(boolean status) throws Exception {
         if (this.status != status) {
+            this.status = status;
             String statusString = status == false ? " is inactive" : " is active";
             Date date = new Date();
             Notification notification = new Notification("The Team: " + name + statusString, date);
             for (StaffMember staffMember : staffMembers) {
-                staffMember.account.getUser().notifications.add(notification);
+                staffMember.account.getUser().addNotification(notification);
             }
             for (Owner owner : owners) {
-                owner.account.getUser().notifications.add(notification);
+                owner.account.getUser().addNotification(notification);
             }
             //todo acknowledge the system and archive the history of the team
         }
+        else if(status==false && this.status==false){
+            throw new Exception("The team is not active already ");
+        }
+        else {
+            throw new Exception("The team is active already ");
+        }
+    }
+
+    public boolean isStatus() {
+        return status;
     }
 
     public String getName() {
@@ -53,10 +59,15 @@ public class Team implements pageable {
         return false;
     }
 
+    public Set<FinancialAction> getFinancialActions() {
+        return financialActions;
+    }
+
     public Team(List<Owner> owners, String name) {
-        owners = new ArrayList<>();
+        this.owners = owners;
         this.name = name;
         this.assetsOfTeam = new ArrayList<>();
+        this.financialActions=new HashSet<>();
     }
 
     public void addAsset(Asset asset) {
@@ -69,6 +80,7 @@ public class Team implements pageable {
     public void addStaffMember(StaffMember member) {
         if (member != null) {
             staffMembers.add(member);
+            member.setTeam(this);
         }
     }
 

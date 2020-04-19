@@ -8,7 +8,7 @@ public class Owner extends BoardMember
         private ArrayList<StaffMember> anotherJob;
 
         public Owner(String userName, String password, String name, String job, Team team, BoardMember boss, ArrayList<StaffMember> anotherJob) {
-                super(userName,password,name,job,team,boss);
+                super(new Account(userName,password),name,team,boss);
                 this.anotherJob = new ArrayList<>();
         }
 
@@ -42,6 +42,7 @@ public class Owner extends BoardMember
                 }
                 team.getOwners().add(newOwner);
                 this.appointments.add(newOwner);
+                newOwner.team=this.team;
         }
 
         /**
@@ -69,6 +70,8 @@ public class Owner extends BoardMember
         public void removeTeamManger(TeamManager teamManager){
                 if(this.appointments.contains(teamManager)) {
                         team.removeTeamManger(teamManager);
+                        teamManager.setTeam(null);
+                        teamManager.cleanPermission();
                 }
                 else {
                         throw new ArithmeticException("This is not your appointment");
@@ -80,7 +83,7 @@ public class Owner extends BoardMember
          * @author matan
          * set the team status to inActive
          */
-        public void closeTeam() {
+        public void closeTeam() throws Exception {
                 if(team==null)
                         throw new ArithmeticException("arguments are not valid");
                 this.team.setStatus(false);
@@ -88,16 +91,17 @@ public class Owner extends BoardMember
         }
         /**
          * @author matan
-         * @param user
+         * @param teamManager
          * @param salary
          * @param permissionList
          * appoint new team manger to the owner's team with permission and salary as we given
          */
-        public void appointTeamManger(User user,List<String> permissionList,double salary) {
-                if(user instanceof Owner || user instanceof TeamManager){
-                        throw new ArithmeticException("already Team manger or team owner");
-                }
-                TeamManager teamManager=new TeamManager(user,this.team,permissionList,salary);
+        public void appointTeamManger(TeamManager teamManager,List<String> permissionList,double salary) {
+                appointments.add(teamManager);
+                teamManager.setPermissions(permissionList);
+                teamManager.setSalary(salary);
+                this.team.addStaffMember(teamManager);
+
         }
         /**
          * @author matan
@@ -106,5 +110,12 @@ public class Owner extends BoardMember
          */
         public void reportIncomeOrOutcome(FinancialAction financialAction){
                 team.addFinancialAction(financialAction);
+        }
+
+        public void openTeam() throws Exception {
+                if(team==null)
+                        throw new ArithmeticException("arguments are not valid");
+                this.team.setStatus(true);
+
         }
 }

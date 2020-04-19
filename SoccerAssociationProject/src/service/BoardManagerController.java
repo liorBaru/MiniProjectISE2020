@@ -65,7 +65,7 @@ public class BoardManagerController {
      * @param user
      * appoint team manger to owner's team UC 6.4
      */
-    public void appointTeamManger(Owner owner, User user, List<String>permissionList,double salary ){
+    public void appointTeamManger(Owner owner, TeamManager user, List<String>permissionList,double salary ){
         owner.appointTeamManger(user,permissionList,salary);
 
     }
@@ -85,9 +85,17 @@ public class BoardManagerController {
      * @param owner
      * Close team's owner UC 6.6
      */
-        public void closeTime(Owner owner){
+        public void closeTeam(Owner owner) throws Exception {
          owner.closeTeam();
         }
+    /**
+     * @author matan
+     * @param owner
+     * Open team's owner UC 6.6
+     */
+    public void openTeam(Owner owner) throws Exception {
+        owner.openTeam();
+    }
 
     /**
      * @author matan
