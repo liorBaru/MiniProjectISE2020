@@ -13,7 +13,6 @@ public class IFAController {
 
     System system;
 
-
     /**
      * @author: David Zaltsman
      * @desc: aadd new league

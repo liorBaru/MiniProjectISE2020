@@ -393,13 +393,13 @@ public class System
      * @param
      * @param
      */
-    public Account getIFAAccount(String name)
+    public Refree getRefree(String name)
     {
-        for (IFA ifa:IFAes)
+        for (Refree referee:refrees)
         {
-            if(ifa.getName()==name)
+            if(referee.getName()==name)
             {
-                return ifa.getAccount();
+                return referee;
             }
         }
         return null;
@@ -411,16 +411,89 @@ public class System
      * @param
      * @param
      */
-    public Account getOwnerAccount(String name)
+    public Account getIFAAccount(String userName)
+    {
+        return accountManager.getAccount(userName);
+    }
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public IFA getIFA(String name)
+    {
+        for (IFA ifa:IFAes)
+        {
+            if(ifa.getName()==name)
+            {
+                return ifa;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public Account getOwnerAccount(String userName)
+    {
+        return accountManager.getAccount(userName);
+    }
+
+    public Owner getOwner(String name)
     {
         for (Owner owner:Owners)
         {
             if(owner.getName()==name)
             {
-                return owner.getAccount();
+                return owner;
             }
         }
         return null;
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public Coach getCoach(String name)
+    {
+        for (Coach coach:Coaches)
+        {
+            if(coach.getName()==name)
+            {
+                return coach;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public Team getTeam(String teamName)
+    {
+        for (Team team:teams)
+        {
+            if(team.getName()==teamName)
+            {
+                return team;
+            }
+        }
+        return null;
+    }
+    public Account getTeamAccount(String teamUserName)
+    {
+        return accountManager.getAccount(teamUserName);
     }
     //-----------------------------------------------------------------------------------  add
 

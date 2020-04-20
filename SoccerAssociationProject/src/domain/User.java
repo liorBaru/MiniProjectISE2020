@@ -38,5 +38,6 @@ public abstract class User extends Guest
         return notifications;
     }
 
+    public Account getAccount(){ return account;}
 
 }//class
