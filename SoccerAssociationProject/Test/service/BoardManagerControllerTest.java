@@ -88,7 +88,7 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.5a
      */
     @org.junit.Test
-    public void testRemoveAppointTeamManger() {
+    public void testRemoveAppointTeamMangerA() {
         Account account=new Account("guyLevi","12341234");
         TeamManager teamManager=new TeamManager(account,"guy levi",null,"manger",null,2000,null);
         BoardManagerController bmc = new BoardManagerController();
@@ -96,8 +96,21 @@ public class BoardManagerControllerTest {
         permissionList.add("addPlayer");
         permissionList.add("removePlayer");
         bmc.appointTeamManger(owner,teamManager,permissionList,2000);
+        assertEquals(owner.getTeam(),teamManager.getTeam());
+    }
+    /**
+     * @author matan
+     * acceptance test UC 6.5b
+     */
+    @org.junit.Test(expected = ArithmeticException.class)
+    public void testRemoveAppointTeamMangerB() {
+        Account account=new Account("guyLevi","12341234");
+        TeamManager teamManager=new TeamManager(account,"guy levi",null,"manger",null,2000,null);
+        BoardManagerController bmc = new BoardManagerController();
+        List<String> permissionList=new ArrayList<>();
+        permissionList.add("addPlayer");
+        permissionList.add("removePlayer");
         bmc.removeTeamManger(owner,teamManager);
-        assertNull(teamManager.getTeam());
     }
     /**
      * @author matan
