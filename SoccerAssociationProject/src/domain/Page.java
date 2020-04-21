@@ -1,30 +1,41 @@
 package domain;
 
+
+import java.util.PriorityQueue;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Page extends Subject
 {
 
     private pageable owner;
-    private List<String> messages;
+    private PriorityQueue<String> messages;
     private String pageName;
+    private int pageID;
+    private static int ID;
 
     public Page (pageable owner)
     {
         this.owner=owner;
-        messages = new LinkedList<>();
+        messages = new PriorityQueue<>();
+        pageID=ID;
+        ID++;
     }
 
     public String getPageName() {
         return pageName;
     }
 
-    public void setPageName(String pageName) {
+    public void setPageName(String pageName)
+    {
         this.pageName = pageName;
     }
 
+    /**
+     * gal
+     * add new message to the page and send new notification to all followers
+     * @param data
+     */
     public void addDataToPage(String data)
     {
         messages.add(data);
@@ -33,6 +44,10 @@ public class Page extends Subject
         notifyObservers(notification);
     }
 
+    public int getPageID()
+    {
+        return pageID;
+    }
 
 
 }

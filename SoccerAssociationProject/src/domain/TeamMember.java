@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Date;
+import java.util.List;
 
 
 public abstract class TeamMember extends StaffMember implements pageable
@@ -34,6 +35,11 @@ public abstract class TeamMember extends StaffMember implements pageable
         }
     }
 
+    /**
+     * gal
+     * upload data to page
+     * @param data
+     */
     @Override
     public void uploadDataToPage(String data)
     {
@@ -42,6 +48,19 @@ public abstract class TeamMember extends StaffMember implements pageable
             page.addDataToPage(data);
         }
     }
+
+    public List<String>showPersonalDetails()
+    {
+        List<String> userDetails =super.showPersonalDetails();
+        String pageName = "Page: "+page.getPageName();
+        String contractString = "Contract: "+contract.toString();
+        String salaryString = "Salary: "+ salary;
+        userDetails.add(pageName);
+        userDetails.add(contractString);
+        userDetails.add(salaryString);
+        return userDetails;
+    }
+
 
 
 }

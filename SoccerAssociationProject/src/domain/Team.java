@@ -2,15 +2,13 @@ package domain;
 
 import java.util.*;
 
-public class Team implements pageable {
+public class Team implements pageable
+{
     private String name;
     private Page page;
-
-    private boolean status=true;// the team is active
-
+    private boolean status;
     private List<Owner> owners;
-
-    private List<StaffMember> staffMembers=new ArrayList<>();
+    private List<StaffMember> staffMembers;
     private TreeMap<Integer, Game> games;
     private TreeMap<Season, TeamInfo> seasons;
     private ArrayList<Asset> assetsOfTeam;
@@ -68,6 +66,12 @@ public class Team implements pageable {
         this.name = name;
         this.assetsOfTeam = new ArrayList<>();
         this.financialActions=new HashSet<>();
+    public Team (List<Owner> owners, String name) throws Exception {
+        this.owners=new ArrayList<>();
+        if(owners.isEmpty())
+            throw new Exception("Team must have owner");
+        this.name=name;
+        this.assetsOfTeam =new ArrayList<>();
     }
 
     public void addAsset(Asset asset) {

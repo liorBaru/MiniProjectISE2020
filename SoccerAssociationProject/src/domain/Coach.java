@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Coach extends TeamMember
 {
@@ -14,9 +15,16 @@ public class Coach extends TeamMember
         this.training=training;
     }
 
-    public void uploadDataToPage(String data){}
-
-
+    @Override
+    public List<String> showPersonalDetails()
+    {
+        List<String> userDetails= super.showPersonalDetails();
+        String sJob = "Job: "+job;
+        String sTrining ="Training: "+training;
+        userDetails.add(sTrining);
+        userDetails.add(sJob);
+        return userDetails;
+    }
 
     @Override
     public String getType() {

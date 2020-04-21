@@ -13,8 +13,7 @@ public class IFA extends User
     }
 
     @Override
-    public void removeUser()
-    {
+    public void removeUser() throws Exception {
         system.removeUser(this.name);
     }
 

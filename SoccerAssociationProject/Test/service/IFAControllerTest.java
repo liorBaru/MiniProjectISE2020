@@ -68,7 +68,7 @@ public class IFAControllerTest {
         }
         assertEquals("Wrong input",message);
     }
-/*//
+
     @org.junit.Test
     public void addSeasonToLeagueTest1() { //find successfuly the season of league
         system.addSeason(2019,false);
@@ -96,4 +96,7 @@ public class IFAControllerTest {
     }
 
      */
+
+
+
 }

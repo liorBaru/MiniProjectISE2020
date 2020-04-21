@@ -37,7 +37,15 @@ public class System
         teams = new LinkedList<>();
         systemManagers= new LinkedList<>();
         accountManager = new AccountManager(this);
-        seasons= new LinkedList<>();
+        pages=new LinkedList<>();
+        assetsExists = new LinkedList<>();
+        players = new LinkedList<>();
+        seasons = new LinkedList<>();
+        systemManagers = new LinkedList<>();
+        complaints = new LinkedList<>();
+        closedTeams = new LinkedList<>();
+        refrees = new LinkedList<>();
+
     }
 
 
@@ -120,7 +128,7 @@ public class System
             if(team.getName()==teamName)
             {
                 String details ="Team : "+teamName+" has been closed by the systemManager";
-                Notification notification = new Notification(details,new Date());
+                Notification notification = new Notification(details);
                 team.setClose(notification);
                 closedTeams.add(team);
                 return true;
@@ -210,6 +218,45 @@ public class System
         return null;
     }
 
+    /**
+     * gal
+     * add page to pages and user to page followers
+     * @param pageID
+     * @return
+     * @throws Exception
+     */
+    public boolean followPage(int pageID, Fan user) throws Exception {
+        for (Page page:pages)
+        {
+            if(page.getPageID()==pageID)
+            {
+                page.addFollower(user);
+                user.addPage(page);
+                return true;
+            }
+        }
+        throw new Exception("page dont exists, please try again");
+    }
+
+    /**
+     * gal
+     * remove user from page followers
+     * @param page
+     * @param user
+     * @return
+     */
+    public boolean unFollowPage(Page page, Fan user) throws Exception {
+        if(page!=null && user!=null)
+        {
+           return page.removeFollower(user);
+        }
+        return false;
+    }
+
+    public void addPage(Page page)
+    {
+        pages.add(page);
+    }
     public List<Page> findPage(String pageName)
     {
         List<Page> releventPages = new LinkedList<>();
@@ -224,12 +271,21 @@ public class System
         return releventPages;
     }
 
+    /**
+     * gal
+     * write the complaint to DB
+     * @param complaint
+     */
     public void addComplaint(Complaint complaint)
     {
         if(complaint!=null)
         {
             complaints.add(complaint);
         }
+    }
+
+    public void changePassword(String oldPassword,String newPassword,User user) throws Exception {
+        accountManager.changePassword(oldPassword,newPassword,user);
     }
 
     public List<Complaint> getComplaints()
@@ -247,8 +303,7 @@ public class System
         return false;
     }
 
-    public boolean removeUser(String userName)
-    {
+    public boolean removeUser(String userName) throws Exception {
         Account account = accountManager.getAccount(userName);
         User user = account.getUser();
         if(user!=null)
@@ -281,6 +336,5 @@ public class System
         assetsExists.add(field);
         return field;
     }
-
 
 }

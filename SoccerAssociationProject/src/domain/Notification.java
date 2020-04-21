@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Notification implements Comparable
 {
-    String details;
-    Date date;
+    private String details;
+    private Date date;
 
     public Notification(String details, Date date) {
         this.details = details;
@@ -15,5 +15,12 @@ public class Notification implements Comparable
     @Override
     public int compareTo(Object o) {
         return  ((Notification)o).date.compareTo(date);
+    }
+    public String getDetails() {
+        return details;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }

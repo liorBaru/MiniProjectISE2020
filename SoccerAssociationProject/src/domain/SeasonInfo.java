@@ -11,6 +11,7 @@ public class SeasonInfo
     private TreeMap<Integer, List<Game>> games;
     private List <TeamInfo> table;
 
+
     public SeasonInfo(GameScheduale gameScheduale, LeagueCalcolator leagueCalcolator) {
         this.gameScheduale = gameScheduale;
         games=new TreeMap<>();

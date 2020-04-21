@@ -25,19 +25,22 @@ public class AccountManager
     public Account createAccount(String userName, String password) throws Exception {
         if(userName!=null && password!=null)
         {
-            if(userName.length()>6 && userNames.containsKey(userName)==false)
+            if(userName.length()>6 )
             {
-                if(checkPassword(password))
+                if(userNames.containsKey(userName)==false)
                 {
-                    Account account = new Account(userName,password);
-                    userNames.put(userName,account);
-                    return account;
+                    if(checkPassword(password))
+                    {
+                        Account account = new Account(userName,password);
+                        userNames.put(userName,account);
+                        return account;
+                    }
                 }
-                throw new Exception("Invalid password");
+                throw new Exception("Invalid username, userName already exists please try different username");
             }
-            throw new Exception("Invalid username");
+            throw new Exception("Invalid username, username must be at least 6 characters");
         }
-        return null;
+        throw new Exception("wrong arguments");
     }
 
 
@@ -47,8 +50,7 @@ public class AccountManager
      * @param password
      * @return
      */
-    private boolean checkPassword(String password)
-    {
+    private boolean checkPassword(String password) throws Exception {
         if(password!=null && password.length()>=8)
         {
             boolean digit=false;
@@ -78,9 +80,40 @@ public class AccountManager
                 return true;
             }
         }
-        return false;
+        throw new Exception("Invalid password");
     }
 
+    /**
+     * gal
+     * change user password
+     * @param oldPassword
+     * @param newPassword
+     * @param user
+     * @throws Exception
+     */
+
+
+    public void changePassword(String oldPassword, String newPassword, User user) throws Exception {
+        if(user!=null)
+        {
+            if(user.account.accountVerification(oldPassword))
+            {
+                if(checkPassword(newPassword))
+                {
+                    user.account.setPassword(newPassword);
+                }
+            }
+            throw new Exception("wrong password");
+        }
+    }
+
+
+    /**
+     * gal
+     * gets account from the system by username
+     * @param userName
+     * @return
+     */
 
 
     public Account getAccount(String userName)

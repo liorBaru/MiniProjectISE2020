@@ -4,9 +4,10 @@ public class Guest
 {
     protected System system;
 
-    public void login(String userName, String password) throws Exception
+    public User login(String userName, String password) throws Exception
     {
        User user = system.login(userName,password);
+       return user;
        /// open user Mode
     }
     public void register(String name, String userName, String password) throws Exception
