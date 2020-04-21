@@ -30,6 +30,8 @@ public abstract class BoardMember extends StaffMember
     public BoardMember(Account account, String name)
     {
         super(account,name);
+        appointments = new LinkedList<>();
+        permissions= new TreeMap<>();
 
     }
 
