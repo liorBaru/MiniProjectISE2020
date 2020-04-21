@@ -4,68 +4,109 @@ import domain.*;
 
 import java.util.List;
 
-public class BoardManagerController
-{
-     private BoardMember boardMember;
+public class BoardManagerController {
 
-     public BoardManagerController(BoardMember boardMember)
-     {
-         this.boardMember=boardMember;
-     }
+     public BoardManagerController()
+        {
+        }
 
-     public void addAssets(String name)
-     {
-         boardMember.addAssets(name);
-     }
+    /**
+     * @author matan
+     * @param asset
+     * @param owner
+     * add assets to the owner's team
+     * UC 6.1
+     */
+        public void addAssets(Asset asset, Owner owner) {
+         if(owner==null || asset==null)
+                throw new ArithmeticException("arguments are not valid");
+            owner.addAsset(asset);
+        }
 
-     public boolean addManager(String userName,String name,String password, double salary, List<String> premissions)
-     {
-         if(boardMember instanceof  Owner)
-         {
-             return ((Owner) boardMember).addManagerToTeam(userName,password,name,salary,premissions);
+    /**
+     * @author matan
+     * @param asset
+     * @param owner
+     * remove assets form the owner's team
+     * UC 6.1
+     */
+        public void removeAssets(Asset asset, Owner owner)
+        {
+            if(owner==null || asset==null)
+                throw new ArithmeticException("arguments are not valid");
+           owner.getTeam().removeAsset(asset);
 
-         }
-         return false;
-     }
+        }
 
-     public boolean addOwner(String userName, String password,String name)
-     {
-         if(boardMember instanceof Owner)
-         {
-             return ((Owner) boardMember).addOwnerToTeam(userName,password,name);
-         }
-         return false;
-     }
+    /**
+     * @author matan
+     * @param owner
+     * @param newOwner
+     * appoint a new owner to the time's owner UC 6.2
+     */
+        public void appointmentNewOwner(Owner owner,Owner newOwner){
+            if(newOwner==null ||owner==null)
+                throw new ArithmeticException("arguments are not valid");
+            owner.appointmentNewOwner(newOwner);
+        }
+    /**
+     * @author matan
+     * @param owner
+     * @param removeOwner
+     * remove appoint of a owner to the time's owner UC 6.3
+     */
+    public void removeOwnerAppointment(Owner owner,Owner removeOwner){
+        owner.removeOwner(removeOwner);
+    }
 
-     public boolean closeTeam()
-     {
-         if(boardMember instanceof Owner)
-         {
-             ((Owner)boardMember).closeTeam();
-              return true;
-         }
-         return false;
-     }
+    /**
+     *@author matan
+     * @param owner
+     * @param user
+     * appoint team manger to owner's team UC 6.4
+     */
+    public void appointTeamManger(Owner owner, TeamManager user, List<String>permissionList,double salary ){
+        owner.appointTeamManger(user,permissionList,salary);
 
-     public void uploadDateToPage(String message)
-     {
-         if(!message.isEmpty())
-         {
-             boardMember.updateTeamPage(message);
-         }
-     }
+    }
 
-     public void addPlayer(String playerName)
-     {
-         boardMember.addPlayer(playerName);
-     }
+    /**
+     * @author matan
+     * @param owner
+     * @param teamManager
+     * remove team manger from owner's team UC 6.5
+     */
+    public void removeTeamManger(Owner owner,TeamManager teamManager){
+        owner.removeTeamManger(teamManager);
+    }
 
-     public void removeAssets(Asset asset, User user)
-     {
-         Team ownerTeam=((Owner)user).getTeam();
-         ownerTeam.removeAsset(asset);
-         if(asset instanceof TeamManager || asset instanceof TeamMember )
-             ((StaffMember)asset).setTeam(null);
-     }
+    /**
+     * @author matan
+     * @param owner
+     * Close team's owner UC 6.6
+     */
+        public void closeTeam(Owner owner) throws Exception {
+         owner.closeTeam();
+        }
+    /**
+     * @author matan
+     * @param owner
+     * Open team's owner UC 6.6
+     */
+    public void openTeam(Owner owner) throws Exception {
+        owner.openTeam();
+    }
+
+    /**
+     * @author matan
+     * @param owner
+     * @param financialAction
+     * Report of income or outcome of the owner's team UC 6.7
+     */
+        public void reportIncomeOrOutcome(Owner owner,FinancialAction financialAction){
+            owner.reportIncomeOrOutcome(financialAction);
+        }
+
+
 
 }

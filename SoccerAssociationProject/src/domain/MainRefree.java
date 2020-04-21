@@ -20,6 +20,12 @@ public class MainRefree extends Refree
         super(name,account );
     }
 
+
+    public MainRefree(String name, String training, Account account) {
+
+        super(name, training,account );
+    }
+
     public boolean editGameEvent(){return false;}
     public boolean startGame(){return false;}
     public boolean cancelGame(){return false;}

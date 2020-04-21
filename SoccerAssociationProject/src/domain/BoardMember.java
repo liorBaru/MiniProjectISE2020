@@ -8,8 +8,8 @@ import java.util.TreeMap;
 public abstract class BoardMember extends StaffMember
 {
     protected List<StaffMember> appointments;
-    protected TreeMap<premission,Boolean> permissions;
-
+    protected TreeMap<permission,Boolean> permissions;
+    System system=System.getInstance();
     public BoardMember (Account account, String name, Team team, BoardMember boss)
     {
         super(account,name,team,boss);
@@ -17,17 +17,13 @@ public abstract class BoardMember extends StaffMember
         permissions= new TreeMap<>();
     }
 
-    public BoardMember (Account account, String name)
-    {
-        super(account,name);
-        appointments = new LinkedList<>();
-        permissions= new TreeMap<>();
-    }
 
 
     public BoardMember(Account account, String name, Team team)
     {
       super(account,name,team);
+        appointments = new LinkedList<>();
+        permissions= new TreeMap<>();
     }
 
 
@@ -135,9 +131,13 @@ public abstract class BoardMember extends StaffMember
         this.getTeam().removeAsset(this);
         setTeam(null);
     }
+    public void cleanPermission(){
+        if(permissions!=null)
+            permissions.clear();
+    }
 
 }
 
-enum premission{
+enum permission {
     addPlayer, removePlayer, addCoach, removeCoach, addFinancial, addAsset ,updateTeamPage
 }

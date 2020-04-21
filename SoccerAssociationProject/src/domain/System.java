@@ -19,10 +19,10 @@ public class System
     private List<Complaint> complaints;
     private List<Team> closedTeams;
     private List<Refree> refrees;
-
     private List<IFA> IFAes;
     private List<Coach> Coaches;
     private List<Owner> Owners;
+
 
     private System ()
     {
@@ -30,10 +30,30 @@ public class System
         teams = new LinkedList<>();
         systemManagers= new LinkedList<>();
         accountManager = new AccountManager(this);
+        pages=new LinkedList<>();
+        assetsExists = new LinkedList<>();
+        players = new LinkedList<>();
+        seasons = new LinkedList<>();
+        systemManagers = new LinkedList<>();
+        complaints = new LinkedList<>();
+        closedTeams = new LinkedList<>();
+        refrees = new LinkedList<>();
         IFAes = new LinkedList<>();
         Coaches = new LinkedList<>();
         Owners = new LinkedList<>();
     }
+
+    public List<Season> getSeasons() {
+        return seasons;
+    }
+
+
+    public List<League> getLeagues() {
+        return leagues;
+    }
+
+
+
 
 
     public Account addBoardMember(String userName,String password, String name) {
@@ -42,6 +62,25 @@ public class System
         system.systemManagers.add(systemManager);
         return accountManager.getAccount(userName);
     }
+
+    public void addRefree(Refree refree)
+    {
+        if(refree!=null)
+        {
+            refrees.add(refree);
+        }
+    }
+
+    public Account getTeamMemberAccount(String userName)
+    {
+        return accountManager.getAccount(userName);
+    }
+
+    public Account getRefreeAccount(String userName)
+    {
+        return accountManager.getAccount(userName);
+    }
+
 
 
     public void createNewFanUser(String name, String userName,String password)throws Exception
@@ -96,7 +135,8 @@ public class System
             if(team.getName()==teamName)
             {
                 String details ="Team : "+teamName+" has been closed by the systemManager";
-                Notification notification = new Notification(details);
+                Date date = new Date();
+                Notification notification = new Notification(details,date);
                 team.setClose(notification);
                 closedTeams.add(team);
                 return true;
@@ -173,6 +213,58 @@ public class System
     }
 
 
+
+    public Player getPlayer(String name)
+    {
+        for (Player player:players)
+        {
+            if(player.getName()==name)
+            {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * gal
+     * add page to pages and user to page followers
+     * @param pageID
+     * @return
+     * @throws Exception
+     */
+    public boolean followPage(int pageID, Fan user) throws Exception {
+        for (Page page:pages)
+        {
+            if(page.getPageID()==pageID)
+            {
+                page.addFollower(user);
+                user.addPage(page);
+                return true;
+            }
+        }
+        throw new Exception("page dont exists, please try again");
+    }
+
+    /**
+     * gal
+     * remove user from page followers
+     * @param page
+     * @param user
+     * @return
+     */
+    public boolean unFollowPage(Page page, Fan user) throws Exception {
+        if(page!=null && user!=null)
+        {
+           return page.removeFollower(user);
+        }
+        return false;
+    }
+
+    public void addPage(Page page)
+    {
+        pages.add(page);
+    }
     public List<Page> findPage(String pageName)
     {
         List<Page> releventPages = new LinkedList<>();
@@ -187,12 +279,21 @@ public class System
         return releventPages;
     }
 
+    /**
+     * gal
+     * write the complaint to DB
+     * @param complaint
+     */
     public void addComplaint(Complaint complaint)
     {
         if(complaint!=null)
         {
             complaints.add(complaint);
         }
+    }
+
+    public void changePassword(String oldPassword,String newPassword,User user) throws Exception {
+        accountManager.changePassword(oldPassword,newPassword,user);
     }
 
     public List<Complaint> getComplaints()
@@ -210,8 +311,7 @@ public class System
         return false;
     }
 
-    public boolean removeUser(String userName)
-    {
+    public boolean removeUser(String userName) throws Exception {
         Account account = accountManager.getAccount(userName);
         User user = account.getUser();
         if(user!=null)
@@ -222,6 +322,13 @@ public class System
         return false;
     }
 
+    public void addPlayer(Player player)
+    {
+        if(player!=null)
+        {
+            players.add(player);
+        }
+    }
     public Field addField(String name,Team team)
     {
         for (Asset asset : assetsExists)
@@ -237,266 +344,6 @@ public class System
         assetsExists.add(field);
         return field;
     }
-    //---------------------------------------------------------------------------------------------lior part
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void createNewPlayerUser(String pName, Date birthDay, String password, String userName)throws Exception {
-        Account pAccount = accountManager.createAccount(userName,password);
-        User newUser = new Player(pAccount,pName, birthDay);
-        pAccount.setUser(newUser);
-        system.addPlayer( (Player) newUser);
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void createNewCoachUser(String cName,String password, String userName)throws Exception {
-        Account cAccount = accountManager.createAccount(userName,password);
-        User newUser = new Coach(cAccount,cName);
-        cAccount.setUser(newUser);
-        system.addCoach( (Coach) newUser);
-
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void createNewRefreeUser(String rName,String password, String userName, String type)throws Exception {
-        Account rAccount =system.getRefreeAccount(userName);
-        if(rAccount==null){
-            rAccount = accountManager.createAccount(userName,password);
-        }
-
-        if(type=="Main")
-        {
-            User newUser = new MainRefree(rName,rAccount);
-            rAccount.setUser(newUser);
-            system.addRefree( (Refree) newUser);
-        }
-        else if(type=="Var")
-        {
-            User newUser = new VarRefree(rName,rAccount);
-            rAccount.setUser(newUser);
-            system.addRefree( (Refree)newUser);
-        }
-        else
-        {
-            User newUser = new LineRefree(rName,rAccount);
-            rAccount.setUser(newUser);
-            system.addRefree( (Refree)newUser);
-        }
-    }
-
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void createNewIFAUser(String ifaName, String password, String userName)throws Exception {
-        Account ifaAccount =system.getIFAAccount(userName);
-        if(ifaAccount==null){
-            ifaAccount = accountManager.createAccount(userName,password);
-        }
-        User newUser = new IFA( ifaName,ifaAccount);
-        ifaAccount.setUser(newUser);
-        system.addIFA( (IFA)newUser);
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void createNewOwnerUser(String oName,String password, String userName)throws Exception {
-        Account ownerAccount =system.getOwnerAccount(userName);
-        if(ownerAccount==null){
-            ownerAccount = accountManager.createAccount(userName,password);
-        }
-        User newUser = new Owner( ownerAccount, oName);
-        ownerAccount.setUser(newUser);
-        system.addOwner( (Owner)newUser);
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void addTeam(Owner owner, String Tname)throws Exception {
-        Team tean = new Team(owner, Tname);
-        owner.addTeam(tean);
-        system.addTeam( tean );
-    }
-    //--------------------------------------------------------------------------------- getters
-
-    public List<Season> getSeasons() {
-        return seasons;
-    }
-
-
-    public List<League> getLeagues() {
-        return leagues;
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public Player getPlayer(String name)
-    {
-        for (Player player:players)
-        {
-            if(player.getName()==name)
-            {
-                return player;
-            }
-        }
-        return null;
-    }
-
-
-    public Account getTeamMemberAccount(String userName)
-    {
-        return accountManager.getAccount(userName);
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public Account getRefreeAccount(String userName)
-    {
-        return accountManager.getAccount(userName);
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public Refree getRefree(String name)
-    {
-        for (Refree referee:refrees)
-        {
-            if(referee.getName()==name)
-            {
-                return referee;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public Account getIFAAccount(String userName)
-    {
-        return accountManager.getAccount(userName);
-    }
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public IFA getIFA(String name)
-    {
-        for (IFA ifa:IFAes)
-        {
-            if(ifa.getName()==name)
-            {
-                return ifa;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public Account getOwnerAccount(String userName)
-    {
-        return accountManager.getAccount(userName);
-    }
-
-    public Owner getOwner(String name)
-    {
-        for (Owner owner:Owners)
-        {
-            if(owner.getName()==name)
-            {
-                return owner;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public Coach getCoach(String name)
-    {
-        for (Coach coach:Coaches)
-        {
-            if(coach.getName()==name)
-            {
-                return coach;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public Team getTeam(String teamName)
-    {
-        for (Team team:teams)
-        {
-            if(team.getName()==teamName)
-            {
-                return team;
-            }
-        }
-        return null;
-    }
-    public Account getTeamAccount(String teamUserName)
-    {
-        return accountManager.getAccount(teamUserName);
-    }
-    //-----------------------------------------------------------------------------------  add
-
     /**
      * @author: Lior Baruchovich
      * @desc:
@@ -580,4 +427,6 @@ public class System
             teams.add(team);
         }
     }
-}//class
+
+
+}

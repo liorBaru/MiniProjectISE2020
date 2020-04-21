@@ -35,6 +35,12 @@ public abstract class Refree extends User
 
     }
 
+    public List<Game> showGames()
+    {return null;}
+    public boolean addEventToGame()
+    {return false;}
+
+
     public List<Game> showGames(){return null;}
     public boolean addEventToGame(){return false;}
 

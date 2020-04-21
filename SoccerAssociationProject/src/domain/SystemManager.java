@@ -15,14 +15,18 @@ public class SystemManager extends User
         return system.getComplaints();
     }
 
-    public boolean removeUserFromSystem (String userName)
-    {
+    public boolean removeUserFromSystem (String userName) throws Exception {
         return system.removeUser(userName);
     }
 
     public void removeUser()
     {
         // throw exception
+    }
+
+    public SystemManager (String userName, String password, String name)
+    {
+        super(userName,password,name);
     }
 
     public boolean closeTeam (String teamName)
@@ -40,16 +44,7 @@ public class SystemManager extends User
         }
     }
 
-    @Override
-    public String showPersonalDetails() {
-       int a;
-        return null;
-    }
 
-    @Override
-    public void updateDetailes() {
-
-    }
 
 
 

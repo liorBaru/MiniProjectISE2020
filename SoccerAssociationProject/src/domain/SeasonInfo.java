@@ -30,4 +30,13 @@ public class SeasonInfo
     }
 
 
+
+    public void setGameScheduale(GameScheduale gameScheduale) {
+        this.gameScheduale = gameScheduale;
+    }
+
+    public void setLeagueCalcolator(LeagueCalcolator leagueCalcolator) {
+        this.leagueCalcolator = leagueCalcolator;
+    }
+
 }

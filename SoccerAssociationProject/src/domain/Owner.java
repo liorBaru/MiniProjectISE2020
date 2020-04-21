@@ -1,133 +1,121 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Owner extends BoardMember
 {
         private StaffMember anotherJob;
-        private List<Team> OwnerTeams;
 
-        public Owner(Account account, String name, Team team, BoardMember boss)
-        {
-                super(account, name,team, boss);
-                setPremissions();
-                OwnerTeams = new LinkedList<>();
-        }
-
-        public Owner(Account account, String name, Team team, BoardMember boss, StaffMember user)
-        {
-                super(account, name,team, boss);
-                this.anotherJob = user;
-                setPremissions();
-                OwnerTeams = new LinkedList<>();
-        }
-
-        public Owner(Account account, String name)
-        {
-                super(account, name);
-                setPremissions();
-                OwnerTeams = new LinkedList<>();
-        }
-
-        public void addTeam(Team team){
-                OwnerTeams.add(team);
-        }
-
-
-        private void setPremissions()
-        {
-                for (premission premission:premission.values())
-                {
-                        permissions.put(premission,true);
-                }
-        }
-
-        public void closeTeam()
-        {
-                String  details = "the team, "+name+", was closed by the owner";
-                Notification closeNotification = new Notification(details);
-                team.setClose(closeNotification);
-                system.closeTeam(closeNotification);
+        public Owner(Account account, String name, String job, Team team, BoardMember boss, StaffMember anotherJob) {
+                super(account,name,team,boss);
+                this.anotherJob = anotherJob;
         }
 
         public void addAnotherJob(StaffMember newRole)
         {
-                if(anotherJob!=null && (anotherJob instanceof Owner)==false)
-                {
-                        anotherJob=newRole;
-                }
+                anotherJob=newRole;
         }
 
         public String getType(){
                 return "Owner";
         }
 
-        @Override
-        public void removeTeam(Team team)
-        {
-                if(this.team.getName()==team.getName() && this.boss!=null)
-                {
-                        super.removeTeam(team);
-                }
-                else
-                {
-                        try
-                        {
-                                throw new Exception("The team must have Owner ");
-                        }
-                        catch (Exception e)
-                        {
-                                e.printStackTrace();
-                        }
-                }
+        /**
+         * @author matan
+         * @param asset
+         * Add asset to the owner's team
+         */
+        public void addAsset(Asset asset){
+                this.getTeam().addAsset(asset);
+                asset.setTeam(this.getTeam());
         }
 
-        public boolean addManagerToTeam(String userName, String password ,String name, double salary , List<String> premissions)
-        {
-                Account account = system.addBoardMember(userName,password, name);
-                if(account!=null && account.getUser()==null)
-                {
-                        BoardMember manger = new TeamManager(account,name,team,this,salary,premissions);
-                        account.setUser(manger);
-                        this.appointments.add(manger);
-                        team.addAsset(manger);
-                        team.addStaffMember(manger);
-                        return true;
+        /**
+         * @author matan
+         * @param newOwner
+         * Add a new owner to the owner's(call tha action) team
+         */
+        public void appointmentNewOwner(Owner newOwner){
+                if(newOwner.team!=null){
+                        throw new ArithmeticException("The owner already has a team");
                 }
-                return false;
+                team.getOwners().add(newOwner);
+                this.appointments.add(newOwner);
+                newOwner.team=this.team;
         }
 
-        public boolean addOwnerToTeam(String userName,String passowrd ,String name)
-        {
-                Account account = system.addBoardMember(userName , passowrd , name);
-                if(account!=null)
-                {
-                        BoardMember owner;
-                        if(account.getUser()==null)
-                        {
-                                owner= new Owner(account,name,team,this);
-                                account.setUser(owner);
-                        }
-                        else if(account.getUser() instanceof Player || account.getUser() instanceof Coach || account.getUser() instanceof TeamManager)
-                        {
-                                owner = new Owner(account,name,team,this,(StaffMember)account.getUser());
-                                account.setUser(owner);
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                        this.appointments.add(owner);
-                        team.addStaffMember(owner);
-                        team.addAsset(owner);
-                        return true;
+        /**
+         * @author matan
+         * @param removeOwner
+         * remove owner that the ask for the action appoint
+         * add remove all the owner appoints
+         */
+        public void removeOwner(Owner removeOwner){
+                if(this.appointments.contains(removeOwner)){
+                        this.appointments.remove(removeOwner);
+                        team.getOwners().removeAll(removeOwner.appointments);
+                        team.getOwners().remove(removeOwner);
+                        team.getStaffMembers().removeAll(appointments);
                 }
-                return false;
+                else {
+                        throw new ArithmeticException("This is not your appointment");
+                }
+        }
+        /**
+         * @author matan
+         * @param teamManager
+         * remove  team manger from the owner's team.
+         */
+        public void removeTeamManger(TeamManager teamManager){
+                if(this.appointments.contains(teamManager)) {
+                        team.removeTeamManger(teamManager);
+                        teamManager.setTeam(null);
+                        teamManager.cleanPermission();
+                }
+                else {
+                        throw new ArithmeticException("This is not your appointment");
+                }
+
         }
 
-        public Account getAccount(){
-                return account;
+        /**
+         * @author matan
+         * set the team status to inActive
+         */
+        public void closeTeam() throws Exception {
+                if(team==null)
+                        throw new ArithmeticException("arguments are not valid");
+                this.team.setStatus(false);
+                ///TODO
         }
-}//class
+        /**
+         * @author matan
+         * @param teamManager
+         * @param salary
+         * @param permissionList
+         * appoint new team manger to the owner's team with permission and salary as we given
+         */
+        public void appointTeamManger(TeamManager teamManager,List<String> permissionList,double salary) {
+                appointments.add(teamManager);
+                teamManager.setPermissions(permissionList);
+                teamManager.setSalary(salary);
+                this.team.addStaffMember(teamManager);
+
+        }
+        /**
+         * @author matan
+         * @param financialAction
+         * add financial Action to owner's team
+         */
+        public void reportIncomeOrOutcome(FinancialAction financialAction){
+                team.addFinancialAction(financialAction);
+        }
+
+        public void openTeam() throws Exception {
+                if(team==null)
+                        throw new ArithmeticException("arguments are not valid");
+                this.team.setStatus(true);
+
+        }
+}

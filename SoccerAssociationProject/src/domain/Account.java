@@ -22,6 +22,25 @@ public class Account
      * @param password
      * @return
      */
+    public String getUserName()
+    {
+        return this.userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
+     * gal
+     * check if the password is correct
+     * @param password
+     * @return
+     */
     public boolean accountVerification(String password)
     {
         if(password!=null && password==this.password )
@@ -31,6 +50,11 @@ public class Account
         return false;
     }
 
+    /**
+     * gal
+     * gets the user by account
+     * @return
+     */
     public User getUser() {
         return user;
     }

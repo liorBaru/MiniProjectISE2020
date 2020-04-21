@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Date;
+import java.util.List;
 
 
 public abstract class TeamMember extends StaffMember implements pageable
@@ -12,19 +13,6 @@ public abstract class TeamMember extends StaffMember implements pageable
     public TeamMember(Account account, String name,Team team, Date contract, double salary)
     {
         super(account, name, team);
-        this.contract = contract;
-        this.salary = salary;
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public TeamMember(Account account, String name)
-    {
-        super(account, name);
         this.contract = contract;
         this.salary = salary;
     }
@@ -47,6 +35,11 @@ public abstract class TeamMember extends StaffMember implements pageable
         }
     }
 
+    /**
+     * gal
+     * upload data to page
+     * @param data
+     */
     @Override
     public void uploadDataToPage(String data)
     {
@@ -55,7 +48,37 @@ public abstract class TeamMember extends StaffMember implements pageable
             page.addDataToPage(data);
         }
     }
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public TeamMember(Account account, String name)
+    {
+        super(account, name);
+        this.contract = contract;
+        this.salary = salary;
+    }
+    public void setTeam(Team team, Date contract, double salary)
+    {
+        this.team=team;
+        this.contract=contract;
+        this.salary=salary;
+    }
+
+    public List<String>showPersonalDetails()
+    {
+        List<String> userDetails =super.showPersonalDetails();
+        String pageName = "Page: "+page.getPageName();
+        String contractString = "Contract: "+contract.toString();
+        String salaryString = "Salary: "+ salary;
+        userDetails.add(pageName);
+        userDetails.add(contractString);
+        userDetails.add(salaryString);
+        return userDetails;
+    }
+
 
 
 }
-

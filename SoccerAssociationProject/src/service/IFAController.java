@@ -5,13 +5,8 @@ import domain.System;
 import java.util.InputMismatchException;
 
 
-import domain.*;
-import domain.System;
-import java.util.Date;
-
 public class IFAController {
-
-    System system;
+    System system=System.getInstance();
 
     /**
      * @author: David Zaltsman
@@ -48,7 +43,7 @@ public class IFAController {
      * @param league - the league that we want to add her season
      * @param season - the season that we want to add
      */
-    public void newSeason(League league, Season season) {
+    public void addSeasonToLeague(League league, Season season) {
         //TODO:
         // 1.add to U.C 9.2.2 the funcionallity of adding seasonInfo
         try {
@@ -57,11 +52,20 @@ public class IFAController {
             throw new InputMismatchException("Wrong input");
         }
     }
-    //---------------------------------------------------------------------------------------------------lior part
+
+    public void updatePolicyToLeague(League league, Season season , LeagueCalcolator leaguePolicy) {
+        //TODO:
+        // 1.add to U.C 9.5 paramater to function : Season season , LeagueCalculator leaguePolicy
+        try {
+            league.updatePolicyToLeague(league, season,leaguePolicy);
+        } catch (InputMismatchException e) {
+            throw new InputMismatchException("Wrong input");
+        }
+    }
     /**
-     * @author: Lior Baruchovich
+         * @author: Lior Baruchovich
      * @desc:
-     * @param
+            * @param
      * @param
      */
     public boolean addPlayer(IFA ifa, String pName, Date birthDay,String password, String userName) throws Exception{
@@ -146,7 +150,7 @@ public class IFAController {
      */
     public boolean addTeam(IFA ifaManager, String teamName, Owner owner) throws Exception{
         if(ifaManager!=null && teamName!=null  && owner!=null){
-                ifaManager.addTeam( owner, teamName);
+            ifaManager.addTeam( owner, teamName);
         }
         return false;
     }
@@ -165,4 +169,5 @@ public class IFAController {
         }
         return false;
     }
-}//class
+
+}

@@ -6,6 +6,7 @@ import java.util.List;
 public class IFA extends User
 
 {
+    private static List<Refree> refrees;
 
     public IFA(String name, Account account)
     {
@@ -13,8 +14,7 @@ public class IFA extends User
     }
 
     @Override
-    public void removeUser()
-    {
+    public void removeUser() throws Exception {
         system.removeUser(this.name);
     }
 
@@ -52,8 +52,6 @@ public class IFA extends User
         }
         return false;
     }
-    //------------------------------------------------------------------------------------------------lior part
-
     /**
      * @author: Lior Baruchovich
      * @desc:
@@ -118,4 +116,4 @@ public class IFA extends User
     public Account getAccount(){
         return account;
     }
-}//class
+}

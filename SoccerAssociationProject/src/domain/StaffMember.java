@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public abstract class StaffMember extends User implements Asset
 {
     protected Team team;
@@ -13,18 +15,6 @@ public abstract class StaffMember extends User implements Asset
     }
 
     public StaffMember (Account account, String name, Team team)
-    {
-        super(name,account);
-        this.team=team;
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public StaffMember (Account account, String name)
     {
         super(name,account);
         this.team=team;
@@ -48,13 +38,14 @@ public abstract class StaffMember extends User implements Asset
     public Team getTeam() {
         return team;
     }
-        @Override
-    public String showPersonalDetails() {
-        return null;
-    }
+
 
     @Override
-    public void updateDetailes() {
-
+    public List<String> showPersonalDetails()
+    {
+        List<String> userDetails= super.showPersonalDetails();
+        String teamString = "Team: "+ team.getName();
+        userDetails.add(teamString);
+        return userDetails;
     }
 }
