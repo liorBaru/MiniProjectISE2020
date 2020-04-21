@@ -37,6 +37,7 @@ public class System
         teams = new LinkedList<>();
         systemManagers= new LinkedList<>();
         accountManager = new AccountManager(this);
+        seasons= new LinkedList<>();
     }
 
 
@@ -280,5 +281,6 @@ public class System
         assetsExists.add(field);
         return field;
     }
+
 
 }
