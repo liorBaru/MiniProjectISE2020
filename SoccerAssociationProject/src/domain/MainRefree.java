@@ -5,11 +5,6 @@ import java.util.Date;
 public class MainRefree extends Refree
 {
 
-    public MainRefree(String name, String training, Account account) {
-
-        super(name, training,account );
-    }
-
     /**
      * @author: Lior Baruchovich
      * @desc:
@@ -21,8 +16,8 @@ public class MainRefree extends Refree
     }
 
 
-    public MainRefree(String name, String training, Account account) {
-
+    public MainRefree(String name, String training, Account account)
+    {
         super(name, training,account );
     }
 

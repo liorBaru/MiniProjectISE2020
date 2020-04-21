@@ -2,6 +2,7 @@ package service;
 import domain.*;
 import domain.System;
 
+import java.util.Date;
 import java.util.InputMismatchException;
 
 
@@ -68,7 +69,7 @@ public class IFAController {
             * @param
      * @param
      */
-    public boolean addPlayer(IFA ifa, String pName, Date birthDay,String password, String userName) throws Exception{
+    public boolean addPlayer(IFA ifa, String pName, Date birthDay, String password, String userName) throws Exception{
         if(ifa!=null && pName!=null && birthDay!=null && password!=null && userName!=null){
             if( isPassAndUserNIsLegal(password, userName) )
             {

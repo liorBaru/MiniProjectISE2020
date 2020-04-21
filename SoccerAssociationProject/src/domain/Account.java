@@ -22,17 +22,10 @@ public class Account
      * @param password
      * @return
      */
-    public String getUserName()
-    {
-        return this.userName;
-    }
+
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     /**

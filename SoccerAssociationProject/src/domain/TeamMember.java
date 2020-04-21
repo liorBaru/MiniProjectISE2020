@@ -16,12 +16,7 @@ public abstract class TeamMember extends StaffMember implements pageable
         this.contract = contract;
         this.salary = salary;
     }
-    public void setTeam(Team team, Date contract, double salary)
-    {
-        this.team=team;
-        this.contract=contract;
-        this.salary=salary;
-    }
+
 
 
     @Override
@@ -56,9 +51,7 @@ public abstract class TeamMember extends StaffMember implements pageable
      */
     public TeamMember(Account account, String name)
     {
-        super(account, name);
-        this.contract = contract;
-        this.salary = salary;
+        super(account,name);
     }
     public void setTeam(Team team, Date contract, double salary)
     {

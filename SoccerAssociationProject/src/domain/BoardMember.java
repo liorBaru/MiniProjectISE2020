@@ -26,7 +26,12 @@ public abstract class BoardMember extends StaffMember
         permissions= new TreeMap<>();
     }
 
+    //lior
+    public BoardMember(Account account, String name)
+    {
+        super(account,name);
 
+    }
 
 
 

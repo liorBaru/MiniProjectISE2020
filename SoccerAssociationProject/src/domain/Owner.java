@@ -6,12 +6,17 @@ import java.util.List;
 public class Owner extends BoardMember
 {
         private StaffMember anotherJob;
+        private List<Team> OwnerTeams;
 
         public Owner(Account account, String name, String job, Team team, BoardMember boss, StaffMember anotherJob) {
                 super(account,name,team,boss);
                 this.anotherJob = anotherJob;
         }
 
+        //lior
+        public Owner(Account account, String name) {
+                super(account,name);
+        }
         public void addAnotherJob(StaffMember newRole)
         {
                 anotherJob=newRole;
@@ -118,4 +123,10 @@ public class Owner extends BoardMember
                 this.team.setStatus(true);
 
         }
+        public void addTeam(Team team){
+                if(team !=null){
+                        OwnerTeams.add(team);
+                }
+        }
+
 }
