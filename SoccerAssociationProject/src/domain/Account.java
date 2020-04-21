@@ -12,6 +12,15 @@ public class Account
         this.password=password;
     }
 
+    public String getUserName()
+    {
+        return this.userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -31,7 +40,13 @@ public class Account
         return false;
     }
 
-    public User getUser() {
+    /**
+     * gal
+     * gets the user by account
+     * @return
+     */
+    public User getUser()
+    {
         return user;
     }
 
