@@ -14,16 +14,6 @@ public class System
     private List<Asset> assetsExists;
     private List<Player> players;
     private List<Season> seasons;
-
-    public List<Season> getSeasons() {
-        return seasons;
-    }
-
-
-    public List<League> getLeagues() {
-        return leagues;
-    }
-
     private List<SystemManager> systemManagers;
     private AccountManager accountManager;
     private List<Complaint> complaints;
@@ -45,8 +35,19 @@ public class System
         complaints = new LinkedList<>();
         closedTeams = new LinkedList<>();
         refrees = new LinkedList<>();
-
     }
+
+    public List<Season> getSeasons() {
+        return seasons;
+    }
+
+
+    public List<League> getLeagues() {
+        return leagues;
+    }
+
+
+
 
 
     public Account addBoardMember(String userName,String password, String name) {
@@ -128,7 +129,8 @@ public class System
             if(team.getName()==teamName)
             {
                 String details ="Team : "+teamName+" has been closed by the systemManager";
-                Notification notification = new Notification(details);
+                Date date = new Date();
+                Notification notification = new Notification(details,date);
                 team.setClose(notification);
                 closedTeams.add(team);
                 return true;

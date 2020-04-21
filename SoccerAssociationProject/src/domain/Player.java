@@ -13,7 +13,7 @@ public class Player extends TeamMember
     public Player(Account account,String name,Team team ,Date birthDay,double salary)
     {
         super(account,name,team,birthDay,salary);
-        this.page = new Page(this,this.name);
+        this.page = new Page(this);
     }
 
 

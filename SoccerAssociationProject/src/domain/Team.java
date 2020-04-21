@@ -13,6 +13,22 @@ public class Team implements pageable
     private TreeMap<Season, TeamInfo> seasons;
     private ArrayList<Asset> assetsOfTeam;
     private Set<FinancialAction> financialActions;
+
+
+    public Team(List<Owner> owners, String name)
+    {
+        this.owners = owners;
+        this.name = name;
+        page = new Page(this);
+        status=true;
+        staffMembers=new LinkedList<>();
+        games= new TreeMap<>();
+        seasons=new TreeMap<>();
+        this.assetsOfTeam = new ArrayList<>();
+        this.financialActions=new HashSet<>();
+
+    }
+
     public List<StaffMember> getStaffMembers() {
         return staffMembers;
     }
@@ -61,18 +77,7 @@ public class Team implements pageable
         return financialActions;
     }
 
-    public Team(List<Owner> owners, String name) {
-        this.owners = owners;
-        this.name = name;
-        this.assetsOfTeam = new ArrayList<>();
-        this.financialActions=new HashSet<>();
-    public Team (List<Owner> owners, String name) throws Exception {
-        this.owners=new ArrayList<>();
-        if(owners.isEmpty())
-            throw new Exception("Team must have owner");
-        this.name=name;
-        this.assetsOfTeam =new ArrayList<>();
-    }
+
 
     public void addAsset(Asset asset) {
         if (asset == null || status == false)
