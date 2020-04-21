@@ -1,7 +1,5 @@
 package domain;
 
-import com.sun.org.apache.xerces.internal.impl.xs.util.LSInputListImpl;
-
 import java.util.LinkedList;
 import java.util.List;
 

@@ -65,9 +65,8 @@ public abstract class User extends Guest
         }
     }
 
-    public boolean updatePassword(String oldPassword, String newPassword) throws Exception {
+    public void updatePassword(String oldPassword, String newPassword) throws Exception {
         system.changePassword(oldPassword,newPassword,this);
-        return false;
     }
 
 

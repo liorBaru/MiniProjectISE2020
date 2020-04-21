@@ -4,6 +4,11 @@ public class Guest
 {
     protected System system;
 
+    public Guest ()
+    {
+        system=System.getInstance();
+    }
+
     public User login(String userName, String password) throws Exception
     {
        User user = system.login(userName,password);

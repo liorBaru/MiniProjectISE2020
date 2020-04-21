@@ -77,11 +77,12 @@ public class System
 
 
 
-    public void createNewFanUser(String name, String userName,String password)throws Exception
+    public User createNewFanUser(String name, String userName,String password)throws Exception
     {
          Account account = accountManager.createAccount(userName,password);
          User newUser = new Fan(name,account);
          account.setUser(newUser);
+         return newUser;
     }
 
     public User login (String username, String password) throws Exception

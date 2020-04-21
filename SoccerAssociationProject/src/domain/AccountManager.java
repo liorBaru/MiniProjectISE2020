@@ -7,7 +7,6 @@ public class AccountManager
     private TreeMap <String, Account> userNames;
     private System system;
 
-
     public AccountManager (System system)
     {
         this.system=system;
@@ -25,7 +24,7 @@ public class AccountManager
     public Account createAccount(String userName, String password) throws Exception {
         if(userName!=null && password!=null)
         {
-            if(userName.length()>6 )
+            if(userName.length()>=6 )
             {
                 if(userNames.containsKey(userName)==false)
                 {
@@ -101,6 +100,7 @@ public class AccountManager
                 if(checkPassword(newPassword))
                 {
                     user.account.setPassword(newPassword);
+                    return;
                 }
             }
             throw new Exception("wrong password");
