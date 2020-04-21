@@ -13,6 +13,11 @@ public class System
     private List<Asset> assetsExists;
     private List<Player> players;
     private List<Season> seasons;
+    private List<SystemManager> systemManagers;
+    private AccountManager accountManager;
+    private List<Complaint> complaints;
+    private List<Team> closedTeams;
+    private List<Refree> refrees;
 
     public List<Season> getSeasons() {
         return seasons;
@@ -23,11 +28,7 @@ public class System
         return leagues;
     }
 
-    private List<SystemManager> systemManagers;
-    private AccountManager accountManager;
-    private List<Complaint> complaints;
-    private List<Team> closedTeams;
-    private List<Refree> refrees;
+
 
 
     private System ()
@@ -36,6 +37,15 @@ public class System
         teams = new LinkedList<>();
         systemManagers= new LinkedList<>();
         accountManager = new AccountManager(this);
+        pages=new LinkedList<>();
+        assetsExists = new LinkedList<>();
+        players = new LinkedList<>();
+        seasons = new LinkedList<>();
+        systemManagers = new LinkedList<>();
+        complaints = new LinkedList<>();
+        closedTeams = new LinkedList<>();
+        refrees = new LinkedList<>();
+
     }
 
 
@@ -208,6 +218,45 @@ public class System
         return null;
     }
 
+    /**
+     * gal
+     * add page to pages and user to page followers
+     * @param pageID
+     * @return
+     * @throws Exception
+     */
+    public boolean followPage(int pageID, Fan user) throws Exception {
+        for (Page page:pages)
+        {
+            if(page.getPageID()==pageID)
+            {
+                page.addFollower(user);
+                user.addPage(page);
+                return true;
+            }
+        }
+        throw new Exception("page dont exists, please try again");
+    }
+
+    /**
+     * gal
+     * remove user from page followers
+     * @param page
+     * @param user
+     * @return
+     */
+    public boolean unFollowPage(Page page, Fan user) throws Exception {
+        if(page!=null && user!=null)
+        {
+           return page.removeFollower(user);
+        }
+        return false;
+    }
+
+    public void addPage(Page page)
+    {
+        pages.add(page);
+    }
     public List<Page> findPage(String pageName)
     {
         List<Page> releventPages = new LinkedList<>();
@@ -222,12 +271,21 @@ public class System
         return releventPages;
     }
 
+    /**
+     * gal
+     * write the complaint to DB
+     * @param complaint
+     */
     public void addComplaint(Complaint complaint)
     {
         if(complaint!=null)
         {
             complaints.add(complaint);
         }
+    }
+
+    public void changePassword(String oldPassword,String newPassword,User user) throws Exception {
+        accountManager.changePassword(oldPassword,newPassword,user);
     }
 
     public List<Complaint> getComplaints()
@@ -245,8 +303,7 @@ public class System
         return false;
     }
 
-    public boolean removeUser(String userName)
-    {
+    public boolean removeUser(String userName) throws Exception {
         Account account = accountManager.getAccount(userName);
         User user = account.getUser();
         if(user!=null)

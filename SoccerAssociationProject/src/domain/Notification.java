@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Notification
 {
-    String details;
-    Date date;
+    private String details;
+    private Date date;
 
 
 
@@ -15,5 +15,11 @@ public class Notification
         date = new Date();
     }
 
+    public String getDetails() {
+        return details;
+    }
 
+    public Date getDate() {
+        return date;
+    }
 }

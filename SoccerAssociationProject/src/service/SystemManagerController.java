@@ -14,7 +14,7 @@ public class SystemManagerController
         return false;
     }
 
-    public boolean removeUser(String userName)
+    public boolean removeUser(String userName) throws Exception
     {
         return systemManager.removeUserFromSystem(userName);
 

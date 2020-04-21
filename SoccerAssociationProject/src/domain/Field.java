@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Field implements Asset {
 
     private String fieldName;
-    ArrayList<Team> teams;
+    private ArrayList<Team> teams;
 
     @Override
     public String getName()

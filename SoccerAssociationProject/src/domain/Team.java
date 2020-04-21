@@ -34,8 +34,10 @@ public class Team implements pageable
         return false;
     }
 
-    public Team (List<Owner> owners, String name){
-        owners=new ArrayList<>();
+    public Team (List<Owner> owners, String name) throws Exception {
+        this.owners=new ArrayList<>();
+        if(owners.isEmpty())
+            throw new Exception("Team must have owner");
         this.name=name;
         this.assetsOfTeam =new ArrayList<>();
     }

@@ -8,7 +8,7 @@ public class Game extends Subject
     private Team host;
     private GameEventLog eventsLog;
     private SeasonInfo league;
-    private String field;
+    private Field field;
     private Date startDate;
     private Date finishDate;
     private int hScore;
@@ -22,11 +22,10 @@ public class Game extends Subject
 
 
     @Override
-    public boolean addFollwer(User user)
-    {
+    public boolean addFollower(User user) throws Exception {
         if(finishDate==null)
         {
-            return super.addFollwer(user);
+            return super.addFollower(user);
         }
         return false;
     }
