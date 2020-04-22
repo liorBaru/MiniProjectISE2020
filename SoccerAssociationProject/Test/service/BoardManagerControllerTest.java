@@ -22,7 +22,7 @@ public class BoardManagerControllerTest {
         team=new Team(ownerList,"M.C");
         Team team=new Team(ownerList,"Hapoal Tel-aviv");
         owner.setTeam(team);
-        coach = new Coach(new Account("galcoach","cDasj3454"),"coach","coach");
+        coach = new Coach(new Account("galcoach","cDasj3454"),"coach");
         fan = new Fan("fan",new Account("gggggg","gfgdagad3"));
     }
 

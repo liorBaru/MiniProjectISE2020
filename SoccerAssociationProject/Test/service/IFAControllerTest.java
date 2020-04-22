@@ -110,13 +110,13 @@ public class IFAControllerTest {
         Account lAcoount = new Account("liorb", "33097377");// userName, String password
         IFA ifa = new IFA("lior" ,lAcoount);  //String name, Account account
 
-        String cname = "ori";
-        String password ="Ori330973845";
-        String userName ="OriLonstein";
+        String cname = "lior";
+        String password ="Lior330973845";
+        String userName ="liorLonstein";
         ifa.addCoach(cname,password, userName);
-        assertEquals("ori",system.getCoach("ori").getName());
-        String userName2 = system.getCoach("ori").getAccount().getUserName();
-        assertEquals("OriLonstein",userName2);
+        assertEquals("lior",system.getCoach("lior").getName());
+        String userName2 = system.getCoach("lior").getAccount().getUserName();
+        assertEquals("liorLonstein",userName2);
     }
 
     @org.junit.Test

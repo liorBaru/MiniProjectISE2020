@@ -16,6 +16,9 @@ public class Owner extends BoardMember
                 this.anotherJob = anotherJob;
                 setPermissions();
         }
+        public Owner(Account account,String name){
+                super(account,name,null);
+        }
 
         /**
          * @author matan

@@ -62,22 +62,6 @@ public abstract class TeamMember extends StaffMember implements pageable
             page.addDataToPage(data);
         }
     }
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public TeamMember(Account account, String name)
-    {
-        super(account,name);
-    }
-    public void setTeam(Team team, Date contract, double salary)
-    {
-        this.team=team;
-        this.contract=contract;
-        this.salary=salary;
-    }
 
     public List<String>showPersonalDetails()
     {

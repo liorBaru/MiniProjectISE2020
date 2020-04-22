@@ -9,10 +9,10 @@ public class Coach extends TeamMember
     private String training;
     private String job;
 
-    public Coach (Account account, String name, String training)
+    public Coach (Account account, String name)
     {
         super(account,name);
-        this.training=training;
+
     }
 
     /**

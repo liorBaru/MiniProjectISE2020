@@ -23,7 +23,7 @@ public class FanControllerTest {
         ownerList.add(owner);
         Team team=new Team(ownerList,"M.C");
         owner.setTeam(team);
-        coach = new Coach(new Account("admin","12341234"),"boss","training");
+        coach = new Coach(new Account("admin","12341234"),"boss");
         userFan = new Fan("gal",new Account("galbo","gAlb1234"));
    }
 
