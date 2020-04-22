@@ -19,6 +19,10 @@ public abstract class StaffMember extends User implements Asset
         super(name,account);
         this.team=team;
     }
+    public StaffMember(Account account, String name)
+    {
+        super(name,account);
+    }
 
     public StaffMember(Account account, String name)
     {

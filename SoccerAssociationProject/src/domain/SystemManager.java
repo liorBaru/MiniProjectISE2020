@@ -5,10 +5,7 @@ import java.util.List;
 public class SystemManager extends User
 {
 
-    public SystemManager (String name,Account account)
-    {
-        super(name,account);
-    }
+
 
     public List<Complaint> watchComplaints()
     {
@@ -31,6 +28,11 @@ public class SystemManager extends User
     public void removeUser()
     {
         //
+    }
+
+    public SystemManager (String userName,Account account)
+    {
+        super(userName,account);
     }
 
     public boolean closeTeam (String teamName)

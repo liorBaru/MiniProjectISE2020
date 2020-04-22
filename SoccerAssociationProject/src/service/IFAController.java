@@ -2,6 +2,7 @@ package service;
 import domain.*;
 import domain.System;
 
+import java.util.Date;
 import java.util.InputMismatchException;
 
 
@@ -63,4 +64,112 @@ public class IFAController
             throw new InputMismatchException("Wrong input");
         }
     }
+    /**
+         * @author: Lior Baruchovich
+     * @desc:
+            * @param
+     * @param
+     */
+    public boolean addPlayer(IFA ifa, String pName, Date birthDay, String password, String userName) throws Exception{
+        if(ifa!=null && pName!=null && birthDay!=null && password!=null && userName!=null){
+            if( isPassAndUserNIsLegal(password, userName) )
+            {
+                ifa.addPlayer(pName, birthDay,password, userName);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public boolean addCoach(IFA ifa, String cName,String password, String userName) throws Exception{
+        if(ifa!=null && cName!=null && password!=null && userName!=null){
+            if( isPassAndUserNIsLegal(password, userName) )
+            {
+                ifa.addCoach(cName,password, userName);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public boolean addReferee(IFA ifa, String rName,String password, String userName, String type) throws Exception{
+        if(ifa!=null && rName!=null  && password!=null && userName!=null && type!=null){
+            if( isPassAndUserNIsLegal(password, userName) )
+            {
+                ifa.addReferee(rName,password, userName, type);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public boolean addIFA(IFA ifaManager, String ifaName, String password, String userName) throws Exception{
+        if(ifaManager!=null && ifaName!=null && password!=null && userName!=null){
+            if( isPassAndUserNIsLegal(password, userName) )
+            {
+                ifaManager.addNewIFA( ifaName, password, userName);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public boolean addOwner(IFA ifaManager, String OwnerName, String password, String userName) throws Exception{
+        if(ifaManager!=null && OwnerName!=null && password!=null && userName!=null){
+            if( isPassAndUserNIsLegal(password, userName) )
+            {
+                ifaManager.addOwner( OwnerName, password, userName);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public boolean addTeam(IFA ifaManager, String teamName, Owner owner) throws Exception{
+        if(ifaManager!=null && teamName!=null  && owner!=null){
+            ifaManager.addTeam( owner, teamName);
+        }
+        return false;
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc: chech if the user nane and password is legal
+     * @param
+     * @param
+     */
+    public boolean isPassAndUserNIsLegal(String password, String userName){
+        if(password!=null && userName!=null){
+            if(userName.length()>=6 && password.length()>=8 ){ //add pass contain capital small and number ??
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

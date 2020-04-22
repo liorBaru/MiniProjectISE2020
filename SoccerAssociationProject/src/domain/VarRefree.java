@@ -7,4 +7,14 @@ public class VarRefree extends Refree
         super(name,training,account);
     }
 
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public VarRefree (String name, Account account)
+    {
+        super(name,account);
+    }
 }

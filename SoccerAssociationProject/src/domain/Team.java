@@ -29,6 +29,22 @@ public class Team implements pageable
 
     }
 
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+//    public Team (Owner owners, String name){
+//        this.owners = new ArrayList<>();
+//        String userName = owners.getAccount().getUserName();
+//        String pass = owners.getAccount().getPassword();
+//        owners.addOwnerToTeam(userName, pass, name);
+//        this.name=name;
+//        this.assetsOfTeam =new ArrayList<>();
+//    }
+
+
     public List<StaffMember> getStaffMembers() {
         return staffMembers;
     }

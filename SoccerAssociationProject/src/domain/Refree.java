@@ -17,6 +17,18 @@ public abstract class Refree extends User
         this.trainig=training;
     }
 
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public Refree(String name, Account account)
+    {
+        super(name,account);
+        games = new LinkedList<>();
+    }
+
     @Override
     public void removeUser()
     {
@@ -33,6 +45,8 @@ public abstract class Refree extends User
     {
         return this.games;
     }
+
+
 
 
 
