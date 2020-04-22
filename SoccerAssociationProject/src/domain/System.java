@@ -43,6 +43,8 @@ public class System
         closedTeams = new LinkedList<>();
         refrees = new LinkedList<>();
         ifaList = new LinkedList<>();
+        coaches=new LinkedList<>();
+        owners=new LinkedList<>();
     }
 
     public List<IFA> getIfaList()

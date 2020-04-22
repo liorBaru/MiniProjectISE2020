@@ -92,31 +92,31 @@ public class IFAControllerTest {
 
     @org.junit.Test
     public void addPlayer() throws Exception{
-        Account lAcoount = new Account("liorb", "33097377");
-        IFA ifa = new IFA("lior" ,lAcoount);  //String name, Account account
+        Account lAcoount = new Account("Gal", "Abc12345");
+        IFA ifa = new IFA("Gal" ,lAcoount);  //String name, Account account
 
         Date date = new Date();
-        String pname = "ori";
-        String password ="Ori330973845";
-        String userName ="OriLonstein";
+        String pname = "gal";
+        String password ="Gal330973845";
+        String userName ="galTheKing";
         ifa.addPlayer(pname, date,password, userName);
-        assertEquals("ori",system.getPlayer("ori").getName());
-        assertEquals("OriLonstein",system.getPlayer("ori").getAccount().getUserName());
+        assertEquals("gal",system.getPlayer("gal").getName());
+        assertEquals("galTheKing",system.getPlayer("gal").getAccount().getUserName());
     }
 
     @org.junit.Test
     public void addCoach() throws Exception{
         // IFA ifa, String cName,String password, String userName
-        Account lAcoount = new Account("liorb", "33097377");// userName, String password
-        IFA ifa = new IFA("lior" ,lAcoount);  //String name, Account account
+        Account lAcoount = new Account("matan22", "Abc12345");// userName, String password
+        IFA ifa = new IFA("matan" ,lAcoount);  //String name, Account account
 
-        String cname = "lior";
-        String password ="Lior330973845";
-        String userName ="liorLonstein";
+        String cname = "Nir";
+        String password ="Nir333845";
+        String userName ="NirLevi";
         ifa.addCoach(cname,password, userName);
-        assertEquals("lior",system.getCoach("lior").getName());
-        String userName2 = system.getCoach("lior").getAccount().getUserName();
-        assertEquals("liorLonstein",userName2);
+        assertEquals("Nir",system.getCoach("Nir").getName());
+        String userName2 = system.getCoach("Nir").getAccount().getUserName();
+        assertEquals("NirLevi",userName2);
     }
 
     @org.junit.Test
