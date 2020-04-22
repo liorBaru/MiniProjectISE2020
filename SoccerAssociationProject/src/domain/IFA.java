@@ -87,8 +87,8 @@ public class IFA extends User
      * @param
      * @param
      */
-    public void addRefree(String rName,String password, String userName, String type) throws Exception{
-        system.createNewRefreeUser(rName, password, userName, type);
+    public void addReferee(String rName,String password, String userName, String type) throws Exception{
+        system.createNewRefereeUser(rName, password, userName, type);
 
     }
 

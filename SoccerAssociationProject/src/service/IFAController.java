@@ -101,11 +101,11 @@ public class IFAController {
      * @param
      * @param
      */
-    public boolean addRefree(IFA ifa, String rName,String password, String userName, String type) throws Exception{
+    public boolean addReferee(IFA ifa, String rName,String password, String userName, String type) throws Exception{
         if(ifa!=null && rName!=null  && password!=null && userName!=null && type!=null){
             if( isPassAndUserNIsLegal(password, userName) )
             {
-                ifa.addRefree(rName,password, userName, type);
+                ifa.addReferee(rName,password, userName, type);
             }
         }
         return false;

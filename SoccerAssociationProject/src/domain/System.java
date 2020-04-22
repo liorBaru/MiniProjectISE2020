@@ -295,7 +295,7 @@ public class System
         return field;
     }
 
-    //----------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------lior part
     /**
      * @author: Lior Baruchovich
      * @desc:
@@ -416,7 +416,7 @@ public class System
      * @param
      * @param
      */
-    public void createNewRefreeUser(String rName,String password, String userName, String type)throws Exception {
+    public void createNewRefereeUser(String rName,String password, String userName, String type)throws Exception {
         Account rAccount =system.getRefreeAccount(userName);
         if(rAccount==null){
             rAccount = accountManager.createAccount(userName,password);

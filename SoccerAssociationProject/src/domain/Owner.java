@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Owner extends BoardMember
@@ -16,6 +17,7 @@ public class Owner extends BoardMember
         //lior
         public Owner(Account account, String name) {
                 super(account,name);
+                OwnerTeams = new LinkedList<>();
         }
         public void addAnotherJob(StaffMember newRole)
         {
