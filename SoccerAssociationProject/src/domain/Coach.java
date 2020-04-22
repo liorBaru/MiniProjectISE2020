@@ -9,11 +9,17 @@ public class Coach extends TeamMember
     private String training;
     private String job;
 
-    public Coach (Account account, String name, Team team, Date contract , double salary, String training)
+    public Coach (Account account, String name, String training)
     {
-        super(account,name,team,contract,salary);
+        super(account,name);
         this.training=training;
     }
+
+    /**
+     * gal
+     * get personal details
+     * @return
+     */
 
     @Override
     public List<String> showPersonalDetails()
@@ -26,6 +32,10 @@ public class Coach extends TeamMember
         return userDetails;
     }
 
+    /**
+     * get type and name
+     * @return
+     */
     @Override
     public String getType() {
         return "Coach: "+this.name;

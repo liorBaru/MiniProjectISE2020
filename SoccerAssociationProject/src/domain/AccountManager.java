@@ -13,6 +13,16 @@ public class AccountManager
         userNames=new TreeMap<>();
     }
 
+    public Account getAccount(String userName)
+    {
+        if(userNames.containsKey(userName))
+        {
+            return userNames.get(userName);
+        }
+        return null;
+    }
+
+
     /**
      * gal
      * create new account
@@ -116,14 +126,6 @@ public class AccountManager
      */
 
 
-    public Account getAccount(String userName)
-    {
-        if(userNames.containsKey(userName))
-        {
-            return userNames.get(userName);
-        }
-        return null;
-    }
 
     /**
      * gal,
@@ -144,6 +146,26 @@ public class AccountManager
             }
         }
         throw new  Exception(" wrong userName or password, please try again");
+    }
+
+    /**
+     * gal,
+     * remove account from the system by system manager
+     * @param account
+     * @return
+     */
+    public boolean removeAccount(Account account)
+    {
+        if(account!=null)
+        {
+            String username=account.getUserName();
+            if(userNames.containsKey(username))
+            {
+                userNames.remove(username);
+                return true;
+            }
+        }
+        return false;
     }
 
 }

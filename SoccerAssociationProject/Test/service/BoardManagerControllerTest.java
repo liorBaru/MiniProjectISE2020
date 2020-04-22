@@ -17,12 +17,12 @@ public class BoardManagerControllerTest {
     public void setUp() throws Exception
     {
         List<Owner> ownerList=new ArrayList<>();
-        owner=new Owner(new Account("bob1","bob12345"),"bob","Owner",null,null,null);
+        owner=new Owner(new Account("bob1","bob12345"),"bob",null,null,null);
         ownerList.add(owner);
         team=new Team(ownerList,"M.C");
         Team team=new Team(ownerList,"Hapoal Tel-aviv");
         owner.setTeam(team);
-        coach = new Coach(new Account("galcoach","cDasj3454"),"coach",team,null,12550,"coach");
+        coach = new Coach(new Account("galcoach","cDasj3454"),"coach","coach");
         fan = new Fan("fan",new Account("gggggg","gfgdagad3"));
     }
 
@@ -55,7 +55,7 @@ public class BoardManagerControllerTest {
      */
     @Test
     public void appointmentNewOwner() {
-        Owner ownerNew=new Owner( new Account("Matan","12341234"),"matan gadasi","another owner",null,null,null);
+        Owner ownerNew=new Owner( new Account("Matan","12341234"),"matan gadasi",null,null,null);
         BoardManagerController bmc = new BoardManagerController();
         bmc.appointmentNewOwner(owner,ownerNew);
         assertTrue(owner.getTeam().getOwners().contains(ownerNew));
@@ -67,7 +67,7 @@ public class BoardManagerControllerTest {
 
     @Test
     public void removeOwnerAppointment() {
-        Owner ownerRemove=new Owner( new Account("Matan","12341234"),"matan gadasi","another owner",null,null,null);
+        Owner ownerRemove=new Owner( new Account("Matan","12341234"),"matan gadasi",null,null,null);
         BoardManagerController bmc = new BoardManagerController();
         bmc.appointmentNewOwner(owner,ownerRemove);
         bmc.removeOwnerAppointment(owner,ownerRemove);
@@ -81,7 +81,7 @@ public class BoardManagerControllerTest {
     @org.junit.Test
     public void testAppointTeamManger() {
         Account account=new Account("guyLevi","12341234");
-        TeamManager teamManager=new TeamManager(account,"guy levi",null,"manger",null,2000,null);
+        TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
         BoardManagerController bmc = new BoardManagerController();
         List<String> permissionList=new ArrayList<>();
         permissionList.add("addPlayer");
@@ -97,7 +97,7 @@ public class BoardManagerControllerTest {
     @org.junit.Test
     public void testRemoveAppointTeamMangerA() {
         Account account=new Account("guyLevi","12341234");
-        TeamManager teamManager=new TeamManager(account,"guy levi",null,"manger",null,2000,null);
+        TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
         BoardManagerController bmc = new BoardManagerController();
         List<String> permissionList=new ArrayList<>();
         permissionList.add("addPlayer");
@@ -112,7 +112,7 @@ public class BoardManagerControllerTest {
     @org.junit.Test(expected = ArithmeticException.class)
     public void testRemoveAppointTeamMangerB() {
         Account account=new Account("guyLevi","12341234");
-        TeamManager teamManager=new TeamManager(account,"guy levi",null,"manger",null,2000,null);
+        TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
         BoardManagerController bmc = new BoardManagerController();
         List<String> permissionList=new ArrayList<>();
         permissionList.add("addPlayer");

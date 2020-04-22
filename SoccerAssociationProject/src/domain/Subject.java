@@ -13,6 +13,13 @@ public abstract class Subject
         followers=new LinkedList<>();
     }
 
+    /**
+     * gal
+     * add follower to follower list if dont exists
+     * @param user
+     * @return
+     * @throws Exception
+     */
     public boolean addFollower(User user)throws Exception
     {
         if(user!=null && followers.contains(user)==false)
@@ -23,6 +30,13 @@ public abstract class Subject
         throw new Exception(user.getName()+" is already following");
     }
 
+    /**
+     * gal
+     * remove follower from followers list if exists
+     * @param user
+     * @return
+     * @throws Exception
+     */
     public boolean removeFollower(User user) throws Exception {
         if(user!=null && followers.contains(user))
         {
@@ -31,6 +45,12 @@ public abstract class Subject
         }
         throw new Exception(user.getName()+" is not  follower.");
     }
+
+    /**
+     * gal
+     * send notification to all followers
+     * @param notification
+     */
 
     public void notifyObservers(Notification notification)
     {

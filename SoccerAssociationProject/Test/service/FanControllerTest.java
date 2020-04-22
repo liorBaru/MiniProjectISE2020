@@ -13,20 +13,17 @@ public class FanControllerTest {
     System system;
     Fan userFan ;
     Owner owner ;
-    Page page;
-    Coach coach;
+    TeamMember coach;
 
     public void setUp() throws Exception
     {
         List<Owner> ownerList=new ArrayList<>();
         system =System.getInstance();
-        owner=new Owner(new Account("admin","12341234"),"Bill",null,null,null,null);
+        owner=new Owner(new Account("admin","12341234"),"Bill",null,null,null);
         ownerList.add(owner);
         Team team=new Team(ownerList,"M.C");
         owner.setTeam(team);
-        coach = new Coach(new Account("admin","12341234"),"boss",team,null,1500,"training");
-        page = new Page(coach);
-        system.addPage(page);
+        coach = new Coach(new Account("admin","12341234"),"boss","training");
         userFan = new Fan("gal",new Account("galbo","gAlb1234"));
    }
 
@@ -41,19 +38,19 @@ public class FanControllerTest {
         {
             e.printStackTrace();
         }
-        userFan.followPage(1);
-        assertTrue(userFan.showPages().contains(page));
+        userFan.followPage(coach.getPage().getPageID());
+        assertTrue(userFan.showPages().contains(coach.getPage()));
         String message="";
         try
         {
-            assertTrue(page.addFollower(userFan));
+            assertTrue(coach.getPage().addFollower(userFan));
         }
         catch (Exception e)
         {
             message=e.getMessage();
         }
         assertEquals(userFan.getName()+" is already following",message);
-        userFan.unfollowPage(1);
+        userFan.unfollowPage(coach.getPage().getPageID());
     }
     @Test
     public void followPageNotExsistPage() throws Exception
@@ -91,15 +88,15 @@ public class FanControllerTest {
         String message="";
         try
         {
-            userFan.followPage(1);
-            userFan.followPage(1);
+            userFan.followPage(coach.getPage().getPageID());
+            userFan.followPage(coach.getPage().getPageID());
         }
         catch (Exception e)
         {
             message=e.getMessage();
         }
         assertEquals(userFan.getName()+" is already following",message);
-        userFan.unfollowPage(1);
+        userFan.unfollowPage(coach.getPage().getPageID());
     }
 
 
@@ -115,12 +112,12 @@ public class FanControllerTest {
         {
             e.printStackTrace();
         }
-        userFan.followPage(1);
-        userFan.unfollowPage(1);
-        assertFalse(userFan.showPages().contains(page));
+        userFan.followPage(coach.getPage().getPageID());
+        userFan.unfollowPage(coach.getPage().getPageID());
+        assertFalse(userFan.showPages().contains(coach.getPage().getPageID()));
         String message ="";
         try {
-            userFan.unfollowPage(1);
+            userFan.unfollowPage(coach.getPage().getPageID());
         }
         catch (Exception e)
         {
@@ -144,7 +141,7 @@ public class FanControllerTest {
         String message ="";
         try
         {
-            userFan.unfollowPage(0);
+            userFan.unfollowPage(coach.getPage().getPageID());
         }
         catch (Exception e)
         {
@@ -168,7 +165,7 @@ public class FanControllerTest {
         String message ="";
         try
         {
-            userFan.unfollowPage(1);
+            userFan.unfollowPage(coach.getPage().getPageID());
         }
         catch (Exception e)
         {

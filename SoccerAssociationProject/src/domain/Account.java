@@ -21,6 +21,11 @@ public class Account
         this.password = password;
     }
 
+    public User getUser()
+    {
+        return user;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -45,9 +50,6 @@ public class Account
      * gets the user by account
      * @return
      */
-    public User getUser()
-    {
-        return user;
-    }
+
 
 }

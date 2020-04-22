@@ -13,6 +13,7 @@ public class Page extends Subject
     private String pageName;
     private int pageID;
     private static int ID;
+    private System system;
 
     public Page (pageable owner)
     {
@@ -20,6 +21,8 @@ public class Page extends Subject
         messages = new PriorityQueue<>();
         pageID=ID;
         ID++;
+        system=System.getInstance();
+        system.addPage(this);
     }
 
     public String getPageName() {

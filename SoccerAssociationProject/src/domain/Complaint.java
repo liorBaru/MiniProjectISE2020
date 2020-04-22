@@ -29,15 +29,16 @@ public class Complaint
         status=false;
         answerDate=new Date();
     }
+    public String getAnswer()
+    {
+        return answer;
+    }
     public String getDetails()
     {
         return this.details;
     }
 
-    public String getAnswer()
-    {
-        return answer;
-    }
+
 
     public User getUser(){return this.user;}
 }

@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,7 +8,6 @@ public abstract class Refree extends User
 {
     private List<Game> games;
     private String trainig;
-    private Game activeGame;
 
 
     public Refree(String name, String training, Account account)
@@ -20,13 +20,19 @@ public abstract class Refree extends User
     @Override
     public void removeUser()
     {
-
+        String details = "Refree, "+this.name+", has been remove from the system by the system manager";
+        Date date = new Date();
+        Notification notification = new Notification(details,date);
+        for (IFA ifa:system.getIfaList())
+        {
+            ifa.addNotification(notification);
+        }
     }
 
     public List<Game> showGames()
-    {return null;}
-    public boolean addEventToGame()
-    {return false;}
+    {
+        return this.games;
+    }
 
 
 

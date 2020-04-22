@@ -19,7 +19,4 @@ public class Guest
     {
         system.createNewFanUser(name,userName,password);
     }
-    public void search (String key){}
-
-
 }

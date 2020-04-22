@@ -6,13 +6,15 @@ public class League
 {
     private String name;
     private int level;
-    List<Refree> refrees;
+    private List<Refree> refrees;
     private HashMap<Season, SeasonInfo> seasonInfos;
 
-    public League(String name, int level) {
+    public League(String name, int level)
+    {
         this.name = name;
         this.level = level;
         seasonInfos=new HashMap<>();
+        refrees=new LinkedList<>();
     }
 
     public String getName() {

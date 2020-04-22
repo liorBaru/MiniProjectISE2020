@@ -9,6 +9,19 @@ public abstract class User extends Guest
     protected Account account;
     protected PriorityQueue<Notification> notifications;
 
+    public User ( String name,Account account)
+    {
+        system=System.getInstance();
+        this.account=account;
+        account.setUser(this);
+        this.name=name;
+        notifications=new PriorityQueue<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object object)
     {
@@ -20,24 +33,11 @@ public abstract class User extends Guest
         return false;
     }
 
-    public User ( String name,Account account)
-    {
-        this.account=account;
-        account.setUser(this);
-        this.name=name;
-        system=System.getInstance();
-        notifications=new PriorityQueue<>();
-    }
-
-    public abstract void removeUser() throws Exception;
-
-    public String getName() {
-        return name;
-    }
-
-
-    public void logout() {};
-
+    /**
+     * gal
+     * add notification to user
+     * @param notification
+     */
     public void addNotification(Notification notification)
     {
         if(notification!=null)
@@ -46,7 +46,10 @@ public abstract class User extends Guest
         }
     }
 
-
+    /**
+     *  show user personal detailes
+     * @return
+     */
     public List<String> showPersonalDetails()
     {
         LinkedList<String> userDetails = new LinkedList<>();
@@ -56,27 +59,29 @@ public abstract class User extends Guest
         userDetails.addFirst(userName);
         return userDetails;
     }
-
-    public void updateName(String name)
+    /**
+     * gal
+     * change user password
+     * @param oldPassword
+     * @param newPassword
+     * @throws Exception
+     */
+    public void updatePassword(String oldPassword, String newPassword) throws Exception
     {
-        if(name.isEmpty()==false)
-        {
-            this.name=name;
-        }
-    }
-
-    public void updatePassword(String oldPassword, String newPassword) throws Exception {
         system.changePassword(oldPassword,newPassword,this);
     }
 
-
-
+    /**
+     * gal,
+     * read notification
+     * @return
+     */
     public PriorityQueue<Notification> readNotification()
     {
         return notifications;
     }
 
-
+    public abstract void removeUser() throws Exception;
 
 
 

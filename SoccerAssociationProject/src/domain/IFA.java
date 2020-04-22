@@ -12,8 +12,13 @@ public class IFA extends User
         super(name,account);
     }
 
+    /**
+     * remove IFA from the system by system manger
+     * @throws Exception
+     */
     @Override
-    public void removeUser() throws Exception {
+    public void removeUser() throws Exception
+    {
         system.removeUser(this.name);
     }
 
@@ -27,28 +32,4 @@ public class IFA extends User
     public boolean startSeason(String league, int season){return false;}
 
 
-    public boolean createRefree(String userName, String name, String type, String training)
-    {
-        Account account =system.getRefreeAccount(userName);
-        if(account!=null)
-        {
-            if(type=="Main")
-            {
-                Refree refree = new MainRefree(name,training,account);
-                system.addRefree(refree);
-            }
-            else if(type=="Var")
-            {
-                Refree refree = new VarRefree(name,training,account);
-                system.addRefree(refree);
-            }
-            else
-            {
-                Refree refree = new LineRefree(name,training,account);
-                system.addRefree(refree);
-            }
-            return true;
-        }
-        return false;
-    }
 }

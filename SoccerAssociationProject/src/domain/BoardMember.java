@@ -9,7 +9,7 @@ public abstract class BoardMember extends StaffMember
 {
     protected List<StaffMember> appointments;
     protected TreeMap<permission,Boolean> permissions;
-    System system=System.getInstance();
+
     public BoardMember (Account account, String name, Team team, BoardMember boss)
     {
         super(account,name,team,boss);
@@ -17,40 +17,19 @@ public abstract class BoardMember extends StaffMember
         permissions= new TreeMap<>();
     }
 
-
-
     public BoardMember(Account account, String name, Team team)
     {
-      super(account,name,team);
+        super(account,name,team);
         appointments = new LinkedList<>();
         permissions= new TreeMap<>();
     }
 
-
-
-
-
-    public boolean addPlayer(String playerName)
-    {
-        if(permissions.get("addPlayer")==true)
-        {
-            Player player =system.getPlayer(playerName);
-            if(player!=null)
-            {
-
-            }
-            else
-            {
-
-            }
-            player.setTeam(team);
-            team.addAsset(player);
-            team.addStaffMember(player);
-            return true;
-        }
-        return false;
-    }
-
+    /**
+     * gal
+     * permission : remove player
+     * @param player
+     * @return
+     */
     public boolean removePlayer(Player player)
     {
         if(player!=null && permissions.get("removePlayer")==true)
@@ -62,7 +41,12 @@ public abstract class BoardMember extends StaffMember
         }
         return false;
     }
-
+    /**
+     * gal
+     * permission : add couch
+     * @param couch
+     * @return
+     */
     public boolean addCouch(Coach couch)
     {
         if(couch!=null && permissions.get("addCoach")==true)
@@ -76,6 +60,11 @@ public abstract class BoardMember extends StaffMember
         return false;
     }
 
+    /**
+     * permission : remove coach
+     * @param coach
+     * @return
+     */
     public boolean removeCoach(Coach coach)
     {
         if(coach!=null && permissions.get("removeCoach")==true)
@@ -92,6 +81,13 @@ public abstract class BoardMember extends StaffMember
         return false;
     }
 
+    /**
+     * permission :add financial action
+     * @param description
+     * @param price
+     * @return
+     */
+
     public boolean addFinancialAction(String description, double price)
     {
         if(permissions.get("addFinancial")==true)
@@ -101,6 +97,12 @@ public abstract class BoardMember extends StaffMember
         }
         return false;
     }
+
+    /**
+     * permission: add assets to team
+     * @param name
+     * @return
+     */
 
     public boolean addAssets(String name)
     {
@@ -113,6 +115,12 @@ public abstract class BoardMember extends StaffMember
         return false;
     }
 
+    /**
+     * permissions: update team page
+     * @param message
+     * @return
+     */
+
     public boolean updateTeamPage (String message)
     {
         if(permissions.get("updateTeamPage")==true)
@@ -124,17 +132,29 @@ public abstract class BoardMember extends StaffMember
     }
 
     @Override
-    public void removeTeam(Team team) {
-        for (StaffMember appoint:appointments) {
-            appoint.removeTeam(team);
+    public void removeTeam(Team team) throws Exception {
+        if(team!=null)
+        {
+            for (StaffMember appoint:appointments)
+            {
+                appoint.removeTeam(team);
+            }
+            if(this.team!=null)
+            {
+                this.team.removeAsset(this);
+                this.team.removeStaffMember(this);
+                this.team=null;
+            }
         }
-        this.getTeam().removeAsset(this);
-        setTeam(null);
     }
-    public void cleanPermission(){
+
+    public void cleanPermission()
+    {
         if(permissions!=null)
             permissions.clear();
     }
+
+
 
 }
 

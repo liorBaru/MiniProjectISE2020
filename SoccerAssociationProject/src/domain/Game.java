@@ -21,6 +21,12 @@ public class Game extends Subject
     Refree[] varReferees;
 
 
+    /**
+     * add follower to the game
+     * @param user
+     * @return
+     * @throws Exception
+     */
     @Override
     public boolean addFollower(User user) throws Exception {
         if(finishDate==null)

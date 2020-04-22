@@ -20,6 +20,11 @@ public abstract class StaffMember extends User implements Asset
         this.team=team;
     }
 
+    public StaffMember(Account account, String name)
+    {
+        super(name,account);
+    }
+
 
     public void setTeam(Team team)
     {
@@ -30,15 +35,19 @@ public abstract class StaffMember extends User implements Asset
     public abstract String getType();
 
     @Override
-    public void removeUser()
-    {
-        removeTeam(team);
+    public void removeUser() throws Exception {
+        this.removeTeam(team);
     }
 
     public Team getTeam() {
         return team;
     }
 
+    /**
+     * gal
+     * show staffMember personal details
+     * @return
+     */
 
     @Override
     public List<String> showPersonalDetails()

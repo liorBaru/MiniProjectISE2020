@@ -8,17 +8,22 @@ import java.util.List;
 public class System
 {
     private static System system;
+    private AccountManager accountManager;
+
     private List<League> leagues;
+    private List<Season> seasons;
     private List<Team> teams;
     private List<Page> pages;
     private List<Asset> assetsExists;
+
     private List<Player> players;
-    private List<Season> seasons;
+    private List<Refree> refrees;
+    private List<IFA> ifaList;
     private List<SystemManager> systemManagers;
-    private AccountManager accountManager;
+
     private List<Complaint> complaints;
     private List<Team> closedTeams;
-    private List<Refree> refrees;
+
 
 
     private System ()
@@ -35,6 +40,16 @@ public class System
         complaints = new LinkedList<>();
         closedTeams = new LinkedList<>();
         refrees = new LinkedList<>();
+        ifaList = new LinkedList<>();
+    }
+
+    public List<IFA> getIfaList()
+    {
+        return this.ifaList;
+    }
+
+    public List<SystemManager> getSystemManagers() {
+        return systemManagers;
     }
 
     public List<Season> getSeasons() {
@@ -312,7 +327,8 @@ public class System
         if(user!=null)
         {
             user.removeUser();
-            return true;
+            return accountManager.removeAccount(account);
+
         }
         return false;
     }

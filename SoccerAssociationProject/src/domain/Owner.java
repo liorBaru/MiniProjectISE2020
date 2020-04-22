@@ -1,24 +1,20 @@
 package domain;
 
+import java.security.Permission;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Owner extends BoardMember
 {
         private StaffMember anotherJob;
 
-        public Owner(Account account, String name, String job, Team team, BoardMember boss, StaffMember anotherJob) {
+        public Owner(Account account, String name, Team team, BoardMember boss, StaffMember anotherJob)
+        {
                 super(account,name,team,boss);
                 this.anotherJob = anotherJob;
-        }
-
-        public void addAnotherJob(StaffMember newRole)
-        {
-                anotherJob=newRole;
-        }
-
-        public String getType(){
-                return "Owner";
+                setPermissions();
         }
 
         /**
@@ -26,7 +22,8 @@ public class Owner extends BoardMember
          * @param asset
          * Add asset to the owner's team
          */
-        public void addAsset(Asset asset){
+        public void addAsset(Asset asset)
+        {
                 this.getTeam().addAsset(asset);
                 asset.setTeam(this.getTeam());
         }
@@ -36,7 +33,8 @@ public class Owner extends BoardMember
          * @param newOwner
          * Add a new owner to the owner's(call tha action) team
          */
-        public void appointmentNewOwner(Owner newOwner){
+        public void appointmentNewOwner(Owner newOwner)
+        {
                 if(newOwner.team!=null){
                         throw new ArithmeticException("The owner already has a team");
                 }
@@ -51,7 +49,8 @@ public class Owner extends BoardMember
          * remove owner that the ask for the action appoint
          * add remove all the owner appoints
          */
-        public void removeOwner(Owner removeOwner){
+        public void removeOwner(Owner removeOwner)
+        {
                 if(this.appointments.contains(removeOwner)){
                         this.appointments.remove(removeOwner);
                         team.getOwners().removeAll(removeOwner.appointments);
@@ -67,7 +66,8 @@ public class Owner extends BoardMember
          * @param teamManager
          * remove  team manger from the owner's team.
          */
-        public void removeTeamManger(TeamManager teamManager){
+        public void removeTeamManger(TeamManager teamManager)
+        {
                 if(this.appointments.contains(teamManager)) {
                         team.removeTeamManger(teamManager);
                         teamManager.setTeam(null);
@@ -84,10 +84,27 @@ public class Owner extends BoardMember
          * set the team status to inActive
          */
         public void closeTeam() throws Exception {
-                if(team==null)
-                        throw new ArithmeticException("arguments are not valid");
-                this.team.setStatus(false);
-                ///TODO
+
+             if(team!=null)
+             {
+                     this.team.setStatus(false);
+                     String details =team.getName()+" has been closed by the owner "+this.name;
+                     Date date= new Date();
+                     Notification notification= new Notification(details,date);
+                     for (StaffMember member:team.getStaffMembers())
+                     {
+                             if(member instanceof BoardMember)
+                             {
+                                     member.addNotification(notification);
+                             }
+                     }
+                     for (SystemManager sm:system.getSystemManagers())
+                     {
+                             sm.addNotification(notification);
+                     }
+                     return;
+             }
+             throw new Exception("team is not connected any more");
         }
         /**
          * @author matan
@@ -108,14 +125,39 @@ public class Owner extends BoardMember
          * @param financialAction
          * add financial Action to owner's team
          */
-        public void reportIncomeOrOutcome(FinancialAction financialAction){
+        public void reportIncomeOrOutcome(FinancialAction financialAction)
+        {
                 team.addFinancialAction(financialAction);
         }
 
-        public void openTeam() throws Exception {
+        @Override
+        public String getType()
+        {
+                return "Owner:"+this.name;
+        }
+        public void openTeam() throws Exception
+        {
                 if(team==null)
                         throw new ArithmeticException("arguments are not valid");
                 this.team.setStatus(true);
+        }
 
+        /**
+         * gal
+         * set owner permissions
+         */
+        private void setPermissions()
+        {
+                permission[] possibleValues = permission.values();
+                for(int i=0;i<possibleValues.length;i++)
+                {
+                        this.permissions.put(possibleValues[i],true);
+                }
+        }
+
+        @Override
+        public void removeTeam(Team team) throws Exception
+        {
+                //ToDo remove owner
         }
 }

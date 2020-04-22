@@ -15,13 +15,22 @@ public class SystemManager extends User
         return system.getComplaints();
     }
 
-    public boolean removeUserFromSystem (String userName) throws Exception {
+
+    /**
+     * remove user from the system
+     * @param userName
+     * @return
+     * @throws Exception
+     */
+    public boolean removeUserFromSystem (String userName) throws Exception
+    {
         return system.removeUser(userName);
+
     }
 
     public void removeUser()
     {
-        // throw exception
+        //
     }
 
     public boolean closeTeam (String teamName)
@@ -29,8 +38,12 @@ public class SystemManager extends User
         return system.closeTeamBySystemManager(teamName);
     }
 
-    public void watchInformation(){};
-
+    /**
+     * gal
+     * answer to fan complaint
+     * @param complaint
+     * @param answer
+     */
     public void answerComplaint (Complaint complaint, String answer )
     {
         if(complaint!=null && answer.isEmpty()==false)

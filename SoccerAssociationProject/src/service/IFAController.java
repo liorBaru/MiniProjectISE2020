@@ -5,12 +5,13 @@ import domain.System;
 import java.util.InputMismatchException;
 
 
-public class IFAController {
+public class IFAController
+{
     System system=System.getInstance();
 
     /**
      * @author: David Zaltsman
-     * @desc: aadd new league
+     * @desc: add new league
      * @param name
      * @param level
      */
@@ -24,7 +25,7 @@ public class IFAController {
 
     /**
      * @author: David Zaltsman
-     * @desc: aadd new season
+     * @desc: add new season
      * @param year
      * @param start
      */

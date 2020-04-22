@@ -8,7 +8,6 @@ public class Fan extends User
     private List<String> searchHistory;
     private List<Page> pages;
 
-
     public Fan(String name, Account account)
     {
         super(name,account);
@@ -42,12 +41,16 @@ public class Fan extends User
      * @return
      * @throws Exception
      */
-
-    public boolean followPage(int pageID) throws Exception {
-
+    public boolean followPage(int pageID) throws Exception
+    {
        return system.followPage(pageID,this);
     }
 
+    /**
+     * gal
+     * add new page to pages
+     * @param page
+     */
     public void addPage(Page page)
     {
         if(pages.contains(page))
@@ -57,28 +60,27 @@ public class Fan extends User
         pages.add(page);
     }
 
-    public boolean followGame(Game game) throws Exception {
-        if (game!=null)
-        {
-            return game.addFollower(this);
-        }
-        return false;
-    }
+    /**
+     * watch search history
+     * @return
+     */
 
     public List<String> watchHistory()
     {
         return searchHistory;
     }
 
+    /**
+     * gal,
+     * get fan following pages
+     * @return
+     */
+
     public List<Page> showPages()
     {
         return pages;
     }
 
-    public List<Page> findPage(String page)
-    {
-        return system.findPage(page);
-    }
 
 
     /**
@@ -96,8 +98,13 @@ public class Fan extends User
         system.addComplaint(complaint);
     }
 
+    /**
+     * remove fan from system by system manager
+     * @throws Exception
+     */
     @Override
-    public void removeUser() throws Exception {
+    public void removeUser() throws Exception
+    {
         for (Page page:pages)
         {
             page.removeFollower(this);

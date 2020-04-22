@@ -10,12 +10,14 @@ public abstract class TeamMember extends StaffMember implements pageable
     protected double salary;
     protected Page page;
 
-    public TeamMember(Account account, String name,Team team, Date contract, double salary)
+    public TeamMember(Account account, String name)
     {
-        super(account, name, team);
-        this.contract = contract;
-        this.salary = salary;
+        super(account, name);
+        page=new Page(this);
     }
+
+
+
     public void setTeam(Team team, Date contract, double salary)
     {
         this.team=team;
@@ -23,15 +25,26 @@ public abstract class TeamMember extends StaffMember implements pageable
         this.salary=salary;
     }
 
+    public Page getPage()
+    {
+       return page;
+    }
+
+
+
 
     @Override
     public void removeTeam(Team team)
     {
-        if(this.team.getName()==team.getName())
+        if(team!=null)
         {
             team.removeAsset(this);
             team.removeStaffMember(this);
-            this.team=null;
+            if (this.team!=null)
+            {
+                this.team=null;
+            }
+
         }
     }
 
