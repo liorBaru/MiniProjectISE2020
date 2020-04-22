@@ -11,7 +11,10 @@
 .idea/misc.xml
 .idea/vcs.xml
 .idea/*
-
+# ignore all logs
+*.xml
+*.iml
+.idea
 # Generated files
 .idea/**/contentModel.xml
 
