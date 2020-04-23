@@ -43,7 +43,6 @@ public class System
     private List<Team> closedTeams;
 
 
-
     private System ()
     {
         leagues = new LinkedList<>();
@@ -73,19 +72,12 @@ public class System
     }
 
 
-
-
-
-
-
-
     public Account addBoardMember(String userName, String password, String name) {
         SystemManager systemManager = new SystemManager(name,new Account(userName, password));
         system = getInstance();
         system.systemManagers.add(systemManager);
         return accountManager.getAccount(userName);
     }
-
 
 
     public User createNewFanUser(String name, String userName, String password)throws Exception

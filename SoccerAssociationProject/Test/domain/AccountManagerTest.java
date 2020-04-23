@@ -28,7 +28,7 @@ public class AccountManagerTest
 
 
     @Test
-    public void createRealAccount1Integration() throws Exception {
+    public void createRealAccount1Unit() throws Exception {
         User user = system.createNewFanUser("user","userName","Password1");
         assertTrue(user.getAccount().getUserName().equals("userName"));
     }
@@ -150,6 +150,10 @@ public class AccountManagerTest
         assertEquals(message,"Invalid username, userName already exists please try different username");
     }
 
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void createAccountSuccess1Unit(){
+
+    }
 
 
 }
