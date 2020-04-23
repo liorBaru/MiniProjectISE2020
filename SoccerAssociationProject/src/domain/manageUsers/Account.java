@@ -4,6 +4,8 @@ public class Account
 {
     private String userName;
     private String password;
+
+
     private User user;
 
     public Account(String userName, String password)
@@ -29,6 +31,9 @@ public class Account
     public void setUser(User user) {
         this.user = user;
     }
+
+
+
 
     /**
      * gal

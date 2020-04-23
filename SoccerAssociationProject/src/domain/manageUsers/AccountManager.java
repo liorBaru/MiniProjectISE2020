@@ -9,6 +9,10 @@ public class AccountManager
     private TreeMap <String, Account> userNames;
     private System system;
 
+    public TreeMap<String, Account> getUserNames() {
+        return userNames;
+    }
+
     public AccountManager (System system)
     {
         this.system=system;
@@ -104,7 +108,7 @@ public class AccountManager
      */
 
 
-    public void changePassword(String oldPassword, String newPassword, User user) throws Exception {
+    public boolean changePassword(String oldPassword, String newPassword, User user) throws Exception {
         if(user!=null)
         {
             if(user.account.accountVerification(oldPassword))
@@ -112,11 +116,13 @@ public class AccountManager
                 if(checkPassword(newPassword))
                 {
                     user.account.setPassword(newPassword);
-                    return;
+                    return true;
                 }
             }
             throw new Exception("wrong password");
         }
+        throw new Exception("no user");
+
     }
 
 
@@ -139,7 +145,7 @@ public class AccountManager
      */
     public User login(String userName, String password) throws Exception
     {
-        if(userNames.containsKey(userName))
+        if(userName!=null && password!=null&& userNames.containsKey(userName))
         {
             Account account =userNames.get(userName);
             if(account.accountVerification(password))
@@ -169,5 +175,6 @@ public class AccountManager
         }
         return false;
     }
+
 
 }

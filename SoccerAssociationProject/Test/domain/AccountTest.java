@@ -15,17 +15,17 @@ public class AccountTest {
     }
 
     @org.junit.Test
-    public void accountVerificationPositive1Unit() {
+    public void accountVerificationSuccess1Unit() {
         assertTrue(account.accountVerification("Pass123"));
     }
 
     @org.junit.Test
-    public void accountVerificationNegative2Unit() {
+    public void accountVerificationFailure2Unit() {
         assertFalse(account.accountVerification("ERROR"));
     }
 
     @org.junit.Test
-    public void accountVerificationNegative3Unit() {
+    public void accountVerificationFailure3Unit() {
         assertFalse(account.accountVerification(null));
     }
 

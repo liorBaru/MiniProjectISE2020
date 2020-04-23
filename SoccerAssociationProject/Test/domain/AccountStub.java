@@ -9,9 +9,9 @@ public class AccountStub extends Account
     private String password;
     private User user;
 
-    public AccountStub()
+    public AccountStub(String userName, String password)
     {
-        super("userName","Pass123");
+        super(userName,password);
     }
 
     public String getUserName()

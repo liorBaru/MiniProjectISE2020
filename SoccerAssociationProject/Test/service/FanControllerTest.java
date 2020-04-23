@@ -6,6 +6,7 @@ import domain.Asset.TeamMember;
 import DB.System;
 import domain.manageUsers.Account;
 import domain.manageTeams.Team;
+import domain.manageUsers.AccountManager;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -31,6 +32,15 @@ public class FanControllerTest {
         coach = new Coach(new Account("admin","12341234"),"boss");
         userFan = new Fan("gal",new Account("galbo","gAlb1234"));
    }
+
+
+
+//   public void setUp2() throws Exception {
+//
+//       AccountManager accountManager = new AccountManager(system);
+//       Fan fan = system.createNewFanUser("fan", "fanUser", "FanUser12");
+//
+//   }
 
     @Test
     public void followPage() throws Exception
