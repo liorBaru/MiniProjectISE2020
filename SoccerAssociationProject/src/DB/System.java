@@ -72,8 +72,8 @@ public class System
     }
 
 
-    public Account addBoardMember(String userName, String password, String name) {
-        SystemManager systemManager = new SystemManager(name,new Account(userName, password));
+    public Account addBoardMember(String userName, String password, String name) throws Exception {
+        SystemManager systemManager = new SystemManager(name,accountManager.createAccount(userName, password));
         system = getInstance();
         system.systemManagers.add(systemManager);
         return accountManager.getAccount(userName);
