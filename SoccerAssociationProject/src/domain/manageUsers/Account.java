@@ -1,4 +1,4 @@
-package domain;
+package domain.manageUsers;
 
 public class Account
 {
