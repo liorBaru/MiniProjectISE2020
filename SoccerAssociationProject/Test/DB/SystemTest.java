@@ -41,8 +41,43 @@ public class SystemTest {
         assertEquals(newUser.getAccount(),accountManager.account);
     }
 
+    @Test
+    public void createAccountSuccess3Unit() throws Exception {
+        User user = system.createNewFanUser("user","userName","Password1");
+        assertTrue(user.getAccount().getUserName().equals("userName"));
+    }
 
 
+    @Test
+    public void createDuplicateAccount3Integration()
+    {
+        String message="";
+        try
+        {
+            system.createNewFanUser("name","userName2","Password1");
+            system.createNewFanUser("name","userName2","Password1");
+        }
+        catch (Exception e)
+        {
+            message=e.getMessage();
+        }
+        assertEquals(message,"Invalid username, userName already exists please try different username");
+    }
+
+    @Test
+    public void createAccountUsernameNotGood4Integration()
+    {
+        String message="";
+        try
+        {
+            system.createNewFanUser("name","user","Password1");
+        }
+        catch (Exception e)
+        {
+            message=e.getMessage();
+        }
+        assertEquals(message,"Invalid username, username must be at least 6 characters");
+    }
 
 
 

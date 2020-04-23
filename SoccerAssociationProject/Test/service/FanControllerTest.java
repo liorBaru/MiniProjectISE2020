@@ -7,6 +7,9 @@ import DB.System;
 import domain.manageUsers.Account;
 import domain.manageTeams.Team;
 import domain.manageUsers.AccountManager;
+import domain.manageUsers.Guest;
+import domain.manageUsers.User;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ public class FanControllerTest {
     Owner owner ;
     TeamMember coach;
 
+    @Before
     public void setUp() throws Exception
     {
         List<Owner> ownerList=new ArrayList<>();
@@ -30,17 +34,34 @@ public class FanControllerTest {
         Team team=new Team(ownerList,"M.C");
         owner.setTeam(team);
         coach = new Coach(new Account("admin","12341234"),"boss");
-        userFan = new Fan("gal",new Account("galbo","gAlb1234"));
+        userFan = new Fan("fan",new Account("fanUser","FanUser12"));
    }
 
 
 
-//   public void setUp2() throws Exception {
-//
-//       AccountManager accountManager = new AccountManager(system);
-//       Fan fan = system.createNewFanUser("fan", "fanUser", "FanUser12");
-//
-//   }
+    @Test
+    public void loginFailure()
+    {
+        String message="";
+        try
+        {
+            setUp();
+        }
+        catch (Exception e)
+        {
+            message=e.getMessage();
+        }
+        try
+        {
+            User user =userFan.login("fffdsd","FanUser12");
+        }
+        catch (Exception e)
+        {
+            message=e.getMessage();
+        }
+        assertEquals(message," wrong userName or password, please try again");
+    }
+
 
     @Test
     public void followPage() throws Exception
@@ -68,7 +89,7 @@ public class FanControllerTest {
         userFan.unfollowPage(coach.getPage().getPageID());
     }
     @Test
-    public void followPageNotExsistPage() throws Exception
+    public void followPageNotExistPage() throws Exception
     {
         try
         {
@@ -89,6 +110,7 @@ public class FanControllerTest {
         }
         assertEquals(message,"page dont exists, please try again");
     }
+
     @Test
     public void followPageAlreadyFollower() throws Exception
     {
@@ -140,6 +162,7 @@ public class FanControllerTest {
         }
         assertEquals(userFan.getName()+" is not following the chosen page",message);
     }
+
     @Test
     public void unFollowPageFanNotFollow() throws Exception
     {
@@ -164,6 +187,7 @@ public class FanControllerTest {
         }
         assertEquals(userFan.getName() +" is not following the chosen page",message);
     }
+
     @Test
     public void unFollowPageNotExistsPage() throws Exception
     {
@@ -206,5 +230,38 @@ public class FanControllerTest {
         assertTrue(system.getComplaints().size()<2);
     }
 
+    @Test
+    public void register() throws Exception
+    {
+        Guest guest = new Guest();
+        guest.register("guest","guestUser","guestUser1");
+        String message="";
+        try
+        {
+            guest.register("guest","guestUser","guestUser1");
+        }
 
+        catch (Exception e)
+        {
+            message=e.getMessage();
+        }
+        assertEquals(message,"Invalid username, userName already exists please try different username");
+    }
+
+
+    @Test
+    public void changePasswordSuccess() throws Exception
+    {
+        userFan.updatePassword("FanUser12","FanUser123");
+        assertTrue(userFan.getAccount().accountVerification("FanUser123"));
+    }
+
+    @Test
+    public void loginSuccess() throws Exception
+    {
+        system.createNewFanUser("fan","fanUser","FanUser12");
+        User user =userFan.login("fanUser","FanUser12");
+        assertTrue(user.equals(userFan));
+
+    }
 }

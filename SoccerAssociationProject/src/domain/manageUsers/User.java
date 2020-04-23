@@ -29,7 +29,7 @@ public abstract class User extends Guest
     public boolean equals(Object object)
     {
         User user = (User)object;
-        if(user.account.getUserName()==this.account.getUserName())
+        if(user.account.getUserName().equals(this.account.getUserName()))
         {
             return true;
         }
