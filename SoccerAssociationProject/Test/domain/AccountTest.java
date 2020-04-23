@@ -1,5 +1,6 @@
 package domain;
 
+import domain.manageUsers.Account;
 import org.junit.Before;
 
 import static org.junit.Assert.*;

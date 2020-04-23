@@ -1,5 +1,6 @@
 package domain;
 
+import domain.manageEvents.Notification;
 import org.junit.Test;
 
 import java.util.Date;

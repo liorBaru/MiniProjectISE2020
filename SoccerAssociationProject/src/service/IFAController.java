@@ -1,6 +1,10 @@
 package service;
-import domain.*;
-import domain.System;
+import domain.manageLeagues.IFA;
+import domain.Asset.Owner;
+import DB.System;
+import domain.manageLeagues.League;
+import domain.manageLeagues.LeagueCalcolator;
+import domain.manageLeagues.Season;
 
 import java.util.Date;
 import java.util.InputMismatchException;

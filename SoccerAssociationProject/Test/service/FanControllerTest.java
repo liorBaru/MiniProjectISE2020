@@ -1,6 +1,11 @@
 package service;
-import domain.*;
-import domain.System;
+import domain.Asset.Coach;
+import domain.Asset.Fan;
+import domain.Asset.Owner;
+import domain.Asset.TeamMember;
+import DB.System;
+import domain.manageUsers.Account;
+import domain.manageTeams.Team;
 import org.junit.Test;
 
 import java.util.ArrayList;

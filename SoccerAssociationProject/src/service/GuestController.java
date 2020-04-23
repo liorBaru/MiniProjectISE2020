@@ -1,6 +1,6 @@
 package service;
 
-import domain.Guest;
+import domain.manageUsers.Guest;
 
 public class GuestController
 {

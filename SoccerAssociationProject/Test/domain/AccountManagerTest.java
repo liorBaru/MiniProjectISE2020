@@ -1,5 +1,8 @@
 package domain;
 
+import DB.System;
+import domain.manageUsers.Guest;
+import domain.manageUsers.User;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -27,7 +30,7 @@ public class AccountManagerTest
     @Test
     public void createRealAccount1Integration() throws Exception {
         User user = system.createNewFanUser("user","userName","Password1");
-        assertTrue(user.account.getUserName().equals("userName"));
+        assertTrue(user.getAccount().getUserName().equals("userName"));
     }
 
 
@@ -80,7 +83,7 @@ public class AccountManagerTest
     public void changePasswordSuccess5Integration() throws Exception
     {
         fan.updatePassword("FanUser12","FanUser123");
-        assertTrue(fan.account.accountVerification("FanUser123"));
+        assertTrue(fan.getAccount().accountVerification("FanUser123"));
         fan.updatePassword("FanUser123","FanUser12");
     }
 

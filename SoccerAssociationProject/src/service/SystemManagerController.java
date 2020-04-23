@@ -1,6 +1,6 @@
 package service;
-import domain.System;
-import domain.SystemManager;
+import DB.System;
+import domain.Asset.SystemManager;
 
 public class SystemManagerController
 {

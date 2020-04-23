@@ -1,6 +1,6 @@
 package service;
 
-import domain.Fan;
+import domain.Asset.Fan;
 
 import java.util.List;
 

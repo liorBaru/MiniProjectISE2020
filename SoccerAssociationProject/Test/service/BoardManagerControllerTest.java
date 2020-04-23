@@ -1,6 +1,10 @@
 package service;
 
-import domain.*;
+import domain.Asset.*;
+import domain.manageUsers.Account;
+import domain.manageEvents.Notification;
+import domain.manageTeams.FinancialAction;
+import domain.manageTeams.Team;
 import org.junit.Test;
 
 import java.util.ArrayList;
