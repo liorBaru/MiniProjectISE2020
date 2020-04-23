@@ -10,7 +10,9 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class IFAControllerTest {
+
     System system =System.getInstance();
+
     @org.junit.Test
     public void newLeagueTest1() {
         int legaueLevel=2;

@@ -1,5 +1,6 @@
 package domain;
 
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -9,6 +10,7 @@ public class AccountManagerTest
     private User fan;
     static boolean flag=true;
 
+    @Before
     public void setUp() throws Exception {
        if(flag)
        {
@@ -19,15 +21,18 @@ public class AccountManagerTest
        {
            fan=system.login("fanUser","FanUser12");
        }
-
     }
+
+
     @Test
-    public void createRealAccount() throws Exception {
+    public void createRealAccount1Integration() throws Exception {
         User user = system.createNewFanUser("user","userName","Password1");
         assertTrue(user.account.getUserName().equals("userName"));
     }
+
+
     @Test
-    public void createInvalidPasswordAccount()
+    public void createInvalidPasswordAccount2Integration()
     {
         String message="";
         try
@@ -41,7 +46,7 @@ public class AccountManagerTest
        assertEquals("Invalid password",message);
     }
     @Test
-    public void createDuplicateAccount()
+    public void createDuplicateAccount3Integration()
     {
         String message="";
         try
@@ -55,8 +60,9 @@ public class AccountManagerTest
         }
         assertEquals(message,"Invalid username, userName already exists please try different username");
     }
+
     @Test
-    public void createAccountUsernameNotGood()
+    public void createAccountUsernameNotGood4Integration()
     {
         String message="";
         try
@@ -71,28 +77,19 @@ public class AccountManagerTest
     }
 
     @Test
-    public void changePasswordSuccess() throws Exception
+    public void changePasswordSuccess5Integration() throws Exception
     {
-        try
-        {
-            setUp();
-        }
-        catch (Exception e)
-        {
-
-        }
         fan.updatePassword("FanUser12","FanUser123");
         assertTrue(fan.account.accountVerification("FanUser123"));
         fan.updatePassword("FanUser123","FanUser12");
     }
 
     @Test
-    public void changePasswordFailure()
+    public void changePasswordFailure6Integration()
     {
         String message="";
         try
         {
-            setUp();
             fan.updatePassword("FanUser452","FanUser123");
         }
         catch(Exception e)
@@ -103,22 +100,14 @@ public class AccountManagerTest
     }
 
     @Test
-    public void loginSuccess() throws Exception
+    public void loginSuccess7Integration() throws Exception
     {
-        try
-        {
-            setUp();
-        }
-        catch (Exception e)
-        {
-
-        }
         User user =fan.login("fanUser","FanUser12");
         assertTrue(user.equals(fan));
 
     }
     @Test
-    public void loginFailure()
+    public void loginFailure8Integration()
     {
         String message="";
         try
@@ -139,8 +128,9 @@ public class AccountManagerTest
         }
         assertEquals(message," wrong userName or password, please try again");
     }
+
     @Test
-    public void register() throws Exception
+    public void register9Integration() throws Exception
     {
         Guest guest = new Guest();
         guest.register("guest","guestUser","guestUser1");
