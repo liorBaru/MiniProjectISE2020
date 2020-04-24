@@ -1,4 +1,4 @@
-package domain;
+package domain.manageUsers;
 
 import domain.manageUsers.Account;
 import org.junit.Before;

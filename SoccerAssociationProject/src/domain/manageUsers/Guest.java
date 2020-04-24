@@ -14,12 +14,19 @@ public class Guest
 
     public User login(String userName, String password) throws Exception
     {
-       User user = system.login(userName,password);
-       return user;
-       /// open user Mode
+        if(userName!=null && password!=null) {
+            User user = system.login(userName, password);
+            return user;
+        }
+        throw new Exception("Bad details");
+
     }
-    public void register(String name, String userName, String password) throws Exception
+
+    public User register(String name, String userName, String password) throws Exception
     {
-        system.createNewFanUser(name,userName,password);
+        if(name!=null && userName!=null && password!=null) {
+            return system.createNewFanUser(name, userName, password);
+        }
+        throw new Exception("Bad details");
     }
 }

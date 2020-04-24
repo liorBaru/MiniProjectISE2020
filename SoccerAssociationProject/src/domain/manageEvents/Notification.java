@@ -1,5 +1,6 @@
 package domain.manageEvents;
 
+
 import java.util.Date;
 
 public class Notification implements Comparable
@@ -26,4 +27,19 @@ public class Notification implements Comparable
     public Date getDate() {
         return date;
     }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        Notification notification = (Notification)object;
+        if((notification.getDetails().equals((this.details)))&&
+                (notification.date.equals(this.date)))
+        {
+            return true;
+        }
+        return false;
+    }
+
 }
+
+

@@ -1,10 +1,9 @@
 package DB;
 
-import domain.AccountMangerStub;
+import domain.manageUsers.AccountMangerStub;
 import domain.Asset.Fan;
 import domain.Asset.SystemManager;
 import domain.manageUsers.Account;
-import domain.manageUsers.AccountManager;
 import domain.manageUsers.User;
 import org.junit.Test;
 

@@ -63,6 +63,12 @@ public class Team implements pageable
         if (this.status != status) {
             this.status = status;
             String statusString = status == false ? " is inactive" : " is active";
+//            if(status==false){
+//                statusString=" is inactive";
+//            }
+//            else {
+//                statusString=" is active";
+//            }
             Date date = new Date();
             Notification notification = new Notification("The Team: " + name + statusString, date);
             for (StaffMember staffMember : staffMembers) {
@@ -104,7 +110,6 @@ public class Team implements pageable
     }
 
 
-
     public void addAsset(Asset asset) {
         if (asset == null || status == false)
             throw new ArithmeticException("missed asset");
@@ -121,7 +126,6 @@ public class Team implements pageable
 
     public void setClose(Notification notification) {
         this.status = false;
-
         for (StaffMember member : staffMembers) {
             member.addNotification(notification);
         }
