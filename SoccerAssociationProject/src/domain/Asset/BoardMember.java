@@ -36,7 +36,7 @@ public abstract class BoardMember extends StaffMember
      */
     public boolean removePlayer(Player player)
     {
-        if(player!=null && permissions.get("removePlayer")==true)
+        if(player!=null && permissions.get(permission.removePlayer)&&team!=null)
         {
             team.removeAsset(player);
             team.removeStaffMember(player);
@@ -53,7 +53,7 @@ public abstract class BoardMember extends StaffMember
      */
     public boolean addCouch(Coach couch)
     {
-        if(couch!=null && permissions.get("addCoach")==true)
+        if(couch!=null && permissions.get(permission.addCoach)&&team!=null)
         {
             team.addStaffMember(couch);
             team.addAsset(couch);
@@ -71,7 +71,7 @@ public abstract class BoardMember extends StaffMember
      */
     public boolean removeCoach(Coach coach)
     {
-        if(coach!=null && permissions.get("removeCoach")==true)
+        if(coach!=null && permissions.get(permission.removeCoach)&&team!=null)
         {
             if(appointments.contains(coach))
             {
@@ -94,7 +94,7 @@ public abstract class BoardMember extends StaffMember
 
     public boolean addFinancialAction(String description, double price)
     {
-        if(permissions.get("addFinancial")==true)
+        if(permissions.get(permission.addFinancial)&&team!=null)
         {
             FinancialAction financialAction = new FinancialAction(description,price,this);
             return team.addFinancialAction(financialAction);
@@ -110,7 +110,7 @@ public abstract class BoardMember extends StaffMember
 
     public boolean addAssets(String name)
     {
-        if(permissions.get("addAsset")==true)
+        if(permissions.get(permission.addAsset)&&team!=null)
         {
             Asset field = system.addField(name,team);
             team.addAsset(field);
@@ -127,7 +127,7 @@ public abstract class BoardMember extends StaffMember
 
     public boolean updateTeamPage (String message)
     {
-        if(permissions.get("updateTeamPage")==true)
+        if(permissions.get(permission.updateTeamPage)&&team!=null)
         {
             team.uploadDataToPage(message);
             return true;
