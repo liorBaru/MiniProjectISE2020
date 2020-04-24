@@ -1,10 +1,13 @@
 package domain.manageTeams;
 
 import domain.Asset.*;
+import domain.manageEvents.Notification;
 import domain.manageUsers.Account;
+import domain.manageUsers.AccountStub;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -94,8 +97,14 @@ public class TeamTest {
         team.addAsset(assetStub);
     }
 
-
-
+    @Test
+    public void removeAssetSuccess9Unit() {
+        setUpUnit();
+        Asset asset= new OwnerStub();
+        team.addAsset(asset);
+        team.removeAsset(asset);
+        assertFalse(team.getAssetsOfTeam().contains(asset));
+    }
 
     @Test
     public void setStatusSuccess1Integration() throws Exception {
@@ -133,6 +142,7 @@ public class TeamTest {
         assertTrue(team.getFinancialActions().contains(financialAction));
     }
 
+
     @Test
     public void addFinancialActionFailed5Integration()  {
         setUpIntegration();
@@ -167,5 +177,69 @@ public class TeamTest {
         setUpIntegration();
         team.addStaffMember(this.staffMember);
         team.getStaffMembers().contains(this.staffMember);
+    }
+
+
+    @Test
+    public void setCloseSuccess10Integration()  {
+        setUpIntegration();
+        Date date= new Date();
+        Notification notification= new Notification(" is inactive",date);
+        team.setClose(notification);
+        for (StaffMember staffMem : team.getStaffMembers()) {
+            Notification staffMemNotification= staffMem.readNotification().peek();
+             assertTrue(notification.equals(staffMemNotification));
+        }
+    }
+
+    @Test
+    public void removeAssetSuccess11Integration() {
+        setUpIntegration();
+        Asset asset= this.Owner;
+        team.addAsset(asset);
+        team.removeAsset(asset);
+        assertFalse(team.getAssetsOfTeam().contains(asset));
+
+    }
+
+    @Test (expected = Exception.class)
+    public void removeAssetFailed12Integration() {
+        setUpIntegration();
+        Asset asset= this.Owner;
+        team.removeAsset(asset);
+        team.getAssetsOfTeam().contains(asset);
+
+    }
+    @Test (expected = Exception.class)
+    public void removeAssetFailed13Integration() {
+        setUpIntegration();
+        team.removeAsset(null);
+    }
+
+    @Test
+    public void removeTeamMangerFailed14Integration() {
+        setUpIntegration();
+        BoardMember bm= this.Owner;
+        List<String> permissions= new ArrayList<>();
+        permissions.add("removeTeamManger");
+        TeamManager tm= new TeamManager(new AccountStub(),"TM",this.team,bm,500,permissions);
+        team.addStaffMember(tm);
+        team.removeTeamManger(tm);
+    }
+
+
+    @Test (expected = Exception.class)
+    public void removeTeamMangerFailed15Integration() {
+        team.removeTeamManger(null);
+    }
+
+    @Test (expected = Exception.class)
+    public void removeTeamMangerFailed16Integration() {
+        setUpIntegration();
+        BoardMember bm= this.Owner;
+        List<String> permissions= new ArrayList<>();
+        permissions.add("removeTeamManger");
+        TeamManager tm= new TeamManager(new AccountStub(),"TM",this.team,bm,500,permissions);
+        team.removeTeamManger(tm);
     }
 }
