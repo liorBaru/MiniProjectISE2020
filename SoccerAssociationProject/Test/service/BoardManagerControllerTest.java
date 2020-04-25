@@ -1,5 +1,6 @@
 package service;
 
+import DB.AcceptanceTests;
 import DB.RegressionTests;
 import domain.Asset.*;
 import domain.manageUsers.Account;
@@ -37,7 +38,7 @@ public class BoardManagerControllerTest {
      *  acceptance test UC 6.1a
      */
     @org.junit.Test
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void addAssets1acceptance() {
         Field filed=new Field("Tady");
         BoardManagerController bmc = new BoardManagerController();
@@ -50,8 +51,8 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.1b
      */
 
-    @org.junit.Test(expected = ArithmeticException.class)
-    @Category(RegressionTests.class)
+    @Test(expected = ArithmeticException.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void removeAssets2acceptance() {
         Field trainField=new Field("buyit vagan");
         BoardManagerController bmc = new BoardManagerController();
@@ -62,7 +63,7 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.2
      */
     @Test
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void appointmentNewOwner3acceptance() {
         Owner ownerNew=new Owner( new Account("Matan","12341234"),"matan gadasi",null,null,null);
         BoardManagerController bmc = new BoardManagerController();
@@ -75,7 +76,7 @@ public class BoardManagerControllerTest {
      */
 
     @Test
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void removeOwnerAppointment4acceptance() {
         Owner ownerRemove=new Owner( new Account("Matan","12341234"),"matan gadasi",null,null,null);
         BoardManagerController bmc = new BoardManagerController();
@@ -89,7 +90,7 @@ public class BoardManagerControllerTest {
      */
 
     @org.junit.Test
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void testAppointTeamManger5acceptance() {
         Account account=new Account("guyLevi","12341234");
         TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
@@ -105,8 +106,8 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.5a
      */
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void testRemoveAppointTeamMangerA6acceptance() {
         Account account=new Account("guyLevi","12341234");
         TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
@@ -121,8 +122,8 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.5b
      */
-    @org.junit.Test(expected = ArithmeticException.class)
-    @Category(RegressionTests.class)
+    @Test(expected = ArithmeticException.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void testRemoveAppointTeamMangerB7acceptance() {
         Account account=new Account("guyLevi","12341234");
         TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
@@ -137,7 +138,7 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.6.1.a
      */
     @Test
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void openTeam1a8acceptance() throws Exception {
         BoardManagerController bmc = new BoardManagerController();
         owner.getTeam().setStatus(false);
@@ -149,7 +150,7 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.6.1.b
      */
     @Test(expected = Exception.class)
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void openTeam1b9acceptance()throws Exception{
         BoardManagerController bmc = new BoardManagerController();
         bmc.openTeam(owner);
@@ -159,7 +160,7 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.6.2.a
      */
     @Test
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void closeTeam2a10acceptance() throws Exception {
         BoardManagerController bmc = new BoardManagerController();
         bmc.closeTeam(owner);
@@ -170,7 +171,7 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.6.2.b
      */
     @Test(expected = Exception.class)
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void closeTeam2b11acceptance()throws Exception{
         BoardManagerController bmc = new BoardManagerController();
         owner.getTeam().setStatus(false);
@@ -181,7 +182,7 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.7a
      */
     @Test
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void reportIncomeOrOutcome12acceptance() {
         FinancialAction financialAction=new FinancialAction("Buy new player",-50000,owner);
         BoardManagerController bmc = new BoardManagerController();
@@ -191,7 +192,7 @@ public class BoardManagerControllerTest {
     }
 
     @Test
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void uploadDataToPage13acceptance() throws Exception {
         fan.followPage(0);
         coach.uploadDataToPage("checkData");
@@ -203,7 +204,7 @@ public class BoardManagerControllerTest {
     }
 
     @Test
-    @Category(RegressionTests.class)
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void uploadEmptyDataToPage14acceptance() throws Exception
     {
         fan.followPage(0);

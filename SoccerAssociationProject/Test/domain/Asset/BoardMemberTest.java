@@ -1,7 +1,9 @@
 package domain.Asset;
 
 
+import DB.IntegrationTests;
 import DB.RegressionTests;
+import DB.UnitTests;
 import domain.manageTeams.Team;
 import domain.manageUsers.Account;
 import org.junit.Before;
@@ -39,75 +41,90 @@ public class BoardMemberTest {
 
     }
     @Test
-    @Category(RegressionTests.class)
+    @Category({ IntegrationTests.class})
     public void removePlayerFalse1Integration() {
         boardMember.permissions.put(permission.removePlayer,false);
         assertFalse(boardMember.removePlayer(player));
     }
 
     @Test
+    @Category({ IntegrationTests.class})
     public void removePlayerTrue2Integration() {
         boardMember.permissions.put(permission.removePlayer,true);
         assertTrue(boardMember.removePlayer(player));
     }
 
     @Test
-    public void addCouchFalse() {
+    @Category({ UnitTests.class})
+    public void addCouchFalse1Unit() {
         boardMember.permissions.put(permission.addCoach,false);
         assertFalse(boardMember.addCouch(coach));
     }
+
     @Test
-    public void addCouchTrue() {
+    @Category({UnitTests.class})
+    public void addCouchTrue2Unit() {
         boardMember.permissions.put(permission.addCoach,true);
         assertTrue(boardMember.addCouch(coach));
     }
 
     @Test
-    public void removeCoachFalse() {
+    @Category({UnitTests.class})
+    public void removeCoachFalse3Unit() {
         boardMember.permissions.put(permission.removeCoach,false);
         assertFalse(boardMember.removeCoach(coach));
     }
     @Test
-    public void removeCoachTrue() {
+    @Category({UnitTests.class})
+    public void removeCoachTrue4Unit() {
         boardMember.permissions.put(permission.removeCoach,true);
         assertFalse(boardMember.removeCoach(coach));
     }
 
     @Test
-    public void addFinancialActionFalse() {
+    @Category({UnitTests.class})
+    public void addFinancialActionFalse5Unit() {
         boardMember.permissions.put(permission.addFinancial,false);
         assertFalse(boardMember.addFinancialAction("buyPlayer",-2000));
     }
+
     @Test
-    public void addFinancialActionTrue() {
+    @Category({UnitTests.class})
+    public void addFinancialActionTrue5Unit() {
         boardMember.permissions.put(permission.addFinancial,true);
         assertTrue(boardMember.addFinancialAction("buyPlayer",-2000));
     }
 
     @Test
-    public void addAssetsFalse() {
+    @Category({UnitTests.class})
+    public void addAssetsFalse6Unit() {
         boardMember.permissions.put(permission.addAsset,false);
         assertFalse(boardMember.addAssets("filed"));
     }
     @Test
-    public void addAssetsTrue() {
+    @Category({UnitTests.class})
+    public void addAssetsTrue7Unit() {
         boardMember.permissions.put(permission.addAsset,true);
         assertTrue(boardMember.addAssets("filed"));
     }
 
     @Test
-    public void updateTeamPageTrue() {
+    @Category({UnitTests.class})
+    public void updateTeamPageTrue8Unit() {
         boardMember.permissions.put(permission.updateTeamPage,true);
         assertTrue(boardMember.updateTeamPage("New Player is on the Way"));
     }
+
     @Test
-    public void updateTeamPageFalse() {
+    @Category({UnitTests.class})
+    public void updateTeamPageFalse9Unit() {
         boardMember.permissions.put(permission.updateTeamPage,false);
         assertFalse(boardMember.updateTeamPage("New Player is on the Way"));
     }
 
     @Test
-    public void removeTeam() throws Exception {
+    @Category({IntegrationTests.class})
+    public void removeTeam1Integration() throws Exception {
         boardMember.removeTeam(team);
         assertNull(boardMember.team);
     }

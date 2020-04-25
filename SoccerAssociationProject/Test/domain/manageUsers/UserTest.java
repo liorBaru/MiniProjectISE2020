@@ -1,14 +1,18 @@
 package domain.manageUsers;
 
+import DB.IntegrationTests;
+import DB.UnitTests;
 import domain.Asset.Fan;
 import domain.Asset.FanStub;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 
 public class UserTest {
 
     @Test
+    @Category({UnitTests.class})
     public void updatePassword1Unit(){
         FanStub fanStub= new FanStub();
         try {
@@ -20,6 +24,7 @@ public class UserTest {
     }
 
     @Test
+    @Category({IntegrationTests.class})
     public void updatePassword1Integration(){
         Fan fan= new Fan("name", new Account("userName","passFAN123"));
         try {

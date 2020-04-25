@@ -1,6 +1,6 @@
 package domain.manageLeagues;
 
-public class LeaguePointsCalculator implements  LeagueCalcolator {
+public class LeaguePointsCalculator implements LeagueCalculator {
 
     private int winPoints;
     private int drawPoints;
@@ -46,4 +46,10 @@ public class LeaguePointsCalculator implements  LeagueCalcolator {
     public int addPointsLose() {
         return losePoints;
     }
+
+    /**
+     * @author: chen arazi
+     * @desc: return LeagueCalculator
+     */
+
 }

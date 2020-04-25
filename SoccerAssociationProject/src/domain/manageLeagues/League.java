@@ -1,7 +1,6 @@
 package domain.manageLeagues;
 
 import domain.Asset.Refree.Refree;
-import DB.System;
 
 import java.util.*;
 
@@ -44,6 +43,7 @@ public class League
             throw new InputMismatchException("Wrong inputs");
         SeasonInfo seasoninfo=new SeasonInfo(null,null);
         seasonInfos.put(season,seasoninfo);
+        season.setSeasonInfo(this,seasoninfo);
         return true;
     }
     /**
@@ -52,7 +52,7 @@ public class League
      * @param season - the season that we want to add her policy
      * @param leaguePolicy - an interface that hold the policy of league
      */
-    public Season updatePolicyToLeague(Season season, LeagueCalcolator leaguePolicy)
+    public Season updatePolicyToLeague(Season season, LeagueCalculator leaguePolicy)
     {
         if(season==null||!seasonInfos.containsKey(season)|| leaguePolicy==null)
             throw new InputMismatchException("Wrong inputs");

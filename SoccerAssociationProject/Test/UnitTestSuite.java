@@ -1,14 +1,15 @@
-
-import DB.RegressionTests;
+import DB.AcceptanceTests;
 import DB.SystemTest;
-
-import domain.Asset.BoardMember;
+import DB.UnitTests;
+import domain.Asset.Asset;
 import domain.Asset.BoardMemberTest;
 import domain.Asset.FanTest;
 import domain.Asset.Refree.RefreeTest;
 import domain.manageEvents.NotificationTest;
 import domain.manageLeagues.GameTest;
+import domain.manageLeagues.League;
 import domain.manageLeagues.LeagueTest;
+import domain.manageTeams.Team;
 import domain.manageTeams.TeamTest;
 import domain.manageUsers.AccountManagerTest;
 import domain.manageUsers.AccountTest;
@@ -18,12 +19,11 @@ import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import service.BoardManagerControllerTest;
-import service.FanController;
 import service.FanControllerTest;
 import service.IFAControllerTest;
 
 @RunWith(Categories.class)
-@Categories.IncludeCategory(RegressionTests.class)
+@Categories.IncludeCategory(UnitTests.class)
 @Suite.SuiteClasses({SystemTest.class,
         BoardManagerControllerTest.class, FanControllerTest.class,
         IFAControllerTest.class, BoardMemberTest.class,FanTest.class,
@@ -31,5 +31,5 @@ import service.IFAControllerTest;
         LeagueTest.class,TeamTest.class, AccountManagerTest.class,
         AccountTest.class, GuestTest.class,UserTest.class
 })
-public class RegressionTestSuite {
+public class UnitTestSuite {
 }

@@ -1,4 +1,5 @@
 package service;
+import DB.AcceptanceTests;
 import DB.RegressionTests;
 import domain.manageUsers.Account;
 import domain.manageLeagues.IFA;
@@ -7,11 +8,13 @@ import DB.System;
 import domain.manageLeagues.League;
 import domain.manageLeagues.Season;
 import domain.manageTeams.Team;
+import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -19,8 +22,8 @@ public class IFAControllerTest {
 
     System system =System.getInstance();
 
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void newLeague1acceptance() {
         int legaueLevel=2;
         String leagueName="Ligan ha aal";
@@ -28,8 +31,8 @@ public class IFAControllerTest {
         assertTrue(system.getLeagues().contains(leagueTest));
     }
 
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void newLeague2acceptance() { //wrong input level test
         //TODO:
         // 1.change mivhanei kabal - test 9.1.b change the input of league to leaguelevel
@@ -45,8 +48,8 @@ public class IFAControllerTest {
         }
         assertEquals("Wrong input",message);
     }
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void newLeagueTest3acceptance() { //existing league test
         int legaueLevel=1;
         String message="";
@@ -60,22 +63,24 @@ public class IFAControllerTest {
         }
         assertEquals("Wrong input",message);
     }
-    @org.junit.Test
-    @Category(RegressionTests.class)
+
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void newSeasonTest4acceptance() { //create season succsesfully
         int year=2022;
         boolean start=false;
-        Season season=system.addSeason(year,start);
+        Season season=system.addSeason(year);
         assertTrue(system.getSeasons().contains(season));
     }
-    @org.junit.Test
-    @Category(RegressionTests.class)
+
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void newSeasonTest5acceptance() { //failure with wrong year
         int year=-15;
         boolean start=false;
         String message="";
         try {
-            Season season = system.addSeason(year, start);
+            Season season = system.addSeason(year);
         }
         catch (InputMismatchException e)
         {
@@ -84,10 +89,10 @@ public class IFAControllerTest {
         assertEquals("Wrong input",message);
     }
 
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void addSeasonToLeagueTest6acceptance() { //find successfuly the season of league
-        system.addSeason(2019,false);
+        system.addSeason(2019);
         system.addLeague("Ligat ha al",1);
         League league1=system.getLeagues().get(0);
         Season season1=system.getSeasons().get(0);
@@ -104,8 +109,8 @@ public class IFAControllerTest {
 
   ///////--------------------------------------------------------------------------------------------lior part
 
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void addPlayer7acceptance() throws Exception{
         Account lAcoount = new Account("Gal", "Abc12345");
         IFA ifa = new IFA("Gal" ,lAcoount);  //String name, Account account
@@ -119,24 +124,23 @@ public class IFAControllerTest {
         assertEquals("galTheKing",system.getPlayer("gal").getAccount().getUserName());
     }
 
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void addCoach8acceptance() throws Exception{
         // IFA ifa, String cName,String password, String userName
         Account lAcoount = new Account("matan22", "Abc12345");// userName, String password
         IFA ifa = new IFA("matan" ,lAcoount);  //String name, Account account
-
+        int rand_int1 = new Random().nextInt(1000);
         String cname = "Nir";
         String password ="Nir333845";
-        String userName ="NirLevi";
+        String userName ="NirLevi"+rand_int1;
         ifa.addCoach(cname,password, userName);
-        assertEquals("Nir",system.getCoach("Nir").getName());
         String userName2 = system.getCoach("Nir").getAccount().getUserName();
-        assertEquals("NirLevi",userName2);
+        assertEquals("NirLevi"+rand_int1,userName2);
     }
 
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void addReferee9acceptance() throws Exception{
 
         Account lAcoount = new Account("liorb", "33097377");// userName, String password
@@ -152,8 +156,8 @@ public class IFAControllerTest {
     }
 
 
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void addIFA10acceptance() throws Exception{
         // addIFA(IFA ifaManager, String ifaName, String password, String userName
         Account Acoount1 = new Account("liorb", "33097377");// userName, String password
@@ -168,8 +172,8 @@ public class IFAControllerTest {
     }
 
 
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void addOwner11acceptance() throws Exception{
         // addIFA(IFA ifaManager, String ifaName, String password, String userName
         Account Acoount1 = new Account("liorb", "33097377");// userName, String password
@@ -184,8 +188,8 @@ public class IFAControllerTest {
     }
 
     //addTeam(IFA ifaManager, String teamName, Owner owner
-    @org.junit.Test
-    @Category(RegressionTests.class)
+    @Test
+    @Category({RegressionTests.class, AcceptanceTests.class})
     public void addTeam12acceptance() throws Exception{
         Account Acoount1 = new Account("liorb", "33097377");// userName, String password
         IFA ifaManager = new IFA("lior" ,Acoount1);  //String name, Account account

@@ -32,16 +32,6 @@ public class IFA extends User
         system.removeUser(this.name);
     }
 
-    public boolean createNewLeugue(String name, int level){return false;}
-    public boolean addSeasonToLeague(String LeagueName, int year){return false;}
-    public boolean addReferee( User user){return false;}
-    public void addRefereeToLeague(String refree, String League){}
-    public boolean removeRefree(String refree){return false;}
-    public boolean updatePointsPolicy(LeagueCalcolator calcolator, String league, int season){return false;}
-    public boolean updateGamePolicy(GameScheduale scheduale, String league, int year){return false;}
-    public boolean startSeason(String league, int season){return false;}
-
-
     public boolean createRefree(String userName, String name, String type, String training)
     {
         Account account =system.getRefreeAccount(userName);
@@ -95,9 +85,9 @@ public class IFA extends User
         }
     }
 
-    public void addSeason(int year, boolean start) {
+    public void addSeason(int year) {
         try {
-            system.addSeason(year, start);
+            system.addSeason(year);
         } catch (InputMismatchException e) {
             throw new InputMismatchException("Wrong input");
         }
@@ -114,7 +104,7 @@ public class IFA extends User
         }
     }
 
-    public void updatePolicyToLeague(League league, Season season , LeagueCalcolator leaguePolicy) {
+    public void updatePolicyToLeague(League league, Season season , LeagueCalculator leaguePolicy) {
         //TODO:
         // 1.add to U.C 9.5 paramater to function : Season season , LeagueCalculator leaguePolicy
         try {

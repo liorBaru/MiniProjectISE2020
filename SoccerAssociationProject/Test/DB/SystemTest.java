@@ -8,6 +8,8 @@ import domain.manageUsers.User;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 public class SystemTest {
@@ -18,8 +20,8 @@ public class SystemTest {
     String name="Matan";
 
     @Test
-    @Category(RegressionTests.class)
-    public void addBoardMember1TestUnit(){
+    @Category({ UnitTests.class})
+    public void addBoardMember1Unit(){
 
         Account excepted=accountManager.account;
         SystemManager systemManager = new SystemManager(name,excepted);
@@ -27,15 +29,18 @@ public class SystemTest {
         Account account=accountManager.getAccount(userName);
         assertEquals(excepted,account);
     }
+
     @Test
-    public void addBoardMember1TestIntegration() throws Exception {
+    @Category({ IntegrationTests.class})
+    public void addBoardMember1Integration() throws Exception {
 
        Account account= system.addBoardMember("gal123","Gal12345","gal");
        assertEquals(system.getSystemManagers().get(0).getAccount(),account);
 
     }
     @Test
-    public void createNewFanUser2TestUnit() throws Exception {
+    @Category({ UnitTests.class})
+    public void createNewFanUser2Unit() throws Exception {
         Account account = accountManager.createAccount(userName,password);
         User newUser = new Fan(name,account);
         account.setUser(newUser);
@@ -43,13 +48,16 @@ public class SystemTest {
     }
 
     @Test
+    @Category({ UnitTests.class, RegressionTests.class})
     public void createAccountSuccess3Unit() throws Exception {
-        User user = system.createNewFanUser("user","userName","Password1");
-        assertTrue(user.getAccount().getUserName().equals("userName"));
+        int rand_int1 = new Random().nextInt(1000);
+        User user = system.createNewFanUser("user",rand_int1+"userName","Password1");
+        assertTrue(user.getAccount().getUserName().equals(rand_int1+"userName"));
     }
 
 
     @Test
+    @Category({ IntegrationTests.class, RegressionTests.class})
     public void createDuplicateAccount3Integration()
     {
         String message="";
@@ -66,6 +74,7 @@ public class SystemTest {
     }
 
     @Test
+    @Category({ IntegrationTests.class, RegressionTests.class})
     public void createAccountUsernameNotGood4Integration()
     {
         String message="";

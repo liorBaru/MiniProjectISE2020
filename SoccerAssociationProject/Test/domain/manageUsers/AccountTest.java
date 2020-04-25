@@ -1,7 +1,10 @@
 package domain.manageUsers;
 
+import DB.UnitTests;
 import domain.manageUsers.Account;
 import org.junit.Before;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 
@@ -14,17 +17,20 @@ public class AccountTest {
         account= new Account("userName","Pass123");
     }
 
-    @org.junit.Test
+    @Test
+    @Category({UnitTests.class})
     public void accountVerificationSuccess1Unit() {
         assertTrue(account.accountVerification("Pass123"));
     }
 
-    @org.junit.Test
+    @Test
+    @Category({UnitTests.class})
     public void accountVerificationFailure2Unit() {
         assertFalse(account.accountVerification("ERROR"));
     }
 
-    @org.junit.Test
+    @Test
+    @Category({UnitTests.class})
     public void accountVerificationFailure3Unit() {
         assertFalse(account.accountVerification(null));
     }
