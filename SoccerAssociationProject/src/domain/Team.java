@@ -63,7 +63,8 @@ public class Team implements pageable
         return name;
     }
 
-    public boolean addFinancialAction(FinancialAction financialAction) {
+    public boolean addFinancialAction(FinancialAction financialAction)
+    {
         if (financialAction != null) {
             if (financialActions.contains(financialAction) == false) {
                 financialActions.add(financialAction);
@@ -73,7 +74,8 @@ public class Team implements pageable
         return false;
     }
 
-    public Set<FinancialAction> getFinancialActions() {
+    public Set<FinancialAction> getFinancialActions()
+    {
         return financialActions;
     }
 
@@ -93,9 +95,9 @@ public class Team implements pageable
         }
     }
 
-    public void setClose(Notification notification) {
+    public void setClose(Notification notification)
+    {
         this.status = false;
-
         for (StaffMember member : staffMembers) {
             member.addNotification(notification);
         }

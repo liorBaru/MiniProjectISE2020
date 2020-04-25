@@ -9,8 +9,4 @@ public class TeamInfo
     private int victories;
     private int draw;
 
-
-
-
-
 }
