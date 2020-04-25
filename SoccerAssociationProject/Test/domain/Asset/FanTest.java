@@ -51,5 +51,4 @@ public class FanTest {
         assertFalse(fan.readNotification().contains(n1));
     }
 
-
 }

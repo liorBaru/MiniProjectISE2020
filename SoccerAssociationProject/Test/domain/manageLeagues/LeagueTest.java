@@ -26,13 +26,13 @@ public class LeagueTest {
         league.addSeasonToLeague(season);
     }
 
-    @Test
-    public void addSeasonToLeagueSuccess2Unit()
-    {
-        setUpUnit();
-        league.addSeasonToLeague(season);
-        assertEquals(league.getSeasonInfos().get(season),season);
-        //season.setSeasonInfo()
-    }
+//    @Test
+//    public void addSeasonToLeagueSuccess2Unit()
+//    {
+//        setUpUnit();
+//        league.addSeasonToLeague(season);
+//        assertEquals(league.getSeasonInfos().get(season),season);
+//        //season.setSeasonInfo()
+//    }
 
 }
