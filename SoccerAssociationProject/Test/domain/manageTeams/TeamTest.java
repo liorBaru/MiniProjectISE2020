@@ -1,10 +1,14 @@
 package domain.manageTeams;
 
+import DB.IntegrationTests;
+import DB.RegressionTests;
+import DB.UnitTests;
 import domain.Asset.*;
 import domain.manageEvents.Notification;
 import domain.manageUsers.Account;
 import domain.manageUsers.AccountStub;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +41,7 @@ public class TeamTest {
     }
 
     @Test
+    @Category({UnitTests.class})
     public void setStatusSuccess1Unit() throws Exception {
         setUpUnit();
         assertTrue(team.isStatus());
@@ -45,6 +50,7 @@ public class TeamTest {
     }
 
     @Test (expected = Exception.class)
+    @Category({UnitTests.class})
     public void setStatusFailed2Unit() throws Exception {
         setUpUnit();
         assertTrue(team.isStatus());
@@ -52,6 +58,7 @@ public class TeamTest {
     }
 
     @Test (expected = Exception.class)
+    @Category({UnitTests.class})
     public void setStatusFailed3Unit() throws Exception {
         setUpUnit();
         assertTrue(team.isStatus());
@@ -61,6 +68,7 @@ public class TeamTest {
     }
 
     @Test
+    @Category({UnitTests.class})
     public void addFinancialActionSuccess4Unit()  {
         setUpUnit();
         BoardMember boardMember= new OwnerStub();
@@ -70,12 +78,14 @@ public class TeamTest {
     }
 
     @Test
+    @Category({UnitTests.class})
     public void addFinancialActionFailed5Unit()  {
         setUpUnit();
         assertFalse(team.addFinancialAction(null));
     }
 
     @Test
+    @Category({UnitTests.class})
     public void addAssetSuccess6Unit()  {
         setUpUnit();
         Asset assetStub= new OwnerStub();
@@ -84,12 +94,14 @@ public class TeamTest {
     }
 
     @Test (expected = Exception.class)
+    @Category({UnitTests.class})
     public void addAssetFailed7Unit()  {
         setUpUnit();
         team.addAsset(null);
     }
 
     @Test (expected = Exception.class)
+    @Category({UnitTests.class})
     public void addAssetFailed8Unit() throws Exception {
         setUpUnit();
         Asset assetStub= new OwnerStub();
@@ -98,6 +110,7 @@ public class TeamTest {
     }
 
     @Test
+    @Category({UnitTests.class})
     public void removeAssetSuccess9Unit() {
         setUpUnit();
         Asset asset= new OwnerStub();
@@ -107,6 +120,7 @@ public class TeamTest {
     }
 
     @Test
+    @Category({IntegrationTests.class})
     public void setStatusSuccess1Integration() throws Exception {
         setUpIntegration();
         assertTrue(team.isStatus());
@@ -119,6 +133,7 @@ public class TeamTest {
     }
 
     @Test (expected = Exception.class)
+    @Category({IntegrationTests.class})
     public void setStatusFailed2Integration() throws Exception {
         setUpIntegration();
         assertTrue(team.isStatus());
@@ -126,6 +141,7 @@ public class TeamTest {
     }
 
     @Test (expected = Exception.class)
+    @Category({IntegrationTests.class})
     public void setStatusFailed3Integration() throws Exception {
         setUpIntegration();
         assertTrue(team.isStatus());
@@ -135,6 +151,7 @@ public class TeamTest {
     }
 
     @Test
+    @Category({IntegrationTests.class, RegressionTests.class})
     public void addFinancialActionSuccess4Integration()  {
         setUpIntegration();
         FinancialAction financialAction= new FinancialAction("Game revenue",5000,this.Owner);
@@ -144,6 +161,7 @@ public class TeamTest {
 
 
     @Test
+    @Category({IntegrationTests.class})
     public void addFinancialActionFailed5Integration()  {
         setUpIntegration();
         assertFalse(team.addFinancialAction(null));
@@ -151,6 +169,7 @@ public class TeamTest {
 
 
     @Test
+    @Category({IntegrationTests.class, RegressionTests.class})
     public void addAssetSuccess6Integration()  {
         setUpIntegration();
         Asset asset= this.Owner;
@@ -159,12 +178,14 @@ public class TeamTest {
     }
 
     @Test (expected = Exception.class)
+    @Category({IntegrationTests.class})
     public void addAssetFailed7Integration()  {
         setUpIntegration();
         team.addAsset(null);
     }
 
     @Test (expected = Exception.class)
+    @Category({IntegrationTests.class})
     public void addAssetFailed8Integration() throws Exception {
         setUpIntegration();
         Asset asset= this.Owner;
@@ -173,6 +194,7 @@ public class TeamTest {
     }
 
     @Test
+    @Category({IntegrationTests.class})
     public void addStaffMemberSuccess9Integration() throws Exception {
         setUpIntegration();
         team.addStaffMember(this.staffMember);
@@ -181,6 +203,7 @@ public class TeamTest {
 
 
     @Test
+    @Category({IntegrationTests.class})
     public void setCloseSuccess10Integration()  {
         setUpIntegration();
         Date date= new Date();
@@ -193,6 +216,7 @@ public class TeamTest {
     }
 
     @Test
+    @Category({IntegrationTests.class})
     public void removeAssetSuccess11Integration() {
         setUpIntegration();
         Asset asset= this.Owner;
@@ -203,6 +227,7 @@ public class TeamTest {
     }
 
     @Test (expected = Exception.class)
+    @Category({IntegrationTests.class})
     public void removeAssetFailed12Integration() {
         setUpIntegration();
         Asset asset= this.Owner;
@@ -211,12 +236,14 @@ public class TeamTest {
 
     }
     @Test (expected = Exception.class)
+    @Category({IntegrationTests.class})
     public void removeAssetFailed13Integration() {
         setUpIntegration();
         team.removeAsset(null);
     }
 
     @Test
+    @Category({IntegrationTests.class})
     public void removeTeamMangerFailed14Integration() {
         setUpIntegration();
         BoardMember bm= this.Owner;
@@ -229,11 +256,13 @@ public class TeamTest {
 
 
     @Test (expected = Exception.class)
+    @Category({IntegrationTests.class})
     public void removeTeamMangerFailed15Integration() {
         team.removeTeamManger(null);
     }
 
     @Test (expected = Exception.class)
+    @Category({IntegrationTests.class})
     public void removeTeamMangerFailed16Integration() {
         setUpIntegration();
         BoardMember bm= this.Owner;

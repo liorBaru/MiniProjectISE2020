@@ -9,12 +9,12 @@ import java.util.TreeMap;
 public class SeasonInfo
 {
     private GameScheduale gameScheduale;
-    private LeagueCalcolator leagueCalcolator;
+    private LeagueCalculator leagueCalcolator;
     private TreeMap<Integer, List<Game>> games;
     private List <TeamInfo> table;
 
 
-    public SeasonInfo(GameScheduale gameScheduale, LeagueCalcolator leagueCalcolator) {
+    public SeasonInfo(GameScheduale gameScheduale, LeagueCalculator leagueCalcolator) {
         this.gameScheduale = gameScheduale;
         games=new TreeMap<>();
         gameScheduale=this.gameScheduale;
@@ -35,8 +35,10 @@ public class SeasonInfo
         this.gameScheduale = gameScheduale;
     }
 
-    public void setLeagueCalculator(LeagueCalcolator leagueCalcolator) {
-        this.leagueCalcolator = leagueCalcolator;
+    public void setLeagueCalculator(LeagueCalculator leagueCalculator) {
+        this.leagueCalcolator = leagueCalculator;
     }
 
-}
+    public LeagueCalculator getLeagueCalculator() {
+        return leagueCalcolator;
+    }}

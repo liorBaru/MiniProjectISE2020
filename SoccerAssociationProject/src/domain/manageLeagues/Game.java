@@ -36,7 +36,7 @@ public class Game extends Subject
      */
     @Override
     public boolean addFollower(User user) throws Exception {
-        if(finishDate==null)
+        if(user!=null && finishDate==null)
         {
             return super.addFollower(user);
         }

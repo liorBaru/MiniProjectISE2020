@@ -172,9 +172,8 @@ public class System
      * @author: David Zaltsman
      * @desc: add new Season to system. USECASE 9.2.1 -> if wrong deatials return appropriate message.
      * @param year- year of the season
-     * @param start- if start ture so we cant modify and changes at seasoninfo
      */
-    public Season addSeason(int year, Boolean start)
+    public Season addSeason(int year)
     {
         if(year<1995 ){
             throw new InputMismatchException("Wrong input");

@@ -1,10 +1,13 @@
 package domain.Asset.Refree;
 
+import DB.IntegrationTests;
+import DB.RegressionTests;
 import DB.System;
 import domain.manageEvents.Notification;
 import domain.manageLeagues.IFA;
 import domain.manageUsers.Account;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +16,8 @@ public class RefreeTest {
     IFA ifa=new IFA("Dan",new Account("dan122","Dan123456"));
 
     @Test
-    public void removeUserTest() {
+    @Category({ IntegrationTests.class})
+    public void removeUserTest1Integration() {
         Refree refree=new LineRefree("Ban",new Account("ban123","Ban123456"));
         system.addIFA(ifa);
         refree.removeUser();

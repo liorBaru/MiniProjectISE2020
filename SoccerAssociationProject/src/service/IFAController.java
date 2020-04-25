@@ -2,7 +2,7 @@ package service;
 import domain.manageLeagues.IFA;
 import domain.Asset.Owner;
 import domain.manageLeagues.League;
-import domain.manageLeagues.LeagueCalcolator;
+import domain.manageLeagues.LeagueCalculator;
 import domain.manageLeagues.Season;
 
 import java.util.Date;
@@ -40,7 +40,7 @@ public class IFAController
         //TODO:
         // 1.fix use case 9.2.1 year-string to year-int.
         try {
-            Ifa.addSeason(year, start);
+            Ifa.addSeason(year);
         } catch (InputMismatchException e) {
             throw new InputMismatchException("Wrong input");
         }
@@ -61,7 +61,7 @@ public class IFAController
         }
     }
 
-    public void updatePolicyToLeague(League league, Season season , LeagueCalcolator leaguePolicy) {
+    public void updatePolicyToLeague(League league, Season season , LeagueCalculator leaguePolicy) {
         //TODO:
         // 1.add to U.C 9.5 parameter to function : Season season , LeagueCalculator leaguePolicy
         try {

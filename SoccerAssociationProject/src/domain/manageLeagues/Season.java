@@ -25,7 +25,7 @@ public class Season
      */
     public Season setSeasonInfo(League league , SeasonInfo seasonInfo)
     {
-        if(league==null || !seasoninfos.containsKey(league) || seasonInfo==null)
+        if(league==null || seasonInfo==null)
             throw new InputMismatchException("Wrong inputs");
         seasoninfos.put(league,seasonInfo);
         return this;
