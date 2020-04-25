@@ -31,13 +31,11 @@ public class SeasonInfo
         this.games.put(round,games);
     }
 
-
-
     public void setGameScheduale(GameScheduale gameScheduale) {
         this.gameScheduale = gameScheduale;
     }
 
-    public void setLeagueCalcolator(LeagueCalcolator leagueCalcolator) {
+    public void setLeagueCalculator(LeagueCalcolator leagueCalcolator) {
         this.leagueCalcolator = leagueCalcolator;
     }
 

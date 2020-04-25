@@ -176,7 +176,7 @@ public class BoardManagerControllerTest {
 
     }
 
-
+    @Test
     public void uploadDataToPage() throws Exception {
         fan.followPage(0);
         coach.uploadDataToPage("checkData");
@@ -187,6 +187,7 @@ public class BoardManagerControllerTest {
         fan.unfollowPage(0);
     }
 
+    @Test
     public void uploadEmptyDataToPage() throws Exception
     {
         fan.followPage(0);

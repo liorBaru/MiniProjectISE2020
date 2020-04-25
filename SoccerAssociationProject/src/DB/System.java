@@ -15,10 +15,7 @@ import domain.manageLeagues.League;
 import domain.manageLeagues.Season;
 import domain.manageTeams.Team;
 
-import java.util.Date;
-import java.util.InputMismatchException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 public class System
@@ -182,7 +179,7 @@ public class System
         if(year<1995 ){
             throw new InputMismatchException("Wrong input");
         }
-        Season season=new Season(year,start);
+        Season season=new Season(year);
         this.seasons.add(season);
         return season;
     }
@@ -661,4 +658,14 @@ public class System
         return accountManager.getAccount(teamUserName);
     }
 
+
+
+    public League getLeague(League league){
+        Iterator<League> leaguesIterator = leagues.iterator();
+        while (leaguesIterator.hasNext()) {
+           if(leaguesIterator.next().equals(league))
+               return leaguesIterator.next();
+        }
+        return null;
+    }
 }

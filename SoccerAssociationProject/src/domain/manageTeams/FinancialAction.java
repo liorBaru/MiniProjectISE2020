@@ -42,4 +42,16 @@ public class FinancialAction
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        FinancialAction financialAction = (FinancialAction)object;
+        if(financialAction.getDate().equals(this.getDescription())&&
+                financialAction.getDescription().equals(this.getDescription()))
+        {
+            return true;
+        }
+        return false;
+    }
 }

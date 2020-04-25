@@ -1,4 +1,4 @@
-package domain;
+package domain.manageEvents;
 
 import domain.manageEvents.Notification;
 import org.junit.Test;

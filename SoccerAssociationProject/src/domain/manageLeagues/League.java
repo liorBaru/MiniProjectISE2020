@@ -37,28 +37,27 @@ public class League
      * @desc: add season to league
      * @param season - the league that we want to add her season
      */
-    public League addSeasonToLeague(League league,Season season)
+    public boolean addSeasonToLeague(Season season)
     {
         //TODO: we will update seasonInfo at the current  use case for policy season update
-        if(season==null || !System.getInstance().getLeagues().contains(league))
+        if(season==null)
             throw new InputMismatchException("Wrong inputs");
         SeasonInfo seasoninfo=new SeasonInfo(null,null);
         seasonInfos.put(season,seasoninfo);
-        return league;
+        return true;
     }
     /**
      * @author: David Zaltsman
      * @desc: add Policyto to season
-     * @param league - the league that we want to add her season
      * @param season - the season that we want to add her policy
      * @param leaguePolicy - an interface that hold the policy of league
      */
-    public Season updatePolicyToLeague(League league,Season season, LeagueCalcolator leaguePolicy)
+    public Season updatePolicyToLeague(Season season, LeagueCalcolator leaguePolicy)
     {
-        if(league==null||!System.getInstance().getLeagues().contains(league)||season==null||!seasonInfos.containsKey(season)|| leaguePolicy==null)
+        if(season==null||!seasonInfos.containsKey(season)|| leaguePolicy==null)
             throw new InputMismatchException("Wrong inputs");
         SeasonInfo seasonInfo= seasonInfos.get(season);
-        seasonInfo.setLeagueCalcolator(leaguePolicy);
+        seasonInfo.setLeagueCalculator(leaguePolicy);
         return season;
     }
 

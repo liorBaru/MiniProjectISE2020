@@ -1,4 +1,4 @@
-package domain;
+package domain.manageUsers;
 
 import DB.System;
 import domain.manageUsers.Account;

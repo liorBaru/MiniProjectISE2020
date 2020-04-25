@@ -163,5 +163,5 @@ public abstract class BoardMember extends StaffMember
 }
 
 enum permission {
-    addPlayer, removePlayer, addCoach, removeCoach, addFinancial, addAsset ,updateTeamPage
+    addPlayer, removePlayer, addCoach, removeCoach, addFinancial, addAsset ,updateTeamPage, removeTeamManger
 }

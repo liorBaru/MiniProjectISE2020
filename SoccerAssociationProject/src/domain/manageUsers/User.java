@@ -86,7 +86,6 @@ public abstract class User extends Guest
 
     public abstract void removeUser() throws Exception;
 
-
     public Account getAccount(){ return account;}
 
 

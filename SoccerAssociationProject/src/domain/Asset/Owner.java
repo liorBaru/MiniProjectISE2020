@@ -165,4 +165,15 @@ public class Owner extends BoardMember
         {
                 //ToDo remove owner
         }
+
+        @Override
+        public boolean equals(Object object)
+        {
+                Owner owner = (Owner)object;
+                if(owner.getName().equals(this.name))
+                {
+                        return true;
+                }
+                return false;
+        }
 }

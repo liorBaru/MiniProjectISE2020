@@ -1,4 +1,4 @@
-package domain;
+package domain.manageUsers;
 
 import domain.manageUsers.Account;
 import domain.manageUsers.User;
@@ -9,9 +9,9 @@ public class AccountStub extends Account
     private String password;
     private User user;
 
-    public AccountStub(String userName, String password)
+    public AccountStub()
     {
-        super(userName,password);
+        super("account","passAccount123");
     }
 
     public String getUserName()
