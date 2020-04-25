@@ -38,7 +38,8 @@ public class GuestTest {
 
     @Test
     public void registerSuccess3Unit() throws Exception {
-        assertNotNull(guest.register("user","userName", "passUser123"));
+        User u=(guest.register("matanGad2020","matan2020Gad2020", "passUser123"));
+      assertNotNull(u);
     }
 
     @Test (expected = Exception.class)

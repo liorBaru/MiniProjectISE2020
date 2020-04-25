@@ -85,7 +85,7 @@ public class IFAControllerTest {
         Season season1=system.getSeasons().get(0);
         String message="";
         try {
-          league1.addSeasonToLeague(league1,season1);
+          league1.addSeasonToLeague(season1);
         }
         catch (InputMismatchException e)
         {

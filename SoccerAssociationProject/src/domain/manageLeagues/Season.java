@@ -1,17 +1,17 @@
 package domain.manageLeagues;
 
+import domain.manageUsers.User;
+
 import java.util.HashMap;
 import java.util.InputMismatchException;
 
 public class Season
 {
     private int year;
-    private boolean start;
     private HashMap<League, SeasonInfo> seasoninfos;
 
-    public Season(int year, boolean start) {
+    public Season(int year) {
         this.year = year;
-        this.start = start;
         seasoninfos =new HashMap<>();
     }
 
@@ -29,5 +29,17 @@ public class Season
         seasoninfos.put(league,seasonInfo);
         return this;
     }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        Season season = (Season)object;
+        if(season.year==(this.year))
+        {
+            return true;
+        }
+        return false;
+    }
+
 
 }

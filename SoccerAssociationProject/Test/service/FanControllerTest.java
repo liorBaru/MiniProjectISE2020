@@ -259,9 +259,9 @@ public class FanControllerTest {
     @Test
     public void loginSuccess() throws Exception
     {
-        system.createNewFanUser("fan","fanUser","FanUser12");
-        User user =userFan.login("fanUser","FanUser12");
-        assertTrue(user.equals(userFan));
+        User user= system.createNewFanUser("fan","fanUser2","FanUser12");
+        User user2 =user.login("fanUser2","FanUser12");
+        assertTrue(user.equals(user2));
 
     }
 }
