@@ -6,6 +6,7 @@ import domain.Asset.SystemManager;
 import domain.manageUsers.Account;
 import domain.manageUsers.User;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 
@@ -17,6 +18,7 @@ public class SystemTest {
     String name="Matan";
 
     @Test
+    @Category(RegressionTests.class)
     public void addBoardMember1TestUnit(){
 
         Account excepted=accountManager.account;
