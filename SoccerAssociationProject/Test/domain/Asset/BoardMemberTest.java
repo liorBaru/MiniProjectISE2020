@@ -1,14 +1,15 @@
 package domain.Asset;
 
-import domain.manageTeams.FinancialAction;
+
+import DB.RegressionTests;
 import domain.manageTeams.Team;
 import domain.manageUsers.Account;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -37,7 +38,7 @@ public class BoardMemberTest {
     team.addAsset(coach);
 
     }
-
+    @Category(RegressionTests.class)
     @Test
     public void removePlayerFalse1Integration() {
         boardMember.permissions.put(permission.removePlayer,false);

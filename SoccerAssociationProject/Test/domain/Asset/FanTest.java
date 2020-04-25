@@ -19,14 +19,14 @@ public class FanTest {
     Page page=team.getPage();
 
     @Test
-    public void followPageTrue() throws Exception {
-        fan.followPage(0);
+    public void followPageTrue1Integration() throws Exception {
+        fan.followPage(page.getPageID());
         Notification n1=new Notification("check",new Date());
         page.notifyObservers(n1);
         assertTrue(fan.readNotification().contains(n1));
     }
     @Test
-    public void followPageFalse() throws Exception {
+    public void followPageFalse2Integration() throws Exception {
         Page page2=new Page(team);
         fan.followPage(page2.getPageID());
         Notification n1=new Notification("check",new Date());
@@ -34,16 +34,16 @@ public class FanTest {
         assertFalse(fan.readNotification().contains(n1));
     }
     @Test(expected = Exception.class)
-    public void followPageDontExists() throws Exception {
+    public void followPageDontExists3Integration() throws Exception {
         fan.followPage(151);
     }
 
     @Test(expected =Exception.class)
-    public void unfollowPagePageNotExists() throws Exception {
+    public void unfollowPagePageNotExists4Integration() throws Exception {
         fan.unfollowPage(150);
     }
     @Test
-    public void unfollowPagePageFollow() throws Exception {
+    public void unfollowPagePageFollow5Integration() throws Exception {
         fan.followPage(0);
         fan.unfollowPage(0);
         Notification n1=new Notification("check",new Date());
