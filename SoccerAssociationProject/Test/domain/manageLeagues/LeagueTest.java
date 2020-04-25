@@ -7,6 +7,7 @@ import java.util.InputMismatchException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 public class LeagueTest {
@@ -19,20 +20,15 @@ public class LeagueTest {
         season= new Season(2020);
     }
 
-    @Test
-    public void addSeasonToLeagueFailed1Unit()
-    {
-        setUpUnit();
-        league.addSeasonToLeague(season);
-    }
 
 //    @Test
-//    public void addSeasonToLeagueSuccess2Unit()
+//    public void addSeasonToLeagueSuccess1Unit()
 //    {
 //        setUpUnit();
 //        league.addSeasonToLeague(season);
 //        assertEquals(league.getSeasonInfos().get(season),season);
-//        //season.setSeasonInfo()
+//        assertEquals(season.getSeasonInfos().get(league),league);
 //    }
+
 
 }

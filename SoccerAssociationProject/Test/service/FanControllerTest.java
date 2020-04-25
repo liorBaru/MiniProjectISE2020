@@ -1,4 +1,5 @@
 package service;
+import DB.RegressionTests;
 import domain.Asset.Coach;
 import domain.Asset.Fan;
 import domain.Asset.Owner;
@@ -11,6 +12,7 @@ import domain.manageUsers.Guest;
 import domain.manageUsers.User;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +40,9 @@ public class FanControllerTest {
    }
 
 
-
     @Test
-    public void loginFailure()
+    @Category(RegressionTests.class)
+    public void loginFailure1acceptance()
     {
         String message="";
         try
@@ -64,7 +66,8 @@ public class FanControllerTest {
 
 
     @Test
-    public void followPage() throws Exception
+    @Category(RegressionTests.class)
+    public void followPage2acceptance() throws Exception
     {
         try
         {
@@ -88,8 +91,10 @@ public class FanControllerTest {
         assertEquals(userFan.getName()+" is already following",message);
         userFan.unfollowPage(coach.getPage().getPageID());
     }
+
     @Test
-    public void followPageNotExistPage() throws Exception
+    @Category(RegressionTests.class)
+    public void followPageNotExistPage3acceptance() throws Exception
     {
         try
         {
@@ -112,7 +117,8 @@ public class FanControllerTest {
     }
 
     @Test
-    public void followPageAlreadyFollower() throws Exception
+    @Category(RegressionTests.class)
+    public void followPageAlreadyFollower4acceptance() throws Exception
     {
         try
         {
@@ -136,10 +142,9 @@ public class FanControllerTest {
         userFan.unfollowPage(coach.getPage().getPageID());
     }
 
-
-
     @Test
-    public void unFollowPage() throws Exception
+    @Category(RegressionTests.class)
+    public void unFollowPage5acceptance() throws Exception
     {
         try
         {
@@ -164,7 +169,8 @@ public class FanControllerTest {
     }
 
     @Test
-    public void unFollowPageFanNotFollow() throws Exception
+    @Category(RegressionTests.class)
+    public void unFollowPageFanNotFollow6acceptance() throws Exception
     {
         try
         {
@@ -189,7 +195,8 @@ public class FanControllerTest {
     }
 
     @Test
-    public void unFollowPageNotExistsPage() throws Exception
+    @Category(RegressionTests.class)
+    public void unFollowPageNotExistsPage7acceptance() throws Exception
     {
         try
         {
@@ -214,7 +221,8 @@ public class FanControllerTest {
     }
 
     @Test
-    public void sendComplaintSuccess()
+    @Category(RegressionTests.class)
+    public void sendComplaintSuccess8acceptance()
     {
         try
         {
@@ -231,7 +239,8 @@ public class FanControllerTest {
     }
 
     @Test
-    public void register() throws Exception
+    @Category(RegressionTests.class)
+    public void register9acceptance() throws Exception
     {
         Guest guest = new Guest();
         guest.register("guest","guestUser","guestUser1");
@@ -250,14 +259,16 @@ public class FanControllerTest {
 
 
     @Test
-    public void changePasswordSuccess() throws Exception
+    @Category(RegressionTests.class)
+    public void changePasswordSuccess10acceptance() throws Exception
     {
         userFan.updatePassword("FanUser12","FanUser123");
         assertTrue(userFan.getAccount().accountVerification("FanUser123"));
     }
 
     @Test
-    public void loginSuccess() throws Exception
+    @Category(RegressionTests.class)
+    public void loginSuccess11acceptance() throws Exception
     {
         User user= system.createNewFanUser("fan","fanUser2","FanUser12");
         User user2 =user.login("fanUser2","FanUser12");

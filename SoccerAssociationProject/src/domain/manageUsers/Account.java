@@ -33,8 +33,6 @@ public class Account
     }
 
 
-
-
     /**
      * gal
      * check if the password is correct

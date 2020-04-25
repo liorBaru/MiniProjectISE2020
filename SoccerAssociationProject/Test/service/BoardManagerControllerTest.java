@@ -1,11 +1,13 @@
 package service;
 
+import DB.RegressionTests;
 import domain.Asset.*;
 import domain.manageUsers.Account;
 import domain.manageEvents.Notification;
 import domain.manageTeams.FinancialAction;
 import domain.manageTeams.Team;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,8 @@ public class BoardManagerControllerTest {
      *  acceptance test UC 6.1a
      */
     @org.junit.Test
-   public void addAssets() {
+    @Category(RegressionTests.class)
+    public void addAssets1acceptance() {
         Field filed=new Field("Tady");
         BoardManagerController bmc = new BoardManagerController();
         bmc.addAssets(filed,owner);
@@ -48,7 +51,8 @@ public class BoardManagerControllerTest {
      */
 
     @org.junit.Test(expected = ArithmeticException.class)
-    public void removeAssets() {
+    @Category(RegressionTests.class)
+    public void removeAssets2acceptance() {
         Field trainField=new Field("buyit vagan");
         BoardManagerController bmc = new BoardManagerController();
         bmc.removeAssets(trainField,owner);
@@ -58,7 +62,8 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.2
      */
     @Test
-    public void appointmentNewOwner() {
+    @Category(RegressionTests.class)
+    public void appointmentNewOwner3acceptance() {
         Owner ownerNew=new Owner( new Account("Matan","12341234"),"matan gadasi",null,null,null);
         BoardManagerController bmc = new BoardManagerController();
         bmc.appointmentNewOwner(owner,ownerNew);
@@ -70,7 +75,8 @@ public class BoardManagerControllerTest {
      */
 
     @Test
-    public void removeOwnerAppointment() {
+    @Category(RegressionTests.class)
+    public void removeOwnerAppointment4acceptance() {
         Owner ownerRemove=new Owner( new Account("Matan","12341234"),"matan gadasi",null,null,null);
         BoardManagerController bmc = new BoardManagerController();
         bmc.appointmentNewOwner(owner,ownerRemove);
@@ -83,7 +89,8 @@ public class BoardManagerControllerTest {
      */
 
     @org.junit.Test
-    public void testAppointTeamManger() {
+    @Category(RegressionTests.class)
+    public void testAppointTeamManger5acceptance() {
         Account account=new Account("guyLevi","12341234");
         TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
         BoardManagerController bmc = new BoardManagerController();
@@ -99,7 +106,8 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.5a
      */
     @org.junit.Test
-    public void testRemoveAppointTeamMangerA() {
+    @Category(RegressionTests.class)
+    public void testRemoveAppointTeamMangerA6acceptance() {
         Account account=new Account("guyLevi","12341234");
         TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
         BoardManagerController bmc = new BoardManagerController();
@@ -114,7 +122,8 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.5b
      */
     @org.junit.Test(expected = ArithmeticException.class)
-    public void testRemoveAppointTeamMangerB() {
+    @Category(RegressionTests.class)
+    public void testRemoveAppointTeamMangerB7acceptance() {
         Account account=new Account("guyLevi","12341234");
         TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
         BoardManagerController bmc = new BoardManagerController();
@@ -128,7 +137,8 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.6.1.a
      */
     @Test
-    public void openTeam1a() throws Exception {
+    @Category(RegressionTests.class)
+    public void openTeam1a8acceptance() throws Exception {
         BoardManagerController bmc = new BoardManagerController();
         owner.getTeam().setStatus(false);
         bmc.openTeam(owner);
@@ -139,7 +149,8 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.6.1.b
      */
     @Test(expected = Exception.class)
-    public void openTeam1b()throws Exception{
+    @Category(RegressionTests.class)
+    public void openTeam1b9acceptance()throws Exception{
         BoardManagerController bmc = new BoardManagerController();
         bmc.openTeam(owner);
     }
@@ -148,7 +159,8 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.6.2.a
      */
     @Test
-    public void closeTeam2a() throws Exception {
+    @Category(RegressionTests.class)
+    public void closeTeam2a10acceptance() throws Exception {
         BoardManagerController bmc = new BoardManagerController();
         bmc.closeTeam(owner);
         assertFalse(owner.getTeam().isStatus());
@@ -158,7 +170,8 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.6.2.b
      */
     @Test(expected = Exception.class)
-    public void closeTeam2b()throws Exception{
+    @Category(RegressionTests.class)
+    public void closeTeam2b11acceptance()throws Exception{
         BoardManagerController bmc = new BoardManagerController();
         owner.getTeam().setStatus(false);
         bmc.closeTeam(owner);
@@ -168,7 +181,8 @@ public class BoardManagerControllerTest {
      * acceptance test UC 6.7a
      */
     @Test
-    public void reportIncomeOrOutcome() {
+    @Category(RegressionTests.class)
+    public void reportIncomeOrOutcome12acceptance() {
         FinancialAction financialAction=new FinancialAction("Buy new player",-50000,owner);
         BoardManagerController bmc = new BoardManagerController();
         bmc.reportIncomeOrOutcome(owner,financialAction);
@@ -177,7 +191,8 @@ public class BoardManagerControllerTest {
     }
 
     @Test
-    public void uploadDataToPage() throws Exception {
+    @Category(RegressionTests.class)
+    public void uploadDataToPage13acceptance() throws Exception {
         fan.followPage(0);
         coach.uploadDataToPage("checkData");
         for (Notification notification:fan.readNotification())
@@ -188,7 +203,8 @@ public class BoardManagerControllerTest {
     }
 
     @Test
-    public void uploadEmptyDataToPage() throws Exception
+    @Category(RegressionTests.class)
+    public void uploadEmptyDataToPage14acceptance() throws Exception
     {
         fan.followPage(0);
         coach.uploadDataToPage("");

@@ -1,4 +1,5 @@
 package service;
+import DB.RegressionTests;
 import domain.manageUsers.Account;
 import domain.manageLeagues.IFA;
 import domain.Asset.Owner;
@@ -6,6 +7,7 @@ import DB.System;
 import domain.manageLeagues.League;
 import domain.manageLeagues.Season;
 import domain.manageTeams.Team;
+import org.junit.experimental.categories.Category;
 
 import java.util.Date;
 import java.util.InputMismatchException;
@@ -18,7 +20,8 @@ public class IFAControllerTest {
     System system =System.getInstance();
 
     @org.junit.Test
-    public void newLeagueTest1() {
+    @Category(RegressionTests.class)
+    public void newLeague1acceptance() {
         int legaueLevel=2;
         String leagueName="Ligan ha aal";
         League leagueTest=system.addLeague(leagueName,legaueLevel);
@@ -26,7 +29,8 @@ public class IFAControllerTest {
     }
 
     @org.junit.Test
-    public void newLeagueTest2() { //wrong input level test
+    @Category(RegressionTests.class)
+    public void newLeague2acceptance() { //wrong input level test
         //TODO:
         // 1.change mivhanei kabal - test 9.1.b change the input of league to leaguelevel
         int legaueLevel=-5;
@@ -42,7 +46,8 @@ public class IFAControllerTest {
         assertEquals("Wrong input",message);
     }
     @org.junit.Test
-    public void newLeagueTest3() { //existing league test
+    @Category(RegressionTests.class)
+    public void newLeagueTest3acceptance() { //existing league test
         int legaueLevel=1;
         String message="";
         String leagueName="Chanpionship League";
@@ -56,14 +61,16 @@ public class IFAControllerTest {
         assertEquals("Wrong input",message);
     }
     @org.junit.Test
-    public void newSeasonTest1() { //create season succsesfully
+    @Category(RegressionTests.class)
+    public void newSeasonTest4acceptance() { //create season succsesfully
         int year=2022;
         boolean start=false;
         Season season=system.addSeason(year,start);
         assertTrue(system.getSeasons().contains(season));
     }
     @org.junit.Test
-    public void newSeasonTest2() { //failure with wrong year
+    @Category(RegressionTests.class)
+    public void newSeasonTest5acceptance() { //failure with wrong year
         int year=-15;
         boolean start=false;
         String message="";
@@ -78,7 +85,8 @@ public class IFAControllerTest {
     }
 
     @org.junit.Test
-    public void addSeasonToLeagueTest1() { //find successfuly the season of league
+    @Category(RegressionTests.class)
+    public void addSeasonToLeagueTest6acceptance() { //find successfuly the season of league
         system.addSeason(2019,false);
         system.addLeague("Ligat ha al",1);
         League league1=system.getLeagues().get(0);
@@ -97,7 +105,8 @@ public class IFAControllerTest {
   ///////--------------------------------------------------------------------------------------------lior part
 
     @org.junit.Test
-    public void addPlayer() throws Exception{
+    @Category(RegressionTests.class)
+    public void addPlayer7acceptance() throws Exception{
         Account lAcoount = new Account("Gal", "Abc12345");
         IFA ifa = new IFA("Gal" ,lAcoount);  //String name, Account account
 
@@ -111,7 +120,8 @@ public class IFAControllerTest {
     }
 
     @org.junit.Test
-    public void addCoach() throws Exception{
+    @Category(RegressionTests.class)
+    public void addCoach8acceptance() throws Exception{
         // IFA ifa, String cName,String password, String userName
         Account lAcoount = new Account("matan22", "Abc12345");// userName, String password
         IFA ifa = new IFA("matan" ,lAcoount);  //String name, Account account
@@ -126,7 +136,8 @@ public class IFAControllerTest {
     }
 
     @org.junit.Test
-    public void addReferee() throws Exception{
+    @Category(RegressionTests.class)
+    public void addReferee9acceptance() throws Exception{
 
         Account lAcoount = new Account("liorb", "33097377");// userName, String password
         IFA ifa = new IFA("lior" ,lAcoount);  //String name, Account account
@@ -142,7 +153,8 @@ public class IFAControllerTest {
 
 
     @org.junit.Test
-    public void addIFA() throws Exception{
+    @Category(RegressionTests.class)
+    public void addIFA10acceptance() throws Exception{
         // addIFA(IFA ifaManager, String ifaName, String password, String userName
         Account Acoount1 = new Account("liorb", "33097377");// userName, String password
         IFA ifaManager = new IFA("lior" ,Acoount1);  //String name, Account account
@@ -157,7 +169,8 @@ public class IFAControllerTest {
 
 
     @org.junit.Test
-    public void addOwner() throws Exception{
+    @Category(RegressionTests.class)
+    public void addOwner11acceptance() throws Exception{
         // addIFA(IFA ifaManager, String ifaName, String password, String userName
         Account Acoount1 = new Account("liorb", "33097377");// userName, String password
         IFA ifaManager = new IFA("lior" ,Acoount1);  //String name, Account account
@@ -172,7 +185,8 @@ public class IFAControllerTest {
 
     //addTeam(IFA ifaManager, String teamName, Owner owner
     @org.junit.Test
-    public void addTeam() throws Exception{
+    @Category(RegressionTests.class)
+    public void addTeam12acceptance() throws Exception{
         Account Acoount1 = new Account("liorb", "33097377");// userName, String password
         IFA ifaManager = new IFA("lior" ,Acoount1);  //String name, Account account
 

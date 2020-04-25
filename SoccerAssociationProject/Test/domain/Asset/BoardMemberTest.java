@@ -38,8 +38,8 @@ public class BoardMemberTest {
     team.addAsset(coach);
 
     }
-    @Category(RegressionTests.class)
     @Test
+    @Category(RegressionTests.class)
     public void removePlayerFalse1Integration() {
         boardMember.permissions.put(permission.removePlayer,false);
         assertFalse(boardMember.removePlayer(player));

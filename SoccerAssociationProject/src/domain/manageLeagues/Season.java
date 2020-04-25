@@ -2,6 +2,7 @@ package domain.manageLeagues;
 
 import domain.manageUsers.User;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 
@@ -42,4 +43,7 @@ public class Season
     }
 
 
+    public  HashMap<League, SeasonInfo> getSeasonInfos() {
+        return seasoninfos;
+    }
 }
