@@ -4,6 +4,7 @@ import DB.IntegrationTests;
 import DB.RegressionTests;
 import DB.System;
 import DB.UnitTests;
+import domain.Asset.Fan;
 import domain.manageUsers.Account;
 import domain.manageUsers.AccountManager;
 import domain.manageUsers.Guest;
@@ -202,9 +203,10 @@ public class AccountManagerTest
 
     @Test
     @Category({UnitTests.class, RegressionTests.class})
-    public void changePasswordSuccess12Unit() throws Exception {
-        accountManager= new AccountManager(system);
-        fan = system.createNewFanUser("fan","fanUser","FanUser12");
+    public void changePasswordSuccess12Unit() throws Exception
+    {
+        fan = new Fan("fan",new Account("fanUser","FanUser12"));
+        accountManager.createAccount("fanUser","FanUser12");
         assertTrue(accountManager.changePassword("FanUser12","FanUser123",fan));
     }
 

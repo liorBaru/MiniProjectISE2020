@@ -36,7 +36,7 @@ public abstract class BoardMember extends StaffMember
      */
     public boolean removePlayer(Player player)
     {
-        if(player!=null && permissions.get(permission.removePlayer)&&team!=null)
+        if(player!=null && permissions.get(permission.removePlayer) && team!=null)
         {
             team.removeAsset(player);
             team.removeStaffMember(player);

@@ -59,8 +59,8 @@ public class FanTest {
     @Category({IntegrationTests.class})
     @Test
     public void unfollowPagePageFollow5Integration() throws Exception {
-        fan.followPage(0);
-        fan.unfollowPage(0);
+        fan.followPage(4);
+        fan.unfollowPage(4);
         Notification n1=new Notification("check",new Date());
         page.notifyObservers(n1);
         assertFalse(fan.readNotification().contains(n1));

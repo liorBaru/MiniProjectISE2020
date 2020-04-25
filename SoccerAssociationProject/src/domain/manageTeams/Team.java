@@ -144,7 +144,8 @@ public class Team implements pageable
         }
     }
 
-    public void removeAsset(Asset asset) {
+    public void removeAsset(Asset asset)
+    {
         if (asset == null || status == false)
             throw new ArithmeticException("missed asset");
         if (!assetsOfTeam.contains(asset))
@@ -170,15 +171,18 @@ public class Team implements pageable
     public void removeTeamManger(TeamManager teamManager) {
         StaffMember tempTM = null;
         for (StaffMember staff : staffMembers) {
-            if (staff instanceof TeamManager && teamManager == staff) {
+            if (staff instanceof TeamManager && teamManager==staff) {
                 tempTM = staff;
                 break;
             }
         }
         if (tempTM != null) {
             staffMembers.remove(tempTM);
-        } else {
+        }
+        else
+        {
             throw new IllegalArgumentException("The TeamManger is not in this team");
+
         }
     }
 }

@@ -90,41 +90,41 @@ public class BoardMemberTest {
 
     @Test
     @Category({UnitTests.class})
-    public void addFinancialActionTrue5Unit() {
+    public void addFinancialActionTrue6Unit() {
         boardMember.permissions.put(permission.addFinancial,true);
         assertTrue(boardMember.addFinancialAction("buyPlayer",-2000));
     }
 
     @Test
     @Category({UnitTests.class})
-    public void addAssetsFalse6Unit() {
+    public void addAssetsFalse7Unit() {
         boardMember.permissions.put(permission.addAsset,false);
         assertFalse(boardMember.addAssets("filed"));
     }
     @Test
     @Category({UnitTests.class})
-    public void addAssetsTrue7Unit() {
+    public void addAssetsTrue8Unit() {
         boardMember.permissions.put(permission.addAsset,true);
         assertTrue(boardMember.addAssets("filed"));
     }
 
     @Test
     @Category({UnitTests.class})
-    public void updateTeamPageTrue8Unit() {
+    public void updateTeamPageTrue9Unit() {
         boardMember.permissions.put(permission.updateTeamPage,true);
         assertTrue(boardMember.updateTeamPage("New Player is on the Way"));
     }
 
     @Test
     @Category({UnitTests.class})
-    public void updateTeamPageFalse9Unit() {
+    public void updateTeamPageFalse10Unit() {
         boardMember.permissions.put(permission.updateTeamPage,false);
         assertFalse(boardMember.updateTeamPage("New Player is on the Way"));
     }
 
     @Test
     @Category({IntegrationTests.class})
-    public void removeTeam1Integration() throws Exception {
+    public void removeTeam3Integration() throws Exception {
         boardMember.removeTeam(team);
         assertNull(boardMember.team);
     }

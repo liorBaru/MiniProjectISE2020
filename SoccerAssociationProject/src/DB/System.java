@@ -22,24 +22,21 @@ public class System
 {
     private static System system;
     private AccountManager accountManager;
-
+    private List<SystemManager> systemManagers;
+    private List<IFA> ifaList;
     private List<League> leagues;
     private List<Season> seasons;
     private List<Team> teams;
+    private List<Team> closedTeams;
     private List<Page> pages;
     private List<Asset> assetsExists;
     private List<Coach> coaches;
     private List<Owner> owners;
-
     private List<Player> players;
     private List<Refree> refrees;
-    private List<IFA> ifaList;
-    private List<SystemManager> systemManagers;
+
 
     private List<Complaint> complaints;
-    private List<Team> closedTeams;
-
-
     private System ()
     {
         leagues = new LinkedList<>();
@@ -64,18 +61,10 @@ public class System
         return this.ifaList;
     }
 
-    public List<SystemManager> getSystemManagers() {
+    public List<SystemManager> getSystemManagers()
+    {
         return systemManagers;
     }
-
-
-    public Account addBoardMember(String userName, String password, String name) throws Exception {
-        SystemManager systemManager = new SystemManager(name,accountManager.createAccount(userName, password));
-        system = getInstance();
-        system.systemManagers.add(systemManager);
-        return accountManager.getAccount(userName);
-    }
-
 
     public User createNewFanUser(String name, String userName, String password)throws Exception
     {
@@ -206,9 +195,6 @@ public class System
         }
     }
 
-
-
-
     /**
      * gal
      * add page to pages and user to page followers
@@ -248,6 +234,7 @@ public class System
     {
         pages.add(page);
     }
+
     public List<Page> findPage(String pageName)
     {
         List<Page> releventPages = new LinkedList<>();
@@ -330,7 +317,7 @@ public class System
      */
     public void addPlayer(Player player)
     {
-        if(player!=null)
+        if(player!=null && players.contains(player)==false)
         {
             players.add(player);
         }
@@ -344,7 +331,7 @@ public class System
      */
     public void addCoach(Coach coach)
     {
-        if(coach!=null)
+        if(coach!=null && coaches.contains(coach)==false)
         {
             coaches.add(coach);
         }
@@ -652,12 +639,6 @@ public class System
         }
         return null;
     }
-    public Account getTeamAccount(String teamUserName)
-    {
-        return accountManager.getAccount(teamUserName);
-    }
-
-
 
     public League getLeague(League league){
         Iterator<League> leaguesIterator = leagues.iterator();
@@ -666,5 +647,10 @@ public class System
                return leaguesIterator.next();
         }
         return null;
+    }
+
+    public AccountManager getAccountManager()
+    {
+        return this.accountManager;
     }
 }

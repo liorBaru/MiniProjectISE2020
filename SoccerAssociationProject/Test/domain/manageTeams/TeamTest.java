@@ -249,7 +249,7 @@ public class TeamTest {
         BoardMember bm= this.Owner;
         List<String> permissions= new ArrayList<>();
         permissions.add("removeTeamManger");
-        TeamManager tm= new TeamManager(new AccountStub(),"TM",this.team,bm,500,permissions);
+        TeamManager tm= new TeamManager(new Account("teamManager","Password1"),"TM",this.team,bm,500,permissions);
         team.addStaffMember(tm);
         team.removeTeamManger(tm);
     }

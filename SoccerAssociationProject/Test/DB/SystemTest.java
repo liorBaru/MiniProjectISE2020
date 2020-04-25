@@ -30,14 +30,7 @@ public class SystemTest {
         assertEquals(excepted,account);
     }
 
-    @Test
-    @Category({ IntegrationTests.class})
-    public void addBoardMember1Integration() throws Exception {
 
-       Account account= system.addBoardMember("gal123","Gal12345","gal");
-       assertEquals(system.getSystemManagers().get(0).getAccount(),account);
-
-    }
     @Test
     @Category({ UnitTests.class})
     public void createNewFanUser2Unit() throws Exception {

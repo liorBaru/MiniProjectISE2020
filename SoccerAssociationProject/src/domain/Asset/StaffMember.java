@@ -65,10 +65,13 @@ public abstract class StaffMember extends User implements Asset
     @Override
     public boolean equals(Object object)
     {
-        StaffMember staffMember = (StaffMember)object;
-        if(staffMember.getTeam().equals(this.team))
+        if(object instanceof StaffMember)
         {
-            return true;
+            StaffMember staffMember = (StaffMember)object;
+            if(staffMember.account.getUserName().equals(this.account.getUserName()))
+            {
+                return true;
+            }
         }
         return false;
     }

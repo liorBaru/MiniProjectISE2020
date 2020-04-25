@@ -28,10 +28,13 @@ public abstract class User extends Guest
     @Override
     public boolean equals(Object object)
     {
-        User user = (User)object;
-        if(user.account.getUserName().equals(this.account.getUserName()))
+        if( object instanceof  User)
         {
-            return true;
+            User user = (User)object;
+            if(user.account.getUserName().equals(this.account.getUserName()))
+            {
+                return true;
+            }
         }
         return false;
     }

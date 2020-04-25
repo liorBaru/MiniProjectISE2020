@@ -83,7 +83,7 @@ public class LeagueTest {
 
     @Test (expected = Exception.class)
     @Category({IntegrationTests.class})
-    public void updatePolicyToLeagueFailed2Integration()
+    public void updatePolicyToLeagueFailed4Integration()
     {
         setUpIntegration();
         league.addSeasonToLeague(null);
