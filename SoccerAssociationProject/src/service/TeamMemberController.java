@@ -1,6 +1,6 @@
 package service;
 
-import domain.TeamMember;
+import domain.Asset.TeamMember;
 
 public class TeamMemberController
 {

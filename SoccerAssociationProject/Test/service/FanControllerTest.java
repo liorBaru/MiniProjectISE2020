@@ -1,7 +1,18 @@
 package service;
-import domain.*;
-import domain.System;
+import DB.RegressionTests;
+import domain.Asset.Coach;
+import domain.Asset.Fan;
+import domain.Asset.Owner;
+import domain.Asset.TeamMember;
+import DB.System;
+import domain.manageUsers.Account;
+import domain.manageTeams.Team;
+import domain.manageUsers.AccountManager;
+import domain.manageUsers.Guest;
+import domain.manageUsers.User;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +26,7 @@ public class FanControllerTest {
     Owner owner ;
     TeamMember coach;
 
+    @Before
     public void setUp() throws Exception
     {
         List<Owner> ownerList=new ArrayList<>();
@@ -23,12 +35,39 @@ public class FanControllerTest {
         ownerList.add(owner);
         Team team=new Team(ownerList,"M.C");
         owner.setTeam(team);
-        coach = new Coach(new Account("admin","12341234"),"boss","training");
-        userFan = new Fan("gal",new Account("galbo","gAlb1234"));
+        coach = new Coach(new Account("admin","12341234"),"boss");
+        userFan = new Fan("fan",new Account("fanUser","FanUser12"));
    }
 
+
     @Test
-    public void followPage() throws Exception
+    @Category(RegressionTests.class)
+    public void loginFailure1acceptance()
+    {
+        String message="";
+        try
+        {
+            setUp();
+        }
+        catch (Exception e)
+        {
+            message=e.getMessage();
+        }
+        try
+        {
+            User user =userFan.login("fffdsd","FanUser12");
+        }
+        catch (Exception e)
+        {
+            message=e.getMessage();
+        }
+        assertEquals(message," wrong userName or password, please try again");
+    }
+
+
+    @Test
+    @Category(RegressionTests.class)
+    public void followPage2acceptance() throws Exception
     {
         try
         {
@@ -52,8 +91,10 @@ public class FanControllerTest {
         assertEquals(userFan.getName()+" is already following",message);
         userFan.unfollowPage(coach.getPage().getPageID());
     }
+
     @Test
-    public void followPageNotExsistPage() throws Exception
+    @Category(RegressionTests.class)
+    public void followPageNotExistPage3acceptance() throws Exception
     {
         try
         {
@@ -74,8 +115,10 @@ public class FanControllerTest {
         }
         assertEquals(message,"page dont exists, please try again");
     }
+
     @Test
-    public void followPageAlreadyFollower() throws Exception
+    @Category(RegressionTests.class)
+    public void followPageAlreadyFollower4acceptance() throws Exception
     {
         try
         {
@@ -99,10 +142,9 @@ public class FanControllerTest {
         userFan.unfollowPage(coach.getPage().getPageID());
     }
 
-
-
     @Test
-    public void unFollowPage() throws Exception
+    @Category(RegressionTests.class)
+    public void unFollowPage5acceptance() throws Exception
     {
         try
         {
@@ -125,8 +167,10 @@ public class FanControllerTest {
         }
         assertEquals(userFan.getName()+" is not following the chosen page",message);
     }
+
     @Test
-    public void unFollowPageFanNotFollow() throws Exception
+    @Category(RegressionTests.class)
+    public void unFollowPageFanNotFollow6acceptance() throws Exception
     {
         try
         {
@@ -149,8 +193,10 @@ public class FanControllerTest {
         }
         assertEquals(userFan.getName() +" is not following the chosen page",message);
     }
+
     @Test
-    public void unFollowPageNotExistsPage() throws Exception
+    @Category(RegressionTests.class)
+    public void unFollowPageNotExistsPage7acceptance() throws Exception
     {
         try
         {
@@ -175,7 +221,8 @@ public class FanControllerTest {
     }
 
     @Test
-    public void sendComplaintSuccess()
+    @Category(RegressionTests.class)
+    public void sendComplaintSuccess8acceptance()
     {
         try
         {
@@ -191,5 +238,41 @@ public class FanControllerTest {
         assertTrue(system.getComplaints().size()<2);
     }
 
+    @Test
+    @Category(RegressionTests.class)
+    public void register9acceptance() throws Exception
+    {
+        Guest guest = new Guest();
+        guest.register("guest","guestUser","guestUser1");
+        String message="";
+        try
+        {
+            guest.register("guest","guestUser","guestUser1");
+        }
 
+        catch (Exception e)
+        {
+            message=e.getMessage();
+        }
+        assertEquals(message,"Invalid username, userName already exists please try different username");
+    }
+
+
+    @Test
+    @Category(RegressionTests.class)
+    public void changePasswordSuccess10acceptance() throws Exception
+    {
+        userFan.updatePassword("FanUser12","FanUser123");
+        assertTrue(userFan.getAccount().accountVerification("FanUser123"));
+    }
+
+    @Test
+    @Category(RegressionTests.class)
+    public void loginSuccess11acceptance() throws Exception
+    {
+        User user= system.createNewFanUser("fan","fanUser2","FanUser12");
+        User user2 =user.login("fanUser2","FanUser12");
+        assertTrue(user.equals(user2));
+
+    }
 }

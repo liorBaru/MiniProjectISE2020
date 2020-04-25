@@ -1,6 +1,9 @@
 package service;
 
-import domain.*;
+import domain.Asset.Asset;
+import domain.Asset.Owner;
+import domain.Asset.TeamManager;
+import domain.manageTeams.FinancialAction;
 
 import java.util.List;
 
@@ -103,7 +106,7 @@ public class BoardManagerController {
      * @param financialAction
      * Report of income or outcome of the owner's team UC 6.7
      */
-        public void reportIncomeOrOutcome(Owner owner,FinancialAction financialAction){
+        public void reportIncomeOrOutcome(Owner owner, FinancialAction financialAction){
             owner.reportIncomeOrOutcome(financialAction);
         }
 
