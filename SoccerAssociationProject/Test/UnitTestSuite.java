@@ -24,7 +24,7 @@ import service.IFAControllerTest;
 
 @RunWith(Categories.class)
 @Categories.IncludeCategory(UnitTests.class)
-@Suite.SuiteClasses({SystemTest.class, BoardMemberTest.class,
+@Suite.SuiteClasses({SystemTest.class,
         BoardManagerControllerTest.class, FanControllerTest.class,
         IFAControllerTest.class, BoardMemberTest.class,FanTest.class,
         RefreeTest.class, NotificationTest.class, GameTest.class,
