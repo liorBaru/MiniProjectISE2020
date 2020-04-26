@@ -8,11 +8,12 @@ public class Notification implements Comparable
     private String details;
     private Date date;
 
-    public Notification(String details, Date date)
+    public Notification(String details)
     {
         this.details = details;
-        this.date = date;
+        this.date = new Date();
     }
+
 
     @Override
     public int compareTo(Object o)

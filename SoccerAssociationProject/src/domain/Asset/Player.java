@@ -15,11 +15,12 @@ public class Player extends TeamMember
     private int yellowCards;
     private int redCards;
 
-    public Player(Account account, String name, Date birthDay)
+    public Player(Account account, String name, Date birthDay, List<String> positionsSt)
     {
         super(account,name);
         this.birthDay=birthDay;
         positions= new LinkedList<>();
+        setPositions(positionsSt);
         goals=0;
         games=0;
         yellowCards=0;
@@ -46,6 +47,18 @@ public class Player extends TeamMember
        userDetails.add(goalSt);
        userDetails.add(gameSt);
        return userDetails;
+    }
+
+    private void setPositions(List<String> positionsSt)
+    {
+        for (String position:positionsSt)
+        {
+            domain.Asset.PlayerPosition positionToAdd = PlayerPosition.valueOf(domain.Asset.PlayerPosition.class, position );
+            if(positionToAdd!=null)
+            {
+                this.positions.add(positionToAdd);
+            }
+        }
     }
 
     public String getType()

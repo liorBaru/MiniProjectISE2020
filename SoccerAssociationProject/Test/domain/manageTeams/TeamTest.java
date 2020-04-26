@@ -22,22 +22,37 @@ public class TeamTest {
     private  Owner Owner;
     private StaffMember staffMember;
 
-    public void setUpUnit(){
+    public void setUpUnit()  {
 
         OwnerStub Owner1= new OwnerStub();
         List<Owner> owners= new ArrayList<>();
         owners.add(Owner1);
-        team= new Team(owners,"team");
+        try
+        {
+            team= new Team(owners,"team");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
-    public void setUpIntegration(){
+    public void setUpIntegration()  {
         Owner= new Owner(new Account("owner1","passOwner1"),"owner");
         List<Owner> owners= new ArrayList<>();
         owners.add(Owner);
-        staffMember= new Coach(new Account("Coach", "passCoach123"),"Coach");
-        team= new Team(owners,"team");
-        team.addStaffMember(staffMember);
+        staffMember= new Coach(new Account("Coach", "passCoach123"),"Coach","training");
+        try
+        {
+            team= new Team(owners,"team");
+            team.addStaffMember(staffMember);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     @Test
@@ -207,11 +222,15 @@ public class TeamTest {
     public void setCloseSuccess10Integration()  {
         setUpIntegration();
         Date date= new Date();
-        Notification notification= new Notification(" is inactive",date);
+        Notification notification= new Notification(" is inactive");
         team.setClose(notification);
-        for (StaffMember staffMem : team.getStaffMembers()) {
-            Notification staffMemNotification= staffMem.readNotification().peek();
-             assertTrue(notification.equals(staffMemNotification));
+        for (StaffMember staffMem : team.getStaffMembers())
+        {
+            if(staffMem instanceof BoardMember)
+            {
+                Notification staffMemNotification= staffMem.readNotification().peek();
+                assertTrue(notification.equals(staffMemNotification));
+            }
         }
     }
 

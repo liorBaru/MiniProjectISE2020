@@ -8,7 +8,6 @@ import domain.Asset.TeamMember;
 import DB.System;
 import domain.manageUsers.Account;
 import domain.manageTeams.Team;
-import domain.manageUsers.AccountManager;
 import domain.manageUsers.Guest;
 import domain.manageUsers.User;
 import org.junit.Before;
@@ -31,14 +30,21 @@ public class FanControllerTest {
     @Before
     public void setUp() throws Exception
     {
-        List<Owner> ownerList=new ArrayList<>();
-        system =System.getInstance();
-        owner=new Owner(new Account("admin","12341234"),"Bill",null,null,null);
-        ownerList.add(owner);
-        Team team=new Team(ownerList,"M.C");
-        owner.setTeam(team);
-        coach = new Coach(new Account("admin","12341234"),"boss");
-        userFan = new Fan("fan",new Account("fanUser","FanUser12"));
+        try
+        {
+            system =System.getInstance();
+            owner=system.createNewOwnerUser("admin","1234123gB","BillBam");
+            system.createTeam(owner.getAccount().getUserName(),"team");
+            coach= system.createNewCoachUser("boss","1234gaGG","adminR","training");
+            userFan=system.createNewFanUser("boss","userNewr","gghsU7768");
+        }
+        catch (Exception e)
+        {
+            owner=(Owner) system.login("BillBam","1234123gB");
+            coach=(Coach)system.login("adminR","1234gaGG");
+            userFan=(Fan)system.login("userNewr","gghsU7768");
+        }
+
    }
 
 
@@ -235,9 +241,9 @@ public class FanControllerTest {
             e.printStackTrace();
         }
         userFan.fillingComplaint("this is Complaint");
-        assertFalse(system.getComplaints().isEmpty());
+        assertTrue(system.getNewComplaints().isEmpty()==false);
         userFan.fillingComplaint("");
-        assertTrue(system.getComplaints().size()<2);
+        assertTrue(system.getNewComplaints().size()>=1);
     }
 
     @Test
@@ -245,18 +251,18 @@ public class FanControllerTest {
     public void register9acceptance() throws Exception
     {
         Guest guest = new Guest();
-        guest.register("guest","guestUser","guestUser1");
+        guest.register("guest","guestUser3","guestUser1");
         String message="";
         try
         {
-            guest.register("guest","guestUser","guestUser1");
+            guest.register("guest","guestUser3","guestUser1");
         }
 
         catch (Exception e)
         {
             message=e.getMessage();
         }
-        assertEquals(message,"Invalid username, userName already exists please try different username");
+        assertEquals("Invalid username, userName already exists please try different username",message);
     }
 
 
@@ -264,8 +270,9 @@ public class FanControllerTest {
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void changePasswordSuccess10acceptance() throws Exception
     {
-        userFan.updatePassword("FanUser12","FanUser123");
+        userFan.updatePassword("gghsU7768","FanUser123");
         assertTrue(userFan.getAccount().accountVerification("FanUser123"));
+        userFan.updatePassword("FanUser123","gghsU7768");
     }
 
     @Test

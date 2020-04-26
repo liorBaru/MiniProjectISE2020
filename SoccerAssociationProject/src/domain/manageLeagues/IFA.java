@@ -1,11 +1,6 @@
 package domain.manageLeagues;
 
 import domain.manageUsers.Account;
-import domain.Asset.Owner;
-import domain.Asset.Refree.LineRefree;
-import domain.Asset.Refree.MainRefree;
-import domain.Asset.Refree.Refree;
-import domain.Asset.Refree.VarRefree;
 import domain.manageUsers.User;
 
 import java.util.Date;
@@ -15,8 +10,6 @@ import java.util.List;
 public class IFA extends User
 
 {
-    private static List<Refree> refrees;
-
     public IFA(String name, Account account)
     {
         super(name,account);
@@ -32,38 +25,14 @@ public class IFA extends User
         system.removeUser(this.name);
     }
 
-    public boolean createRefree(String userName, String name, String type, String training)
-    {
-        Account account =system.getRefreeAccount(userName);
-        if(account!=null)
-        {
-            if(type=="Main")
-            {
-                Refree refree = new MainRefree(name,training,account);
-                system.addRefree(refree);
-            }
-            else if(type=="Var")
-            {
-                Refree refree = new VarRefree(name,training,account);
-                system.addRefree(refree);
-            }
-            else
-            {
-                Refree refree = new LineRefree(name,training,account);
-                system.addRefree(refree);
-            }
-            return true;
-        }
-        return false;
-    }
     /**
      * @author: Lior Baruchovich
      * @desc:
      * @param
      * @param
      */
-    public void addPlayer(String pName, Date birthDay,String password, String userName)throws Exception{
-        system.createNewPlayerUser(pName, birthDay,password, userName);
+    public void addPlayer(String pName, Date birthDay,String password, String userName,List<String>positions)throws Exception{
+        system.createNewPlayerUser(pName,birthDay,password,userName,positions);
     }
 
     /**
@@ -72,8 +41,8 @@ public class IFA extends User
      * @param
      * @param
      */
-    public void addCoach(String cName,String password, String userName)throws Exception{
-        system.createNewCoachUser(cName,password, userName);
+    public void addCoach(String cName,String password, String userName,String training)throws Exception{
+        system.createNewCoachUser(cName,password, userName,training);
     }
 
 
@@ -133,8 +102,8 @@ public class IFA extends User
      * @param
      * @param
      */
-    public void addReferee(String rName,String password, String userName, String type) throws Exception{
-        system.createNewRefereeUser(rName, password, userName, type);
+    public void addReferee(String rName,String password, String userName, String type,String training) throws Exception{
+        system.createNewRefereeUser(rName, password, userName, type,training);
 
     }
 
@@ -155,8 +124,8 @@ public class IFA extends User
      * @param
      * @param
      */
-    public void addTeam(Owner owner, String TName)throws Exception{
-        system.addTeam(owner, TName);
+    public void addTeam(String owner, String TName)throws Exception{
+        system.createTeam(owner, TName);
     }
 
     public Account getAccount(){

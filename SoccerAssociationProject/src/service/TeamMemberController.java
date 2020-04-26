@@ -5,6 +5,10 @@ import domain.Asset.TeamMember;
 public class TeamMemberController
 {
     TeamMember teamMember;
+    public TeamMemberController(TeamMember teamMember)
+    {
+        this.teamMember=teamMember;
+    }
 
 
     /**

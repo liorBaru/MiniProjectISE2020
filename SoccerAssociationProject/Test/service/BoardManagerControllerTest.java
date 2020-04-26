@@ -29,7 +29,7 @@ public class BoardManagerControllerTest {
         team=new Team(ownerList,"M.C");
         Team team=new Team(ownerList,"Hapoal Tel-aviv");
         owner.setTeam(team);
-        coach = new Coach(new Account("galcoach","cDasj3454"),"coach");
+        coach = new Coach(new Account("galcoach","cDasj3454"),"coach","training");
         fan = new Fan("fan",new Account("gggggg","gfgdagad3"));
     }
 
@@ -191,25 +191,4 @@ public class BoardManagerControllerTest {
 
     }
 
-    @Test
-    @Category({RegressionTests.class, AcceptanceTests.class})
-    public void uploadDataToPage13acceptance() throws Exception {
-        fan.followPage(0);
-        coach.uploadDataToPage("checkData");
-        for (Notification notification:fan.readNotification())
-        {
-            assertEquals(notification.getDetails(),"checkData");
-        }
-        fan.unfollowPage(0);
-    }
-
-    @Test
-    @Category({RegressionTests.class, AcceptanceTests.class})
-    public void uploadEmptyDataToPage14acceptance() throws Exception
-    {
-        fan.followPage(0);
-        coach.uploadDataToPage("");
-        assertTrue(fan.readNotification().isEmpty());
-        fan.unfollowPage(0);
-    }
 }

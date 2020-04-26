@@ -16,31 +16,19 @@ public abstract class Refree extends User
     private String trainig;
 
 
-    public Refree(String name, String training, Account account)
+    public Refree(String name, Account account,String trainig)
     {
         super(name,account);
+        this.trainig=trainig;
         games = new LinkedList<>();
-        this.trainig=training;
     }
 
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public Refree(String name, Account account)
-    {
-        super(name,account);
-        games = new LinkedList<>();
-    }
 
     @Override
     public void removeUser()
     {
         String details = "Refree, "+this.name+", has been remove from the system by the system manager";
-        Date date = new Date();
-        Notification notification = new Notification(details,date);
+        Notification notification = new Notification(details);
         for (IFA ifa:system.getIfaList())
         {
             ifa.addNotification(notification);

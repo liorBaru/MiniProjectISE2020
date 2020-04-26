@@ -2,7 +2,10 @@ package domain.manageUsers;
 
 import DB.System;
 import domain.manageLeagues.League;
+import domain.manageTeams.Team;
 import domain.manageUsers.User;
+
+import java.util.List;
 
 public class Guest
 {
@@ -22,6 +25,8 @@ public class Guest
         throw new Exception("Bad details");
 
     }
+
+
 
     public User register(String name, String userName, String password) throws Exception
     {

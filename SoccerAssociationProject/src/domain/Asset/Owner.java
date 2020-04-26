@@ -95,7 +95,7 @@ public class Owner extends BoardMember
                      this.team.setStatus(false);
                      String details =team.getName()+" has been closed by the owner "+this.name;
                      Date date= new Date();
-                     Notification notification= new Notification(details,date);
+                     Notification notification= new Notification(details);
                      for (StaffMember member:team.getStaffMembers())
                      {
                              if(member instanceof BoardMember)

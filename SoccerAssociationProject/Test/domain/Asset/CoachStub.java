@@ -6,7 +6,7 @@ import domain.manageUsers.AccountStub;
 
 public class CoachStub extends Coach{
     public CoachStub() {
-        super(new AccountStub(), "account");
+        super(new AccountStub(), "account","training");
     }
 
     @Override

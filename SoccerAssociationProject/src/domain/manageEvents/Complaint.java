@@ -12,6 +12,9 @@ public class Complaint
     private String answer;
     private Date createdDate;
     private Date answerDate;
+    private int  complaintID;
+    private static int ID;
+
 
     public Complaint (User user, String details)
     {
@@ -19,6 +22,13 @@ public class Complaint
         this.details=details;
         status=true;
         createdDate=new Date();
+        ID++;
+        complaintID=ID;
+    }
+
+    public int getComplaintID()
+    {
+        return complaintID;
     }
 
     public boolean getStatus() {
@@ -30,6 +40,8 @@ public class Complaint
         this.answer=answer;
         status=false;
         answerDate=new Date();
+        Notification notification=new Notification("System answer: "+answer);
+        user.addNotification(notification);
     }
     public String getAnswer()
     {

@@ -1,19 +1,43 @@
 package domain.Asset;
 
+import domain.manageTeams.Team;
 import domain.manageUsers.Account;
 import domain.manageEvents.Complaint;
 import domain.manageUsers.User;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
 
 public class SystemManager extends User
 {
 
 
-
-    public List<Complaint> watchComplaints()
+    /**
+     * gal,
+     * get all new complaints from the system
+     * @return
+     */
+    public TreeMap<Integer,String> watchComplaints()
     {
-        return system.getComplaints();
+        TreeMap<Integer,String> complaints = new TreeMap<>();
+        for (Complaint c :system.getNewComplaints())
+        {
+            int id=c.getComplaintID();
+            String details=c.getDetails();
+            complaints.put(id,details);
+        }
+        return complaints;
+    }
+
+    public List<String> getTeams()
+    {
+        List<String> teamNames= new LinkedList<>();
+        for (Team team:system.getTeams())
+        {
+            teamNames.add(team.getName());
+        }
+        return teamNames;
     }
 
 
@@ -34,27 +58,27 @@ public class SystemManager extends User
         //
     }
 
-    public SystemManager (String userName, Account account)
+    public SystemManager (String name, Account account)
     {
-        super(userName,account);
+        super(name,account);
     }
 
-    public boolean closeTeam (String teamName)
-    {
-        return system.closeTeamBySystemManager(teamName);
+    public void closeTeam (String teamName) throws Exception {
+        system.closeTeamBySystemManager(teamName);
     }
 
     /**
      * gal
-     * answer to fan complaint
-     * @param complaint
+     * answer Complaint by system manager
+     * @param complaintID
      * @param answer
+     * @throws Exception
      */
-    public void answerComplaint (Complaint complaint, String answer )
+    public void answerComplaint (int complaintID, String answer ) throws Exception
     {
-        if(complaint!=null && answer.isEmpty()==false)
+        if(answer.isEmpty()==false)
         {
-            system.ansComplaint(complaint,answer);
+            system.ansComplaint(complaintID,answer);
         }
     }
 

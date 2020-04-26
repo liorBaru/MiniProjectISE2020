@@ -45,7 +45,7 @@ public class Page extends Subject
     {
         messages.add(data);
         String details = pageName +" add new notification";
-        Notification notification =new Notification(details,new Date());
+        Notification notification =new Notification(details);
         notifyObservers(notification);
     }
 

@@ -7,6 +7,7 @@ import domain.manageLeagues.Season;
 
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.List;
 
 
 public class IFAController
@@ -76,12 +77,36 @@ public class IFAController
             * @param
      * @param
      */
-    public boolean addPlayer(String pName, Date birthDay, String password, String userName) throws Exception{
-        if( pName!=null && birthDay!=null && password!=null && userName!=null){
-            if( isPassAndUserNIsLegal(password, userName) )
-            {
-                Ifa.addPlayer(pName, birthDay,password, userName);
-            }
+    public void addPlayer(String pName, Date birthDay, String password, String userName, List<String> positions) throws Exception{
+        if( pName!=null && birthDay!=null && password!=null && userName!=null && positions!=null && positions.isEmpty()==false)
+        {
+            Ifa.addPlayer(pName,birthDay,password, userName,positions);
+        }
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public void addCoach(String cName,String password, String userName, String training) throws Exception{
+        if(cName!=null && password!=null && userName!=null && training!=null)
+        {
+            Ifa.addCoach(cName,password, userName,training);
+        }
+    }
+
+    /**
+     * @author: Lior Baruchovich
+     * @desc:
+     * @param
+     * @param
+     */
+    public boolean addReferee( String rName,String password, String userName, String type,String training) throws Exception{
+        if( rName!=null  && password!=null && userName!=null && type!=null)
+        {
+            Ifa.addReferee(rName,password, userName, type,training);
         }
         return false;
     }
@@ -92,46 +117,11 @@ public class IFAController
      * @param
      * @param
      */
-    public boolean addCoach( String cName,String password, String userName) throws Exception{
-        if(cName!=null && password!=null && userName!=null){
-            if( isPassAndUserNIsLegal(password, userName) )
-            {
-                Ifa.addCoach(cName,password, userName);
-            }
+    public void addIFA( String ifaName, String password, String userName) throws Exception{
+        if( ifaName!=null && password!=null && userName!=null)
+        {
+            Ifa.addNewIFA( ifaName, password, userName);
         }
-        return false;
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public boolean addReferee( String rName,String password, String userName, String type) throws Exception{
-        if( rName!=null  && password!=null && userName!=null && type!=null){
-            if( isPassAndUserNIsLegal(password, userName) )
-            {
-                Ifa.addReferee(rName,password, userName, type);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public boolean addIFA( String ifaName, String password, String userName) throws Exception{
-        if( ifaName!=null && password!=null && userName!=null){
-            if( isPassAndUserNIsLegal(password, userName) )
-            {
-                Ifa.addNewIFA( ifaName, password, userName);
-            }
-        }
-        return false;
     }
 
     /**
@@ -141,11 +131,9 @@ public class IFAController
      * @param
      */
     public boolean addOwner(String OwnerName, String password, String userName) throws Exception{
-        if( OwnerName!=null && password!=null && userName!=null){
-            if( isPassAndUserNIsLegal(password, userName) )
-            {
-                Ifa.addOwner( OwnerName, password, userName);
-            }
+        if( OwnerName!=null && password!=null && userName!=null)
+        {
+            Ifa.addOwner( OwnerName, password, userName);
         }
         return false;
     }
@@ -156,26 +144,12 @@ public class IFAController
      * @param
      * @param
      */
-    public boolean addTeam(String teamName, Owner owner) throws Exception{
-        if( teamName!=null  && owner!=null){
-            Ifa.addTeam( owner, teamName);
+    public void addTeam(String teamName, String ownerUserName) throws Exception{
+        if( teamName!=null  && ownerUserName!=null){
+            Ifa.addTeam( ownerUserName, teamName);
         }
-        return false;
     }
 
-    /**
-     * @author: Lior Baruchovich
-     * @desc: chech if the user nane and password is legal
-     * @param
-     * @param
-     */
-    public boolean isPassAndUserNIsLegal(String password, String userName){
-        if(password!=null && userName!=null){
-            if(userName.length()>=6 && password.length()>=8 ){ //add pass contain capital small and number ??
-                return true;
-            }
-        }
-        return false;
-    }
+
 
 }

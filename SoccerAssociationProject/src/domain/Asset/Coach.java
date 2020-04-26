@@ -10,10 +10,10 @@ public class Coach extends TeamMember
     private String training;
     private String job;
 
-    public Coach (Account account, String name)
+    public Coach (Account account, String name,String training)
     {
         super(account,name);
-
+        this.training=training;
     }
 
     /**
@@ -40,6 +40,11 @@ public class Coach extends TeamMember
     @Override
     public String getType() {
         return "Coach: "+this.name;
+    }
+
+    public void setJob(String job)
+    {
+        this.job=job;
     }
 }
 

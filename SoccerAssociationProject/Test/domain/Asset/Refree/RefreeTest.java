@@ -13,14 +13,23 @@ import static org.junit.Assert.*;
 
 public class RefreeTest {
     System system=System.getInstance();
-    IFA ifa=new IFA("Dan",new Account("dan122","Dan123456"));
+    IFA ifa;
 
     @Test
     @Category({ IntegrationTests.class})
     public void removeUserTest1Integration() {
-        Refree refree=new LineRefree("Ban",new Account("ban123","Ban123456"));
-        system.addIFA(ifa);
-        refree.removeUser();
+
+
+        try
+        {
+            Refree refree=   system.createNewRefereeUser("Ban","Ban123456","ban123","Line","training");
+            ifa=system.createNewIFAUser("Dan","Dan123456","dan122");
+            refree.removeUser();
+        }
+        catch (Exception e)
+        {
+
+        }
         boolean flag=false;
         for (Notification n:ifa.readNotification()) {
             flag=n.getDetails().equals( "Refree, Ban, has been remove from the system by the system manager");

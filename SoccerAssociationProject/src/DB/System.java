@@ -34,9 +34,8 @@ public class System
     private List<Owner> owners;
     private List<Player> players;
     private List<Refree> refrees;
-
-
     private List<Complaint> complaints;
+
     private System ()
     {
         leagues = new LinkedList<>();
@@ -56,27 +55,16 @@ public class System
         owners=new LinkedList<>();
     }
 
-    public List<IFA> getIfaList()
+    public static System getInstance()
     {
-        return this.ifaList;
-    }
-
-    public List<SystemManager> getSystemManagers()
-    {
-        return systemManagers;
-    }
-
-    public User createNewFanUser(String name, String userName, String password)throws Exception
-    {
-         Account account = accountManager.createAccount(userName,password);
-         User newUser = new Fan(name,account);
-         account.setUser(newUser);
-         return newUser;
-    }
-
-    public User login (String username, String password) throws Exception
-    {
-        return accountManager.login(username,password);
+        if(system!=null)
+        {
+            return system;
+        }
+        else
+        {
+            return system=new System();
+        }
     }
 
     public static void initSystem(String userName, String password, String name) throws Exception {
@@ -96,50 +84,44 @@ public class System
         }
     }
 
-    private void connectToIFA() throws Exception {
-      // throw new Exception("cant connect to IFA systems");
-    }
 
-    private void connectToTaxLaW() throws Exception
+    public List<Team> getTeams()
     {
-
-        //throw new Exception("cant connect to tax law system");
-
+        return teams;
     }
-    private void connectToDB () throws Exception {
-
-        //throw new Exception("cant connect to dataBase");
-    }
-
-
-    public boolean closeTeamBySystemManager(String teamName)
+    public List<IFA> getIfaList()
     {
-        for (Team team:teams)
-        {
-            if(team.getName()==teamName)
-            {
-                String details ="Team : "+teamName+" has been closed by the systemManager";
-                Date date = new Date();
-                Notification notification = new Notification(details,date);
-                team.setClose(notification);
-                closedTeams.add(team);
-                return true;
-            }
-        }
-        return false;
+        return this.ifaList;
+    }
+    public List<SystemManager> getSystemManagers()
+    {
+        return systemManagers;
     }
 
-    public static System getInstance()
+
+    public Fan createNewFanUser(String name, String userName, String password)throws Exception
     {
-    if(system!=null)
-    {
-        return system;
+         Account account = accountManager.createAccount(userName,password);
+         Fan newUser = new Fan(name,account);
+         return newUser;
     }
-    else
+
+    public User login (String username, String password) throws Exception
     {
-        return system=new System();
+        return accountManager.login(username,password);
     }
-}
+
+    public  SystemManager createNewSysteamManager(String userName,String password,String name) throws Exception
+    {
+        Account account=accountManager.createAccount(userName,password);
+        SystemManager systemManager = new SystemManager(name,account);
+        systemManagers.add(systemManager);
+        return systemManager;
+    }
+
+
+
+
 
     /**
      * @author: David Zaltsman
@@ -266,20 +248,6 @@ public class System
         accountManager.changePassword(oldPassword,newPassword,user);
     }
 
-    public List<Complaint> getComplaints()
-    {
-        return complaints;
-    }
-
-    public boolean ansComplaint(Complaint complaint,String answer)
-    {
-        if(complaint.getStatus())
-        {
-            complaint.setAnswer(answer);
-            return true;
-        }
-        return false;
-    }
 
     public boolean removeUser(String userName) throws Exception {
         Account account = accountManager.getAccount(userName);
@@ -337,32 +305,33 @@ public class System
         }
     }
 
+
+
+
     /**
      * @author: Lior Baruchovich
      * @desc:
      * @param
      * @param
      */
-    public void addRefree(Refree refree)
+    public void createTeam(String ownerName, String Tname)throws Exception
     {
-        if(refree!=null)
+        Owner owner = system.getOwner(ownerName);
+
+        if(owner.getTeam()!=null)
         {
-            refrees.add(refree);
+            throw new Exception("the owner as alreadyTeam");
         }
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void addIFA(IFA ifa)
-    {
-        if(ifa!=null)
+        Team team = system.getTeam(Tname);
+        if(team!=null)
         {
-            ifaList.add(ifa);
+            throw new Exception("there is already team call " +team.getName()+" in the system");
         }
+        List<Owner> owners =new LinkedList<>();
+        owners.add(owner);
+        team = new Team(owners, Tname);
+        owner.setTeam(team);
+        teams.add(team);
     }
 
     /**
@@ -371,40 +340,10 @@ public class System
      * @param
      * @param
      */
-    public void addOwner(Owner owner)
-    {
-        if(owner!=null)
-        {
-            owners.add(owner);
-        }
-    }
-
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void addTeam(Owner owner, String Tname)throws Exception {
-        if(owner!=null && Tname!=null){
-            List<Owner> owners =new LinkedList<>();
-            owners.add(owner);
-            Team team = new Team(owners, Tname);
-            owner.setTeam(team);
-            teams.add(team);
-        }
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void createNewPlayerUser(String pName, Date birthDay, String password, String userName)throws Exception {
+    public void createNewPlayerUser(String pName, Date birthDay, String password, String userName,List<String> positions)throws Exception {
         Account pAccount = accountManager.createAccount(userName,password);
-        User newUser = new Player(pAccount,pName, birthDay);
+        List<String> position = new LinkedList<>();
+        User newUser = new Player(pAccount,pName, birthDay,positions);
         pAccount.setUser(newUser);
         system.addPlayer( (Player) newUser);
     }
@@ -415,12 +354,12 @@ public class System
      * @param
      * @param
      */
-    public void createNewCoachUser(String cName,String password, String userName)throws Exception {
+    public Coach createNewCoachUser(String cName,String password, String userName,String training)throws Exception {
         Account cAccount = accountManager.createAccount(userName,password);
-        User newUser = new Coach(cAccount,cName);
+        Coach newUser = new Coach(cAccount,cName,training);
         cAccount.setUser(newUser);
         system.addCoach( (Coach) newUser);
-
+        return newUser;
     }
 
     /**
@@ -429,30 +368,31 @@ public class System
      * @param
      * @param
      */
-    public void createNewRefereeUser(String rName,String password, String userName, String type)throws Exception {
-        Account rAccount =system.getRefreeAccount(userName);
-        if(rAccount==null){
-            rAccount = accountManager.createAccount(userName,password);
-        }
+    public Refree createNewRefereeUser(String rName,String password, String userName, String type,String training)throws Exception {
 
+        Account rAccount = accountManager.createAccount(userName,password);
         if(type=="Main")
         {
-            User newUser = new MainRefree(rName,rAccount);
+            Refree newUser = new MainRefree(rName,training,rAccount);
             rAccount.setUser(newUser);
-            system.addRefree( (Refree) newUser);
+            refrees.add ((Refree) newUser);
+            return newUser;
         }
         else if(type=="Var")
         {
-            User newUser = new VarRefree(rName,rAccount);
+            Refree newUser = new VarRefree(rName,training,rAccount);
             rAccount.setUser(newUser);
-            system.addRefree( (Refree)newUser);
+            refrees.add ((Refree) newUser);
+            return newUser;
         }
-        else
+        else if(type=="Line")
         {
-            User newUser = new LineRefree(rName,rAccount);
+            Refree newUser = new LineRefree(rName,training,rAccount);
             rAccount.setUser(newUser);
-            system.addRefree( (Refree)newUser);
+            refrees.add ((Refree) newUser);
+            return newUser;
         }
+        throw new Exception("Invalid type:"+type);
     }
 
 
@@ -462,14 +402,13 @@ public class System
      * @param
      * @param
      */
-    public void createNewIFAUser(String ifaName, String password, String userName)throws Exception {
-        Account ifaAccount =system.getIFAAccount(userName);
-        if(ifaAccount==null){
-            ifaAccount = accountManager.createAccount(userName,password);
-        }
-        User newUser = new IFA( ifaName,ifaAccount);
+    public IFA createNewIFAUser(String ifaName, String password, String userName)throws Exception
+    {
+        Account ifaAccount = accountManager.createAccount(userName,password);
+        IFA newUser = new IFA( ifaName,ifaAccount);
         ifaAccount.setUser(newUser);
-        system.addIFA( (IFA)newUser);
+        ifaList.add(newUser);
+        return newUser;
     }
 
     /**
@@ -478,18 +417,15 @@ public class System
      * @param
      * @param
      */
-    public void createNewOwnerUser(String oName,String password, String userName)throws Exception {
-        Account ownerAccount =system.getOwnerAccount(userName);
-        if(ownerAccount==null){
-            ownerAccount = accountManager.createAccount(userName,password);
-        }
-        User newUser = new Owner( ownerAccount, oName);
+    public Owner createNewOwnerUser(String ownerName,String password, String userName)throws Exception
+    {
+        Account ownerAccount = accountManager.createAccount(userName,password);
+        Owner newUser = new Owner( ownerAccount, ownerName);
         ownerAccount.setUser(newUser);
-        system.addOwner( (Owner)newUser);
-    }
+        owners.add( (Owner)newUser);
+        return newUser;
+}
 
-
-    //--------------------------------------------------------------------------------- getters
 
     public List<Season> getSeasons() {
         return seasons;
@@ -524,16 +460,7 @@ public class System
         return accountManager.getAccount(userName);
     }
 
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public Account getRefreeAccount(String userName)
-    {
-        return accountManager.getAccount(userName);
-    }
+
 
     /**
      * @author: Lior Baruchovich
@@ -559,16 +486,6 @@ public class System
      * @param
      * @param
      */
-    public Account getIFAAccount(String userName)
-    {
-        return accountManager.getAccount(userName);
-    }
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
     public IFA getIFA(String name)
     {
         for (IFA ifa:ifaList)
@@ -581,27 +498,15 @@ public class System
         return null;
     }
 
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public Account getOwnerAccount(String userName)
-    {
-        return accountManager.getAccount(userName);
-    }
-
-    public Owner getOwner(String name)
-    {
+    public Owner getOwner(String username) throws Exception {
         for (Owner owner:owners)
         {
-            if(owner.getName()==name)
+            if(owner.getAccount().getUserName()==username)
             {
                 return owner;
             }
         }
-        return null;
+       throw new Exception("owner "+username+" is not an owner in the system");
     }
 
     /**
@@ -640,7 +545,8 @@ public class System
         return null;
     }
 
-    public League getLeague(League league){
+    public League getLeague(League league)
+    {
         Iterator<League> leaguesIterator = leagues.iterator();
         while (leaguesIterator.hasNext()) {
            if(leaguesIterator.next().equals(league))
@@ -653,4 +559,94 @@ public class System
     {
         return this.accountManager;
     }
+
+
+    /**
+     * gal,
+     * get all new complaint
+     * system manager
+     * @return
+     */
+    public List<Complaint> getNewComplaints()
+    {
+        List<Complaint> newComplaints=new LinkedList<>();
+        for (Complaint complaint:complaints)
+        {
+            if(complaint.getStatus()==true)
+            {
+                newComplaints.add(complaint);
+            }
+        }
+        return newComplaints;
+    }
+    /**
+     * answer to complaint by systemManager
+     * @param complaintID
+     * @param answer
+     * @throws Exception
+     */
+    public void ansComplaint(int complaintID,String answer) throws Exception
+    {
+        Complaint complaint =system.getComplaintByID(complaintID);
+        if(complaint.getStatus())
+        {
+            complaint.setAnswer(answer);
+        }
+        throw new Exception("complaint has been answer already");
+    }
+
+    private Complaint getComplaintByID(int complaintID) throws Exception
+    {
+        for (Complaint complaint:complaints)
+        {
+            if(complaint.getComplaintID()==complaintID)
+            {
+                return complaint;
+            }
+        }
+        throw new Exception("Complaint dont exists");
+    }
+
+    /**
+     * close team by system manager
+     * @param teamName
+     * @throws Exception
+     */
+
+    public void closeTeamBySystemManager(String teamName) throws Exception {
+        for (Team team:teams)
+        {
+            if(team.getName()==teamName)
+            {
+                String details ="Team : "+teamName+" has been closed by the systemManager";
+                Notification notification = new Notification(details);
+                team.setClose(notification);
+                teams.remove(team);
+                closedTeams.add(team);
+                return;
+            }
+        }
+        throw new Exception("Team "+teamName+" is not active team in the system");
+    }
+
+
+
+
+    private void connectToIFA() throws Exception {
+        // throw new Exception("cant connect to IFA systems");
+    }
+
+    private void connectToTaxLaW() throws Exception
+    {
+
+        //throw new Exception("cant connect to tax law system");
+
+    }
+    private void connectToDB () throws Exception {
+
+        //throw new Exception("cant connect to dataBase");
+    }
+
+
+
 }

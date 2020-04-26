@@ -11,20 +11,11 @@ public class MainRefree extends Refree
      * @param
      * @param
      */
-    public MainRefree(String name, Account account) {
-        super(name,account );
-    }
-
-
     public MainRefree(String name, String training, Account account)
     {
-        super(name, training,account );
+        super(name,account ,training );
     }
 
-    public boolean editGameEvent(){return false;}
-    public boolean startGame(){return false;}
-    public boolean cancelGame(){return false;}
-    public boolean finishGame(){return false;}
 
 
 }

@@ -1,9 +1,6 @@
 package domain.manageTeams;
 
-import domain.Asset.Asset;
-import domain.Asset.Owner;
-import domain.Asset.StaffMember;
-import domain.Asset.TeamManager;
+import domain.Asset.*;
 import domain.manageEvents.Notification;
 import domain.manageLeagues.Game;
 import domain.manageLeagues.Season;
@@ -25,8 +22,11 @@ public class Team implements pageable
     private Set<FinancialAction> financialActions;
 
 
-    public Team(List<Owner> owners, String name)
-    {
+    public Team(List<Owner> owners, String name) throws Exception {
+        if(owners==null|| owners.isEmpty())
+        {
+            throw new Exception("cant open a team without a owner");
+        }
         this.owners = owners;
         this.name = name;
         page = new Page(this);
@@ -36,6 +36,8 @@ public class Team implements pageable
         seasons=new TreeMap<>();
         this.assetsOfTeam = new ArrayList<>();
         this.financialActions=new HashSet<>();
+        staffMembers.addAll(owners);
+
 
     }
 
@@ -69,8 +71,7 @@ public class Team implements pageable
 //            else {
 //                statusString=" is active";
 //            }
-            Date date = new Date();
-            Notification notification = new Notification("The Team: " + name + statusString, date);
+            Notification notification = new Notification("The Team: " + name + statusString);
             for (StaffMember staffMember : staffMembers) {
                 staffMember.getAccount().getUser().addNotification(notification);
             }
@@ -129,8 +130,12 @@ public class Team implements pageable
     public void setClose(Notification notification)
     {
         this.status = false;
-        for (StaffMember member : staffMembers) {
-            member.addNotification(notification);
+        for (StaffMember member : staffMembers)
+        {
+            if(member instanceof BoardMember)
+            {
+                member.addNotification(notification);
+            }
         }
     }
 

@@ -11,10 +11,7 @@ import domain.manageTeams.Team;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.Date;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -119,7 +116,9 @@ public class IFAControllerTest {
         String pname = "gal";
         String password ="Gal330973845";
         String userName ="galTheKing";
-        ifa.addPlayer(pname, date,password, userName);
+        List<String> positions=new LinkedList<>();
+        positions.add("GK");
+        ifa.addPlayer(pname, date,password, userName,positions);
         assertEquals("gal",system.getPlayer("gal").getName());
         assertEquals("galTheKing",system.getPlayer("gal").getAccount().getUserName());
     }
@@ -134,7 +133,7 @@ public class IFAControllerTest {
         String cname = "Nir";
         String password ="Nir333845";
         String userName ="NirLevi"+rand_int1;
-        ifa.addCoach(cname,password, userName);
+        ifa.addCoach(cname,password, userName,"training");
         String userName2 = system.getCoach("Nir").getAccount().getUserName();
         assertEquals("NirLevi"+rand_int1,userName2);
     }
@@ -142,17 +141,15 @@ public class IFAControllerTest {
     @Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void addReferee9acceptance() throws Exception{
-
         Account lAcoount = new Account("liorb", "33097377");// userName, String password
         IFA ifa = new IFA("lior" ,lAcoount);  //String name, Account account
-
         String rName = "ori";
         String password ="Ori330973845";
-        String userName ="OriLonstein";
+        String userName ="OriLonsteine";
         String type = "Main";
-        ifa.addReferee(rName, password, userName, type);
+        ifa.addReferee(rName, password, userName, type,"training");
         assertEquals("ori",system.getRefree(rName).getName());
-        assertEquals("OriLonstein",system.getRefreeAccount(userName).getUserName());
+        assertEquals("OriLonsteine",system.getAccountManager().getAccount(userName).getUserName());
     }
 
 
@@ -160,15 +157,13 @@ public class IFAControllerTest {
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void addIFA10acceptance() throws Exception{
         // addIFA(IFA ifaManager, String ifaName, String password, String userName
-        Account Acoount1 = new Account("liorb", "33097377");// userName, String password
-        IFA ifaManager = new IFA("lior" ,Acoount1);  //String name, Account account
-
+        IFA ifaManager=system.createNewIFAUser("liorgg","330973Gb","liorbjhh");
         String ifaName = "ori";
         String password ="Ori330973845";
-        String userName ="OriLonstein";
+        String userName ="OriLonsteinr";
         ifaManager.addNewIFA(ifaName, password, userName);
         assertEquals("ori",system.getIFA(ifaName).getName());
-        assertEquals("OriLonstein",system.getIFAAccount(userName).getUserName());
+        assertEquals("OriLonsteinr",system.getAccountManager().getAccount(userName).getUserName());
     }
 
 
@@ -181,26 +176,22 @@ public class IFAControllerTest {
 
         String OwnerName = "ori";
         String password ="Ori330973845";
-        String userName ="OriLonstein";
+        String userName ="OriLonsteinrr";
         ifaManager.addOwner(OwnerName, password, userName);
-        assertEquals("ori",system.getOwner(OwnerName).getName());
-        assertEquals("OriLonstein",system.getOwnerAccount(userName).getUserName());
+        assertEquals("ori",system.getOwner(userName).getName());
+        assertEquals("OriLonsteinrr",system.getAccountManager().getAccount(userName).getUserName());
     }
 
-    //addTeam(IFA ifaManager, String teamName, Owner owner
+    //createTeam(IFA ifaManager, String teamName, Owner owner
     @Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void addTeam12acceptance() throws Exception{
-        Account Acoount1 = new Account("liorb", "33097377");// userName, String password
-        IFA ifaManager = new IFA("lior" ,Acoount1);  //String name, Account account
 
-        Account Acoountowner = new Account("OriLonstein", "Ori330973845");// userName, String password
-        Owner owner = new Owner(Acoountowner, "ori");
+        IFA ifaManager = system.createNewIFAUser("lior","330973gB","liorbj");
+        Owner owner =system.createNewOwnerUser("ori","Ori330973845","OriLonstein");
         String teamName = "hapoel";
-        ifaManager.addTeam(owner, teamName);
-
+        ifaManager.addTeam(owner.getAccount().getUserName(), teamName);
         assertEquals("hapoel",system.getTeam(teamName).getName());
-
         Team team = system.getTeam(teamName);
         List<Owner> ownerList = team.getOwners();
         String userNameOwner ="";

@@ -12,6 +12,7 @@ import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -33,10 +34,12 @@ public class BoardMemberTest {
     boardMember=new TeamManager(new Account("namename","Name12345"),"name",null,null,20000,list);
     team =new Team( ownerList,"MC");
     boardMember.setTeam(team);
-    player=new Player(new Account("Banhaim","Bb123456"),"banHamin", new Date(1991,5,14));
+    List<String> positions = new LinkedList<>();
+    positions.add("GK");
+    player=new Player(new Account("Banhaim","Bb123456"),"banHamin", new Date(1991,5,14),positions);
     team.addAsset(player);
     team.addAsset(boardMember);
-    coach=new Coach(new Account("TalTal","Tal123456"),"Tal Haim");
+    coach=new Coach(new Account("TalTal","Tal123456"),"Tal Haim","training");
     team.addAsset(coach);
 
     }
