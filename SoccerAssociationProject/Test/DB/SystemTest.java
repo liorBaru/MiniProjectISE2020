@@ -5,6 +5,8 @@ import domain.Asset.Fan;
 import domain.Asset.SystemManager;
 import domain.manageUsers.Account;
 import domain.manageUsers.User;
+import domain.manageUsers.AccountManager;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -12,9 +14,11 @@ import java.util.Random;
 
 import static org.junit.Assert.*;
 
-public class SystemTest {
-    System system=System.getInstance();
-    AccountMangerStub accountManager=new AccountMangerStub(system);
+public class SystemTest
+{
+    System system;
+    AccountMangerStub accountManager;
+    static boolean flag=false;
     String userName="MatanG";
     String password="Ga123456";
     String name="Matan";
@@ -29,6 +33,25 @@ public class SystemTest {
         Account account=accountManager.getAccount(userName);
         assertEquals(excepted,account);
     }
+
+    @Before
+    @Test
+    public void initSystemUnit3()
+    {
+        try
+        {
+            System.initSystem("userAdmain","Password1","chen");
+            system=System.getInstance();
+            accountManager=new AccountMangerStub(system);
+            assertTrue(system!=null);
+        }
+        catch (Exception e)
+        {
+            system=System.getInstance();
+            accountManager=new AccountMangerStub(system);
+        }
+    }
+
 
 
     @Test

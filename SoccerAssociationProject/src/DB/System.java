@@ -68,14 +68,15 @@ public class System
     }
 
     public static void initSystem(String userName, String password, String name) throws Exception {
-        try {
+        try
+        {
             system=getInstance();
-            system.connectToDB();
+           // system.connectToDB();
             Account account = system.accountManager.createAccount(userName,password);
             SystemManager systemManager = new SystemManager(name,account);
             system.systemManagers.add(systemManager);
-            system.connectToIFA();
-            system.connectToTaxLaW();
+           // system.connectToIFA();
+          // system.connectToTaxLaW();
         }
         catch (Exception e)
         {
@@ -277,36 +278,6 @@ public class System
         assetsExists.add(field);
         return field;
     }
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void addPlayer(Player player)
-    {
-        if(player!=null && players.contains(player)==false)
-        {
-            players.add(player);
-        }
-    }
-
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-    public void addCoach(Coach coach)
-    {
-        if(coach!=null && coaches.contains(coach)==false)
-        {
-            coaches.add(coach);
-        }
-    }
-
-
-
 
     /**
      * @author: Lior Baruchovich
@@ -340,12 +311,13 @@ public class System
      * @param
      * @param
      */
-    public void createNewPlayerUser(String pName, Date birthDay, String password, String userName,List<String> positions)throws Exception {
+    public Player createNewPlayerUser(String pName, Date birthDay, String password, String userName,List<String> positions)throws Exception {
         Account pAccount = accountManager.createAccount(userName,password);
         List<String> position = new LinkedList<>();
-        User newUser = new Player(pAccount,pName, birthDay,positions);
+        Player newUser = new Player(pAccount,pName, birthDay,positions);
         pAccount.setUser(newUser);
-        system.addPlayer( (Player) newUser);
+        players.add(newUser);
+        return newUser;
     }
 
     /**
@@ -358,7 +330,7 @@ public class System
         Account cAccount = accountManager.createAccount(userName,password);
         Coach newUser = new Coach(cAccount,cName,training);
         cAccount.setUser(newUser);
-        system.addCoach( (Coach) newUser);
+        coaches.add(newUser);
         return newUser;
     }
 
@@ -375,21 +347,21 @@ public class System
         {
             Refree newUser = new MainRefree(rName,training,rAccount);
             rAccount.setUser(newUser);
-            refrees.add ((Refree) newUser);
+            refrees.add ( newUser);
             return newUser;
         }
         else if(type=="Var")
         {
             Refree newUser = new VarRefree(rName,training,rAccount);
             rAccount.setUser(newUser);
-            refrees.add ((Refree) newUser);
+            refrees.add (newUser);
             return newUser;
         }
         else if(type=="Line")
         {
             Refree newUser = new LineRefree(rName,training,rAccount);
             rAccount.setUser(newUser);
-            refrees.add ((Refree) newUser);
+            refrees.add ( newUser);
             return newUser;
         }
         throw new Exception("Invalid type:"+type);
@@ -591,6 +563,7 @@ public class System
         if(complaint.getStatus())
         {
             complaint.setAnswer(answer);
+            return;
         }
         throw new Exception("complaint has been answer already");
     }
