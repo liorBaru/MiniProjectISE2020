@@ -10,9 +10,10 @@
 .idea/workspace.xml
 .idea/misc.xml
 .idea/vcs.xml
+report
 .idea/*
 # ignore all logs
-*.xml
+
 *.iml
 .idea
 # Generated files
