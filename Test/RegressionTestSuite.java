@@ -1,8 +1,7 @@
 
-import DB.RegressionTests;
+import main.DB.RegressionTests;
 import DB.SystemTest;
 
-import domain.Asset.BoardMember;
 import domain.Asset.BoardMemberTest;
 import domain.Asset.FanTest;
 import domain.Asset.Refree.RefreeTest;
@@ -18,7 +17,6 @@ import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import service.BoardManagerControllerTest;
-import service.FanController;
 import service.FanControllerTest;
 import service.IFAControllerTest;
 

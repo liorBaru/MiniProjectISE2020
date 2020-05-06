@@ -1,11 +1,12 @@
 package domain.Asset;
 
 
-import DB.IntegrationTests;
-import DB.RegressionTests;
-import DB.UnitTests;
-import domain.manageTeams.Team;
-import domain.manageUsers.Account;
+
+import main.DB.IntegrationTests;
+import main.DB.UnitTests;
+import main.domain.Asset.*;
+import main.domain.manageTeams.Team;
+import main.domain.manageUsers.Account;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

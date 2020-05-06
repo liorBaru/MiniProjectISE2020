@@ -1,10 +1,10 @@
 package domain.Asset;
 
-import domain.manageTeams.Team;
-import domain.manageUsers.Account;
+import main.domain.Asset.Coach;
+import main.domain.manageTeams.Team;
 import domain.manageUsers.AccountStub;
 
-public class CoachStub extends Coach{
+public class CoachStub extends Coach {
     public CoachStub() {
         super(new AccountStub(), "account","training");
     }

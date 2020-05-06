@@ -1,9 +1,9 @@
 package domain.manageUsers;
 
-import DB.System;
-import domain.manageUsers.Account;
-import domain.manageUsers.AccountManager;
-import domain.manageUsers.User;
+import main.DB.System;
+import main.domain.manageUsers.Account;
+import main.domain.manageUsers.AccountManager;
+import main.domain.manageUsers.User;
 
 public class AccountMangerStub extends AccountManager {
     public  Account account=new Account("MatanG","Ga123456");

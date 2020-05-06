@@ -1,12 +1,12 @@
 package service;
 
-import DB.AcceptanceTests;
-import DB.RegressionTests;
-import domain.Asset.*;
-import domain.manageUsers.Account;
-import domain.manageEvents.Notification;
-import domain.manageTeams.FinancialAction;
-import domain.manageTeams.Team;
+import main.DB.AcceptanceTests;
+import main.DB.RegressionTests;
+import main.domain.Asset.*;
+import main.domain.manageUsers.Account;
+import main.domain.manageTeams.FinancialAction;
+import main.domain.manageTeams.Team;
+import main.service.BoardManagerController;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 

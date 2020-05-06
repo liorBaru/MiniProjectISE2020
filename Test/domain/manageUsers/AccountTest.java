@@ -1,7 +1,7 @@
 package domain.manageUsers;
 
-import DB.UnitTests;
-import domain.manageUsers.Account;
+import main.DB.UnitTests;
+import main.domain.manageUsers.Account;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

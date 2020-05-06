@@ -1,20 +1,14 @@
 package service;
 
-import DB.AcceptanceTests;
-import DB.IntegrationTests;
-import DB.RegressionTests;
-import domain.Asset.Fan;
-import domain.Asset.Owner;
-import domain.Asset.SystemManager;
-import domain.manageEvents.Complaint;
-import domain.manageEvents.Notification;
-import domain.manageTeams.Team;
-import domain.manageUsers.Account;
-import domain.manageUsers.User;
-import javafx.util.Pair;
+import main.DB.IntegrationTests;
+import main.DB.RegressionTests;
+import main.domain.Asset.Fan;
+import main.domain.Asset.Owner;
+import main.domain.Asset.SystemManager;
+import main.domain.manageEvents.Notification;
 import org.junit.Before;
 import org.junit.Test;
-import DB.System;
+import main.DB.System;
 import org.junit.experimental.categories.Category;
 
 import java.util.*;

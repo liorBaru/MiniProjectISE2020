@@ -1,7 +1,7 @@
 package domain.manageUsers;
 
-import domain.manageUsers.Account;
-import domain.manageUsers.User;
+import main.domain.manageUsers.Account;
+import main.domain.manageUsers.User;
 
 public class AccountStub extends Account
 {

@@ -1,15 +1,11 @@
-import DB.AcceptanceTests;
 import DB.SystemTest;
-import DB.UnitTests;
-import domain.Asset.Asset;
+import main.DB.UnitTests;
 import domain.Asset.BoardMemberTest;
 import domain.Asset.FanTest;
 import domain.Asset.Refree.RefreeTest;
 import domain.manageEvents.NotificationTest;
 import domain.manageLeagues.GameTest;
-import domain.manageLeagues.League;
 import domain.manageLeagues.LeagueTest;
-import domain.manageTeams.Team;
 import domain.manageTeams.TeamTest;
 import domain.manageUsers.AccountManagerTest;
 import domain.manageUsers.AccountTest;

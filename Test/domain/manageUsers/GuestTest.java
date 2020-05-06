@@ -1,7 +1,10 @@
 package domain.manageUsers;
 
-import DB.System;
-import DB.UnitTests;
+import main.DB.System;
+import main.DB.UnitTests;
+import main.domain.manageUsers.AccountManager;
+import main.domain.manageUsers.Guest;
+import main.domain.manageUsers.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

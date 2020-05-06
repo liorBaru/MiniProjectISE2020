@@ -1,12 +1,9 @@
 package domain.manageEvents;
 
-import DB.IntegrationTests;
-import DB.UnitTests;
-import domain.manageEvents.Notification;
+import main.DB.UnitTests;
+import main.domain.manageEvents.Notification;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
-import java.util.Date;
 
 import static org.junit.Assert.*;
 

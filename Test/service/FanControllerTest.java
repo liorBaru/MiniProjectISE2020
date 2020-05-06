@@ -1,21 +1,17 @@
 package service;
-import DB.AcceptanceTests;
-import DB.RegressionTests;
-import domain.Asset.Coach;
-import domain.Asset.Fan;
-import domain.Asset.Owner;
-import domain.Asset.TeamMember;
-import DB.System;
-import domain.manageUsers.Account;
-import domain.manageTeams.Team;
-import domain.manageUsers.Guest;
-import domain.manageUsers.User;
+import main.DB.AcceptanceTests;
+import main.DB.RegressionTests;
+import main.domain.Asset.Coach;
+import main.domain.Asset.Fan;
+import main.domain.Asset.Owner;
+import main.domain.Asset.TeamMember;
+import main.DB.System;
+import main.domain.manageUsers.Guest;
+import main.domain.manageUsers.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.*;

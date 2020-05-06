@@ -1,13 +1,13 @@
 package service;
-import DB.AcceptanceTests;
-import DB.RegressionTests;
-import domain.manageUsers.Account;
-import domain.manageLeagues.IFA;
-import domain.Asset.Owner;
-import DB.System;
-import domain.manageLeagues.League;
-import domain.manageLeagues.Season;
-import domain.manageTeams.Team;
+import main.DB.AcceptanceTests;
+import main.DB.RegressionTests;
+import main.domain.manageUsers.Account;
+import main.domain.manageLeagues.IFA;
+import main.domain.Asset.Owner;
+import main.DB.System;
+import main.domain.manageLeagues.League;
+import main.domain.manageLeagues.Season;
+import main.domain.manageTeams.Team;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 

@@ -1,11 +1,14 @@
 package domain.manageTeams;
 
-import DB.IntegrationTests;
-import DB.RegressionTests;
-import DB.UnitTests;
+import main.DB.IntegrationTests;
+import main.DB.RegressionTests;
+import main.DB.UnitTests;
 import domain.Asset.*;
-import domain.manageEvents.Notification;
-import domain.manageUsers.Account;
+import main.domain.Asset.*;
+import main.domain.manageEvents.Notification;
+import main.domain.manageTeams.FinancialAction;
+import main.domain.manageTeams.Team;
+import main.domain.manageUsers.Account;
 import domain.manageUsers.AccountStub;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -19,7 +22,7 @@ import static org.junit.Assert.*;
 public class TeamTest {
 
     private Team team;
-    private  Owner Owner;
+    private main.domain.Asset.Owner Owner;
     private StaffMember staffMember;
 
     public void setUpUnit()  {

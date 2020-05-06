@@ -1,8 +1,9 @@
 package domain.manageLeagues;
 
-import DB.IntegrationTests;
-import DB.RegressionTests;
-import DB.UnitTests;
+import main.DB.IntegrationTests;
+import main.DB.RegressionTests;
+import main.DB.UnitTests;
+import main.domain.manageLeagues.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -15,8 +16,8 @@ import static org.junit.Assert.assertTrue;
 
 public class LeagueTest {
 
-    private  League league;
-    private  Season season;
+    private League league;
+    private Season season;
     private  SeasonStub seasonStub;
 
     private void setUpUnit(){

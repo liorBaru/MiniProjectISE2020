@@ -1,5 +1,4 @@
-import DB.AcceptanceTests;
-import DB.IntegrationTests;
+import main.DB.AcceptanceTests;
 import DB.SystemTest;
 import domain.Asset.BoardMemberTest;
 import domain.Asset.FanTest;

@@ -1,17 +1,20 @@
 package domain.Asset;
 
-import DB.IntegrationTests;
-import domain.manageEvents.Notification;
-import domain.managePages.Page;
-import domain.manageTeams.Team;
+
+import main.DB.IntegrationTests;
+import main.domain.Asset.Coach;
+import main.domain.manageEvents.Notification;
+import main.domain.managePages.Page;
+import main.domain.manageTeams.Team;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import DB.System;
+import main.DB.System;
 
 import java.util.Random;
 
 import static org.junit.Assert.*;
+import main.domain.Asset.Fan;
 
 public class FanTest
 {

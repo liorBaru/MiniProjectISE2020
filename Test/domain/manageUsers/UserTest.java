@@ -1,13 +1,12 @@
 package domain.manageUsers;
 
-import DB.IntegrationTests;
-import DB.UnitTests;
-import domain.Asset.Fan;
+import main.DB.IntegrationTests;
+import main.DB.UnitTests;
+import main.domain.Asset.Fan;
 import domain.Asset.FanStub;
+import main.domain.manageUsers.Account;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
-import static org.junit.Assert.*;
 
 public class UserTest {
 

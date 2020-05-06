@@ -1,11 +1,14 @@
 package DB;
 
 import domain.manageUsers.AccountMangerStub;
-import domain.Asset.Fan;
-import domain.Asset.SystemManager;
-import domain.manageUsers.Account;
-import domain.manageUsers.User;
-import domain.manageUsers.AccountManager;
+import main.DB.IntegrationTests;
+import main.DB.RegressionTests;
+import main.DB.System;
+import main.DB.UnitTests;
+import main.domain.Asset.Fan;
+import main.domain.Asset.SystemManager;
+import main.domain.manageUsers.Account;
+import main.domain.manageUsers.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
