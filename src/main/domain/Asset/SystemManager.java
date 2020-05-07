@@ -11,8 +11,6 @@ import java.util.TreeMap;
 
 public class SystemManager extends User
 {
-
-
     /**
      * gal,
      * get all new complaints from the system

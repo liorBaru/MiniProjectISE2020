@@ -3,19 +3,37 @@ import main.domain.manageLeagues.IFA;
 import main.domain.manageLeagues.League;
 import main.domain.manageLeagues.LeagueCalculator;
 import main.domain.manageLeagues.Season;
+import main.domain.manageUsers.Guest;
 
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
 
 
-public class IFAController
+public class IFAController extends GuestController
 {
+
+
     private IFA Ifa;
-    public void IFAController(IFA ifa)
-    {
-        Ifa=ifa;
+
+    public IFAController(Guest guest) {
+        super(guest);
+
     }
+
+//    public void IFAController(IFA ifa)
+//    {
+//        Ifa=ifa;
+//    }
+
+    /**
+     * @author: chen arazi
+     * @desc: setIfa
+     */
+    public void setIfa(IFA ifa) {
+        Ifa = ifa;
+    }
+
     /**
      * @author: David Zaltsman
      * @desc: add new league

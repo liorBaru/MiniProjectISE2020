@@ -2,13 +2,17 @@ package main.domain.manageUsers;
 
 import main.DB.System;
 
-public class Guest
+import java.util.Observable;
+import java.util.Random;
+
+public class Guest extends Observable
 {
     protected System system;
 
     public Guest ()
     {
         system=System.getInstance();
+
     }
 
     public User login(String userName, String password) throws Exception

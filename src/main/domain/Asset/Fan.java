@@ -4,7 +4,6 @@ import main.domain.manageEvents.Complaint;
 import main.domain.managePages.Page;
 import main.domain.manageUsers.Account;
 import main.domain.manageUsers.User;
-
 import java.util.LinkedList;
 import java.util.List;
 

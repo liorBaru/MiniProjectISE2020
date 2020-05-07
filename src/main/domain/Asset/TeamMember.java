@@ -21,8 +21,6 @@ public abstract class TeamMember extends StaffMember implements pageable
         page=new Page(this);
     }
 
-
-
     public void setTeam(Team team, Date contract, double salary)
     {
         this.team=team;

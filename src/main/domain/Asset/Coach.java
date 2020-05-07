@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Coach extends TeamMember
 {
-
     private String training;
     private String job;
 

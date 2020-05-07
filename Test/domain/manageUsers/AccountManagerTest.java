@@ -37,7 +37,7 @@ public class AccountManagerTest
 //       }
 //       else
 //       {
-//           fan=system.login("fanUser","FanUser12");
+//           fan=system.toLoginPage("fanUser","FanUser12");
 //       }
 //    }
 

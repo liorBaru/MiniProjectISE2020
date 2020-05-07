@@ -11,6 +11,7 @@ public abstract class User extends Guest
     protected String name;
     protected Account account;
     protected PriorityQueue<Notification> notifications;
+    protected String kind;
 
     public User ( String name,Account account)
     {
@@ -20,6 +21,7 @@ public abstract class User extends Guest
         this.name=name;
         notifications=new PriorityQueue<>();
     }
+
 
     public String getName() {
         return name;
@@ -90,6 +92,8 @@ public abstract class User extends Guest
     public abstract void removeUser() throws Exception;
 
     public Account getAccount(){ return account;}
+
+    public String getKind() {return kind; }
 
 
 

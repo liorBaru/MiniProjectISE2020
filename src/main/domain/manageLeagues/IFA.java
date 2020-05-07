@@ -13,7 +13,10 @@ public class IFA extends User
     public IFA(String name, Account account)
     {
         super(name,account);
+        kind="IFA";
     }
+
+
 
     /**
      * remove IFA from the system by system manger

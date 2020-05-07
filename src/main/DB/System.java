@@ -21,9 +21,9 @@ import java.util.*;
 public class System
 {
     private static System system;
-    private AccountManager accountManager;
+    private static AccountManager accountManager;
     private List<SystemManager> systemManagers;
-    private List<IFA> ifaList;
+    private static List<IFA> ifaList;
     private List<League> leagues;
     private List<Season> seasons;
     private List<Team> teams;
@@ -53,6 +53,9 @@ public class System
         ifaList = new LinkedList<>();
         coaches=new LinkedList<>();
         owners=new LinkedList<>();
+
+
+
     }
 
     public static System getInstance()
@@ -63,20 +66,30 @@ public class System
         }
         else
         {
-            return system=new System();
+            system=new System();
+            try {
+                system.initSystem("adminSystem1", "admin123A", "admin");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return system;
         }
     }
 
     public static void initSystem(String userName, String password, String name) throws Exception {
         try
         {
-            system=getInstance();
+           // system=getInstance();
            // system.connectToDB();
             Account account = system.accountManager.createAccount(userName,password);
             SystemManager systemManager = new SystemManager(name,account);
             system.systemManagers.add(systemManager);
            // system.connectToIFA();
           // system.connectToTaxLaW();
+            try {
+                createNewIFAUser("chenarazi","chenarazi123A","chenarazi");            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         catch (Exception e)
         {
@@ -106,6 +119,7 @@ public class System
          Fan newUser = new Fan(name,account);
          return newUser;
     }
+
 
     public User login (String username, String password) throws Exception
     {
@@ -374,7 +388,7 @@ public class System
      * @param
      * @param
      */
-    public IFA createNewIFAUser(String ifaName, String password, String userName)throws Exception
+    public static IFA createNewIFAUser(String ifaName, String password, String userName)throws Exception
     {
         Account ifaAccount = accountManager.createAccount(userName,password);
         IFA newUser = new IFA( ifaName,ifaAccount);

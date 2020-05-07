@@ -11,7 +11,6 @@ import java.util.List;
 public class Owner extends BoardMember
 {
         private StaffMember anotherJob;
-
         public Owner(Account account, String name, Team team, BoardMember boss, StaffMember anotherJob)
         {
                 super(account,name,team,boss);

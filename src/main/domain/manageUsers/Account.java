@@ -41,7 +41,7 @@ public class Account
      */
     public boolean accountVerification(String password)
     {
-        if(password!=null && password==this.password )
+        if(password!=null && password.equals(this.password ))
         {
             return true;
         }

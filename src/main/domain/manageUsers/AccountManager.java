@@ -137,7 +137,7 @@ public class AccountManager
 
     /**
      * gal,
-     * find the relevant user in login and return the user
+     * find the relevant user in toLoginPage and return the user
      * @param userName
      * @param password
      * @return user
