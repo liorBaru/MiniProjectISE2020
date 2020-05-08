@@ -30,7 +30,7 @@ public class SystemManagerControllerTest {
         {
             system = System.getInstance();
             fan = system.createNewFanUser("marko","MarkoPolo","markO12345");
-            systemManager=system.createNewSysteamManager("systemMnager11","sPois9fff","amnon");
+            systemManager=system.createNewSystemManager("systemMnager11","sPois9fff","amnon");
         }
         catch (Exception e)
         {

@@ -2,7 +2,7 @@ package main.domain.Asset.Refree;
 
 import main.domain.manageUsers.Account;
 
-public class LineRefree extends Refree
+public class MainReferee extends Referee
 {
 
     /**
@@ -11,9 +11,11 @@ public class LineRefree extends Refree
      * @param
      * @param
      */
-    public LineRefree(String name, String training, Account account)
+    public MainReferee(String name, String training, Account account)
     {
-        super(name,account,training);
+        super(name,account ,training );
+        kind="MainReferee";
+
     }
 
 

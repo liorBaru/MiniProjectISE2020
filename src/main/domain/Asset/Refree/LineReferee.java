@@ -2,17 +2,21 @@ package main.domain.Asset.Refree;
 
 import main.domain.manageUsers.Account;
 
-public class VarRefree extends Refree
+public class LineReferee extends Referee
 {
+
     /**
      * @author: Lior Baruchovich
      * @desc:
      * @param
      * @param
      */
-
-    public VarRefree (String name, String training, Account account)
+    public LineReferee(String name, Account account,  String training)
     {
         super(name,account,training);
+        kind="LineReferee";
     }
+
+
+
 }

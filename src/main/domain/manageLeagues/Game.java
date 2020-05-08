@@ -1,12 +1,11 @@
 package main.domain.manageLeagues;
 
 import main.domain.Asset.Field;
-import main.domain.Asset.Refree.Refree;
+import main.domain.Asset.Refree.Referee;
 import main.domain.manageUsers.User;
 import main.domain.manageEvents.GameEventLog;
 import main.domain.managePages.Subject;
 import main.domain.manageTeams.Team;
-
 import java.util.Date;
 
 public class Game extends Subject
@@ -20,12 +19,11 @@ public class Game extends Subject
     private Date finishDate;
     private int hScore;
     private int gScore;
-    Refree lineReferee1;
-    Refree lineReferee2;
-    Refree mainReferee;
-    Refree extraRefree;
-    Refree[] varReferees;
-
+    Referee lineReferee1;
+    Referee lineReferee2;
+    Referee mainReferee;
+    Referee extraReferee;
+    Referee[] varReferees;
 
     /**
      * add follower to the game

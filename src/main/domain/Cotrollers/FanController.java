@@ -1,18 +1,16 @@
-package main.service;
+package main.domain.Cotrollers;
 
 import main.domain.Asset.Fan;
 import main.domain.manageUsers.Guest;
+import main.service.GuestApplication;
 
 import java.util.List;
 
-public class FanController extends GuestController
+public class FanController
 {
 
     private Fan userFan;
 
-    public FanController(Guest guest) {
-        super(guest);
-    }
 
 //    public void FanController(Fan fan)
 //    {

@@ -6,29 +6,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.stage.Stage;
-import main.service.GuestController;
+import main.service.GuestApplication;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 public class View implements Observer {
 
-    private static GuestController currentController;
-    private static Map<String,GuestController> controllers ;
+    private static GuestApplication appController;
 
     @FXML
     public javafx.scene.control.Button btn_signUp;
     public javafx.scene.control.Button btn_login;
+    public javafx.scene.control.Button btn_GroupRegistration;
     public javafx.scene.control.TextField txt_userName;
     public javafx.scene.control.TextField txt_password;
     public javafx.scene.control.TextField txt_name;
     public javafx.scene.control.TextField lab_welcome;
+    public javafx.scene.control.TextField txt_teamName;
+    public javafx.scene.control.TextField txt_ownerName;
 
     public void toSignUpPage(ActionEvent actionEvent) throws IOException {
         loadPage(btn_signUp, "signUp.fxml");
@@ -60,7 +59,7 @@ public class View implements Observer {
             return;
         }
         try {
-            if (currentController.register(txt_name.getText(), txt_userName.getText(),txt_password.getText())) {
+            if (appController.register(txt_name.getText(), txt_userName.getText(),txt_password.getText())) {
                 congratulationsAlert("You have signed up for the system");
                 loadPage(txt_name,"login.fxml");
             }
@@ -83,11 +82,10 @@ public class View implements Observer {
             return;
         }
         try {
-            String userType=currentController.login(txt_userName.getText(),txt_password.getText());
+            String userType= appController.login(txt_userName.getText(),txt_password.getText());
              if(!userType.equals("invalid")) {
                  congratulationsAlert("welcome "+userType+" "+ txt_userName.getText());
                  loadPage(txt_userName, userType+".fxml");
-                 currentController= controllers.get(userType);
              }
             else
                 beAttentionAlert("Username length should be at least 6 characters\n" +
@@ -99,6 +97,21 @@ public class View implements Observer {
 
     public void toLoginPage(ActionEvent actionEvent) throws IOException {
         loadPage(btn_login,"login.fxml");
+    }
+
+
+    public void toCreateTeamPage(ActionEvent actionEvent) throws IOException {
+        loadPage(btn_GroupRegistration,"createTeam.fxml");
+    }
+
+    public void createTeam(ActionEvent actionEvent) throws Exception {
+        String ans= appController.openTeam(txt_teamName.getText(),txt_ownerName.getText());
+        if(ans.equals("team added")){
+            congratulationsAlert("added team");
+        }
+        else {
+            beAttentionAlert(ans);
+        }
     }
 
     private void beAttentionAlert(String message) {
@@ -115,15 +128,14 @@ public class View implements Observer {
     }
 
 
+
     @Override
     public void update(Observable o, Object arg) {
 
     }
 
-    public void setController(GuestController guestController, Map<String, GuestController> controllers){
-        currentController= guestController;
-        this.controllers= controllers;
-
+    public void setController(GuestApplication guestApplication){
+        appController = guestApplication;
     }
 
 
@@ -135,4 +147,6 @@ public class View implements Observer {
 
     public void toGamePolicyPage(ActionEvent actionEvent) {
     }
+
+
 }

@@ -2,7 +2,7 @@ package domain.Asset.Refree;
 
 import main.DB.IntegrationTests;
 import main.DB.System;
-import main.domain.Asset.Refree.Refree;
+import main.domain.Asset.Refree.Referee;
 import main.domain.manageEvents.Notification;
 import main.domain.manageLeagues.IFA;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 
-public class RefreeTest {
+public class RefereeTest {
     System system=System.getInstance();
     IFA ifa;
 
@@ -21,9 +21,9 @@ public class RefreeTest {
 
         try
         {
-            Refree refree=   system.createNewRefereeUser("Ban","Ban123456","ban123","Line","training");
+            Referee referee =   system.createNewRefereeUser("Ban","Ban123456","ban123","Line","training");
             ifa=system.createNewIFAUser("Dan","Dan123456","dan122");
-            refree.removeUser();
+            referee.removeUser();
         }
         catch (Exception e)
         {
@@ -31,7 +31,7 @@ public class RefreeTest {
         }
         boolean flag=false;
         for (Notification n:ifa.readNotification()) {
-            flag=n.getDetails().equals( "Refree, Ban, has been remove from the system by the system manager");
+            flag=n.getDetails().equals( "Referee, Ban, has been remove from the system by the system manager");
         }
         assertTrue(flag);
     }

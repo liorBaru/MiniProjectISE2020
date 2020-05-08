@@ -1,6 +1,6 @@
 package main.domain.manageLeagues;
 
-import main.domain.Asset.Refree.Refree;
+import main.domain.Asset.Refree.Referee;
 
 import java.util.*;
 
@@ -8,7 +8,7 @@ public class League
 {
     private String name;
     private int level;
-    private List<Refree> refrees;
+    private List<Referee> referees;
     private HashMap<Season, SeasonInfo> seasonInfos;
 
     public League(String name, int level)
@@ -16,7 +16,7 @@ public class League
         this.name = name;
         this.level = level;
         seasonInfos=new HashMap<>();
-        refrees=new LinkedList<>();
+        referees =new LinkedList<>();
     }
 
     public String getName() {

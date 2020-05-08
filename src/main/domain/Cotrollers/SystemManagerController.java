@@ -1,15 +1,16 @@
-package main.service;
+package main.domain.Cotrollers;
 import main.DB.System;
 import main.domain.Asset.SystemManager;
 
 public class SystemManagerController
 {
+
     SystemManager systemManager;
 
-    public SystemManagerController(SystemManager systemManager)
-    {
-        this.systemManager=systemManager;
+    public void setSystemManager(SystemManager systemManager) {
+        this.systemManager = systemManager;
     }
+
 
     public boolean initSystem(String userName, String password, String name) throws Exception {
         if(userName!=null && password!=null && name!=null) {
@@ -19,6 +20,11 @@ public class SystemManagerController
         }
         return false;
     }
+
+    public String openTeam(String teamName, String owner) throws Exception {
+        return systemManager.openTeam(teamName, owner);
+    }
+
 
     public boolean removeUser(String userName) throws Exception
     {

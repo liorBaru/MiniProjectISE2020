@@ -9,24 +9,26 @@ import main.domain.manageLeagues.IFA;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class Refree extends User
+public abstract class Referee extends User
 {
     private List<Game> games;
-    private String trainig;
+    private String training;
 
 
-    public Refree(String name, Account account,String trainig)
+    public Referee(String name, Account account, String training)
     {
         super(name,account);
-        this.trainig=trainig;
+        this.training =training;
         games = new LinkedList<>();
+        kind="Referee";
+
     }
 
 
     @Override
     public void removeUser()
     {
-        String details = "Refree, "+this.name+", has been remove from the system by the system manager";
+        String details = "Referee, "+this.name+", has been remove from the system by the system manager";
         Notification notification = new Notification(details);
         for (IFA ifa:system.getIfaList())
         {

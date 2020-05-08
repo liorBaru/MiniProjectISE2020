@@ -11,6 +11,13 @@ import java.util.TreeMap;
 
 public class SystemManager extends User
 {
+    public SystemManager(String name, Account account)
+    {
+        super(name,account);
+        kind="SystemManager";
+    }
+
+
     /**
      * gal,
      * get all new complaints from the system
@@ -56,10 +63,14 @@ public class SystemManager extends User
         //
     }
 
-    public SystemManager (String name, Account account)
-    {
-        super(name,account);
+
+    /**
+     * chen
+     */
+    public String openTeam (String teamName, String owner) throws Exception {
+        return system.openTeamBySystemManager(teamName, owner);
     }
+
 
     public void closeTeam (String teamName) throws Exception {
         system.closeTeamBySystemManager(teamName);

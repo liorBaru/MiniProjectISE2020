@@ -1,4 +1,4 @@
-package main.service;
+package main.domain.Cotrollers;
 
 import main.domain.Asset.Asset;
 import main.domain.Asset.BoardMember;
@@ -6,21 +6,14 @@ import main.domain.Asset.Owner;
 import main.domain.Asset.TeamManager;
 import main.domain.manageTeams.FinancialAction;
 import main.domain.manageUsers.Guest;
+import main.service.GuestApplication;
 
 import java.util.List;
 
-public class BoardManagerController extends GuestController {
+public class BoardManagerController {
 
     private BoardMember boardMember;
 
-    public BoardManagerController(Guest guest) {
-        super(guest);
-    }
-
-    public void BoardManagerController(BoardMember boardMember)
-    {
-        this.boardMember=boardMember;
-    }
     /**
      * @author matan
      * @param asset

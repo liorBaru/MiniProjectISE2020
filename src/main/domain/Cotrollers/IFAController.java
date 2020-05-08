@@ -1,25 +1,22 @@
-package main.service;
+package main.domain.Cotrollers;
 import main.domain.manageLeagues.IFA;
 import main.domain.manageLeagues.League;
 import main.domain.manageLeagues.LeagueCalculator;
 import main.domain.manageLeagues.Season;
 import main.domain.manageUsers.Guest;
+import main.service.GuestApplication;
 
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
 
 
-public class IFAController extends GuestController
+public class IFAController
 {
 
 
     private IFA Ifa;
 
-    public IFAController(Guest guest) {
-        super(guest);
-
-    }
 
 //    public void IFAController(IFA ifa)
 //    {

@@ -1,24 +1,16 @@
-package main.service;
+package main.domain.Cotrollers;
 
 import main.domain.Asset.TeamMember;
 import main.domain.manageUsers.Guest;
+import main.service.GuestApplication;
 
-public class TeamMemberController extends GuestController
+public class TeamMemberController
 {
     TeamMember teamMember;
-
-    public TeamMemberController(Guest guest) {
-        super(guest);
-    }
 
     public void setUser(TeamMember teamMember) {
         this.teamMember = teamMember;
     }
-//    public TeamMemberController(TeamMember teamMember)
-//    {
-//        this.teamMember=teamMember;
-//    }
-
 
     /**
      * gal

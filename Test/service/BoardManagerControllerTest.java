@@ -3,11 +3,11 @@ package service;
 import main.DB.AcceptanceTests;
 import main.DB.RegressionTests;
 import main.domain.Asset.*;
+import main.domain.Cotrollers.BoardManagerController;
 import main.domain.manageUsers.Account;
 import main.domain.manageTeams.FinancialAction;
 import main.domain.manageTeams.Team;
 import main.domain.manageUsers.Guest;
-import main.service.BoardManagerController;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -44,7 +44,7 @@ public class BoardManagerControllerTest {
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void addAssets1acceptance() {
         Field filed=new Field("Tady");
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         bmc.addAssets(filed,owner);
         assertTrue(owner.getTeam().getAssetsOfTeam().contains(filed));
     }
@@ -58,7 +58,7 @@ public class BoardManagerControllerTest {
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void removeAssets2acceptance() {
         Field trainField=new Field("buyit vagan");
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         bmc.removeAssets(trainField,owner);
     }
     /**
@@ -69,7 +69,7 @@ public class BoardManagerControllerTest {
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void appointmentNewOwner3acceptance() {
         Owner ownerNew=new Owner( new Account("Matan","12341234"),"matan gadasi",null,null,null);
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         bmc.appointmentNewOwner(owner,ownerNew);
         assertTrue(owner.getTeam().getOwners().contains(ownerNew));
     }
@@ -82,7 +82,7 @@ public class BoardManagerControllerTest {
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void removeOwnerAppointment4acceptance() {
         Owner ownerRemove=new Owner( new Account("Matan","12341234"),"matan gadasi",null,null,null);
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         bmc.appointmentNewOwner(owner,ownerRemove);
         bmc.removeOwnerAppointment(owner,ownerRemove);
         assertFalse(owner.getTeam().getOwners().contains(ownerRemove));
@@ -97,7 +97,7 @@ public class BoardManagerControllerTest {
     public void testAppointTeamManger5acceptance() {
         Account account=new Account("guyLevi","12341234");
         TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         List<String> permissionList=new ArrayList<>();
         permissionList.add("addPlayer");
         permissionList.add("removePlayer");
@@ -114,7 +114,7 @@ public class BoardManagerControllerTest {
     public void testRemoveAppointTeamMangerA6acceptance() {
         Account account=new Account("guyLevi","12341234");
         TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         List<String> permissionList=new ArrayList<>();
         permissionList.add("addPlayer");
         permissionList.add("removePlayer");
@@ -130,7 +130,7 @@ public class BoardManagerControllerTest {
     public void testRemoveAppointTeamMangerB7acceptance() {
         Account account=new Account("guyLevi","12341234");
         TeamManager teamManager=new TeamManager(account,"guy levi",null,null,2000,null);
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         List<String> permissionList=new ArrayList<>();
         permissionList.add("addPlayer");
         permissionList.add("removePlayer");
@@ -143,7 +143,7 @@ public class BoardManagerControllerTest {
     @Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void openTeam1a8acceptance() throws Exception {
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         owner.getTeam().setStatus(false);
         bmc.openTeam(owner);
         assertTrue(owner.getTeam().isStatus());
@@ -155,7 +155,7 @@ public class BoardManagerControllerTest {
     @Test(expected = Exception.class)
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void openTeam1b9acceptance()throws Exception{
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         bmc.openTeam(owner);
     }
     /**
@@ -165,7 +165,7 @@ public class BoardManagerControllerTest {
     @Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void closeTeam2a10acceptance() throws Exception {
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         bmc.closeTeam(owner);
         assertFalse(owner.getTeam().isStatus());
     }
@@ -176,7 +176,7 @@ public class BoardManagerControllerTest {
     @Test(expected = Exception.class)
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void closeTeam2b11acceptance()throws Exception{
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         owner.getTeam().setStatus(false);
         bmc.closeTeam(owner);
     }
@@ -188,7 +188,7 @@ public class BoardManagerControllerTest {
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void reportIncomeOrOutcome12acceptance() {
         FinancialAction financialAction=new FinancialAction("Buy new player",-50000,owner);
-        BoardManagerController bmc = new BoardManagerController(guest);
+        BoardManagerController bmc = new BoardManagerController();
         bmc.reportIncomeOrOutcome(owner,financialAction);
         assertTrue(owner.getTeam().getFinancialActions().contains(financialAction));
 

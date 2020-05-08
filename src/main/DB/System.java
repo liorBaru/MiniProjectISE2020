@@ -1,12 +1,11 @@
 package main.DB;
 import main.domain.Asset.*;
+import main.domain.Asset.Refree.*;
 import main.domain.managePages.Page;
 import main.domain.manageUsers.Account;
 import main.domain.manageUsers.AccountManager;
-import main.domain.Asset.Refree.LineRefree;
-import main.domain.Asset.Refree.MainRefree;
-import main.domain.Asset.Refree.Refree;
-import main.domain.Asset.Refree.VarRefree;
+import main.domain.Asset.Refree.Referee;
+import main.domain.Asset.Refree.VarReferee;
 import main.domain.manageUsers.User;
 import main.domain.manageEvents.Complaint;
 import main.domain.manageEvents.Notification;
@@ -22,19 +21,19 @@ public class System
 {
     private static System system;
     private static AccountManager accountManager;
-    private List<SystemManager> systemManagers;
+    private static List<SystemManager> systemManagers;
     private static List<IFA> ifaList;
-    private List<League> leagues;
-    private List<Season> seasons;
-    private List<Team> teams;
-    private List<Team> closedTeams;
-    private List<Page> pages;
-    private List<Asset> assetsExists;
-    private List<Coach> coaches;
-    private List<Owner> owners;
-    private List<Player> players;
-    private List<Refree> refrees;
-    private List<Complaint> complaints;
+    private static List<League> leagues;
+    private static List<Season> seasons;
+    private static List<Team> teams;
+    private static List<Team> closedTeams;
+    private static List<Page> pages;
+    private static List<Asset> assetsExists;
+    private static List<Coach> coaches;
+    private static List<Owner> owners;
+    private static List<Player> players;
+    private static List<Referee> referees;
+    private static List<Complaint> complaints;
 
     private System ()
     {
@@ -49,7 +48,7 @@ public class System
         systemManagers = new LinkedList<>();
         complaints = new LinkedList<>();
         closedTeams = new LinkedList<>();
-        refrees = new LinkedList<>();
+        referees = new LinkedList<>();
         ifaList = new LinkedList<>();
         coaches=new LinkedList<>();
         owners=new LinkedList<>();
@@ -85,9 +84,11 @@ public class System
             SystemManager systemManager = new SystemManager(name,account);
             system.systemManagers.add(systemManager);
            // system.connectToIFA();
-          // system.connectToTaxLaW();
+           // system.connectToTaxLaW();
             try {
-                createNewIFAUser("chenarazi","chenarazi123A","chenarazi");            } catch (Exception e) {
+                createNewIFAUser("chenIFA","chenarazi1A","chenIFA");
+                createNewSystemManager("chenSysM", "chenarazi1A", "chenSysM");
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -126,7 +127,7 @@ public class System
         return accountManager.login(username,password);
     }
 
-    public  SystemManager createNewSysteamManager(String userName,String password,String name) throws Exception
+    public static SystemManager createNewSystemManager(String name, String password, String userName) throws Exception
     {
         Account account=accountManager.createAccount(userName,password);
         SystemManager systemManager = new SystemManager(name,account);
@@ -144,7 +145,7 @@ public class System
      * @param name - name of league
      * @param level - level of the league
      */
-    public League addLeague(String name, int level)
+    public  League addLeague(String name, int level)
     {
         if(level<0 || checkLeagueExist(level) ){
             throw new InputMismatchException("Wrong input");
@@ -325,7 +326,7 @@ public class System
      * @param
      * @param
      */
-    public Player createNewPlayerUser(String pName, Date birthDay, String password, String userName,List<String> positions)throws Exception {
+    public static Player createNewPlayerUser(String pName, Date birthDay, String password, String userName,List<String> positions)throws Exception {
         Account pAccount = accountManager.createAccount(userName,password);
         List<String> position = new LinkedList<>();
         Player newUser = new Player(pAccount,pName, birthDay,positions);
@@ -354,28 +355,28 @@ public class System
      * @param
      * @param
      */
-    public Refree createNewRefereeUser(String rName,String password, String userName, String type,String training)throws Exception {
+    public Referee createNewRefereeUser(String rName, String password, String userName, String type, String training)throws Exception {
 
         Account rAccount = accountManager.createAccount(userName,password);
         if(type=="Main")
         {
-            Refree newUser = new MainRefree(rName,training,rAccount);
+            Referee newUser = new MainReferee(rName,training,rAccount);
             rAccount.setUser(newUser);
-            refrees.add ( newUser);
+            referees.add ( newUser);
             return newUser;
         }
         else if(type=="Var")
         {
-            Refree newUser = new VarRefree(rName,training,rAccount);
+            Referee newUser = new VarReferee(rName,training,rAccount);
             rAccount.setUser(newUser);
-            refrees.add (newUser);
+            referees.add (newUser);
             return newUser;
         }
         else if(type=="Line")
         {
-            Refree newUser = new LineRefree(rName,training,rAccount);
+            Referee newUser = new LineReferee(rName,rAccount,training);
             rAccount.setUser(newUser);
-            refrees.add ( newUser);
+            referees.add ( newUser);
             return newUser;
         }
         throw new Exception("Invalid type:"+type);
@@ -454,9 +455,9 @@ public class System
      * @param
      * @param
      */
-    public Refree getRefree(String name)
+    public Referee getRefree(String name)
     {
-        for (Refree referee:refrees)
+        for (Referee referee: referees)
         {
             if(referee.getName()==name)
             {
@@ -635,5 +636,8 @@ public class System
     }
 
 
-
+    //TODO: create team!
+    public String openTeamBySystemManager(String teamName, String owner) {
+      return "team added";
+    }
 }
