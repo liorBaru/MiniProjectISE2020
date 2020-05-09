@@ -12,7 +12,6 @@ public class Guest extends Observable
     public Guest ()
     {
         system=System.getInstance();
-
     }
 
     public User login(String userName, String password) throws Exception

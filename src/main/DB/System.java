@@ -53,9 +53,6 @@ public class System
         ifaList = new LinkedList<>();
         coaches=new LinkedList<>();
         owners=new LinkedList<>();
-
-
-
     }
 
     public static System getInstance()
