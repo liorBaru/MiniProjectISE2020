@@ -1,8 +1,7 @@
 package main.DB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,15 +16,38 @@ public class apointmentsDaoSql implements DaoSql
     }
 
     @Override
-    public List<String[]> getAll()
-    {
+    public List<String[]> getAll() {
+        ResultSet resultaDb = null;
+        List<String[]> results = new LinkedList<>();
+        Connection conn = dBconnector.getConnection();
+        String query = " SELECT * FROM apointments";
+        if (conn != null)
+        {
+            Statement stmt = null;
+            try {
+                stmt = conn.createStatement();
+                resultaDb = stmt.executeQuery(query);
+                while (resultaDb.next()) {
+                    String[] row = new String[2];
+                    row[0] = resultaDb.getString(1);
+                    row[1] = resultaDb.getString(2);
+                    results.add(row);
+                }
+                resultaDb.close();
+                stmt.close();
+                return results;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                // System.out.println(e.getMessage());
+            }
+        }
         return null;
     }
 
     @Override
     public void save(String[] params) throws SQLException
     {
-        String query = "USE " + dBconnector.getDatabaseName() + " insert into apointments(manager, employee) " +
+        String query = " insert into apointments(manager, employee) " +
                 "VALUES(?,?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -54,7 +76,7 @@ public class apointmentsDaoSql implements DaoSql
     @Override
     public void delete(String[] params)
     {
-        String query = "USE " + dBconnector.getDatabaseName() + " Delete from apointments(manager, employee) " +
+        String query =" Delete from apointments(manager, employee) " +
                 "VALUES(?,?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
