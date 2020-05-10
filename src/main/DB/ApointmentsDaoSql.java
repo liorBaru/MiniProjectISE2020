@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class apointmentsDaoSql implements DaoSql
+public class ApointmentsDaoSql implements DaoSql
 {
     DBconnector dBconnector= DBconnector.getInstance();
 
