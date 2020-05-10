@@ -10,9 +10,9 @@ public class apointmentsDaoSql implements DaoSql
     DBconnector dBconnector= DBconnector.getInstance();
 
     @Override
-    public Optional<String[]> get(String[] key)
+    public String[] get(String[] key)
     {
-        return Optional.empty();
+        return null;
     }
 
     @Override
@@ -38,7 +38,6 @@ public class apointmentsDaoSql implements DaoSql
                 return results;
             } catch (SQLException e) {
                 e.printStackTrace();
-                // System.out.println(e.getMessage());
             }
         }
         return null;

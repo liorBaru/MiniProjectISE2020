@@ -16,7 +16,8 @@ public class Guest extends Observable
 
     public User login(String userName, String password) throws Exception
     {
-        if(userName!=null && password!=null) {
+        if(userName!=null && password!=null)
+        {
             User user = system.login(userName, password);
             return user;
         }

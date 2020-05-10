@@ -1,4 +1,6 @@
 package main.DB;
 
-public class boardMemberDaoSql {
+public class boardMemberDaoSql
+{
+
 }

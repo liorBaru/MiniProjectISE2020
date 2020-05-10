@@ -4,7 +4,7 @@ import java.util.*;
 public interface DaoSql
 {
 
-    Optional<String[]> get(String[] key );
+    String[] get(String[] key );
     List<String[]> getAll();
     void save(String[] params) throws SQLException;
     void update(String[] params);
