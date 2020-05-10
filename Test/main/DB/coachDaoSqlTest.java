@@ -7,9 +7,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class usersDaoSqlTest
+public class coachDaoSqlTest
 {
-    UsersDaoSql usersDaoSql=UsersDaoSql.getInstance();
+    CoachDaoSql coachDaoSql = CoachDaoSql.getInstance();
 
 
     @Test
@@ -21,20 +21,21 @@ public class usersDaoSqlTest
     @Test
     public void save()
     {
-        String [] details = new String[4];
+        String [] details = new String[5];
         details[0]="galborabia";
-        details[1]="galb1234";
-        details[2]="125632597";
-        details[3]="Fan";
+        details[1]="Hapoel Tel aviv";
+        details[2]="454";
+        details[3]="Coach";
+        details[4]="Goal keeper coach";
         try
         {
-            usersDaoSql.save(details);
+            coachDaoSql.save(details);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        List<String []> checks=usersDaoSql.get(details);
-        assertEquals("galborabia",checks.get(0));
-        usersDaoSql.delete(details);
+        List<String []> checks=coachDaoSql.get(details);
+        assertEquals("galborabia",checks.get(0)[0]);
+        coachDaoSql.delete(details);
     }
 
     @Test
@@ -46,11 +47,11 @@ public class usersDaoSqlTest
         details[2]="125632597";
         details[3]="Fan";
         try {
-            usersDaoSql.save(details);
+            coachDaoSql.save(details);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         details[1]="galNewPass1";
-        usersDaoSql.update(details);
+        coachDaoSql.update(details);
     }
 }

@@ -2,29 +2,27 @@ package main.DB;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-class OwnersDaoSql implements DaoSql
+class TeamInfoDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
-    private static OwnersDaoSql ownerDaoSql = new OwnersDaoSql();
+    private static TeamInfoDaoSql teamInfoDaoSql = new TeamInfoDaoSql();
 
-    public static  OwnersDaoSql getInstance()
+    public static TeamInfoDaoSql getInstance()
     {
-        return ownerDaoSql;
+        return teamInfoDaoSql;
     }
 
     @Override
-    /**
-     * David
-     * get coach
-     */
     public List<String[]> get(String[] key)
     {
-        Connection conn = dBconnector.getConnection();
         ResultSet resultSet;
-        String query="SELECT * FROM owners where user_name =?";
+        String query="SELECT * FROM teaminfo where team =?";
+        Connection conn = dBconnector.getConnection();
         String [] results;
         List<String[]> list = new ArrayList<>();
         if (conn != null)
@@ -35,13 +33,19 @@ class OwnersDaoSql implements DaoSql
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
                 resultSet=stmt.executeQuery();
-                results= new String[4];
+                results= new String[10];
                 if(resultSet.next())
                 {
                     results[0]=resultSet.getString(1);
-                    results[1]=resultSet.getString(2);
+                    results[1]=String.valueOf(resultSet.getInt(2));
                     results[2]=resultSet.getString(3);
-                    results[3]=resultSet.getString(4);
+                    results[3]=String.valueOf(resultSet.getInt(4));
+                    results[4]=String.valueOf(resultSet.getInt(5));
+                    results[5]=String.valueOf(resultSet.getInt(6));
+                    results[6]=String.valueOf(resultSet.getInt(7));
+                    results[7]=String.valueOf(resultSet.getInt(8));
+                    results[8]=String.valueOf(resultSet.getInt(9));
+                    results[9]=String.valueOf(resultSet.getInt(10));
                     stmt.close();
                     list.add(results);
                     return list;
@@ -58,7 +62,7 @@ class OwnersDaoSql implements DaoSql
     @Override
     public List<String[]> getAll()
     {
-        String query = "SELECT * FROM owners";
+        String query = "SELECT * FROM teaminfo";
         List<String[]> list= new ArrayList();
         String[] results= null;
         ResultSet resultSet=null;
@@ -70,9 +74,16 @@ class OwnersDaoSql implements DaoSql
             while(resultSet.next())
             {
                 results[0]=resultSet.getString(1);
-                results[1]=resultSet.getString(2);
+                results[1]=String.valueOf(resultSet.getInt(2));
                 results[2]=resultSet.getString(3);
-                results[3]=resultSet.getString(4);
+                results[3]=String.valueOf(resultSet.getInt(4));
+                results[4]=String.valueOf(resultSet.getInt(5));
+                results[5]=String.valueOf(resultSet.getInt(6));
+                results[6]=String.valueOf(resultSet.getInt(7));
+                results[7]=String.valueOf(resultSet.getInt(8));
+                results[8]=String.valueOf(resultSet.getInt(9));
+                results[9]=String.valueOf(resultSet.getInt(10));
+                statement.close();
                 list.add(results);
 
             }
@@ -82,29 +93,34 @@ class OwnersDaoSql implements DaoSql
 
         return list;
     }
-    /**
-     * David
-     * insert new Coach to DB
-     */
+
     @Override
     public void save(String[] params) throws SQLException
     {
-        String query="INSERT INTO owners(user_name,name,team,anotherJob)" +"values(?,?,?,?);";
+
+        String query="INSERT INTO teaminfo(team,season,league,points,goals,onGoals,losses,victories,draw,position)" +"values(?,?,?,?,?,?,?,?,?,?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
+
             PreparedStatement stmt = null;
             try {
                 conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
-                stmt.setString(2,params[1]);
+                stmt.setInt(2,Integer.parseInt(params[1]));
                 stmt.setString(3,params[2]);
-                stmt.setString(4,params[3]);
+                stmt.setInt(4,Integer.parseInt(params[3]));
+                stmt.setInt(5,Integer.parseInt(params[4]));
+                stmt.setInt(6,Integer.parseInt(params[5]));
+                stmt.setInt(7,Integer.parseInt(params[6]));
+                stmt.setInt(8,Integer.parseInt(params[7]));
+                stmt.setInt(9,Integer.parseInt(params[8]));
+                stmt.setInt(10,Integer.parseInt(params[9]));
                 stmt.execute();
                 stmt.close();
             }
-            catch (SQLException e)
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -115,8 +131,7 @@ class OwnersDaoSql implements DaoSql
     public void update(String[] params)
     {
         ResultSet resultSet;
-        String query="Select FROM owners(user_name)"+
-                "values(?);";
+        String query="Select FROM teaminfo(team,season,league,points,goals,onGoals,losses,victories,draw,position)" +"values(?,?,?,?,?,?,?,?,?,?)";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
@@ -125,16 +140,18 @@ class OwnersDaoSql implements DaoSql
                 conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
-                //resultSet=stmt.executeQuery();
-                //  String type=resultSet.getString(4);
-                //  BigDecimal big =resultSet.getBigDecimal(3);
-                String update="Replace INTO coach(user_name,name,team,anotherJob)" +"values(?,?,?,?);";
+                String update="Replace INTO teaminfo(team,season,league,points,goals,onGoals,losses,victories,draw,position)" +"values(?,?,?,?,?,?,?,?,?,?)";
                 stmt=conn.prepareStatement(update);
                 stmt.setString(1,params[0]);
-                stmt.setString(2,params[1]);
+                stmt.setInt(2,Integer.parseInt(params[1]));
                 stmt.setString(3,params[2]);
-                stmt.setString(4,params[3]);
-
+                stmt.setInt(4,Integer.parseInt(params[3]));
+                stmt.setInt(5,Integer.parseInt(params[4]));
+                stmt.setInt(6,Integer.parseInt(params[5]));
+                stmt.setInt(7,Integer.parseInt(params[6]));
+                stmt.setInt(8,Integer.parseInt(params[7]));
+                stmt.setInt(9,Integer.parseInt(params[8]));
+                stmt.setInt(10,Integer.parseInt(params[9]));
                 stmt.execute();
                 stmt.close();
             }
@@ -150,13 +167,13 @@ class OwnersDaoSql implements DaoSql
     @Override
     public void delete(String[] key)
     {
-        String query =" Delete from owners where user_name=?;" ;
+        String query =" Delete from teaminfo where team=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
             PreparedStatement stmt = null;
             try {
-                conn.setCatalog("managteams");
+                conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
                 stmt.execute();

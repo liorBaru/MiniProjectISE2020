@@ -2,29 +2,27 @@ package main.DB;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-class OwnersDaoSql implements DaoSql
+class FinancialDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
-    private static OwnersDaoSql ownerDaoSql = new OwnersDaoSql();
+    private static FinancialDaoSql financialDaoSql = new FinancialDaoSql();
 
-    public static  OwnersDaoSql getInstance()
+    public static FinancialDaoSql getInstance()
     {
-        return ownerDaoSql;
+        return financialDaoSql;
     }
 
     @Override
-    /**
-     * David
-     * get coach
-     */
     public List<String[]> get(String[] key)
     {
-        Connection conn = dBconnector.getConnection();
         ResultSet resultSet;
-        String query="SELECT * FROM owners where user_name =?";
+        String query="SELECT * FROM financialactions where user_name =?";
+        Connection conn = dBconnector.getConnection();
         String [] results;
         List<String[]> list = new ArrayList<>();
         if (conn != null)
@@ -35,13 +33,14 @@ class OwnersDaoSql implements DaoSql
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
                 resultSet=stmt.executeQuery();
-                results= new String[4];
+                results= new String[5];
                 if(resultSet.next())
                 {
                     results[0]=resultSet.getString(1);
-                    results[1]=resultSet.getString(2);
+                    results[1]=String.valueOf(resultSet.getDate(2));
                     results[2]=resultSet.getString(3);
                     results[3]=resultSet.getString(4);
+                    results[4]=String.valueOf(resultSet.getDouble(5));
                     stmt.close();
                     list.add(results);
                     return list;
@@ -58,7 +57,7 @@ class OwnersDaoSql implements DaoSql
     @Override
     public List<String[]> getAll()
     {
-        String query = "SELECT * FROM owners";
+        String query = "SELECT * FROM financialactions";
         List<String[]> list= new ArrayList();
         String[] results= null;
         ResultSet resultSet=null;
@@ -70,9 +69,11 @@ class OwnersDaoSql implements DaoSql
             while(resultSet.next())
             {
                 results[0]=resultSet.getString(1);
-                results[1]=resultSet.getString(2);
+                results[1]=String.valueOf(resultSet.getDate(2));
                 results[2]=resultSet.getString(3);
                 results[3]=resultSet.getString(4);
+                results[4]=String.valueOf(resultSet.getDouble(5));
+                statement.close();
                 list.add(results);
 
             }
@@ -82,29 +83,33 @@ class OwnersDaoSql implements DaoSql
 
         return list;
     }
-    /**
-     * David
-     * insert new Coach to DB
-     */
+
     @Override
     public void save(String[] params) throws SQLException
     {
-        String query="INSERT INTO owners(user_name,name,team,anotherJob)" +"values(?,?,?,?);";
+        Date date=null;
+        String query="INSERT INTO financialactions(team,date,description,member,price)" +"values(?,?,?,?,?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
+            try {
+              date= (Date) new SimpleDateFormat("dd/MM/yyyy").parse(params[1]);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             PreparedStatement stmt = null;
             try {
                 conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
-                stmt.setString(2,params[1]);
+                stmt.setDate(2,date);
                 stmt.setString(3,params[2]);
                 stmt.setString(4,params[3]);
+                stmt.setDouble(5,Double.parseDouble(params[4]));
                 stmt.execute();
                 stmt.close();
             }
-            catch (SQLException e)
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -114,8 +119,14 @@ class OwnersDaoSql implements DaoSql
     @Override
     public void update(String[] params)
     {
+        Date date=null;
+        try {
+            date= (Date) new SimpleDateFormat("dd/MM/yyyy").parse(params[1]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         ResultSet resultSet;
-        String query="Select FROM owners(user_name)"+
+        String query="Select FROM financialactions(team)"+
                 "values(?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -125,16 +136,13 @@ class OwnersDaoSql implements DaoSql
                 conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
-                //resultSet=stmt.executeQuery();
-                //  String type=resultSet.getString(4);
-                //  BigDecimal big =resultSet.getBigDecimal(3);
-                String update="Replace INTO coach(user_name,name,team,anotherJob)" +"values(?,?,?,?);";
+                String update="Replace INTO users(team,date,description,member,price)"+"values(?,?,?,?,?)";
                 stmt=conn.prepareStatement(update);
                 stmt.setString(1,params[0]);
-                stmt.setString(2,params[1]);
+                stmt.setDate(2,date);
                 stmt.setString(3,params[2]);
                 stmt.setString(4,params[3]);
-
+                stmt.setDouble(5,Double.parseDouble(params[4]));
                 stmt.execute();
                 stmt.close();
             }
@@ -150,13 +158,13 @@ class OwnersDaoSql implements DaoSql
     @Override
     public void delete(String[] key)
     {
-        String query =" Delete from owners where user_name=?;" ;
+        String query =" Delete from financialactions where team=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
             PreparedStatement stmt = null;
             try {
-                conn.setCatalog("managteams");
+                conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
                 stmt.execute();
