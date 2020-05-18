@@ -10,7 +10,7 @@ public class ApointmentsDaoSql implements DaoSql
     DBconnector dBconnector= DBconnector.getInstance();
 
     @Override
-    public String[] get(String[] key)
+    public List<String[]> get(String[] key)
     {
         return null;
     }

@@ -3,6 +3,8 @@ package main.DB;
 
 import org.junit.Test;
 import java.sql.SQLException;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class usersDaoSqlTest
@@ -30,8 +32,15 @@ public class usersDaoSqlTest
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String [] checks=usersDaoSql.get(details);
-        assertEquals("galborabia",checks[0]);
+        boolean flag=false;
+        for (String [] checks:usersDaoSql.get(details))
+        {
+            if(checks[0]=="galborabia")
+            {
+                flag=true;
+            }
+        }
+        assertEquals(true,flag);
         usersDaoSql.delete(details);
     }
 

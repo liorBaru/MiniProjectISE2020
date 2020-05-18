@@ -20,7 +20,7 @@ public class PagesDaoSql implements DaoSql
     @Override
     public List<String[]> get(String[] key)
     {
-        String query ="SELECT * from pages where id=?;";
+        String query ="SELECT owner,page_name from pages where id=?;";
         ResultSet resultSet;
         Connection conn = dBconnector.getConnection();
         String [] results;
@@ -32,13 +32,12 @@ public class PagesDaoSql implements DaoSql
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
                 resultSet=stmt.executeQuery();
-                results= new String[3];
+                results= new String[2];
                 List<String[]> queryResults=new LinkedList<>();
                 if(resultSet.next())
                 {
-                    results[0]=String.valueOf(resultSet.getInt(1));
+                    results[0]=resultSet.getString(1);
                     results[1]=resultSet.getString(2);
-                    results[2]=resultSet.getString(3);
                     queryResults.add(results);
                     stmt.close();
                     return  queryResults;
@@ -89,7 +88,7 @@ public class PagesDaoSql implements DaoSql
     @Override
     public void save(String[] params) throws SQLException
     {
-        String query="Insert into pages(id,owner,name) values(?,?,?);";
+        String query="Insert into pages(id,owner,page_name) values(?,?,?);";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
         {
@@ -98,7 +97,8 @@ public class PagesDaoSql implements DaoSql
                 PreparedStatement stmt;
                 conn.setCatalog("managepages");
                 stmt = conn.prepareStatement(query);
-                stmt.setInt(1,Integer.valueOf(params[0]));
+                int x=Integer.valueOf(params[0]);
+                stmt.setInt(1,x);
                 stmt.setString(2,params[1]);
                 stmt.setString(3,params[2]);
                 stmt.execute();
@@ -107,7 +107,7 @@ public class PagesDaoSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                throw new SQLException(e.getMessage());
             }
         }
     }
@@ -115,7 +115,7 @@ public class PagesDaoSql implements DaoSql
     @Override
     public void update(String[] params)
     {
-        String query ="Update pages Set owner=?,name=? where id=?  ;";
+        String query ="Update pages Set owner=?,page_name=? where id=?  ;";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
         {

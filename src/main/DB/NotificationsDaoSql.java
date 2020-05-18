@@ -1,5 +1,6 @@
 package main.DB;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.sql.*;
 import java.util.LinkedList;
@@ -10,6 +11,11 @@ public class NotificationsDaoSql implements DaoSql
 
     private DBconnector dBconnector =DBconnector.getInstance();
     private static NotificationsDaoSql notificationsDaoSql = new NotificationsDaoSql();
+
+    public static NotificationsDaoSql getInstance()
+    {
+        return notificationsDaoSql;
+    }
 
     @Override
     public List <String[]> get(String[] key)
@@ -30,8 +36,8 @@ public class NotificationsDaoSql implements DaoSql
                 {
                     String [] row = new String[2];
                     row[0]=resultSet.getString(2);
-                    Date date =resultSet.getDate(3);
-                    row[1]=date.toString();
+                    java.util.Date date =resultSet.getTimestamp(3);
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     results.add(row);
                 }
                 stmt.close();
@@ -55,7 +61,7 @@ public class NotificationsDaoSql implements DaoSql
     @Override
     public void save(String[] params) throws SQLException
     {
-        String query = "Insert INTO notifications (user_name,details,date) values(?,?,?);";
+        String query = "Insert INTO notifications (user_name,details,date_time) values(?,?,?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
@@ -65,7 +71,7 @@ public class NotificationsDaoSql implements DaoSql
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
                 stmt.setString(2,params[1]);
-                SimpleDateFormat  simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 java.util.Date date = simpleDateFormat.parse(params[2]);
                 java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
                 stmt.setDate(3,sqlStartDate);
