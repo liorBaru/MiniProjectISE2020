@@ -1,29 +1,23 @@
 package main.domain.manageUsers;
 
-import main.DB.System;
+import main.DB.UsersDaoSql;
+import main.domain.Asset.Fan;
 
-import java.util.TreeMap;
+import java.util.List;
 
 public class AccountManager
 {
-    private TreeMap <String, Account> userNames;
-    private System system;
-
-    public TreeMap<String, Account> getUserNames() {
-        return userNames;
-    }
-
-    public AccountManager (System system)
-    {
-        this.system=system;
-        userNames=new TreeMap<>();
-    }
+    private UsersDaoSql usersDaoSql =UsersDaoSql.getInstance();
 
     public Account getAccount(String userName)
     {
-        if(userNames.containsKey(userName))
+        String[] key = {userName};
+        List<String[]> user =usersDaoSql.get(key);
+        if(user.isEmpty()==false)
         {
-            return userNames.get(userName);
+            String [] userString=user.get(0);
+            Account account = new Account(userString[0],userString[1]);
+            return account;
         }
         return null;
     }
@@ -37,19 +31,18 @@ public class AccountManager
      * @return new Account
      * @throws Exception
      */
-    public Account createAccount(String userName, String password) throws Exception {
+    public Account createAccount(String userName, String password) throws Exception
+    {
         if(userName!=null && password!=null)
         {
             if(userName.length()>=6 )
             {
-                if(userNames.containsKey(userName)==false)
+                if(checkPassword(password))
                 {
-                    if(checkPassword(password))
-                    {
-                        Account account = new Account(userName,password);
-                        userNames.put(userName,account);
-                        return account;
-                    }
+                    String[] params={userName,password};
+                    usersDaoSql.save(params);
+                    Account account = new Account(userName,password);
+                    return account;
                 }
                 throw new Exception("Invalid username, userName already exists please try different username");
             }
@@ -145,15 +138,56 @@ public class AccountManager
      */
     public User login(String userName, String password) throws Exception
     {
-        if(userName!=null && password!=null&& userNames.containsKey(userName))
+        if(userName!=null && password!=null)
         {
-            Account account =userNames.get(userName);
-            if(account.accountVerification(password))
+            String [] key={userName};
+            List<String []> userData =usersDaoSql.get(key);
+            if(userData.isEmpty())
             {
-                return account.getUser();
+                throw new  Exception(" wrong userName or password, please try again");
+            }
+            else
+            {
+                String [] userDetails= userData.get(0);
+                if(userDetails[1].equals(password))
+                {
+                    if(userDetails[3].equals("Fan"))
+                    {
+                        User user = Fan.createFan(userDetails);
+                        return user;
+                    }
+                    if(userDetails[3].equals("Coach"))
+                    {
+
+                    }
+                    if(userDetails[3].equals("Refree"))
+                    {
+
+                    }
+                    if(userDetails[3].equals("Player"))
+                    {
+
+                    }
+                    if(userDetails[3].equals("IFA"))
+                    {
+
+                    }
+                    if(userDetails[3].equals("Owner"))
+                    {
+
+                    }
+                    if(userDetails[3].equals("TeamManager"))
+                    {
+
+                    }
+                    if(userDetails[3].equals("SystemManager"))
+                    {
+
+                    }
+                }
             }
         }
-        throw new  Exception(" wrong userName or password, please try again");
+        return null;
     }
 
     /**
@@ -167,11 +201,9 @@ public class AccountManager
         if(account!=null)
         {
             String username=account.getUserName();
-            if(userNames.containsKey(username))
-            {
-                userNames.remove(username);
-                return true;
-            }
+            String [] key = {username};
+            usersDaoSql.delete(key);
+            return true;
         }
         return false;
     }

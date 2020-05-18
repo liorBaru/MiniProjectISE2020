@@ -1,5 +1,8 @@
 package main.domain.Asset;
 
+import main.DB.FansDaoSql;
+import main.DB.PageFollowersDaoSql;
+import main.DB.PagesDaoSql;
 import main.domain.manageEvents.Complaint;
 import main.domain.managePages.Page;
 import main.domain.manageUsers.Account;
@@ -9,14 +12,23 @@ import java.util.List;
 
 public class Fan extends User
 {
-    private List<String> searchHistory;
-    private List<Page> pages;
-
+    private static List<String> searchHistory;
+    private static PageFollowersDaoSql pages;
+    private static FansDaoSql fansDaoSql;
     public Fan(String name, Account account)
     {
         super(name,account);
-        searchHistory=new LinkedList<>();
-        pages=new LinkedList<>();
+    }
+
+    public static Fan createFan(String[]data) throws Exception {
+        Account account = new Account(data[0],data[1]);
+        List<String[]> fanData=fansDaoSql.get(data);
+        if(fanData.isEmpty()==false)
+        {
+            Fan fan = new Fan(fanData.get(0)[1],account);
+            return fan;
+        }
+        throw new Exception("username not found");
     }
 
 
@@ -26,7 +38,8 @@ public class Fan extends User
      * @return
      * @throws Exception
      */
-    public boolean unfollowPage(int pageID) throws Exception {
+    public boolean unfollowPage(int pageID) throws Exception
+    {
         for (Page page:pages)
         {
             if(page.getPageID()==pageID)

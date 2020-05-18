@@ -29,7 +29,8 @@ public class Guest extends Observable
 
     public User register(String name, String userName, String password) throws Exception
     {
-        if(name!=null && userName!=null && password!=null) {
+        if(name!=null && userName!=null && password!=null)
+        {
             return system.createNewFanUser(name, userName, password);
         }
         throw new Exception("Bad details");

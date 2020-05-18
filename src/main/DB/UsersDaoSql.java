@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-class UsersDaoSql implements DaoSql
+public class UsersDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
     private static UsersDaoSql usersDaoSql = new UsersDaoSql();
