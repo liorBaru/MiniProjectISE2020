@@ -18,12 +18,12 @@ public class GameTest {
     private User user;
 
     public void setUpUnit(){
-        game= new Game();
+        //game= new Game();
         user= new Fan("gameFan",new AccountStub());
     }
 
     public void setUpIntegration(){
-        game= new Game();
+        //game= new Game();
         user= new Fan("gameFan", new Account("gameFan","passFan123"));
     }
 
