@@ -51,6 +51,7 @@ public class SystemManagerDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -88,7 +89,7 @@ public class SystemManagerDaoSql implements DaoSql
             }
             catch (Exception e)
             {
-
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -111,9 +112,11 @@ public class SystemManagerDaoSql implements DaoSql
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The user " + params[0] + "succesffuly saved");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -136,9 +139,11 @@ public class SystemManagerDaoSql implements DaoSql
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The user " + params[0] + "succesffuly updated");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -160,9 +165,11 @@ public class SystemManagerDaoSql implements DaoSql
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The user " + key[0] + "succesffuly deleted");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

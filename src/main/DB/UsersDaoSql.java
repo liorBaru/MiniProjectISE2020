@@ -47,6 +47,7 @@ public class UsersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -82,6 +83,7 @@ public class UsersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -105,9 +107,11 @@ public class UsersDaoSql implements DaoSql
                 stmt.setString(4,params[3]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The user " + params[0] + "successfuly saved");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -131,9 +135,11 @@ public class UsersDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The user " + params[0] + "successfuly update");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -155,9 +161,11 @@ public class UsersDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The user " + key[0] + "successfuly deleted");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
