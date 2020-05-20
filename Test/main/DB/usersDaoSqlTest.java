@@ -15,7 +15,7 @@ public class usersDaoSqlTest
     @Test
     public void getAll()
     {
-
+        assertTrue(usersDaoSql.getAll().size()>5);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class usersDaoSqlTest
             e.printStackTrace();
         }
         List<String []> checks=usersDaoSql.get(details);
-        assertEquals("galborabia",checks.get(0));
+        assertEquals("galborabia",checks.get(0)[0]);
         usersDaoSql.delete(details);
     }
 
@@ -50,7 +50,9 @@ public class usersDaoSqlTest
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        details[1]="galNewPass1";
+        details[3]="Player";
         usersDaoSql.update(details);
+        assertEquals("Player",usersDaoSql.get(details).get(0)[3]);
+        usersDaoSql.delete(details);
     }
 }

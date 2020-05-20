@@ -15,10 +15,10 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 
-public class SystemManagerControllerTest {
+public class SystemManagerControllerTest
+{
 
-
-
+/**
 
     System system;
     SystemManager systemManager;
@@ -135,4 +135,5 @@ public class SystemManagerControllerTest {
 
 
     }
+    **/
 }

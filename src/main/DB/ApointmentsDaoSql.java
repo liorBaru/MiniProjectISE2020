@@ -7,11 +7,83 @@ import java.util.Optional;
 
 public class ApointmentsDaoSql implements DaoSql
 {
-    DBconnector dBconnector= DBconnector.getInstance();
 
+    DBconnector dBconnector= DBconnector.getInstance();
     @Override
     public List<String[]> get(String[] key)
     {
+        if(key[0].equals("Employee"))
+        {
+            return getByUserEmployee(key[1]);
+        }
+        else if(key[0].equals("Manager"))
+        {
+            return  getByManager(key[1]);
+        }
+        return null;
+    }
+
+    private List<String[]> getByUserEmployee(String key)
+    {
+        String query = "select manager from apointments where employee=? ;";
+        Connection connection = dBconnector.getConnection();
+        if (connection != null) {
+            List<String[]> ans = new LinkedList<>();
+            PreparedStatement statement;
+
+            try {
+                connection.setCatalog("manageteams");
+                statement = connection.prepareStatement(query);
+                statement.setString(1, key);
+                ResultSet rs = statement.executeQuery();
+                while (rs.next())
+                {
+                    String[] raw = new String[1];
+                    raw[0] = rs.getString(1);
+                    ans.add(raw);
+                }
+                rs.close();
+                statement.close();
+                connection.close();
+                return ans;
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private List<String[]> getByManager(String username)
+    {
+        String query = "select employee from apointments where manager=? ;";
+        Connection connection = dBconnector.getConnection();
+        if (connection != null) {
+            List<String[]> ans = new LinkedList<>();
+            PreparedStatement statement;
+
+            try {
+                connection.setCatalog("manageteams");
+                statement = connection.prepareStatement(query);
+                statement.setString(1,username);
+                ResultSet rs = statement.executeQuery();
+                while (rs.next())
+                {
+                    String[] raw = new String[1];
+                    raw[0] = rs.getString(1);
+                    ans.add(raw);
+                }
+                rs.close();
+                statement.close();
+                connection.close();
+                return ans;
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
@@ -25,6 +97,7 @@ public class ApointmentsDaoSql implements DaoSql
         {
             Statement stmt = null;
             try {
+                conn.setCatalog("manageteams");
                 stmt = conn.createStatement();
                 resultaDb = stmt.executeQuery(query);
                 while (resultaDb.next()) {
@@ -53,6 +126,7 @@ public class ApointmentsDaoSql implements DaoSql
         {
             PreparedStatement stmt = null;
             try {
+                conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
                 stmt.setString(2,params[1]);
@@ -82,6 +156,7 @@ public class ApointmentsDaoSql implements DaoSql
         {
             PreparedStatement stmt = null;
             try {
+                conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
                 stmt.setString(2,params[1]);

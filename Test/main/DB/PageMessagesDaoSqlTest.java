@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -16,20 +15,8 @@ import static org.junit.Assert.*;
 
 public class PageMessagesDaoSqlTest {
 
-    PageMessagesDaoSql pageMessagesDaoSql;
+    PageMessagesDaoSql pageMessagesDaoSql =PageMessagesDaoSql.getInstance();
 
-    @Before
-    public void setUp() throws Exception
-    {
-        pageMessagesDaoSql=PageMessagesDaoSql.getInstance();
-    }
-
-    @After
-    public void tearDown() throws Exception
-    {
-
-
-    }
 
     @Test
     public void get()
@@ -39,7 +26,7 @@ public class PageMessagesDaoSqlTest {
         boolean flag=false;
         for (String [] row :pageMessagesDaoSql.get(key))
         {
-            if(row[1]=="test message")
+            if(row[0].equals("test"))
             {
                 flag=true;
             }

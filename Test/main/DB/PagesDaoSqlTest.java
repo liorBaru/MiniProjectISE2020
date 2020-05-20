@@ -50,7 +50,6 @@ public class PagesDaoSqlTest {
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
             message=e.getMessage();
         }
         assertEquals("Duplicate entry '1' for key 'PRIMARY'",message);

@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
 
 public class TeamTest {
 
+    /**
     private Team team;
     private main.domain.Asset.Owner Owner;
     private StaffMember staffMember;
@@ -293,4 +294,5 @@ public class TeamTest {
         TeamManager tm= new TeamManager(new AccountStub(),"TM",this.team,bm,500,permissions);
         team.removeTeamManger(tm);
     }
+    */
 }
