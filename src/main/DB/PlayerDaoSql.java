@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-class PlayerDaoSql implements DaoSql
+public class PlayerDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
     private static PlayerDaoSql playerDaoSql = new PlayerDaoSql();

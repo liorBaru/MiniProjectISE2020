@@ -38,6 +38,7 @@ public class NotificationsDaoSql implements DaoSql
                     row[0]=resultSet.getString(2);
                     java.util.Date date =resultSet.getTimestamp(3);
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    row[1]=dateFormat.format(date);
                     results.add(row);
                 }
                 stmt.close();

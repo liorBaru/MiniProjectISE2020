@@ -10,28 +10,27 @@ import static org.junit.Assert.*;
 
 public class AccountTest {
 
-    Account account;
-
-    @Before
-    public void setUp(){
-        account= new Account("userName","Pass123");
+    @Test
+    @Category({UnitTests.class})
+    public void accountVerificationSuccess1Unit()
+    {
+        Account account=new Account("fanTest","Galb1234");
+        assertTrue(account.accountVerification("Galb1234"));
     }
 
     @Test
     @Category({UnitTests.class})
-    public void accountVerificationSuccess1Unit() {
-        assertTrue(account.accountVerification("Pass123"));
-    }
-
-    @Test
-    @Category({UnitTests.class})
-    public void accountVerificationFailure2Unit() {
+    public void accountVerificationFailure2Unit()
+    {
+        Account account=new Account("fanTest","Galb1234");
         assertFalse(account.accountVerification("ERROR"));
     }
 
     @Test
     @Category({UnitTests.class})
-    public void accountVerificationFailure3Unit() {
+    public void accountVerificationFailure3Unit()
+    {
+        Account account=new Account("fanTest","Galb1234");
         assertFalse(account.accountVerification(null));
     }
 

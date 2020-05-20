@@ -2,106 +2,79 @@ package domain.Asset;
 
 
 import main.DB.IntegrationTests;
-import main.domain.Asset.Coach;
-import main.domain.manageEvents.Notification;
-import main.domain.managePages.Page;
-import main.domain.manageTeams.Team;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import main.DB.System;
-
-import java.util.Random;
 
 import static org.junit.Assert.*;
-import main.domain.Asset.Fan;
-
 public class FanTest
 {
-    private static boolean flag=true;
-    Fan fan;
-    Team team;
-    Page page;
-    System system;
 
-    @Before
-    public void setUp()
+    public void createFanFromDBGood()
     {
-        system=System.getInstance();
-        if(flag)
-        {
-            try
-            {
-                system.createNewOwnerUser("name","ownerP1234","usernameOwner");
-                system.createNewFanUser("matan","matang","Matan1234");
-                system.createTeam("usernameOwner","mc");
-            }
-            catch (Exception e)
-            {
-
-            }
-            flag=false;
-        }
-        team=system.getTeam("mc");
-        page=team.getPage();
-        try
-        {
-            fan=(Fan) system.login("matang","Matan1234");
-        }
-        catch (Exception e)
-        {
-
-        }
 
     }
 
-    public FanTest() throws Exception {
+    public void createFanFromDBFailure()
+    {
+
+    }
+
+    public void unfollowPageGood(int pageID)
+    {
+
+    }
+
+    public void unfollowPageNotGoodPage()
+    {
+
+    }
+
+    public void unfollowPageNotGoodUser()
+    {
+
     }
 
     @Test
     @Category({IntegrationTests.class})
-    public void followPageTrue1Integration() throws Exception {
-        fan.followPage(page.getPageID());
-        Notification n1=new Notification("check");
-        page.notifyObservers(n1);
-        assertTrue(fan.readNotification().contains(n1));
+    public void followPageTrue1Integration() throws Exception
+    {
+
     }
 
     @Test
     @Category({IntegrationTests.class})
     public void followPageFalse2Integration() throws Exception {
-        Page page2=new Page(team);
-        fan.followPage(page2.getPageID());
-        Notification n1=new Notification("check");
-        page.notifyObservers(n1);
-        assertTrue(fan.readNotification().contains(n1));
+
     }
 
     @Test(expected =Exception.class)
     @Category({IntegrationTests.class})
     public void followPageDontExists3Integration() throws Exception {
-        Random rand = new Random();
-        int rand_int1 = rand.nextInt(10000);
-        int newPageId= rand_int1+151;
-         fan.followPage(newPageId);
     }
 
-    @Category({IntegrationTests.class})
-    @Test(expected =Exception.class)
-    public void unfollowPagePageNotExists4Integration() throws Exception {
-        fan.unfollowPage(150);
+    public void showPagesGood()
+    {
+
+    }
+    public void showPagesNotGood()
+    {
+
     }
 
-    @Category({IntegrationTests.class})
-    @Test
-    public void unfollowPagePageFollow5Integration() throws Exception {
+    public void fillingComplaintGood(String deatails)
+    {
 
-        Coach coach=system.createNewCoachUser("coach","coachGal1","coachUserName","training");
-        fan.followPage(coach.getPage().getPageID());
-        fan.unfollowPage(coach.getPage().getPageID());
-        Notification n1=new Notification("check");
-        coach.getPage().notifyObservers(n1);
-        assertTrue(fan.readNotification().contains(n1)==false);
     }
+    public void fillingComplaintFailure(String deatails)
+    {
+
+    }
+
+    public boolean removeUser()
+    {
+        return true;
+    }
+
+
 
 }

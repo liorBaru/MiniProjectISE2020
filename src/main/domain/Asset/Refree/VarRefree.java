@@ -2,6 +2,8 @@ package main.domain.Asset.Refree;
 
 import main.domain.manageUsers.Account;
 
+import java.sql.SQLException;
+
 public class VarRefree extends Refree
 {
     /**
@@ -11,8 +13,14 @@ public class VarRefree extends Refree
      * @param
      */
 
-    public VarRefree (String name, String training, Account account)
+    public VarRefree (String name, String training, Account account) throws SQLException {
+        super(name,account,training,"Var");
+    }
+
+    @Override
+    protected void update()
     {
-        super(name,account,training);
+        String[]key={account.getUserName(),name,training,"Var"};
+        refreesDaoSql.update(key);
     }
 }

@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import java.sql.SQLException;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -226,8 +227,7 @@ public class FanControllerTest {
 
     @Test
     @Category({RegressionTests.class, AcceptanceTests.class})
-    public void sendComplaintSuccess8acceptance()
-    {
+    public void sendComplaintSuccess8acceptance() throws SQLException {
         try
         {
             setUp();

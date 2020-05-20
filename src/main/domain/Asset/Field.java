@@ -7,13 +7,19 @@ import java.util.ArrayList;
 public class Field implements Asset {
 
     private String fieldName;
-    private ArrayList<Team> teams;
+    private Team team;
 
     public Field(String fieldName)
     {
         this.fieldName=fieldName;
-        teams=new ArrayList<>();
     }
+
+    public Field (String name, Team team)
+    {
+        this.team=team;
+        this.fieldName=name;
+    }
+
 
     @Override
     public String getName()
@@ -24,24 +30,18 @@ public class Field implements Asset {
     @Override
     public void setTeam(Team team)
     {
-        if(team!=null && teams.contains(team)==false)
-        {
-            teams.add(team);
-        }
+        this.team = team;
     }
 
     @Override
     public void removeTeam(Team team)
     {
-        if (team != null && teams.contains(team))
-        {
-            teams.remove(team);
-        }
+       this.team=null;
     }
 
     @Override
     public String getType()
     {
-        return "Field: " +this.fieldName;
+        return "Field";
     }
 }

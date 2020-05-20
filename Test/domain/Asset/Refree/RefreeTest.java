@@ -3,36 +3,38 @@ package domain.Asset.Refree;
 import main.DB.IntegrationTests;
 import main.DB.System;
 import main.domain.Asset.Refree.Refree;
+import main.domain.Asset.SystemManager;
 import main.domain.manageEvents.Notification;
 import main.domain.manageLeagues.IFA;
+import main.domain.manageUsers.User;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 
 public class RefreeTest {
-    System system=System.getInstance();
-    IFA ifa;
+    private Refree refree;
 
     @Test
     @Category({ IntegrationTests.class})
-    public void removeUserTest1Integration() {
-
-
-        try
-        {
-            Refree refree=   system.createNewRefereeUser("Ban","Ban123456","ban123","Line","training");
-            ifa=system.createNewIFAUser("Dan","Dan123456","dan122");
-            refree.removeUser();
+    public void removeRefree()
+    {
+        try {
+            System system=System.getInstance();
+            User user=system.getAccountManager().getUser("SMTest","SystemManager");
+            SystemManager systemManager=(SystemManager)user;
+            assertTrue(systemManager.removeUserFromSystem("RefreeTest"));
+            user=system.getAccountManager().getUser("IFATest","IFA");
+            IFA ifa=(IFA)user;
+            ifa.addReferee("name","Galb1234","RefreeTest","type","training");
         }
         catch (Exception e)
         {
+            e.printStackTrace();
+        }
 
-        }
-        boolean flag=false;
-        for (Notification n:ifa.readNotification()) {
-            flag=n.getDetails().equals( "Refree, Ban, has been remove from the system by the system manager");
-        }
-        assertTrue(flag);
+
+
     }
+
 }

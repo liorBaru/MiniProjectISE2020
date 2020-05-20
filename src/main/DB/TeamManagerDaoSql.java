@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class TeamManagerDaoSql implements DaoSql
+public class TeamManagerDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
     private static TeamManagerDaoSql teamManagerDaoSql = new TeamManagerDaoSql();

@@ -7,6 +7,7 @@ import main.DB.System;
 import main.DB.UnitTests;
 import main.domain.Asset.Fan;
 import main.domain.Asset.SystemManager;
+import main.domain.manageEvents.Notification;
 import main.domain.manageUsers.Account;
 import main.domain.manageUsers.User;
 import org.junit.Before;
@@ -20,93 +21,87 @@ import static org.junit.Assert.*;
 public class SystemTest
 {
     System system;
-    AccountMangerStub accountManager;
-    static boolean flag=false;
-    String userName="MatanG";
-    String password="Ga123456";
-    String name="Matan";
-
-    @Test
-    @Category({ UnitTests.class})
-    public void addBoardMember1Unit(){
-
-        Account excepted=accountManager.account;
-        SystemManager systemManager = new SystemManager(name,excepted);
-        system.getSystemManagers().add(systemManager);
-        Account account=accountManager.getAccount(userName);
-        assertEquals(excepted,account);
-    }
 
     @Before
     @Test
+    @Category(UnitTests.class)
     public void initSystemUnit3()
     {
         try
         {
             System.initSystem("userAdmain","Password1","chen");
-            system=System.getInstance();
-            accountManager=new AccountMangerStub(system);
             assertTrue(system!=null);
+            Account account=system.getAccountManager().getAccount("userAdmin");
+            system.getAccountManager().removeAccount(account);
+
         }
         catch (Exception e)
         {
             system=System.getInstance();
-            accountManager=new AccountMangerStub(system);
         }
     }
 
-
-
     @Test
-    @Category({ UnitTests.class})
-    public void createNewFanUser2Unit() throws Exception {
-        Account account = accountManager.createAccount(userName,password);
-        User newUser = new Fan(name,account);
-        account.setUser(newUser);
-        assertEquals(newUser.getAccount(),accountManager.account);
+    @Category({UnitTests.class,RegressionTests.class})
+    public void sendNotificationTest1()
+    {
+        try {
+            Notification notification = new Notification("details");
+            system.sendNotification("fanTest",notification);
+            User user=system.getAccountManager().login("fanTest","Galb1234");
+            assertTrue(user.readNotification().contains(notification));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Test
-    @Category({ UnitTests.class, RegressionTests.class})
-    public void createAccountSuccess3Unit() throws Exception {
-        int rand_int1 = new Random().nextInt(1000);
-        User user = system.createNewFanUser("user",rand_int1+"userName","Password1");
-        assertTrue(user.getAccount().getUserName().equals(rand_int1+"userName"));
-    }
-
-
-    @Test
-    @Category({ IntegrationTests.class, RegressionTests.class})
-    public void createDuplicateAccount3Integration()
+    @Category(UnitTests.class)
+    public void sendNotificationTest2()
     {
         String message="";
-        try
-        {
-            system.createNewFanUser("name","userName2","Password1");
-            system.createNewFanUser("name","userName2","Password1");
+        try {
+            Notification notification = new Notification("details");
+            system.sendNotification("fanTestW",notification);
+            User user=system.getAccountManager().login("fanTest","Galb1234");
         }
         catch (Exception e)
         {
             message=e.getMessage();
+            e.printStackTrace();
         }
-        assertEquals(message,"Invalid username, userName already exists please try different username");
+        assertEquals("message",message);
     }
 
     @Test
-    @Category({ IntegrationTests.class, RegressionTests.class})
-    public void createAccountUsernameNotGood4Integration()
+    @Category(UnitTests.class)
+    public void sendNotificationTest3()
     {
         String message="";
-        try
-        {
-            system.createNewFanUser("name","user","Password1");
+        try {
+            Notification notification = new Notification("");
+            system.sendNotification("fanTest",notification);
+            User user=system.getAccountManager().login("fanTest","Galb1234");
         }
         catch (Exception e)
         {
             message=e.getMessage();
+            e.printStackTrace();
         }
-        assertEquals(message,"Invalid username, username must be at least 6 characters");
+        assertEquals("message",message);
     }
+
+
+
+
+
+
+
+
+
+
 
 
 

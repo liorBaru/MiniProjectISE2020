@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-class TeamDaoSql implements DaoSql
+public class TeamDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
     private static TeamDaoSql teamDaoSql = new TeamDaoSql();

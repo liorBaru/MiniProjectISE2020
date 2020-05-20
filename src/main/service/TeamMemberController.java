@@ -27,9 +27,15 @@ public class TeamMemberController extends GuestController
      */
     public void upLoadDataToPage(String message)
     {
-        if (!message.isEmpty())
+        try
         {
             teamMember.uploadDataToPage(message);
         }
+        catch (Exception e)
+        {
+            e.printStackTrace();;
+        }
+
+
     }
 }

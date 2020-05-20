@@ -22,7 +22,6 @@ public class Guest extends Observable
             return user;
         }
         throw new Exception("Bad details");
-
     }
 
 

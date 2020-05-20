@@ -1,31 +1,40 @@
 package main.domain.Asset;
 
 
+import main.DB.ApointmentsDaoSql;
+import main.DB.AssetsDauSql;
+import main.DB.PermissionsDaoSql;
+import main.DB.StaffMembersDaoSql;
 import main.domain.manageUsers.Account;
 import main.domain.manageTeams.FinancialAction;
 import main.domain.manageTeams.Team;
-
+import main.domain.manageUsers.User;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeMap;
+
 
 public abstract class BoardMember extends StaffMember
 {
-    protected List<StaffMember> appointments;
-    public TreeMap<permission,Boolean> permissions;
+    protected  LinkedList<permission> permissions;
+    protected static ApointmentsDaoSql apointmentsDaoSql;
+    protected static PermissionsDaoSql permissionsDaoSql;
+    protected static StaffMembersDaoSql staffMembersDaoSql;
+    protected static AssetsDauSql assetsDauSql;
 
-    public BoardMember (Account account, String name, Team team, BoardMember boss)
-    {
-        super(account,name,team,boss);
-        appointments = new LinkedList<>();
-        permissions= new TreeMap<>();
+    public BoardMember (Account account, String name, Team team, BoardMember boss,String type) throws SQLException {
+        super(account,name,team,boss,type);
+        permissions= new LinkedList<>();
     }
 
     public BoardMember(Account account, String name, Team team)
     {
         super(account,name,team);
-        appointments = new LinkedList<>();
-        permissions= new TreeMap<>();
+        permissions= new LinkedList<>();
+    }
+
+    protected BoardMember()
+    {
     }
 
     /**
@@ -36,9 +45,8 @@ public abstract class BoardMember extends StaffMember
      */
     public boolean removePlayer(Player player)
     {
-        if(player!=null && permissions.get(permission.removePlayer) && team!=null)
+        if(player!=null && permissions.contains(permission.removePlayer) && team!=null)
         {
-            team.removeAsset(player);
             team.removeStaffMember(player);
             player.setTeam(null);
             return true;
@@ -51,14 +59,13 @@ public abstract class BoardMember extends StaffMember
      * @param couch
      * @return
      */
-    public boolean addCouch(Coach couch)
+    public boolean addCouch(Coach couch) throws SQLException
     {
-        if(couch!=null && permissions.get(permission.addCoach)&&team!=null)
+        if(couch!=null && permissions.contains(permission.addCoach)&&team!=null)
         {
             team.addStaffMember(couch);
-            team.addAsset(couch);
-            couch.setTeam(team);
-            appointments.add(couch);
+            String[] key={this.account.getUserName(),couch.getAccount().getUserName()};
+            apointmentsDaoSql.save(key);
             return true;
         }
         return false;
@@ -71,16 +78,13 @@ public abstract class BoardMember extends StaffMember
      */
     public boolean removeCoach(Coach coach)
     {
-        if(coach!=null && permissions.get(permission.removeCoach)&&team!=null)
+        if(coach!=null && permissions.contains(permission.removeCoach)&&team!=null)
         {
-            if(appointments.contains(coach))
-            {
-                appointments.remove(coach);
-                team.removeStaffMember(coach);
-                team.removeAsset(coach);
-                coach.setTeam(null);
-                return true;
-            }
+            String [] key ={this.account.getUserName(),coach.getAccount().getUserName()};
+            apointmentsDaoSql.delete(key);
+            team.removeStaffMember(coach);
+            coach.setTeam(null);
+            return true;
         }
         return false;
     }
@@ -94,10 +98,10 @@ public abstract class BoardMember extends StaffMember
 
     public boolean addFinancialAction(String description, double price)
     {
-        if(permissions.get(permission.addFinancial)&&team!=null)
+        if(permissions.contains(permission.addFinancial)&&team!=null)
         {
             FinancialAction financialAction = new FinancialAction(description,price,this);
-            return team.addFinancialAction(financialAction);
+            system.sendFinancialAction(this,financialAction);
         }
         return false;
     }
@@ -108,15 +112,27 @@ public abstract class BoardMember extends StaffMember
      * @return
      */
 
-    public boolean addAssets(String name)
-    {
-        if(permissions.get(permission.addAsset)&&team!=null)
+    public boolean addAssets(String name,String type) throws SQLException {
+        if(permissions.contains(permission.addAsset)&&team!=null)
         {
-            Asset field = system.addField(name,team);
-            team.addAsset(field);
-            return true;
+            if(type.equals("Field"))
+            {
+                String[]key={team.getName(),name,"Field"};
+                assetsDauSql.save(key);
+                return true;
+            }
         }
         return false;
+    }
+
+    public void removeAsset(String name) throws Exception {
+        if(permissions.contains(permission.removeAsset)&&team!=null)
+        {
+            String[]key={"key",team.getName(),name};
+            assetsDauSql.delete(key);
+        }
+        throw new Exception("invalid operation , check your premission");
+        //TODO: write to logger
     }
 
     /**
@@ -125,9 +141,8 @@ public abstract class BoardMember extends StaffMember
      * @return
      */
 
-    public boolean updateTeamPage (String message)
-    {
-        if(permissions.get(permission.updateTeamPage)&&team!=null)
+    public boolean updateTeamPage (String message) throws Exception {
+        if(permissions.contains(permission.updateTeamPage)&&team!=null)
         {
             team.uploadDataToPage(message);
             return true;
@@ -135,27 +150,44 @@ public abstract class BoardMember extends StaffMember
         return false;
     }
 
+    public List<StaffMember> getAppointments() throws Exception {
+        String[] key ={"Boss",this.account.getUserName()};
+        List<StaffMember> staffMembers = new LinkedList<>();
+        for (String[] apointment:apointmentsDaoSql.get(key))
+        {
+            String [] detailes={apointment[1]};
+            List<String[]> staffMembersL =staffMembersDaoSql.get(detailes);
+            String[] staffMember=staffMembersL.get(0);
+            User user =system.getAccountManager().getUser(staffMember[0],staffMember[1]);
+            if(user instanceof StaffMember)
+            {
+                staffMembers.add((StaffMember) user);
+            }
+        }
+        return staffMembers;
+    }
+
     @Override
     public void removeTeam(Team team) throws Exception {
         if(team!=null)
         {
-            for (StaffMember appoint:appointments)
+            for (StaffMember appoint:getAppointments())
             {
                 appoint.removeTeam(team);
             }
             if(this.team!=null)
             {
-                this.team.removeAsset(this);
                 this.team.removeStaffMember(this);
                 this.team=null;
             }
         }
+        update();
     }
 
     public void cleanPermission()
     {
-        if(permissions!=null)
-            permissions.clear();
+        String [] key = {"user_name",this.account.getUserName()};
+        permissionsDaoSql.delete(key);
     }
 
 

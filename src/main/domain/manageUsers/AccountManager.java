@@ -1,7 +1,9 @@
 package main.domain.manageUsers;
 
 import main.DB.UsersDaoSql;
-import main.domain.Asset.Fan;
+import main.domain.Asset.*;
+import main.domain.Asset.Refree.Refree;
+import main.domain.manageLeagues.IFA;
 
 import java.util.List;
 
@@ -22,6 +24,23 @@ public class AccountManager
         return null;
     }
 
+    public String getUserType(String userName) throws Exception {
+        String [] key ={userName};
+        List<String[]> users =usersDaoSql.get(key);
+        if(users!=null && users.isEmpty()==false)
+        {
+            String[] user=users.get(0);
+            return user[2];
+        }
+        throw new Exception("wrong input");
+    }
+
+    public List<String[]> getUserNames()
+    {
+        List<String[]> userNames =usersDaoSql.getAll();
+        return userNames;
+    }
+
 
     /**
      * gal
@@ -31,7 +50,7 @@ public class AccountManager
      * @return new Account
      * @throws Exception
      */
-    public Account createAccount(String userName, String password) throws Exception
+    public Account createAccount(String userName, String password,String type) throws Exception
     {
         if(userName!=null && password!=null)
         {
@@ -39,7 +58,8 @@ public class AccountManager
             {
                 if(checkPassword(password))
                 {
-                    String[] params={userName,password};
+                    String salt="1";
+                    String[] params={userName,password,salt,type};
                     usersDaoSql.save(params);
                     Account account = new Account(userName,password);
                     return account;
@@ -151,43 +171,55 @@ public class AccountManager
                 String [] userDetails= userData.get(0);
                 if(userDetails[1].equals(password))
                 {
-                    if(userDetails[3].equals("Fan"))
-                    {
-                        User user = Fan.createFan(userDetails);
-                        return user;
-                    }
-                    if(userDetails[3].equals("Coach"))
-                    {
-
-                    }
-                    if(userDetails[3].equals("Refree"))
-                    {
-
-                    }
-                    if(userDetails[3].equals("Player"))
-                    {
-
-                    }
-                    if(userDetails[3].equals("IFA"))
-                    {
-
-                    }
-                    if(userDetails[3].equals("Owner"))
-                    {
-
-                    }
-                    if(userDetails[3].equals("TeamManager"))
-                    {
-
-                    }
-                    if(userDetails[3].equals("SystemManager"))
-                    {
-
-                    }
+                    User user=getUser(userDetails[0],userDetails[1]);
+                    return user;
                 }
             }
         }
         return null;
+    }
+
+    public User getUser(String userName, String type) throws Exception {
+        String[] key = {userName};
+        User user=null;
+        if(type.equals("Fan"))
+        {
+            user = Fan.createFanFromDB(key);
+            return user;
+        }
+        else if(type.equals("Coach"))
+        {
+            user=Coach.getCoachFromDB(key);
+        }
+        else if(type.equals("Refree"))
+        {
+            user= Refree.getRefreeFromDB(key);
+        }
+        else if(type.equals("Player"))
+        {
+            user= Player.getPlayerFromDB(key);
+        }
+        else if(type.equals("IFA"))
+        {
+            user=IFA.getIFADromDB(key);
+        }
+        else if(type.equals("Owner"))
+        {
+            user= Owner.getOwnerFromDB(key);
+        }
+        else if(type.equals("TeamManager"))
+        {
+            user=TeamManager.createTeamManagerFromDB(key);
+        }
+        else if(type.equals("SystemManager"))
+        {
+            user= SystemManager.createSystemManagerFromDB(key);
+        }
+        else
+        {
+            throw new Exception("wrong arguments");
+        }
+        return user;
     }
 
     /**

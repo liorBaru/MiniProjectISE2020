@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class StaffMembersDaoSql implements DaoSql
+public class StaffMembersDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
     private static StaffMembersDaoSql staffMembersDaoSql = new StaffMembersDaoSql();

@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class PermissionsDaoSql implements DaoSql
+public class PermissionsDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
     private static PermissionsDaoSql permissionsDaoSql = new PermissionsDaoSql();

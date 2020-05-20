@@ -1,7 +1,12 @@
 package main.domain.manageUsers;
+import main.DB.NotificationsDaoSql;
 import main.DB.System;
+import main.DB.UsersDaoSql;
 import main.domain.manageEvents.Notification;
 
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -13,7 +18,10 @@ public abstract class User extends Guest
     protected PriorityQueue<Notification> notifications;
     protected String kind;
 
-    public User ( String name,Account account)
+    private static UsersDaoSql usersDaoSql;
+    private static NotificationsDaoSql notificationsDaoSql;
+
+    public User (String name,Account account)
     {
         system=System.getInstance();
         this.account=account;
@@ -22,11 +30,20 @@ public abstract class User extends Guest
         notifications=new PriorityQueue<>();
     }
 
+    protected User() {
+    }
+
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name)
+    {
+        this.name=name;
+        update();
+    }
+    protected abstract void update();
     @Override
     public boolean equals(Object object)
     {
@@ -46,11 +63,14 @@ public abstract class User extends Guest
      * add notification to user
      * @param notification
      */
-    public void addNotification(Notification notification)
-    {
+    public void addNotification(Notification notification) throws SQLException {
         if(notification!=null)
         {
-            notifications.add(notification);
+            String [] param = new String [3];
+            param[0]=this.getAccount().getUserName();
+            param[1]=notification.getDetails();
+            param[2]=notification.getDate();
+            notificationsDaoSql.save(param);
         }
     }
 
@@ -86,14 +106,22 @@ public abstract class User extends Guest
      */
     public PriorityQueue<Notification> readNotification()
     {
+        PriorityQueue<Notification> notifications = new PriorityQueue<>();
+        String [] key ={this.account.getUserName()};
+        for (String[] notificationString:notificationsDaoSql.get(key))
+        {
+            Notification notification = new Notification(notificationString);
+            notifications.add(notification);
+        }
         return notifications;
     }
 
-    public abstract void removeUser() throws Exception;
+    public abstract boolean removeUser() throws Exception;
 
     public Account getAccount(){ return account;}
 
     public String getKind() {return kind; }
+
 
 
 

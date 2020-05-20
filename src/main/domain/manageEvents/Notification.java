@@ -1,6 +1,8 @@
 package main.domain.manageEvents;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Notification implements Comparable
@@ -8,10 +10,25 @@ public class Notification implements Comparable
     private String details;
     private Date date;
 
-    public Notification(String details)
-    {
+    public Notification(String details) throws Exception {
+        if(details==null || details.isEmpty())
+            throw new Exception("Invalid arguments");
         this.details = details;
         this.date = new Date();
+    }
+
+    public Notification(String[] details)
+    {
+        this.details=details[0];
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try
+        {
+            this.date=dateFormat.parse(details[1]);
+        }
+        catch (Exception e)
+        {
+            date = new Date();
+        }
     }
 
 
@@ -25,8 +42,11 @@ public class Notification implements Comparable
         return details;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate()
+    {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String sDate=dateFormat.format(date);
+        return sDate;
     }
 
     @Override

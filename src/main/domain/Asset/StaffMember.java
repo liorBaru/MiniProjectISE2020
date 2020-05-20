@@ -1,21 +1,25 @@
 package main.domain.Asset;
 
+import main.DB.StaffMembersDaoSql;
 import main.domain.manageUsers.Account;
 import main.domain.manageTeams.Team;
 import main.domain.manageUsers.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public abstract class StaffMember extends User implements Asset
 {
     public Team team;
     protected BoardMember boss;
+    protected StaffMembersDaoSql staffMembersDaoSql;
 
-    public StaffMember(Account account, String name, Team team, BoardMember boardMember)
-    {
+    public StaffMember(Account account, String name, Team team, BoardMember boardMember, String type) throws SQLException {
         super(name,account);
         this.team=team;
         this.boss=boardMember;
+        String[]key={account.getUserName(),type};
+        staffMembersDaoSql.save(key);
     }
 
     public StaffMember (Account account, String name, Team team)
@@ -28,20 +32,27 @@ public abstract class StaffMember extends User implements Asset
         super(name,account);
     }
 
+    protected StaffMember() {
+    }
 
 
     public void setTeam(Team team)
     {
         this.team = team;
+        update();
     }
+
+    public void setBoss(BoardMember boardMember)
+    {
+        this.boss=boardMember;
+        update();
+    }
+
 
     @Override
     public abstract String getType();
 
-    @Override
-    public void removeUser() throws Exception {
-        this.removeTeam(team);
-    }
+    public abstract void removeTeam(Team team) throws Exception;
 
     public Team getTeam() {
         return team;
@@ -60,6 +71,12 @@ public abstract class StaffMember extends User implements Asset
         String teamString = "Team: "+ team.getName();
         userDetails.add(teamString);
         return userDetails;
+    }
+
+    @Override
+    public boolean removeUser() throws Exception {
+        this.removeTeam(this.team);
+        return true;
     }
 
     @Override

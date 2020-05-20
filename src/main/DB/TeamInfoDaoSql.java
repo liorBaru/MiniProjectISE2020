@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-class TeamInfoDaoSql implements DaoSql
+public class TeamInfoDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
     private static TeamInfoDaoSql teamInfoDaoSql = new TeamInfoDaoSql();

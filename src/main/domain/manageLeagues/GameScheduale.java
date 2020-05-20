@@ -5,5 +5,5 @@ import java.util.TreeMap;
 
 public interface GameScheduale
 {
-    public TreeMap<Integer, List<Game>> createLeagueGames(SeasonInfo season);
+     TreeMap<Integer, List<Game>> createLeagueGames(SeasonInfo season);
 }

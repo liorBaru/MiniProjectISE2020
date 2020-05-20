@@ -3,6 +3,7 @@ package main.service;
 import main.domain.Asset.Fan;
 import main.domain.manageUsers.Guest;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class FanController extends GuestController
@@ -13,11 +14,6 @@ public class FanController extends GuestController
     public FanController(Guest guest) {
         super(guest);
     }
-
-//    public void FanController(Fan fan)
-//    {
-//        userFan=fan;
-//    }
 
     public void setUserFan(Fan userFan) {
         this.userFan = userFan;
@@ -64,14 +60,12 @@ public class FanController extends GuestController
          return userFan.unfollowPage(pageID);
     }
 
-
-
     /**
      * gal
      * send complaint to system manager
      * @param details
      */
-    public void sendComplaint(String details)
+    public void sendComplaint(String details) throws SQLException
     {
         if(details.isEmpty()==false)
         {

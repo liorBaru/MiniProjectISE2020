@@ -21,11 +21,6 @@ public class IFAController extends GuestController
 
     }
 
-//    public void IFAController(IFA ifa)
-//    {
-//        Ifa=ifa;
-//    }
-
     /**
      * @author: chen arazi
      * @desc: setIfa
@@ -41,50 +36,39 @@ public class IFAController extends GuestController
      * @param level
      */
     public void newLeague(String name, int level) {
-        try {
+        try
+        {
             Ifa.addLeague(name, level);
-        } catch (InputMismatchException e) {
+        }
+        catch (Exception e)
+        {
             throw new InputMismatchException("Wrong input");
         }
     }
 
-    /**
-     * @author: David Zaltsman
-     * @desc: add new season
-     * @param year
-     * @param start
-     */
-    public void newSeason(int year, boolean start) {
-        //TODO:
-        // 1.fix use case 9.2.1 year-string to year-int.
-        try {
-            Ifa.addSeason(year);
-        } catch (InputMismatchException e) {
-            throw new InputMismatchException("Wrong input");
-        }
-    }
     /**
      * @author: David Zaltsman
      * @desc: add season to league
      * @param league - the league that we want to add her season
      * @param season - the season that we want to add
      */
-    public void addSeasonToLeague(League league, Season season) {
+    public void addSeasonToLeague(String league,int season)
+    {
         //TODO:
         // 1.add to U.C 9.2.2 the functionality of adding seasonInfo
         try {
             Ifa.addSeasonToLeague(league, season);
-        } catch (InputMismatchException e) {
+        } catch (Exception e) {
             throw new InputMismatchException("Wrong input");
         }
     }
 
-    public void updatePolicyToLeague(League league, Season season , LeagueCalculator leaguePolicy) {
+    public void updatePolicyToLeague(String league, int season , LeagueCalculator leaguePolicy) {
         //TODO:
         // 1.add to U.C 9.5 parameter to function : Season season , LeagueCalculator leaguePolicy
         try {
             Ifa.updatePolicyToLeague(league, season,leaguePolicy);
-        } catch (InputMismatchException e) {
+        } catch (Exception e) {
             throw new InputMismatchException("Wrong input");
         }
     }
@@ -166,6 +150,7 @@ public class IFAController extends GuestController
             Ifa.addTeam( ownerUserName, teamName);
         }
     }
+
 
 
 

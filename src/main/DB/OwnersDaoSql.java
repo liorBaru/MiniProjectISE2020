@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class OwnersDaoSql implements DaoSql
+public class OwnersDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
     private static OwnersDaoSql ownerDaoSql = new OwnersDaoSql();
@@ -128,7 +128,7 @@ class OwnersDaoSql implements DaoSql
                 //resultSet=stmt.executeQuery();
                 //  String type=resultSet.getString(4);
                 //  BigDecimal big =resultSet.getBigDecimal(3);
-                String update="Replace INTO coach(user_name,name,team,anotherJob)" +"values(?,?,?,?);";
+                String update="Replace INTO owner (user_name,name,team,anotherJob)" +"values(?,?,?,?);";
                 stmt=conn.prepareStatement(update);
                 stmt.setString(1,params[0]);
                 stmt.setString(2,params[1]);

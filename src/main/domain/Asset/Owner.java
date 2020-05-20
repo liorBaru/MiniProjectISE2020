@@ -1,50 +1,105 @@
 package main.domain.Asset;
 
+import main.DB.System;
+import main.DB.SystemManagerDaoSql;
 import main.domain.manageUsers.Account;
-import main.domain.manageTeams.FinancialAction;
 import main.domain.manageEvents.Notification;
 import main.domain.manageTeams.Team;
+import main.DB.OwnersDaoSql;
 
-import java.util.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Owner extends BoardMember
 {
+        private static OwnersDaoSql ownersDauSql;
+        private static SystemManagerDaoSql systemManagerDaoSql;
+
         private StaffMember anotherJob;
-        public Owner(Account account, String name, Team team, BoardMember boss, StaffMember anotherJob)
-        {
-                super(account,name,team,boss);
+
+        public Owner(Account account, String name, Team team, BoardMember boss, StaffMember anotherJob) throws SQLException {
+                super(account,name,team,boss,"Owner");
+                String anotherJobS="";
+                if(anotherJob!=null)
+                {
+                    anotherJobS=anotherJob.getType();
+                }
+                String []params={account.getUserName(),name,team.getName(),team.getName(),anotherJobS};
+                ownersDauSql.save(params);
                 this.anotherJob = anotherJob;
                 setPermissions();
         }
-        public Owner(Account account,String name){
+
+        public Owner(Account account,String name) throws SQLException {
                 super(account,name,null);
+                String[] params={account.getUserName(),name,"",""};
+                String[] key={account.getUserName(),account.getUserName()};
+                apointmentsDaoSql.save(key);
+                ownersDauSql.save(params);
         }
 
-        /**
-         * @author matan
-         * @param asset
-         * Add asset to the owner's team
-         */
-        public void addAsset(Asset asset)
+        public Owner(Account account,String name, Team team, StaffMember anotherJob)
         {
-                this.getTeam().addAsset(asset);
-                asset.setTeam(this.getTeam());
+                super(account,name,team);
+                this.anotherJob=anotherJob;
         }
+
+        public static Owner getOwnerFromDB(String[] ownerName) throws Exception
+        {
+                List<String []> owners= ownersDauSql.get(ownerName);
+                if(owners.isEmpty())
+                {
+                        throw new Exception("username not found in system");
+                }
+                String [] ownerDetails = owners.get(0);
+                return createOwnerFromDB(ownerDetails);
+        }
+
+        public static Owner createOwnerFromDB(String[] ownerDetails) throws Exception {
+                System system=System.getInstance();
+                Account account= system.getAccountManager().getAccount(ownerDetails[0]);
+                String name="";
+                Team team=null;
+                StaffMember anotherJob=null;
+                if(ownerDetails[1]!=null)
+                {
+                        name=ownerDetails[1];
+                }
+                if(ownerDetails[2]!=null && ownerDetails[2].isEmpty()==false)
+                {
+                        team = Team.createTeamFromDB(ownerDetails[2]);
+                }
+                if(ownerDetails[3]!=null && ownerDetails[3].isEmpty()==false)
+                {
+                        if(ownerDetails[3].equals("Coach"))
+                        {
+                                anotherJob = Coach.createCoachFromDB(ownerDetails);
+                        }
+                        else if(ownerDetails[3].equals("Player"))
+                        {
+                                anotherJob=Player.createPlayerFromDB(ownerDetails);
+                        }
+                }
+                Owner owner = new Owner(account,name,team,anotherJob);
+                owner.setPermissions();
+                return owner;
+        }
+
 
         /**
          * @author matan
          * @param newOwner
          * Add a new owner to the owner's(call tha action) team
          */
-        public void appointmentNewOwner(Owner newOwner)
-        {
-                if(newOwner.team!=null){
+        public void appointmentNewOwner(Owner newOwner) throws Exception {
+                if(newOwner.team!=null)
+                {
                         throw new ArithmeticException("The owner already has a team");
                 }
-                team.getOwners().add(newOwner);
-                this.appointments.add(newOwner);
-                newOwner.team=this.team;
+                team.addStaffMember(newOwner);
+                String[] key={this.account.getUserName(),newOwner.getAccount().getUserName()};
+                apointmentsDaoSql.save(key);
+                newOwner.setTeam(this.team);
         }
 
         /**
@@ -53,16 +108,22 @@ public class Owner extends BoardMember
          * remove owner that the ask for the action appoint
          * add remove all the owner appoints
          */
-        public void removeOwner(Owner removeOwner)
+        public void removeOwner(Owner removeOwner) throws Exception
         {
-                if(this.appointments.contains(removeOwner)){
-                        this.appointments.remove(removeOwner);
-                        team.getOwners().removeAll(removeOwner.appointments);
-                        team.getOwners().remove(removeOwner);
-                        team.getStaffMembers().removeAll(appointments);
-                }
-                else {
-                        throw new ArithmeticException("This is not your appointment");
+                if(this.team!=null && removeOwner.team!=null)
+                {
+                        String[] key={"Key",this.account.getUserName(),removeOwner.account.getUserName()};
+                        List<String[]> appointments=apointmentsDaoSql.get(key);
+                        if(appointments!=null && appointments.isEmpty()==false)
+                        {
+                                String[] params= {this.account.getUserName(),removeOwner.account.getUserName()};
+                                apointmentsDaoSql.delete(params);
+                                removeOwner.removeTeam(removeOwner.team);
+                        }
+                        else
+                        {
+                                throw new Exception("invalid operation");
+                        }
                 }
         }
         /**
@@ -70,30 +131,35 @@ public class Owner extends BoardMember
          * @param teamManager
          * remove  team manger from the owner's team.
          */
-        public void removeTeamManger(TeamManager teamManager)
+        public void removeTeamManger(TeamManager teamManager) throws Exception
         {
-                if(this.appointments.contains(teamManager)) {
-                        team.removeTeamManger(teamManager);
-                        teamManager.setTeam(null);
-                        teamManager.cleanPermission();
+                if(this.team!=null && teamManager.team!=null)
+                {
+                        String[] key={"Key",this.account.getUserName(),teamManager.getAccount().getUserName()};
+                        List<String[]> appointments=apointmentsDaoSql.get(key);
+                        if(appointments!=null && appointments.isEmpty()==false)
+                        {
+                                String[] params= {this.account.getUserName(),teamManager.getAccount().getUserName()};
+                                apointmentsDaoSql.delete(params);
+                                teamManager.removeTeam(teamManager.team);
+                        }
+                        else
+                        {
+                                throw new Exception("invalid operation");
+                        }
                 }
-                else {
-                        throw new ArithmeticException("This is not your appointment");
-                }
-
         }
 
         /**
          * @author matan
          * set the team status to inActive
          */
-        public void closeTeam() throws Exception {
-
+        public void closeTeam() throws Exception
+        {
              if(team!=null)
              {
                      this.team.setStatus(false);
                      String details =team.getName()+" has been closed by the owner "+this.name;
-                     Date date= new Date();
                      Notification notification= new Notification(details);
                      for (StaffMember member:team.getStaffMembers())
                      {
@@ -102,9 +168,9 @@ public class Owner extends BoardMember
                                      member.addNotification(notification);
                              }
                      }
-                     for (SystemManager sm:system.getSystemManagers())
+                     for (String[] systemManager:systemManagerDaoSql.getAll())
                      {
-                             sm.addNotification(notification);
+                            system.sendNotification(systemManager[0],notification);
                      }
                      return;
              }
@@ -113,31 +179,21 @@ public class Owner extends BoardMember
         /**
          * @author matan
          * @param teamManager
-         * @param salary
          * @param permissionList
          * appoint new team manger to the owner's team with permission and salary as we given
          */
-        public void appointTeamManger(TeamManager teamManager,List<String> permissionList,double salary) {
-                appointments.add(teamManager);
-                teamManager.setPermissions(permissionList);
-                teamManager.setSalary(salary);
-                this.team.addStaffMember(teamManager);
-
-        }
-        /**
-         * @author matan
-         * @param financialAction
-         * add financial Action to owner's team
-         */
-        public void reportIncomeOrOutcome(FinancialAction financialAction)
+        public void appointTeamManger(TeamManager teamManager,List<String> permissionList) throws SQLException
         {
-                team.addFinancialAction(financialAction);
+                String[] key ={this.account.getUserName(),teamManager.getAccount().getUserName()};
+                apointmentsDaoSql.save(key);
+                teamManager.setPermissions(permissionList);
+                this.team.addStaffMember(teamManager);
         }
 
         @Override
         public String getType()
         {
-                return "Owner:"+this.name;
+                return "Owner";
         }
         public void openTeam() throws Exception
         {
@@ -155,14 +211,31 @@ public class Owner extends BoardMember
                 permission[] possibleValues = permission.values();
                 for(int i=0;i<possibleValues.length;i++)
                 {
-                        this.permissions.put(possibleValues[i],true);
+                        this.permissions.add(possibleValues[i]);
                 }
         }
 
         @Override
         public void removeTeam(Team team) throws Exception
         {
-                //ToDo remove owner
+                if(this.team.isStatus() && this.boss==null)
+                {
+
+                        throw new Exception("you cant delete from the system team owner.");
+                }
+                else
+                {
+                        for (StaffMember appoint:getAppointments())
+                        {
+                                appoint.removeTeam(team);
+                        }
+                        if(this.team!=null)
+                        {
+                                this.team.removeStaffMember(this);
+                                this.team=null;
+                        }
+                }
+                update();
         }
 
         @Override
@@ -174,5 +247,24 @@ public class Owner extends BoardMember
                         return true;
                 }
                 return false;
+        }
+
+        @Override
+        protected void update()
+        {
+                String [] params = new String[4];
+                params[0]=this.account.getUserName();
+                params[1]=this.getName();
+                params[2]="";
+                if(team!=null)
+                {
+                        params[2]=team.getName();
+                }
+                params[3]="";
+                if(anotherJob!=null)
+                {
+                        params[3]=anotherJob.getType();
+                }
+                ownersDauSql.update(params);
         }
 }

@@ -57,6 +57,33 @@ public class UsersDaoSql implements DaoSql
     @Override
     public List<String[]> getAll()
     {
+
+        ResultSet resultSet;
+        String query="SELECT user_name,FROM users ;";
+        Connection conn = dBconnector.getConnection();
+        String [] results;
+        List<String[]> list = new ArrayList<>();
+        if (conn != null)
+        {
+            PreparedStatement stmt = null;
+            try {
+                conn.setCatalog("accounts");
+                stmt = conn.prepareStatement(query);
+                resultSet=stmt.executeQuery();
+                results= new String[1];
+                while (resultSet.next())
+                {
+                    results[0]=resultSet.getString(1);
+                    stmt.close();
+                    list.add(results);
+                }
+                return list;
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 

@@ -1,12 +1,16 @@
 package main.domain.manageTeams;
 
+import main.DB.*;
+import main.DB.System;
 import main.domain.Asset.*;
 import main.domain.manageEvents.Notification;
 import main.domain.manageLeagues.Game;
 import main.domain.manageLeagues.Season;
 import main.domain.managePages.Page;
 import main.domain.managePages.pageable;
+import main.domain.manageUsers.User;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class Team implements pageable
@@ -14,69 +18,175 @@ public class Team implements pageable
     private String name;
     private Page page;
     private boolean status;
-    private List<Owner> owners;
-    private List<StaffMember> staffMembers;
-    private TreeMap<Integer, Game> games;
-    private TreeMap<Season, TeamInfo> seasons;
-    private ArrayList<Asset> assetsOfTeam;
-    private Set<FinancialAction> financialActions;
+   // private TreeMap<Integer, Game> games;
+   // private TreeMap<Season, TeamInfo> seasons;
+  //  private Set<FinancialAction> financialActions;
 
+    private static TeamDaoSql teamDaoSql;
+    private static StaffMembersDaoSql staffMembersDaoSql;
+    private static OwnersDaoSql ownersDaoSql;
+    private static CoachDaoSql coachDaoSql;
+    private static PlayerDaoSql playerDaoSql;
+    private static TeamManagerDaoSql teamManagerDaoSql;
+    private static AssetsDauSql assetsDauSql;
 
-    public Team(List<Owner> owners, String name) throws Exception {
-        if(owners==null|| owners.isEmpty())
-        {
+    public Team (List<Owner> owners, String name) throws Exception {
+        if (owners == null || owners.isEmpty()) {
             throw new Exception("cant open a team without a owner");
         }
-        this.owners = owners;
         this.name = name;
-        page = new Page(this);
-        status=true;
-        staffMembers=new LinkedList<>();
-        games= new TreeMap<>();
-        seasons=new TreeMap<>();
-        this.assetsOfTeam = new ArrayList<>();
-        this.financialActions=new HashSet<>();
-        staffMembers.addAll(owners);
-
-
+        try {
+            page = new Page(this);
+        } catch (Exception e) {
+            throw new Exception("failed to create a page for the team, "+e.getMessage());
+        }
+        status = true;
+        String[] params = new String[3];
+        params[0]=name;
+        params[1]=String.valueOf(page.getPageID());
+        params[2]=String.valueOf(status);
+        teamDaoSql.save(params);
     }
 
-    /**
-     * @author: Lior Baruchovich
-     * @desc:
-     * @param
-     * @param
-     */
-//    public Team (Owner owners, String name){
-//        this.owners = new ArrayList<>();
-//        String userName = owners.getAccount().getUserName();
-//        String pass = owners.getAccount().getPassword();
-//        owners.addOwnerToTeam(userName, pass, name);
-//        this.name=name;
-//        this.assetsOfTeam =new ArrayList<>();
-//    }
+    public Team (String name, Page page,boolean teamStatus)
+    {
+        this.name=name;
+        this.page=page;
+        this.status=teamStatus;
+    }
+
+    public static Team createTeamFromDB(String teamName) throws Exception
+    {
+        String[] key={teamName};
+        List<String[]> teams = teamDaoSql.get(key);
+        if(teams==null || teams.isEmpty())
+        {
+            throw new Exception("cant find team");
+        }
+        String[] teamDetails=teams.get(0);
+        Page page =Page.createPageFromDB(teamDetails[1]);
+        boolean teamStatus=Boolean.parseBoolean(teamDetails[2]);
+        Team team = new Team(teamName,page,teamStatus);
+        return team;
+    }
+
+    @Override
+    public String getPageOwnerName()
+    {
+        return name;
+    }
+
+    public Page getPage() {
+        return page;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Owner> getOwners()
+    {
+        List<Owner> owners=new LinkedList<>();
+        try
+        {
+            for (String [] ownerString :ownersDaoSql.getAll())
+            {
+                if(ownerString[2]!=null && ownerString[2].equals(this.name))
+                {
+                    Owner owner = Owner.createOwnerFromDB(ownerString);
+                    owners.add(owner);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return owners;
+    }
+
+    public List<Player> getPlayers()
+    {
+        String [] key ={"Team",name};
+        List<Player> players =new LinkedList<>();
+        try
+        {
+            for (String [] playerString:playerDaoSql.get(key))
+            {
+                Player player=Player.createPlayerFromDB(playerString);
+                players.add(player);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return players;
+    }
+
+    public List<Coach> getCoach()
+    {
+        String [] key ={"Team",name};
+        List<Coach> coaches=new LinkedList<>();
+        try
+        {
+            for (String [] coachString: coachDaoSql.get(key))
+            {
+                Coach coach =Coach.createCoachFromDB(coachString);
+                coaches.add(coach);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return coaches;
+    }
+
+    public List<TeamManager> getTeamManager()
+    {
+        String [] key ={"Team",name};
+        List<TeamManager> teamManagers= new LinkedList<>();
+        try
+        {
+            for (String[] teamMemberString:teamManagerDaoSql.get(key))
+            {
+                TeamManager teamManager=TeamManager.createTeamManagerFromDB(teamMemberString);
+                teamManagers.add(teamManager);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return teamManagers;
+    }
 
 
-    public List<StaffMember> getStaffMembers() {
+    public List<StaffMember> getStaffMembers()
+    {
+        List<StaffMember> staffMembers= new LinkedList<>();
+        staffMembers.addAll(getOwners());
+        staffMembers.addAll(getTeamManager());
+        staffMembers.addAll(getCoach());
+        staffMembers.addAll(getPlayers());
         return staffMembers;
     }
 
     public void setStatus(boolean status) throws Exception {
-        if (this.status != status) {
+        if (this.status != status)
+        {
             this.status = status;
             String statusString = status == false ? " is inactive" : " is active";
-//            if(status==false){
-//                statusString=" is inactive";
-//            }
-//            else {
-//                statusString=" is active";
-//            }
             Notification notification = new Notification("The Team: " + name + statusString);
-            for (StaffMember staffMember : staffMembers) {
-                staffMember.getAccount().getUser().addNotification(notification);
-            }
-            for (Owner owner : owners) {
-                owner.getAccount().getUser().addNotification(notification);
+            for (StaffMember staffMember : getStaffMembers())
+            {
+                System system=System.getInstance();
+                system.sendNotification(staffMember.getAccount().getUserName(),notification);
             }
             //todo acknowledge the system and archive the history of the team
         }
@@ -88,106 +198,73 @@ public class Team implements pageable
         }
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean addFinancialAction(FinancialAction financialAction)
-    {
-        if (financialAction != null) {
-            if (financialActions.contains(financialAction) == false) {
-                financialActions.add(financialAction);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Set<FinancialAction> getFinancialActions()
-    {
-        return financialActions;
-    }
-
-
-    public void addAsset(Asset asset) {
-        if (asset == null || status == false)
-            throw new ArithmeticException("missed asset");
-        this.assetsOfTeam.add(asset);
-        //TODO: write to logger
-    }
-
-    public void addStaffMember(StaffMember member) {
-        if (member != null) {
-            staffMembers.add(member);
+    public void addStaffMember(StaffMember member) throws SQLException {
+        if (member != null)
+        {
             member.setTeam(this);
+            String[] key={member.getAccount().getUserName(),member.getType()};
+            staffMembersDaoSql.save(key);
         }
     }
 
-    public void setClose(Notification notification)
+    public void setClose(Notification notification) throws SQLException
     {
         this.status = false;
-        for (StaffMember member : staffMembers)
+        String[] key={"Team",name};
+        for (String [] staffMember : staffMembersDaoSql.get(key))
         {
-            if(member instanceof BoardMember)
+            if(staffMember[1].equals("Owner") || staffMember[1].equals("TeamManager"))
             {
-                member.addNotification(notification);
+                System system= System.getInstance();
+                system.sendNotification(staffMember[0],notification);
             }
         }
     }
 
-    public Page getPage() {
-        return page;
-    }
-
-    public void removeStaffMember(StaffMember member) {
-        if (member != null && staffMembers.contains(member)) {
-            staffMembers.remove(member);
+    public void removeTeamManger(TeamManager teamManager)
+    {
+        if(teamManager.team.getName().equals(name))
+        {
+            String[] key={teamManager.getAccount().getUserName()};
+            staffMembersDaoSql.delete(key);
+        }
+        else
+        {
+            throw new IllegalArgumentException("The TeamManger is not in this team");
         }
     }
 
-    public void removeAsset(Asset asset)
+    public void removeStaffMember(StaffMember member)
     {
-        if (asset == null || status == false)
-            throw new ArithmeticException("missed asset");
-        if (!assetsOfTeam.contains(asset))
-            throw new ArithmeticException("the asset doesnt exists");
-        this.assetsOfTeam.remove(asset);
-        //TODO: write to logger
+        if (member != null)
+        {
+            String[] key ={member.getAccount().getUserName()};
+            staffMembersDaoSql.delete(key);
+        }
     }
 
-    public ArrayList<Asset> getAssetsOfTeam() {
+    public ArrayList<Asset> getAssetsOfTeam()
+    {
+        ArrayList<Asset> assetsOfTeam =new ArrayList<>();
+        String [] key={"team",this.getName()} ;
+        List<String[]> assets=assetsDauSql.get(key);
+        for (String[] asset:assets)
+        {
+            if(asset[1].equals("Field"))
+            {
+                Field field =new Field(asset[0],this);
+                assetsOfTeam.add(field);
+            }
+        }
         return assetsOfTeam;
     }
 
-    public void uploadDataToPage(String data) {
+    public void uploadDataToPage(String data) throws Exception
+    {
         if (data.isEmpty() == false) {
             page.addDataToPage(data);
         }
     }
 
-    public List<Owner> getOwners() {
-        return owners;
-    }
 
-    public void removeTeamManger(TeamManager teamManager) {
-        StaffMember tempTM = null;
-        for (StaffMember staff : staffMembers) {
-            if (staff instanceof TeamManager && teamManager==staff) {
-                tempTM = staff;
-                break;
-            }
-        }
-        if (tempTM != null) {
-            staffMembers.remove(tempTM);
-        }
-        else
-        {
-            throw new IllegalArgumentException("The TeamManger is not in this team");
-
-        }
-    }
 }

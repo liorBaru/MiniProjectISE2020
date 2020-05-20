@@ -55,14 +55,6 @@ public abstract class Subject
      * @param notification
      */
 
-    public void notifyObservers(Notification notification)
-    {
-        if(notification!=null)
-        {
-            for (User follower:followers)
-            {
-                follower.addNotification(notification);
-            }
-        }
-    }
+    public abstract void notifyObservers(Notification notification);
+
 }

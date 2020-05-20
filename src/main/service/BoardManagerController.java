@@ -7,6 +7,7 @@ import main.domain.Asset.TeamManager;
 import main.domain.manageTeams.FinancialAction;
 import main.domain.manageUsers.Guest;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class BoardManagerController extends GuestController {
@@ -23,30 +24,42 @@ public class BoardManagerController extends GuestController {
     }
     /**
      * @author matan
-     * @param asset
-     * @param owner
      * add assets to the owner's team
      * UC 6.1
      */
-        public void addAssets(Asset asset, Owner owner) {
-         if(owner==null || asset==null)
+        public void addAssets(String name,String type, BoardMember boardMember)
+        {
+            if(boardMember==null || name.isEmpty() || type.isEmpty())
                 throw new ArithmeticException("arguments are not valid");
-            owner.addAsset(asset);
+            try
+            {
+             boardMember.addAssets(name,type);
+            }
+            catch (Exception e)
+            {
+             e.printStackTrace();
+            }
         }
 
     /**
      * @author matan
      * @param asset
-     * @param owner
+     * @param boardMember
      * remove assets form the owner's team
      * UC 6.1
      */
-        public void removeAssets(Asset asset, Owner owner)
+        public void removeAssets(String asset, BoardMember boardMember)
         {
-            if(owner==null || asset==null)
+            if(boardMember==null || asset==null ||asset.isEmpty())
                 throw new ArithmeticException("arguments are not valid");
-           owner.getTeam().removeAsset(asset);
-
+            try
+            {
+                boardMember.removeAsset(asset);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
 
     /**
@@ -55,7 +68,7 @@ public class BoardManagerController extends GuestController {
      * @param newOwner
      * appoint a new owner to the time's owner UC 6.2
      */
-        public void appointmentNewOwner(Owner owner,Owner newOwner){
+        public void appointmentNewOwner(Owner owner,Owner newOwner) throws Exception {
             if(newOwner==null ||owner==null)
                 throw new ArithmeticException("arguments are not valid");
             owner.appointmentNewOwner(newOwner);
@@ -66,8 +79,16 @@ public class BoardManagerController extends GuestController {
      * @param removeOwner
      * remove appoint of a owner to the time's owner UC 6.3
      */
-    public void removeOwnerAppointment(Owner owner,Owner removeOwner){
-        owner.removeOwner(removeOwner);
+    public void removeOwnerAppointment(Owner owner,Owner removeOwner)
+    {
+        try
+        {
+            owner.removeOwner(removeOwner);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -76,8 +97,8 @@ public class BoardManagerController extends GuestController {
      * @param user
      * appoint team manger to owner's team UC 6.4
      */
-    public void appointTeamManger(Owner owner, TeamManager user, List<String>permissionList,double salary ){
-        owner.appointTeamManger(user,permissionList,salary);
+    public void appointTeamManger(Owner owner, TeamManager user, List<String>permissionList,double salary ) throws SQLException {
+        owner.appointTeamManger(user,permissionList);
 
     }
 
@@ -87,8 +108,17 @@ public class BoardManagerController extends GuestController {
      * @param teamManager
      * remove team manger from owner's team UC 6.5
      */
-    public void removeTeamManger(Owner owner,TeamManager teamManager){
-        owner.removeTeamManger(teamManager);
+    public void removeTeamManger(Owner owner,TeamManager teamManager)
+    {
+        try
+        {
+            owner.removeTeamManger(teamManager);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -110,12 +140,14 @@ public class BoardManagerController extends GuestController {
 
     /**
      * @author matan
-     * @param owner
-     * @param financialAction
+     * @param boardMember
+     * @param detailes
+     * @param price
      * Report of income or outcome of the owner's team UC 6.7
      */
-        public void reportIncomeOrOutcome(Owner owner, FinancialAction financialAction){
-            owner.reportIncomeOrOutcome(financialAction);
+        public void reportIncomeOrOutcome(BoardMember boardMember,String detailes,double price)
+        {
+            boardMember.addFinancialAction(detailes,price);
         }
 
 
