@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class TeamMemberControllerTest
 {
 
-
+/**
     System system;
     Coach coach;
     Fan fan;
@@ -77,5 +77,5 @@ public class TeamMemberControllerTest
         }
     }
 
-
+**/
 }

@@ -16,7 +16,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class BoardManagerControllerTest {
+public class BoardManagerControllerTest
+{
+    /**
     Owner owner;
     Team team;
     Coach coach;
@@ -40,6 +42,7 @@ public class BoardManagerControllerTest {
      * @author matan
      *  acceptance test UC 6.1a
      */
+    /**
     @org.junit.Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void addAssets1acceptance() {
@@ -53,7 +56,7 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.1b
      */
-
+/**
     @Test(expected = ArithmeticException.class)
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void removeAssets2acceptance() {
@@ -65,6 +68,7 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.2
      */
+/**
     @Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void appointmentNewOwner3acceptance() {
@@ -77,7 +81,7 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.3
      */
-
+/*
     @Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void removeOwnerAppointment4acceptance() {
@@ -91,7 +95,7 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.4
      */
-
+/**
     @org.junit.Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void testAppointTeamManger5acceptance() {
@@ -109,6 +113,7 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.5a
      */
+/**
     @Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void testRemoveAppointTeamMangerA6acceptance() {
@@ -121,10 +126,12 @@ public class BoardManagerControllerTest {
         bmc.appointTeamManger(owner,teamManager,permissionList,2000);
         assertEquals(owner.getTeam(),teamManager.getTeam());
     }
+
     /**
      * @author matan
      * acceptance test UC 6.5b
      */
+/**
     @Test(expected = ArithmeticException.class)
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void testRemoveAppointTeamMangerB7acceptance() {
@@ -140,6 +147,7 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.6.1.a
      */
+    /**
     @Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void openTeam1a8acceptance() throws Exception {
@@ -152,6 +160,7 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.6.1.b
      */
+    /**
     @Test(expected = Exception.class)
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void openTeam1b9acceptance()throws Exception{
@@ -162,6 +171,7 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.6.2.a
      */
+    /**
     @Test
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void closeTeam2a10acceptance() throws Exception {
@@ -173,6 +183,7 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.6.2.b
      */
+    /**
     @Test(expected = Exception.class)
     @Category({RegressionTests.class, AcceptanceTests.class})
     public void closeTeam2b11acceptance()throws Exception{
@@ -184,14 +195,14 @@ public class BoardManagerControllerTest {
      * @author matan
      * acceptance test UC 6.7a
      */
-    @Test
-    @Category({RegressionTests.class, AcceptanceTests.class})
-    public void reportIncomeOrOutcome12acceptance() {
-        FinancialAction financialAction=new FinancialAction("Buy new player",-50000,owner);
-        BoardManagerController bmc = new BoardManagerController(guest);
-        bmc.reportIncomeOrOutcome(owner,financialAction);
-        assertTrue(owner.getTeam().getFinancialActions().contains(financialAction));
 
-    }
+    //@Test
+    //@Category({RegressionTests.class, AcceptanceTests.class})
+   // public void reportIncomeOrOutcome12acceptance() {
+    //    FinancialAction financialAction=new FinancialAction("Buy new player",-50000,owner);
+    //    BoardManagerController bmc = new BoardManagerController(guest);
+    //    bmc.reportIncomeOrOutcome(owner,financialAction);
+     //   assertTrue(owner.getTeam().getFinancialActions().contains(financialAction));
 
+   // }
 }

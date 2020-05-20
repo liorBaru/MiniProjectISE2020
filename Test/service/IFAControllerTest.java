@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
 
 public class IFAControllerTest {
 
+    /**
     System system =System.getInstance();
 
     @Test
@@ -206,5 +207,6 @@ public class IFAControllerTest {
         assertEquals(owner.getAccount().getUserName(),userNameOwner);
     }
 
+*/
 
-}//class
+}

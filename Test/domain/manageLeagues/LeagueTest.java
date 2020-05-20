@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 
 public class LeagueTest {
-
+/**
     private League league;
     private Season season;
     private  SeasonStub seasonStub;
@@ -104,5 +104,5 @@ public class LeagueTest {
 
     }
 
-
+**/
 }

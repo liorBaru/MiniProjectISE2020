@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 
 public class FanControllerTest {
 
+    /**
     System system;
     Fan userFan ;
     Owner owner ;
@@ -283,4 +284,5 @@ public class FanControllerTest {
         assertTrue(user.equals(user2));
 
     }
+    */
 }
