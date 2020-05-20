@@ -46,6 +46,7 @@ public class FansDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -83,7 +84,7 @@ public class FansDaoSql implements DaoSql
            }
            catch (Exception e)
            {
-
+               logger.error(e.getMessage());
            }
         }
         return null;
@@ -106,9 +107,11 @@ public class FansDaoSql implements DaoSql
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The fan that his username is " + params[0] + "successfuly saved");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -131,9 +134,11 @@ public class FansDaoSql implements DaoSql
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The fan that his username is " + params[0] + "successfuly updated");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -149,15 +154,18 @@ public class FansDaoSql implements DaoSql
             PreparedStatement preparedStatement;
             try
             {
+
                 connection.setCatalog("users");
                 preparedStatement=connection.prepareStatement(query);
                 preparedStatement.setString(1,key[0]);
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The fan that his username is " + key[0] + "successfuly deleted");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

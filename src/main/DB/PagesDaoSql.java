@@ -104,9 +104,11 @@ public class PagesDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The pageID " + params[0] + "successfuly saved in pages ");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 throw new SQLException(e.getMessage());
             }
         }
@@ -129,10 +131,12 @@ public class PagesDaoSql implements DaoSql
                 stmt.setString(2,params[2]);
                 stmt.execute();
                 stmt.close();
-                conn.close();
+
+                logger.info("The page succesfully updated");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -154,9 +158,11 @@ public class PagesDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The page " +key[0] +"succesfully deleted");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

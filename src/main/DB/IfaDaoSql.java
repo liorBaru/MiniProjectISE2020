@@ -48,6 +48,7 @@ public class IfaDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -85,7 +86,7 @@ public class IfaDaoSql implements DaoSql
             }
             catch (Exception e)
             {
-
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -108,9 +109,11 @@ public class IfaDaoSql implements DaoSql
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The user + " +params[0] + " is succsefullly saved as IFA");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -133,9 +136,11 @@ public class IfaDaoSql implements DaoSql
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The user + " +params[0] + " is succsefullly updated");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -157,9 +162,11 @@ public class IfaDaoSql implements DaoSql
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The user + " +key[0] + " is succsefullly deleted");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

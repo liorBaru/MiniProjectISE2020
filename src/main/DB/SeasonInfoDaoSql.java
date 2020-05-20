@@ -47,6 +47,7 @@ public class SeasonInfoDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -82,6 +83,7 @@ public class SeasonInfoDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -107,9 +109,11 @@ public class SeasonInfoDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The sesson is sucessfuly add to " + params[0]);
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 throw new SQLException(e.getMessage());
             }
         }
@@ -134,9 +138,11 @@ public class SeasonInfoDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The sesson is successfully updated");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -158,9 +164,11 @@ public class SeasonInfoDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The sesson is successfully deleted");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

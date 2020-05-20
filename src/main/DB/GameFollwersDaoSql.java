@@ -60,6 +60,7 @@ public class GameFollwersDaoSql implements DaoSql {
                 connection.close();
                 return ans;
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -92,6 +93,7 @@ public class GameFollwersDaoSql implements DaoSql {
                 connection.close();
                 return ans;
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -125,6 +127,7 @@ public class GameFollwersDaoSql implements DaoSql {
                 connection.close();
                 return ans;
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -156,7 +159,7 @@ public class GameFollwersDaoSql implements DaoSql {
                 connection.close();
                 return ans;
             } catch (Exception e) {
-
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -178,7 +181,9 @@ public class GameFollwersDaoSql implements DaoSql {
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The username " + params[1] + " successfuly following the gameID " + params[0]);
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -221,7 +226,9 @@ public class GameFollwersDaoSql implements DaoSql {
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The gameID " + gameID + " succesfully delted");
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -240,7 +247,9 @@ public class GameFollwersDaoSql implements DaoSql {
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The username " + user_name + " succesfully unfollowing the all his games");
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -260,7 +269,9 @@ public class GameFollwersDaoSql implements DaoSql {
                 preparedStatement.execute();
                 preparedStatement.close();
                 connection.close();
+                logger.info("The username " + key[0] + " succesfully unfollowing the game" + key[1]);
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

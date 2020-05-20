@@ -62,6 +62,7 @@ public class PageFollowersDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -94,6 +95,7 @@ public class PageFollowersDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -126,6 +128,7 @@ public class PageFollowersDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -159,6 +162,7 @@ public class PageFollowersDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -185,6 +189,8 @@ public class PageFollowersDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.info("The username " + params[1] + " successfuly following the pageID " + params[0]);
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -230,9 +236,11 @@ public class PageFollowersDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The username " + key[0] + " succesfully unfollowing the all his pages");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -252,9 +260,11 @@ public class PageFollowersDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The pageID " + key[0] + " succesfully deleted");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -276,9 +286,11 @@ public class PageFollowersDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The username " + key[0] + " succesfully unfollowing the page" + key[1]);
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

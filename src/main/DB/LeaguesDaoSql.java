@@ -45,6 +45,7 @@ public class LeaguesDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -78,6 +79,7 @@ public class LeaguesDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -101,9 +103,11 @@ public class LeaguesDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The league " + params[0] + "succsefully saved");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 throw new SQLException(e.getMessage());
             }
         }
@@ -126,9 +130,11 @@ public class LeaguesDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The league " + params[0] + "succsefully updated");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -150,9 +156,11 @@ public class LeaguesDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The league " + key[0] + "succsefully deleted");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

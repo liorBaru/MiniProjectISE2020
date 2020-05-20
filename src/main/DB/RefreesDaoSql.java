@@ -95,9 +95,11 @@ public class RefreesDaoSql implements DaoSql
                 stmt.setString(4,params[3]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The Refree " + params[0] + " Successfully added");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -125,9 +127,11 @@ public class RefreesDaoSql implements DaoSql
                 stmt.setString(4,params[3]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The Refree " + params[0] + "Successfully updated");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -149,9 +153,11 @@ public class RefreesDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The Refree successfuly deleted");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

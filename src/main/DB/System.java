@@ -22,6 +22,7 @@ import java.util.*;
 
 public class System
 {
+
     private static System system;
     private static AccountManager accountManager;
     private NotificationsDaoSql notificationsDaoSql;
