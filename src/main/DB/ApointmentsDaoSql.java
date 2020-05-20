@@ -9,6 +9,11 @@ public class ApointmentsDaoSql implements DaoSql
 {
 
     DBconnector dBconnector= DBconnector.getInstance();
+    private static ApointmentsDaoSql apointmentsDaoSql = new ApointmentsDaoSql();
+    public static ApointmentsDaoSql getInstance()
+    {
+        return apointmentsDaoSql;
+    }
     @Override
     public List<String[]> get(String[] key)
     {
@@ -82,6 +87,7 @@ public class ApointmentsDaoSql implements DaoSql
             catch (Exception e)
             {
                 e.printStackTrace();
+
             }
         }
         return null;
@@ -136,6 +142,10 @@ public class ApointmentsDaoSql implements DaoSql
             catch (SQLException e)
             {
                 e.printStackTrace();
+                if(e.getMessage().contains("foreign key"))
+                    throw new SQLException("wrong usernames");
+                else
+                    throw new SQLException("employee already as owner");
             }
         }
     }
@@ -149,8 +159,19 @@ public class ApointmentsDaoSql implements DaoSql
     @Override
     public void delete(String[] params)
     {
-        String query =" Delete from apointments(manager, employee) " +
-                "VALUES(?,?);";
+        if(params[0].equals("Employee"))
+        {
+            deleteByEmployee(params[1]);
+        }
+        else if(params[0].equals("Manager"))
+        {
+            deleteByManager(params[1]);
+        }
+
+    }
+    private void deleteByEmployee(String employee)
+    {
+        String query =" Delete from apointments where employee=? ;";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
@@ -158,8 +179,28 @@ public class ApointmentsDaoSql implements DaoSql
             try {
                 conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
-                stmt.setString(1,params[0]);
-                stmt.setString(2,params[1]);
+                stmt.setString(1,employee);
+                stmt.execute();
+                stmt.close();
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void deleteByManager(String manager)
+    {
+        String query =" Delete from apointments where manager=? ;";
+        Connection conn = dBconnector.getConnection();
+        if (conn != null)
+        {
+            PreparedStatement stmt = null;
+            try {
+                conn.setCatalog("manageteams");
+                stmt = conn.prepareStatement(query);
+                stmt.setString(1,manager);
                 stmt.execute();
                 stmt.close();
             }

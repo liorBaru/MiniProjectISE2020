@@ -8,6 +8,7 @@ import java.util.List;
 class BoardMemberDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
+
     private static BoardMemberDaoSql boardMemberDaoSql = new BoardMemberDaoSql();
 
     public static BoardMemberDaoSql getInstance()
@@ -55,9 +56,8 @@ class BoardMemberDaoSql implements DaoSql
     @Override
     public List<String[]> getAll()
     {
-        String query = "SELECT * FROM boardmembers";
+        String query = "SELECT * FROM boardmembers ;";
         List<String[]> list= new ArrayList();
-        String[] results= null;
         ResultSet resultSet=null;
         try{
             Connection conn = dBconnector.getConnection();
@@ -66,9 +66,9 @@ class BoardMemberDaoSql implements DaoSql
             resultSet = statement.executeQuery(query);
             while(resultSet.next())
             {
+                String[] results=new String[1];
                 results[0]=resultSet.getString(1);
                 list.add(results);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
