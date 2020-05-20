@@ -141,7 +141,7 @@ public class PlayerDaoSql implements DaoSql
             e.printStackTrace();
         }
         ResultSet resultSet;
-        String query="Select FROM financialactions(team)"+
+        String query="Select FROM player(username)"+
                 "values(?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
