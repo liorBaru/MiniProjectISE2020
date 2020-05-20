@@ -1,5 +1,6 @@
 package main.domain.Asset.Refree;
 
+import main.DB.RefreesDaoSql;
 import main.domain.manageLeagues.Game;
 import main.domain.manageUsers.Account;
 import main.domain.manageUsers.User;
@@ -13,13 +14,17 @@ public abstract class Refree extends User
 {
     private List<Game> games;
     private String trainig;
-
+    private static RefreesDaoSql refreesDaoSql;
 
     public Refree(String name, Account account,String trainig)
     {
         super(name,account);
         this.trainig=trainig;
         games = new LinkedList<>();
+    }
+
+    public static Refree createReferee(String[] userDetails) {
+       List<String[]> refree = refreesDaoSql.
     }
 
 

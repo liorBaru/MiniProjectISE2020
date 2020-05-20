@@ -1,11 +1,13 @@
 package main.domain.manageTeams;
 
+import main.DB.TeamDaoSql;
 import main.domain.Asset.*;
 import main.domain.manageEvents.Notification;
 import main.domain.manageLeagues.Game;
 import main.domain.manageLeagues.Season;
 import main.domain.managePages.Page;
 import main.domain.managePages.pageable;
+import main.domain.manageUsers.Account;
 
 import java.util.*;
 
@@ -15,6 +17,7 @@ public class Team implements pageable
     private Page page;
     private boolean status;
     private List<Owner> owners;
+    private TeamDaoSql teamDaoSql;
     private List<StaffMember> staffMembers;
     private TreeMap<Integer, Game> games;
     private TreeMap<Season, TeamInfo> seasons;
@@ -169,9 +172,7 @@ public class Team implements pageable
         }
     }
 
-    public List<Owner> getOwners() {
-        return owners;
-    }
+
 
     public void removeTeamManger(TeamManager teamManager) {
         StaffMember tempTM = null;

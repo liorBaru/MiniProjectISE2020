@@ -1,7 +1,9 @@
 package main.domain.manageUsers;
 
 import main.DB.UsersDaoSql;
+import main.domain.Asset.Coach;
 import main.domain.Asset.Fan;
+import main.domain.Asset.Refree.Refree;
 
 import java.util.List;
 
@@ -159,10 +161,14 @@ public class AccountManager
                     if(userDetails[3].equals("Coach"))
                     {
 
+                        //TODO:
+                        // 1.complete the tables to add coach
+                       // User coach = Coach.createCoach(userDetails);
+                        //return user
                     }
                     if(userDetails[3].equals("Refree"))
                     {
-
+                        Refree referee = Refree.createReferee(userDetails);
                     }
                     if(userDetails[3].equals("Player"))
                     {

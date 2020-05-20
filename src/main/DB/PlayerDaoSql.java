@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-class PlayerDaoSql implements DaoSql
+public class PlayerDaoSql implements DaoSql
 {
     private DBconnector dBconnector;
     private static PlayerDaoSql playerDaoSql = new PlayerDaoSql();
@@ -141,7 +141,7 @@ class PlayerDaoSql implements DaoSql
             e.printStackTrace();
         }
         ResultSet resultSet;
-        String query="Select FROM financialactions(team)"+
+        String query="Select FROM player(username)"+
                 "values(?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
