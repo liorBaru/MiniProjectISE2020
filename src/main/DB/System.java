@@ -25,7 +25,6 @@ public class System
     private static System system;
     private static AccountManager accountManager;
     private NotificationsDaoSql notificationsDaoSql;
-
     private System ()
     {
         accountManager = new AccountManager();

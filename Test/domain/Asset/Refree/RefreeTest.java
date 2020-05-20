@@ -13,10 +13,10 @@ import org.junit.experimental.categories.Category;
 import static org.junit.Assert.*;
 
 public class RefreeTest {
-    private Refree refree;
 
     @Test
     @Category({ IntegrationTests.class})
+
     public void removeRefree()
     {
         try {
@@ -32,8 +32,9 @@ public class RefreeTest {
         {
             e.printStackTrace();
         }
-
-
+    }
+    public void getRefreeFromDB()
+    {
 
     }
 
