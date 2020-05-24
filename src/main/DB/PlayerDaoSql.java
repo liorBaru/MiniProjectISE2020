@@ -1,6 +1,8 @@
 package main.DB;
 
+import java.math.BigDecimal;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,6 @@ public class PlayerDaoSql implements DaoSql
     {
         return playerDaoSql;
     }
-
 
     @Override
     public List<String[]> get(String[] key)
@@ -156,6 +157,11 @@ public class PlayerDaoSql implements DaoSql
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
+            try {
+                date= (Date) new SimpleDateFormat("dd/MM/yyyy").parse(params[4]);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             PreparedStatement stmt = null;
             try {
                 conn.setCatalog("manageteams");
@@ -175,6 +181,7 @@ public class PlayerDaoSql implements DaoSql
                 stmt.setInt(10,Integer.parseInt(params[9]));
                 stmt.execute();
                 stmt.close();
+                logger.info("The player " +params[0] + " is succesufully saved");
             }
             catch (Exception e)
             {
@@ -208,6 +215,7 @@ public class PlayerDaoSql implements DaoSql
                 stmt.setInt(10,Integer.parseInt(params[9]));
                 stmt.execute();
                 stmt.close();
+                logger.info("The player " +params[0] + " is succesufully update");
             }
             catch (Exception e)
             {
@@ -232,6 +240,7 @@ public class PlayerDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The player " +key[0] + " is succesufully deleted");
             }
             catch (SQLException e)
             {
@@ -239,5 +248,6 @@ public class PlayerDaoSql implements DaoSql
                 throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
+
     }
 }

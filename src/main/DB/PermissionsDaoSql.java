@@ -141,6 +141,7 @@ public class PermissionsDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The permission " +params[1] + " is succesufully saved");
             }
             catch (SQLException e)
             {
@@ -167,6 +168,7 @@ public class PermissionsDaoSql implements DaoSql
                 stmt.setString(2,key[2]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The permission " +key[2] + " of "+key[1]+" succesufully updated");
             }
             catch (SQLException e)
             {
@@ -174,6 +176,8 @@ public class PermissionsDaoSql implements DaoSql
                 throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
+
+
     }
     private void deleteByUserName(String[] key) throws SQLException {
         String query =" Delete from permissions where user_name=?;" ;
@@ -187,6 +191,7 @@ public class PermissionsDaoSql implements DaoSql
                 stmt.setString(1,key[1]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The permission is succesufully deleted");
             }
             catch (SQLException e)
             {

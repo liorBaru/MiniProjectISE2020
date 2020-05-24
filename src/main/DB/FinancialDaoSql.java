@@ -9,7 +9,7 @@ import java.util.List;
 
 class FinancialDaoSql implements DaoSql
 {
-    private DBconnector dBconnector=DBconnector.getInstance();
+    private DBconnector dBconnector;
     private static FinancialDaoSql financialDaoSql = new FinancialDaoSql();
 
     public static FinancialDaoSql getInstance()
@@ -109,6 +109,7 @@ class FinancialDaoSql implements DaoSql
                 stmt.setDouble(5,Double.parseDouble(params[4]));
                 stmt.execute();
                 stmt.close();
+                logger.info("financial action succesfully saved");
             }
             catch (Exception e)
             {
@@ -146,6 +147,7 @@ class FinancialDaoSql implements DaoSql
                 stmt.setDouble(5,Double.parseDouble(params[4]));
                 stmt.execute();
                 stmt.close();
+                logger.info("financial action succesfully updated");
             }
             catch (SQLException e)
             {
@@ -170,6 +172,7 @@ class FinancialDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("financial action succesfully deleted");
             }
             catch (SQLException e)
             {

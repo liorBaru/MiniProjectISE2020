@@ -1,4 +1,8 @@
 package main.DB;
+import main.ExternalSystems.PaymentProxy;
+import main.ExternalSystems.PaymentSystem;
+import main.ExternalSystems.TaxProxy;
+import main.ExternalSystems.TaxSystem;
 import main.domain.Asset.*;
 import main.domain.managePages.Page;
 import main.domain.manageTeams.FinancialAction;
@@ -26,6 +30,8 @@ public class System
     private static System system = new System();
     private static AccountManager accountManager;
     private NotificationsDaoSql notificationsDaoSql;
+    static PaymentSystem externalPaymentsSystem;
+    static TaxSystem externalTaxSystem;
     private System ()
     {
         accountManager = new AccountManager();
@@ -56,6 +62,8 @@ public class System
            // system.connectToDB();
             Account account = system.accountManager.createAccount(userName,password,"SystemManager");
             SystemManager systemManager = new SystemManager(name,account);
+            PaymentSystem externalPaymentsSystem = new PaymentProxy();
+            TaxSystem externalTaxSystem = new TaxProxy();
            // system.connectToIFA();
           // system.connectToTaxLaW();
         }
@@ -94,18 +102,16 @@ public class System
          notificationsDaoSql.save(key);
     }
 
-
-    private void connectToIFA() throws Exception {
-        // throw new Exception("cant connect to IFA systems");
-    }
-
-    private void connectToTaxLaW() throws Exception
+    public boolean addPaymentToPaymentSystem(String teamName , String date , Double amount)
     {
-
-        //throw new Exception("cant connect to tax law system");
-
+        return externalPaymentsSystem.addPayment(teamName,date,amount);
     }
 
+
+    public double addTaxRate(double revenueAmount)
+    {
+        return externalTaxSystem.getTaxRate(revenueAmount);
+    }
 
 
     public void sendFinancialAction(BoardMember boardMember, FinancialAction financialAction)

@@ -70,7 +70,7 @@ class BoardMemberDaoSql implements DaoSql
                 list.add(results);
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            e.printStackTrace();
         }
 
         return list;
@@ -93,6 +93,7 @@ class BoardMemberDaoSql implements DaoSql
                 stmt.setString(1,params[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("board member " + params[0] + "successfuly saved");
             }
             catch (SQLException e)
             {
@@ -103,7 +104,8 @@ class BoardMemberDaoSql implements DaoSql
     }
 
     @Override
-    public void update(String[] params) throws SQLException {
+    public void update(String[] params)
+    {
         ResultSet resultSet;
         String query="Select FROM boardmembers(user_name)"+
                 "values(?,?);";
@@ -123,8 +125,7 @@ class BoardMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                logger.error(e.getMessage());
-                throw new SQLException(DaoSql.getException(e.getMessage()));
+                e.printStackTrace();
             }
         }
 
@@ -132,7 +133,8 @@ class BoardMemberDaoSql implements DaoSql
     }
 
     @Override
-    public void delete(String[] key) throws SQLException {
+    public void delete(String[] key)
+    {
         String query =" Delete from boardmembers where user_name=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -147,8 +149,7 @@ class BoardMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                logger.error(e.getMessage());
-                throw new SQLException(DaoSql.getException(e.getMessage()));
+                e.printStackTrace();
             }
         }
 

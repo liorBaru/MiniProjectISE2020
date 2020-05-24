@@ -154,6 +154,7 @@ public class CoachDaoSql implements DaoSql {
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("coach " + params[0] + "successfuly saved");
             }
             catch (SQLException e)
             {
@@ -164,7 +165,8 @@ public class CoachDaoSql implements DaoSql {
     }
 
     @Override
-    public void update(String[] params) throws SQLException {
+    public void update(String[] params) throws SQLException
+    {
         String query = "Update coach set user_name=?,team=?,pageID=?,training=?,job=? where user_name=?;";
         Connection conn = dBconnector.getConnection();
         if (conn != null) {
@@ -181,6 +183,7 @@ public class CoachDaoSql implements DaoSql {
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("board member " + params[0] + "successfuly updated");
             }
             catch (SQLException e)
             {
@@ -202,6 +205,7 @@ public class CoachDaoSql implements DaoSql {
                 stmt.setString(1, key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("board member " + key[0] + "successfuly deleted");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new SQLException(DaoSql.getException(e.getMessage()));

@@ -93,8 +93,7 @@ public class ApointmentsDaoSql implements DaoSql
     }
 
     @Override
-    public List<String[]> getAll()
-    {
+    public List<String[]> getAll() {
         ResultSet resultaDb = null;
         List<String[]> results = new LinkedList<>();
         Connection conn = dBconnector.getConnection();
@@ -170,8 +169,8 @@ public class ApointmentsDaoSql implements DaoSql
         }
 
     }
-
-    private void deleteByEmployee(String employee) throws SQLException {
+    private void deleteByEmployee(String employee) throws SQLException
+    {
         String query =" Delete from apointments where employee=? ;";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -192,7 +191,8 @@ public class ApointmentsDaoSql implements DaoSql
         }
     }
 
-    private void deleteByManager(String manager) throws SQLException {
+    private void deleteByManager(String manager)throws SQLException
+    {
         String query =" Delete from apointments where manager=? ;";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -204,6 +204,7 @@ public class ApointmentsDaoSql implements DaoSql
                 stmt.setString(1,manager);
                 stmt.execute();
                 stmt.close();
+                logger.info("The appointment succesfuly deleted");
             }
             catch (SQLException e)
             {

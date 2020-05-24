@@ -133,6 +133,7 @@ public class GamesDaoSql implements DaoSql
                 stmt.setBoolean(13,Boolean.parseBoolean(params[12]));
                 stmt.execute();
                 stmt.close();
+                logger.info("New game is scheduled in system");
             }
             catch (Exception e)
             {
@@ -177,6 +178,7 @@ public class GamesDaoSql implements DaoSql
                 stmt.setBoolean(13,Boolean.parseBoolean(params[12]));
                 stmt.execute();
                 stmt.close();
+                logger.info("The game id " + params[0]  + "is updated");
             }
             catch (SQLException e)
             {
@@ -201,6 +203,7 @@ public class GamesDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The game id " + key[0]  + "is deleted");
             }
             catch (SQLException e)
             {

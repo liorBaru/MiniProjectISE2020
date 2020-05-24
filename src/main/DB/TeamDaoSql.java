@@ -98,6 +98,7 @@ public class TeamDaoSql implements DaoSql
                 stmt.execute();
                 stmt.close();
                 conn.close();
+                logger.info("The team " + params[0] + "succesfully saved");
             }
             catch (SQLException e)
             {
@@ -123,6 +124,7 @@ public class TeamDaoSql implements DaoSql
 
                 stmt.execute();
                 stmt.close();
+                logger.info("The team " + params[0] + "succesfully updated");
             }
             catch (SQLException e)
             {
@@ -130,6 +132,8 @@ public class TeamDaoSql implements DaoSql
                 throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
+
+
     }
 
     @Override
@@ -145,6 +149,7 @@ public class TeamDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The team " + key[0] + "succesfully deleted");
             }
             catch (SQLException e)
             {
