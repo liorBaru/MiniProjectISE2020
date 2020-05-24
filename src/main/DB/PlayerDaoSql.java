@@ -157,11 +157,6 @@ public class PlayerDaoSql implements DaoSql
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
-            try {
-                date= (Date) new SimpleDateFormat("dd/MM/yyyy").parse(params[4]);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
             PreparedStatement stmt = null;
             try {
                 conn.setCatalog("manageteams");

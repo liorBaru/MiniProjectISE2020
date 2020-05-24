@@ -144,8 +144,7 @@ public class BoardManagerController extends GuestController {
      * @param price
      * Report of income or outcome of the owner's team UC 6.7
      */
-        public void reportIncomeOrOutcome(BoardMember boardMember,String detailes,double price)
-        {
+        public void reportIncomeOrOutcome(BoardMember boardMember,String detailes,double price) throws Exception {
             boardMember.addFinancialAction(detailes,price);
         }
 
