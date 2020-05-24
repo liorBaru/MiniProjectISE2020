@@ -39,9 +39,10 @@ public class Fan extends User
         System system= System.getInstance();
         Account account = system.getAccountManager().getAccount(data[0]);
         List<String[]> fanData=fansDaoSql.get(data);
-        if(fanData.isEmpty()==false)
+        if(fanData.size()==0)
         {
-            Fan fan = new Fan(fanData.get(0),account);
+            String[] newData={account.getUserName(),"Gal"};
+            Fan fan = new Fan(newData,account);
             return fan;
         }
         throw new Exception("username not found");

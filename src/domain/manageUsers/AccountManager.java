@@ -5,19 +5,20 @@ import domain.Asset.*;
 import domain.Asset.*;
 import domain.Asset.Refree.Refree;
 import domain.manageLeagues.IFA;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class AccountManager
 {
-    private UsersDaoSql usersDaoSql =UsersDaoSql.getInstance();
+    private static UsersDaoSql usersDaoSql =UsersDaoSql.getInstance();
 
     public Account getAccount(String userName)
     {
         String[] key = {userName};
         List<String[]> user =usersDaoSql.get(key);
-        if(user.isEmpty()==false)
+        if(user!=null)
         {
             String [] userString=user.get(0);
             Account account = new Account(userString[0],userString[1]);
@@ -61,7 +62,9 @@ public class AccountManager
                 if(checkPassword(password))
                 {
                     String salt="1";
-                    String[] params={userName,password,salt,type};
+                    String newPasswod = BCrypt.hashpw(password, BCrypt.gensalt());
+                    System.out.println(newPasswod);
+                    String[] params={userName,newPasswod,salt,type};
                     usersDaoSql.save(params);
                     Account account = new Account(userName,password);
                     return account;
@@ -131,6 +134,9 @@ public class AccountManager
                 if(checkPassword(newPassword))
                 {
                     user.account.setPassword(newPassword);
+                    String newPasswordEncrypt = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+                    String[] update = {user.getAccount().getUserName(),newPasswordEncrypt,user.getName(),"1",user.getKind()};
+                    usersDaoSql.update(update);
                     return true;
                 }
             }
@@ -171,9 +177,10 @@ public class AccountManager
             else
             {
                 String [] userDetails= userData.get(0);
-                if(userDetails[1].equals(password))
+                boolean encryptSuccess= BCrypt.checkpw(password, userDetails[1]);
+                if(encryptSuccess)
                 {
-                    User user=getUser(userDetails[0],userDetails[1]);
+                    User user=getUser(userDetails[0],userDetails[3]);
                     return user;
                 }
             }

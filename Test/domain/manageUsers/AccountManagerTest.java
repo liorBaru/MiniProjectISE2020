@@ -22,7 +22,7 @@ public class AccountManagerTest
     @Category({UnitTests.class, RegressionTests.class})
     public void createAccountSuccess1Unit() throws Exception
     {
-        accountManager.createAccount("userName","PassUser12","Fan");
+        accountManager.createAccount("username","PassUser12","Fan");
         boolean flag=false;
         Account account=accountManager.getAccount("username");
         if (account!=null)
@@ -240,9 +240,9 @@ public class AccountManagerTest
     @Category({UnitTests.class, RegressionTests.class})
     public void loginSuccess15Unit() throws Exception {
         setUpUnit();
-        Account account=accountManager.createAccount("userName", "FanUser12","Fan");
-        User u=(accountManager.login("userName", "FanUser12"));
-        assertNull(u);
+        Account account=accountManager.createAccount("davidzzz1", "FanUser12","Fan");
+        User u=(accountManager.login("davidzzz1", "FanUser12"));
+        assertNotNull(u);
         accountManager.removeAccount(account);
     }
 
