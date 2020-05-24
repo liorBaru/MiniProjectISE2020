@@ -43,7 +43,6 @@ public class Fan extends User
             Fan fan = new Fan(fanData.get(0),account);
             return fan;
         }
-        Lo4jDemo.writeError("username not found"+data[0]);
         throw new Exception("username not found");
     }
 
