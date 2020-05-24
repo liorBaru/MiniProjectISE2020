@@ -7,6 +7,7 @@ import domain.manageTeams.Team;
 import domain.manageUsers.Account;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -94,10 +95,10 @@ public abstract class TeamMember extends StaffMember implements pageable
         return this.account.getUserName();
     }
 
-    public List<String>showPersonalDetails()
+    public LinkedList<String> showPersonalDetails()
     {
-        List<String> userDetails =super.showPersonalDetails();
-        String pageName = "Page: "+page.getPageName();
+        LinkedList<String> userDetails =super.showPersonalDetails();
+        String pageName =page.getPageName();
         userDetails.add(pageName);
         return userDetails;
     }

@@ -10,6 +10,7 @@ import domain.manageUsers.User;
 import Logger.Lo4jDemo;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -148,16 +149,10 @@ public class Fan extends User
      * @return
      */
     @Override
-    public List<String> showPersonalDetails()
+    public LinkedList<String> showPersonalDetails()
     {
-        List<String> userDetails = super.showPersonalDetails();
-        String pageString =" pages:";
-        userDetails.add(pageString);
-        for (String s:showPages().values())
-        {
-            pageString=pageString+", "+s;
-        }
-        userDetails.add(pageString);
+        LinkedList<String> userDetails = super.showPersonalDetails();
+        userDetails.addFirst("Fan");
         return userDetails;
     }
 

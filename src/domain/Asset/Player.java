@@ -122,24 +122,25 @@ public class Player extends TeamMember
      * @return
      */
     @Override
-    public List<String> showPersonalDetails()
+    public LinkedList<String> showPersonalDetails()
     {
-       List<String> userDetails= super.showPersonalDetails();
-       String birth ="BirthDay:"+birthDay.toString();
-       String positionsS="positions: ";
+       LinkedList<String> userDetails= super.showPersonalDetails();
+       userDetails.addFirst("Player");
+       DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+       String birth =dateFormat.format(birthDay);
+       userDetails.addLast(birth);
+       String positionsS="";
        for (PlayerPosition position:positions)
        {
            positionsS+=position+" ";
        }
-       String goalSt="Goals: "+goals;
-       String gameSt ="Games: "+games;
-       userDetails.add(birth);
-       userDetails.add(positionsS);
-       userDetails.add(goalSt);
-       userDetails.add(gameSt);
+       userDetails.addLast(positionsS);
+       String goalSt=String.valueOf(goals);
+       String gameSt =String.valueOf(games);
+       userDetails.addLast(goalSt);
+       userDetails.addLast(gameSt);
        return userDetails;
     }
-
     @Override
     protected void update() throws SQLException {
         String [] params= new String[10];
@@ -178,7 +179,7 @@ public class Player extends TeamMember
     }
 
     public void setGoals(int goals) throws SQLException {
-        this.goals = goals;
+        this.goals += goals;
         update();
     }
 
@@ -187,7 +188,7 @@ public class Player extends TeamMember
     }
 
     public void setGames(int games) throws SQLException {
-        this.games = games;
+        this.games += games;
         update();
     }
 
@@ -196,7 +197,7 @@ public class Player extends TeamMember
     }
 
     public void setYellowCards(int yellowCards) throws SQLException {
-        this.yellowCards = yellowCards;
+        this.yellowCards += yellowCards;
         update();
     }
 
@@ -205,7 +206,7 @@ public class Player extends TeamMember
     }
 
     public void setRedCards(int redCards) throws SQLException {
-        this.redCards = redCards;
+        this.redCards += redCards;
         update();
     }
 

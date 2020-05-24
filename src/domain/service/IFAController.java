@@ -16,7 +16,6 @@ public class IFAController extends GuestController
 
     public IFAController(Guest guest) {
         super(guest);
-
     }
 
     /**
@@ -61,12 +60,21 @@ public class IFAController extends GuestController
         }
     }
 
-    public void updatePolicyToLeague(String league, int season , LeagueCalculator leaguePolicy) {
-        try {
+    public String[]setLeagueCalculator (String league, int season, LeagueCalculator leaguePolicy)
+    {
+        String[] message=new String[2];
+        try
+        {
             Ifa.updatePolicyToLeague(league, season,leaguePolicy);
-        } catch (Exception e) {
-            throw new InputMismatchException("Wrong input");
+            message[0]="Respond";
+            message[1]="Success operation";
         }
+        catch (Exception e)
+        {
+            message[0]="Fail";
+            message[1]=e.getMessage();
+        }
+        return message;
     }
     /**
          * @author: Lior Baruchovich
@@ -127,12 +135,26 @@ public class IFAController extends GuestController
      * @param
      * @param
      */
-    public boolean addOwner(String OwnerName, String password, String userName) throws Exception{
-        if( OwnerName!=null && password!=null && userName!=null)
+    public String[] addOwner(String OwnerName,String userName,String password)
+    {
+        String[] message=null;
+        try
         {
-            Ifa.addOwner( OwnerName, password, userName);
+            if( OwnerName!=null && password!=null && userName!=null)
+            {
+                Ifa.addOwner(OwnerName, password, userName);
+                message = new String[2];
+                message[0]="Respond";
+                message[1]="Success operation";
+            }
         }
-        return false;
+        catch (Exception e)
+        {
+            message= new String[2];
+            message[0]="Fail";
+            message[1]=e.getMessage();
+        }
+        return message;
     }
 
     /**
@@ -141,10 +163,30 @@ public class IFAController extends GuestController
      * @param
      * @param
      */
-    public void addTeam(String teamName, String ownerUserName) throws Exception{
-        if( teamName!=null  && ownerUserName!=null){
-            Ifa.addTeam( ownerUserName, teamName);
+    public void addTeam(String teamName, String ownerUserName)
+    {
+        String [] message=null;
+        try
+        {
+            if( teamName!=null && teamName.isEmpty()==false  && ownerUserName!=null && ownerUserName.isEmpty()==false)
+            {
+                Ifa.addTeam( ownerUserName, teamName);
+                message = new String[2];
+                message[0]="Respond";
+                message[1]="Success operation";
+            }
+            else
+            {
+                throw new Exception("Invalid arguments");
+            }
         }
+        catch (Exception e)
+        {
+            message = new String[2];
+            message[0]="Fail";
+            message[1]=e.getMessage();
+        }
+
     }
 
 

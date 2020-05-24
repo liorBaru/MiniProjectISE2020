@@ -6,6 +6,7 @@ import domain.manageUsers.Account;
 import domain.manageUsers.User;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class StaffMember extends User implements Asset
@@ -70,11 +71,15 @@ public abstract class StaffMember extends User implements Asset
      */
 
     @Override
-    public List<String> showPersonalDetails()
+    public LinkedList<String> showPersonalDetails()
     {
-        List<String> userDetails= super.showPersonalDetails();
-        String teamString = "Team: "+ team.getName();
-        userDetails.add(teamString);
+        LinkedList<String> userDetails= super.showPersonalDetails();
+        String teamString="";
+        if(team!=null)
+        {
+            teamString = team.getName();
+        }
+        userDetails.addLast(teamString);
         return userDetails;
     }
 

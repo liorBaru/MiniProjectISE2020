@@ -24,4 +24,10 @@ public class LineRefree extends Refree
         String[]key={account.getUserName(),name,training,"Line"};
         refreesDaoSql.update(key);
     }
+
+    @Override
+    public String getKind()
+    {
+        return "Line";
+    }
 }

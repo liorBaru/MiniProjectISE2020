@@ -21,6 +21,14 @@ public class TeamManager extends BoardMember
         setPermissions(permissions);
     }
 
+    @Override
+    public LinkedList<String> showPersonalDetails()
+    {
+        LinkedList<String> userDetails= super.showPersonalDetails();
+        userDetails.addFirst("TeamManager");
+        return userDetails;
+    }
+
     public TeamManager(Account account,Team team, String name) throws Exception {
         this.account=account;
         this.team=team;

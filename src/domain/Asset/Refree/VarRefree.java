@@ -22,4 +22,9 @@ public class VarRefree extends Refree
         String[]key={account.getUserName(),name,training,"Var"};
         refreesDaoSql.update(key);
     }
+    @Override
+    public String getKind()
+    {
+        return "Var";
+    }
 }

@@ -7,6 +7,7 @@ import domain.manageTeams.Team;
 import domain.manageUsers.Account;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Coach extends TeamMember
@@ -26,6 +27,7 @@ public class Coach extends TeamMember
         params[3]=training;
         params[4]="";
         params[5]=name;
+        job="";
         coachDaoSql.save(params);
     }
 
@@ -64,15 +66,24 @@ public class Coach extends TeamMember
      * @return
      */
     @Override
-    public List<String> showPersonalDetails()
+    public LinkedList<String> showPersonalDetails()
     {
-        List<String> userDetails= super.showPersonalDetails();
-        String sJob = "Job: "+job;
-        String sTrining ="Training: "+training;
-        userDetails.add(sTrining);
-        userDetails.add(sJob);
+        LinkedList <String> userDetails= super.showPersonalDetails();
+        userDetails.addLast(training);
+        userDetails.addLast(job);
+        userDetails.addFirst("Coach");
+        if(team!=null)
+        {
+           userDetails.addLast(team.getName());
+        }
+        else
+        {
+            userDetails.addLast("");
+        }
+        userDetails.addLast(page.getPageName());
         return userDetails;
     }
+
 
     /**
      * get type and name

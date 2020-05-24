@@ -9,6 +9,7 @@ import domain.manageLeagues.Game;
 import domain.manageEvents.Notification;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Refree extends User
@@ -31,7 +32,6 @@ public abstract class Refree extends User
     {
         return null;
     }
-
     public static User getRefreeFromDB(String [] params)
     {
         return createRefreeFromDB(params);
@@ -53,6 +53,15 @@ public abstract class Refree extends User
             }
         }
         return true;
+    }
+
+    @Override
+    public LinkedList<String> showPersonalDetails()
+    {
+        LinkedList<String> userDetails= super.showPersonalDetails();
+        userDetails.addLast(training);
+        userDetails.addFirst(getKind());
+        return userDetails;
     }
 
 }

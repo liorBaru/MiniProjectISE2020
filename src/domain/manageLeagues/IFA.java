@@ -42,7 +42,13 @@ public class IFA extends User
         this.name=params[1];
     }
 
-
+    @Override
+    public LinkedList<String> showPersonalDetails()
+    {
+        LinkedList<String> userDetails= super.showPersonalDetails();
+        userDetails.addFirst("IFA");
+        return userDetails;
+    }
 
     public static User getIFADromDB(String[] key) throws Exception {
         List<String[]> ifaList=ifaDaoSql.get(key);

@@ -17,10 +17,14 @@ public class MainRefree extends Refree
         super(name,account ,training,"Main");
     }
 
-
     @Override
     protected void update() throws SQLException {
         String[]key={account.getUserName(),name,training,"Main"};
         refreesDaoSql.update(key);
+    }
+    @Override
+    public String getKind()
+    {
+        return "Main";
     }
 }

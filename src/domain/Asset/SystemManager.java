@@ -33,6 +33,14 @@ public class SystemManager extends User
         systemManagerDaoSql.save(params);
     }
 
+    @Override
+    public LinkedList<String> showPersonalDetails()
+    {
+        LinkedList<String> userDetails= super.showPersonalDetails();
+        userDetails.addFirst("SystemManager");
+        return userDetails;
+    }
+
     public SystemManager (String [] details)
     {
         this.account=system.getAccountManager().getAccount(details[0]);

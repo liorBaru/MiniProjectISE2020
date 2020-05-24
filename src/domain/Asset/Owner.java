@@ -7,6 +7,7 @@ import domain.manageEvents.Notification;
 import DataAccess.OwnersDaoSql;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Owner extends BoardMember
@@ -26,6 +27,7 @@ public class Owner extends BoardMember
                 this.anotherJob = anotherJob;
                 setPermissions();
         }
+
 
         public Owner(Account account,String name) throws SQLException {
                 super(account,name,null);
@@ -241,6 +243,20 @@ public class Owner extends BoardMember
                         return true;
                 }
                 return false;
+        }
+
+        @Override
+        public LinkedList<String> showPersonalDetails()
+        {
+                LinkedList<String> userDetails =super.showPersonalDetails();
+                userDetails.addFirst("Owner");
+                String anotherjobS="";
+                if(this.anotherJob!=null)
+                {
+                        anotherjobS=anotherJob.getType();
+                }
+                userDetails.addLast(anotherjobS);
+                return userDetails;
         }
 
         @Override

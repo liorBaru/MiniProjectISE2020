@@ -64,11 +64,11 @@ public class System
         }
     }
 
-    public Fan createNewFanUser(String name, String userName, String password)throws Exception
+    public boolean createNewFanUser(String name, String userName, String password)throws Exception
     {
          Account account = accountManager.createAccount(userName,password,"Fan");
          Fan newUser = new Fan(name,account);
-         return newUser;
+         return true;
     }
 
 

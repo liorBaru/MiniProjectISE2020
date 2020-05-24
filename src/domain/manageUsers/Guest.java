@@ -25,7 +25,7 @@ public class Guest extends Observable
 
 
 
-    public User register(String name, String userName, String password) throws Exception
+    public boolean register(String name, String userName, String password) throws Exception
     {
         if(name!=null && userName!=null && password!=null)
         {

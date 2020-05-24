@@ -73,13 +73,13 @@ public abstract class User extends Guest
      *  show user personal detailes
      * @return
      */
-    public List<String> showPersonalDetails()
+    public LinkedList<String> showPersonalDetails()
     {
         LinkedList<String> userDetails = new LinkedList<>();
-        String sName = "Name: " +name;
-        userDetails.addFirst(sName);
-        String userName = "Username: " +account.getUserName();
-        userDetails.addFirst(userName);
+        String userName = account.getUserName();
+        userDetails.addLast(userName);
+        String sName = name;
+        userDetails.addLast(sName);
         return userDetails;
     }
     /**
@@ -116,7 +116,6 @@ public abstract class User extends Guest
     public Account getAccount(){ return account;}
 
     public String getKind() {return kind; }
-
 
 
 
