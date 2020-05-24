@@ -1,6 +1,5 @@
 package main.DB;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,19 @@ public class OwnersDaoSql implements DaoSql
      */
     public List<String[]> get(String[] key)
     {
+       if(key[0].equals("Key"))
+       {
+           return getByKey(key[1]);
+       }
+       else if(key[0].equals("Team"))
+       {
+           return getByTeam(key[1]);
+       }
+       return null;
+    }
+
+    private List<String[]> getByTeam(String key)
+    {
         Connection conn = dBconnector.getConnection();
         ResultSet resultSet;
         String query="SELECT * FROM owners where user_name =?";
@@ -33,7 +45,7 @@ public class OwnersDaoSql implements DaoSql
             try {
                 conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
-                stmt.setString(1,key[0]);
+                stmt.setString(1,key);
                 resultSet=stmt.executeQuery();
                 results= new String[4];
                 if(resultSet.next())
@@ -44,17 +56,52 @@ public class OwnersDaoSql implements DaoSql
                     results[3]=resultSet.getString(4);
                     stmt.close();
                     list.add(results);
-                    return list;
                 }
+                return list;
             }
             catch (SQLException e)
             {
-                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
         return null;
     }
+
+    private List<String[]> getByKey(String key)
+    {
+        Connection conn = dBconnector.getConnection();
+        ResultSet resultSet;
+        String query="SELECT * FROM owners where user_name =?";
+        String [] results;
+        List<String[]> list = new ArrayList<>();
+        if (conn != null)
+        {
+            PreparedStatement stmt = null;
+            try {
+                conn.setCatalog("manageteams");
+                stmt = conn.prepareStatement(query);
+                stmt.setString(1,key);
+                resultSet=stmt.executeQuery();
+                results= new String[4];
+                if(resultSet.next())
+                {
+                    results[0]=resultSet.getString(1);
+                    results[1]=resultSet.getString(2);
+                    results[2]=resultSet.getString(3);
+                    results[3]=resultSet.getString(4);
+                    stmt.close();
+                    list.add(results);
+                }
+                return list;
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public List<String[]> getAll()
@@ -77,12 +124,11 @@ public class OwnersDaoSql implements DaoSql
                 list.add(results);
 
             }
+            return list;
         } catch (SQLException e) {
-            logger.error(e.getMessage());
             e.printStackTrace();
         }
-
-        return list;
+        return null;
     }
     /**
      * David
@@ -105,12 +151,14 @@ public class OwnersDaoSql implements DaoSql
                 stmt.setString(4,params[3]);
                 stmt.execute();
                 stmt.close();
-                logger.info("The owner " +params[0] +" is succsufully saved");
             }
             catch (SQLException e)
             {
-                logger.error(e.getMessage());
                 e.printStackTrace();
+                if(e.getMessage().contains("foreign key"))
+                    throw new SQLException("wrong parameters");
+                else
+                    throw new SQLException("this owner is already owner");
             }
         }
     }
@@ -118,21 +166,13 @@ public class OwnersDaoSql implements DaoSql
     @Override
     public void update(String[] params)
     {
-        ResultSet resultSet;
-        String query="Select FROM owners(user_name)"+
-                "values(?);";
+        String update="Replace INTO owners (user_name,name,team,anotherJob)" +"values(?,?,?,?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
             PreparedStatement stmt = null;
             try {
                 conn.setCatalog("manageteams");
-                stmt = conn.prepareStatement(query);
-                stmt.setString(1,params[0]);
-                //resultSet=stmt.executeQuery();
-                //  String type=resultSet.getString(4);
-                //  BigDecimal big =resultSet.getBigDecimal(3);
-                String update="Replace INTO owner (user_name,name,team,anotherJob)" +"values(?,?,?,?);";
                 stmt=conn.prepareStatement(update);
                 stmt.setString(1,params[0]);
                 stmt.setString(2,params[1]);
@@ -140,16 +180,13 @@ public class OwnersDaoSql implements DaoSql
                 stmt.setString(4,params[3]);
                 stmt.execute();
                 stmt.close();
-                logger.info("The owner " +params[0] + " is succsufully update");
+                conn.close();
             }
             catch (SQLException e)
             {
-                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
-
-
     }
 
     @Override
@@ -161,19 +198,16 @@ public class OwnersDaoSql implements DaoSql
         {
             PreparedStatement stmt = null;
             try {
-                conn.setCatalog("managteams");
+                conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
-                logger.info("The owner " +key[0] + " is succsufully deleted");
             }
             catch (SQLException e)
             {
-                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
-
     }
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 public class SearchHistoryDaoSql implements DaoSql
 {
-
     @Override
     public List<String[]> get(String[] key)
     {
