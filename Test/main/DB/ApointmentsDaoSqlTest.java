@@ -86,7 +86,7 @@ public class ApointmentsDaoSqlTest {
         {
             message=e.getMessage();
         }
-        assertEquals("wrong usernames",message);
+        assertEquals("wrong parameters",message);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class ApointmentsDaoSqlTest {
         {
             message=e.getMessage();
         }
-        assertEquals("wrong usernames",message);
+        assertEquals("object not found",message);
     }
 
     @Test
@@ -119,7 +119,7 @@ public class ApointmentsDaoSqlTest {
         {
             message=e.getMessage();
         }
-        assertEquals("employee already as owner",message);
+        assertEquals("wrong parameters",message);
     }
 
 }

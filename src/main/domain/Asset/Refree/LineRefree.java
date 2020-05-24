@@ -21,8 +21,7 @@ public class LineRefree extends Refree
 
 
     @Override
-    protected void update()
-    {
+    protected void update() throws SQLException {
         String[]key={account.getUserName(),name,training,"Line"};
         refreesDaoSql.update(key);
     }

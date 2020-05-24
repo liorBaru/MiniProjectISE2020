@@ -76,7 +76,6 @@ public class ComplaintDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -107,7 +106,6 @@ public class ComplaintDaoSql implements DaoSql
                 stmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
                 logger.error(e.getMessage());
             }
         }
@@ -142,14 +140,13 @@ public class ComplaintDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         String query = "Update complaint set status=?,answer=?,answer_time=? where id=?;";
         Connection connection=dBconnector.getConnection();
         if(connection!=null)
@@ -177,14 +174,13 @@ public class ComplaintDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query = "Delete from complaint where id=?;";
         Connection connection = dBconnector.getConnection();
         if(connection!=null)
@@ -205,7 +201,7 @@ public class ComplaintDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

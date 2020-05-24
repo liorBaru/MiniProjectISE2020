@@ -12,9 +12,7 @@ import java.util.List;
 
 public class Owner extends BoardMember
 {
-        private static OwnersDaoSql ownersDauSql;
-        private static SystemManagerDaoSql systemManagerDaoSql;
-
+        private static OwnersDaoSql ownersDauSql =OwnersDaoSql.getInstance();
         private StaffMember anotherJob;
 
         public Owner(Account account, String name, Team team, BoardMember boss, StaffMember anotherJob) throws SQLException {
@@ -168,10 +166,7 @@ public class Owner extends BoardMember
                                      member.addNotification(notification);
                              }
                      }
-                     for (String[] systemManager:systemManagerDaoSql.getAll())
-                     {
-                            system.sendNotification(systemManager[0],notification);
-                     }
+                     system.sendNotificationToSystemManager(notification);
                      return;
              }
              throw new Exception("team is not connected any more");
@@ -250,8 +245,7 @@ public class Owner extends BoardMember
         }
 
         @Override
-        protected void update()
-        {
+        protected void update() throws SQLException {
                 String [] params = new String[4];
                 params[0]=this.account.getUserName();
                 params[1]=this.getName();

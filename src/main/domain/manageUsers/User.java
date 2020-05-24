@@ -15,7 +15,6 @@ public abstract class User extends Guest
 {
     protected String name;
     protected Account account;
-    protected PriorityQueue<Notification> notifications;
     protected String kind;
 
     private static UsersDaoSql usersDaoSql;
@@ -27,7 +26,6 @@ public abstract class User extends Guest
         this.account=account;
         account.setUser(this);
         this.name=name;
-        notifications=new PriorityQueue<>();
     }
 
     protected User() {
@@ -38,12 +36,11 @@ public abstract class User extends Guest
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) throws SQLException {
         this.name=name;
         update();
     }
-    protected abstract void update();
+    protected abstract void update() throws SQLException;
     @Override
     public boolean equals(Object object)
     {

@@ -20,8 +20,9 @@ public class OwnersDaoSqlTest {
             ownersDaoSql.delete(key);
             String[] key2={"Key","ownerTest"};
             assertTrue(ownersDaoSql.get(key2).isEmpty());
-            String[] params={"ownerTest","owner","teamTest","coach"};
+            String[] params={"ownerTest","owner","teamTest","Coach"};
             ownersDaoSql.save(params);
+            assertEquals("Coach",ownersDaoSql.get(key2).get(0)[3]);
             String[] params1={"ownerTest","owner","teamTest",""};
             ownersDaoSql.update(params1);
             assertTrue(ownersDaoSql.get(key2).get(0)[3].isEmpty());
@@ -42,12 +43,13 @@ public class OwnersDaoSqlTest {
         {
             String[] params={"ownerTest","owner","teamTest","coach"};
             ownersDaoSql.save(params);
+            ownersDaoSql.save(params);
         }
         catch (Exception e)
         {
             message=e.getMessage();
         }
-        assertEquals("this owner is already owner",message);
+        assertEquals("wrong parameters",message);
     }
 
     @Test
@@ -65,6 +67,6 @@ public class OwnersDaoSqlTest {
         {
             message=e.getMessage();
         }
-        assertEquals("wrong parameters",message);
+        assertEquals("object not found",message);
     }
 }

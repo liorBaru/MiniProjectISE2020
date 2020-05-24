@@ -61,18 +61,11 @@ public class IFA extends User
     }
 
     @Override
-    protected void update()
-    {
+    protected void update() throws SQLException {
         String[] key={account.getUserName(),name};
         ifaDaoSql.update(key);
     }
 
-    @Override
-    public void setName(String name)
-    {
-        this.name=name;
-        update();
-    }
 
 
     /**
@@ -132,8 +125,6 @@ public class IFA extends User
     }
 
     public void updatePolicyToLeague(String league, int season , LeagueCalculator leaguePolicy) throws Exception {
-        //TODO:
-        // 1.add to U.C 9.5 paramater to function : Season season , LeagueCalculator leaguePolicy
         if(leaguePolicy==null||season<yearMin || league.isEmpty())
             throw new Exception("Invalid arguments");
         String [] key={league,String.valueOf(season),leaguePolicy.getName()};

@@ -23,7 +23,7 @@ import java.util.*;
 public class System
 {
 
-    private static System system;
+    private static System system = new System();
     private static AccountManager accountManager;
     private NotificationsDaoSql notificationsDaoSql;
     private System ()
@@ -111,5 +111,13 @@ public class System
     public void sendFinancialAction(BoardMember boardMember, FinancialAction financialAction)
     {
 
+    }
+
+    public void sendNotificationToSystemManager(Notification notification) throws SQLException {
+        SystemManagerDaoSql systemManagerDaoSql=SystemManagerDaoSql.getInstance();
+        for (String [] manager:systemManagerDaoSql.getAll())
+        {
+            sendNotification(manager[0],notification);
+        }
     }
 }

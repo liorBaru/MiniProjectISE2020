@@ -1,6 +1,6 @@
 package main.domain.Asset;
 
-
+import main.Demo.Lo4jDemo;
 import main.DB.ApointmentsDaoSql;
 import main.DB.AssetsDauSql;
 import main.DB.PermissionsDaoSql;
@@ -16,11 +16,11 @@ import java.util.List;
 
 public abstract class BoardMember extends StaffMember
 {
-    protected  LinkedList<permission> permissions;
-    protected static ApointmentsDaoSql apointmentsDaoSql;
-    protected static PermissionsDaoSql permissionsDaoSql;
-    protected static StaffMembersDaoSql staffMembersDaoSql;
-    protected static AssetsDauSql assetsDauSql;
+    protected LinkedList<permission> permissions;
+    protected static ApointmentsDaoSql apointmentsDaoSql=ApointmentsDaoSql.getInstance();
+    protected static PermissionsDaoSql permissionsDaoSql =PermissionsDaoSql.getInstance();
+    protected static StaffMembersDaoSql staffMembersDaoSql=StaffMembersDaoSql.getInstance();
+    protected static AssetsDauSql assetsDauSql=AssetsDauSql.getInstance();
 
     public BoardMember (Account account, String name, Team team, BoardMember boss,String type) throws SQLException {
         super(account,name,team,boss,type);
@@ -39,36 +39,57 @@ public abstract class BoardMember extends StaffMember
 
     /**
      * gal
+     * permission : add player
+     * @param player
+     * @return
+     */
+
+    public boolean addPlayer(Player player) throws Exception {
+        if(player!=null && player.team==null &&team!=null)
+        {
+            player.setTeam(team);
+            return true;
+        }
+        Lo4jDemo.writeError("Invalid operation - addPlayer "+this.account.getUserName());
+        throw new Exception("Invalid operation");
+    }
+
+    /**
+     * gal
      * permission : remove player
      * @param player
      * @return
      */
-    public boolean removePlayer(Player player)
-    {
+    public boolean removePlayer(Player player) throws Exception {
         if(player!=null && permissions.contains(permission.removePlayer) && team!=null)
         {
-            team.removeStaffMember(player);
-            player.setTeam(null);
-            return true;
+            if(this.team.getName().equals(player.team.getName()))
+            {
+                player.setTeam(null);
+                return true;
+            }
         }
-        return false;
+        Lo4jDemo.writeError("Invalid operation - removeUser "+this.account.getUserName());
+        throw new Exception("Invalid operation");
     }
+
+
     /**
      * gal
      * permission : add couch
      * @param couch
      * @return
      */
-    public boolean addCouch(Coach couch) throws SQLException
+    public boolean addCouch(Coach couch) throws Exception
     {
-        if(couch!=null && permissions.contains(permission.addCoach)&&team!=null)
+        if(couch!=null && permissions.contains(permission.addCoach)&&team!=null && couch.team==null)
         {
-            team.addStaffMember(couch);
-            String[] key={this.account.getUserName(),couch.getAccount().getUserName()};
-            apointmentsDaoSql.save(key);
+            couch.setBoss(this);
+            couch.setTeam(team);
             return true;
         }
-        return false;
+        Lo4jDemo.writeError("Invalid operation - addCouch "+this.account.getUserName());
+        throw new Exception("Invalid operation");
     }
 
     /**
@@ -76,17 +97,19 @@ public abstract class BoardMember extends StaffMember
      * @param coach
      * @return
      */
-    public boolean removeCoach(Coach coach)
+    public boolean removeCoach(Coach coach) throws Exception
     {
         if(coach!=null && permissions.contains(permission.removeCoach)&&team!=null)
         {
-            String [] key ={this.account.getUserName(),coach.getAccount().getUserName()};
-            apointmentsDaoSql.delete(key);
-            team.removeStaffMember(coach);
-            coach.setTeam(null);
+            if(coach.getBoss().account.getUserName().equals(this.account.getUserName()) && coach.team.getName().equals(team.getName()))
+            {
+                String[] key={"Key",this.account.getUserName(),coach.getAccount().getUserName()};
+                apointmentsDaoSql.delete(key);
+            }
             return true;
         }
-        return false;
+        Lo4jDemo.writeError("Invalid operation - removeCouch "+this.account.getUserName());
+        throw new Exception("Invalid operation");
     }
 
     /**
@@ -96,14 +119,14 @@ public abstract class BoardMember extends StaffMember
      * @return
      */
 
-    public boolean addFinancialAction(String description, double price)
-    {
+    public boolean addFinancialAction(String description, double price) throws Exception {
         if(permissions.contains(permission.addFinancial)&&team!=null)
         {
             FinancialAction financialAction = new FinancialAction(description,price,this);
             system.sendFinancialAction(this,financialAction);
         }
-        return false;
+        Lo4jDemo.writeError("Invalid operation - addCouch "+this.account.getUserName());
+        throw new Exception("Invalid operation");
     }
 
     /**
@@ -112,7 +135,7 @@ public abstract class BoardMember extends StaffMember
      * @return
      */
 
-    public boolean addAssets(String name,String type) throws SQLException {
+    public boolean addAssets(String name,String type) throws Exception {
         if(permissions.contains(permission.addAsset)&&team!=null)
         {
             if(type.equals("Field"))
@@ -122,7 +145,8 @@ public abstract class BoardMember extends StaffMember
                 return true;
             }
         }
-        return false;
+        Lo4jDemo.writeError("Invalid operation - addAssets "+this.account.getUserName());
+        throw new Exception("Invalid operation");
     }
 
     public void removeAsset(String name) throws Exception {
@@ -131,8 +155,8 @@ public abstract class BoardMember extends StaffMember
             String[]key={"key",team.getName(),name};
             assetsDauSql.delete(key);
         }
-        throw new Exception("invalid operation , check your premission");
-        //TODO: write to logger
+        Lo4jDemo.writeError("Invalid operation - removeAsses "+this.account.getUserName());
+        throw new Exception("Invalid operation");
     }
 
     /**
@@ -141,13 +165,15 @@ public abstract class BoardMember extends StaffMember
      * @return
      */
 
-    public boolean updateTeamPage (String message) throws Exception {
+    public boolean updateTeamPage (String message) throws Exception
+    {
         if(permissions.contains(permission.updateTeamPage)&&team!=null)
         {
             team.uploadDataToPage(message);
             return true;
         }
-        return false;
+        Lo4jDemo.writeError("Invalid operation - updateTeamPage "+this.account.getUserName());
+        throw new Exception("Invalid operation");
     }
 
     public List<StaffMember> getAppointments() throws Exception {
@@ -183,14 +209,6 @@ public abstract class BoardMember extends StaffMember
         }
         update();
     }
-
-    public void cleanPermission()
-    {
-        String [] key = {"user_name",this.account.getUserName()};
-        permissionsDaoSql.delete(key);
-    }
-
-
 
 }
 

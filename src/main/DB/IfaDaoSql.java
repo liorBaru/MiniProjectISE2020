@@ -49,7 +49,6 @@ public class IfaDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -114,14 +113,13 @@ public class IfaDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         String query="update ifa set name=? where user_name=?;";
         Connection connection=dBconnector.getConnection();
         if(connection!=null)
@@ -141,14 +139,13 @@ public class IfaDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query="delete from ifa where user_name=? ;";
         Connection connection=dBconnector.getConnection();
         if(connection!=null)
@@ -167,7 +164,7 @@ public class IfaDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

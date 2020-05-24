@@ -89,9 +89,14 @@ public class TeamManager extends BoardMember
         }
     }
 
+    public void cleanPermission() throws SQLException {
+        String [] key = {"user_name",this.account.getUserName()};
+        permissionsDaoSql.delete(key);
+    }
+
 
     @Override
-    protected void update() {
+    protected void update() throws SQLException {
         String teamName="";
         if(this.team!=null)
         {

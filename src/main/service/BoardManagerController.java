@@ -1,10 +1,9 @@
 package main.service;
 
-import main.domain.Asset.Asset;
+
 import main.domain.Asset.BoardMember;
 import main.domain.Asset.Owner;
 import main.domain.Asset.TeamManager;
-import main.domain.manageTeams.FinancialAction;
 import main.domain.manageUsers.Guest;
 
 import java.sql.SQLException;

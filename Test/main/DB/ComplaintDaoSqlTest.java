@@ -49,11 +49,18 @@ public class ComplaintDaoSqlTest {
                 flag2=true;
             }
         }
-        assertEquals(true,flag1);
-        assertEquals(true,flag2);
-        complaintDaoSql.delete(details);
-        details[0]="1";
-        complaintDaoSql.delete(details);
+        try {
+            assertEquals(true,flag1);
+            assertEquals(true,flag2);
+            complaintDaoSql.delete(details);
+            details[0]="1";
+            complaintDaoSql.delete(details);
+        }
+        catch (Exception e)
+        {
+
+        }
+
     }
 
     @Test
@@ -70,21 +77,22 @@ public class ComplaintDaoSqlTest {
         try
         {
             complaintDaoSql.save(details);
+            boolean flag=false;
+            for (String [] row:complaintDaoSql.get(details))
+            {
+                if(row[3].equals("This is the details of the complaint"))
+                {
+                    flag=true;
+                }
+            }
+            assertEquals(true,flag);
+            complaintDaoSql.delete(details);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-        boolean flag=false;
-        for (String [] row:complaintDaoSql.get(details))
-        {
-            if(row[3].equals("This is the details of the complaint"))
-            {
-                flag=true;
-            }
-        }
-        assertEquals(true,flag);
-        complaintDaoSql.delete(details);
+
     }
 
     @Test
@@ -101,29 +109,30 @@ public class ComplaintDaoSqlTest {
         try
         {
             complaintDaoSql.save(details);
+            String[] update = new String[4];
+            update[0]=String.valueOf(true);
+            update[1]="answer";
+            Date dateu = new Date();
+            SimpleDateFormat datetimeFormatteru = new SimpleDateFormat("yyyy-MM-dd");
+            update[2]= datetimeFormatteru.format(dateu);
+            update[3]="2";
+            complaintDaoSql.update(update);
+            boolean flag =false;
+            for (String [] row:complaintDaoSql.get(details))
+            {
+                if(row[4
+                        ].equals("answer") && row[2].equals(String.valueOf(true)))
+                {
+                    flag=true;
+                }
+            }
+            assertEquals(true,flag);
+            complaintDaoSql.delete(details);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-        String[] update = new String[4];
-        update[0]=String.valueOf(true);
-        update[1]="answer";
-        Date dateu = new Date();
-        SimpleDateFormat datetimeFormatteru = new SimpleDateFormat("yyyy-MM-dd");
-        update[2]= datetimeFormatteru.format(dateu);
-        update[3]="2";
-        complaintDaoSql.update(update);
-        boolean flag =false;
-        for (String [] row:complaintDaoSql.get(details))
-        {
-            if(row[4
-                    ].equals("answer") && row[2].equals(String.valueOf(true)))
-            {
-                flag=true;
-            }
-        }
-        assertEquals(true,flag);
-        complaintDaoSql.delete(details);
+
     }
 }

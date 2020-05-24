@@ -64,8 +64,6 @@ public class IFAController extends GuestController
     }
 
     public void updatePolicyToLeague(String league, int season , LeagueCalculator leaguePolicy) {
-        //TODO:
-        // 1.add to U.C 9.5 parameter to function : Season season , LeagueCalculator leaguePolicy
         try {
             Ifa.updatePolicyToLeague(league, season,leaguePolicy);
         } catch (Exception e) {

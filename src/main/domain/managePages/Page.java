@@ -44,7 +44,7 @@ public class Page extends Subject
         this.pageName=pageName;
     }
 
-    public void deletePage()
+    public void deletePage() throws SQLException
     {
         String [] key ={String.valueOf(this.pageID)};
         pagesDaoSql.delete(key);
@@ -86,8 +86,7 @@ public class Page extends Subject
         return pageName;
     }
 
-    public void setPageName(String pageName)
-    {
+    public void setPageName(String pageName) throws SQLException {
         String[] params={String.valueOf(pageID),pageName};
         pagesDaoSql.update(params);
     }

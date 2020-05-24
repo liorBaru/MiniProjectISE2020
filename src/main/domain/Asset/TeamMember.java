@@ -15,10 +15,11 @@ public abstract class TeamMember extends StaffMember implements pageable
 {
     protected Page page;
     private static StaffMembersDaoSql staffMembersDaoSql;
-    public TeamMember(Account account, String name) throws SQLException {
+
+    public TeamMember(Account account, String name) throws SQLException
+    {
         super(account, name);
         page=new Page(this);
-
     }
 
     protected TeamMember()
@@ -56,11 +57,9 @@ public abstract class TeamMember extends StaffMember implements pageable
     }
 
     @Override
-    public void removeTeam(Team team)
-    {
-        if(team!=null)
+    public void removeTeam(Team team) throws SQLException {
+        if(this.team!=null)
         {
-            team.removeStaffMember(this);
             if (this.team!=null)
             {
                 this.team=null;
@@ -68,6 +67,14 @@ public abstract class TeamMember extends StaffMember implements pageable
 
         }
         update();
+    }
+
+    @Override
+    public boolean removeUser() throws Exception
+    {
+        this.removeTeam(this.team);
+        this.page.deletePage();
+        return true;
     }
 
     /**

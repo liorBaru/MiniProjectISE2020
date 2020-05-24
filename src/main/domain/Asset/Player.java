@@ -141,8 +141,7 @@ public class Player extends TeamMember
     }
 
     @Override
-    protected void update()
-    {
+    protected void update() throws SQLException {
         String [] params= new String[10];
         params[0]=account.getUserName();
         params[1]="";
@@ -169,8 +168,7 @@ public class Player extends TeamMember
         return birthDay;
     }
 
-    public void setBirthDay(Date birthDay)
-    {
+    public void setBirthDay(Date birthDay) throws SQLException {
         this.birthDay = birthDay;
         update();
     }
@@ -179,7 +177,7 @@ public class Player extends TeamMember
         return goals;
     }
 
-    public void setGoals(int goals) {
+    public void setGoals(int goals) throws SQLException {
         this.goals = goals;
         update();
     }
@@ -188,7 +186,7 @@ public class Player extends TeamMember
         return games;
     }
 
-    public void setGames(int games) {
+    public void setGames(int games) throws SQLException {
         this.games = games;
         update();
     }
@@ -197,7 +195,7 @@ public class Player extends TeamMember
         return yellowCards;
     }
 
-    public void setYellowCards(int yellowCards) {
+    public void setYellowCards(int yellowCards) throws SQLException {
         this.yellowCards = yellowCards;
         update();
     }
@@ -206,7 +204,7 @@ public class Player extends TeamMember
         return redCards;
     }
 
-    public void setRedCards(int redCards) {
+    public void setRedCards(int redCards) throws SQLException {
         this.redCards = redCards;
         update();
     }
@@ -215,8 +213,7 @@ public class Player extends TeamMember
         return positions;
     }
 
-    private void setPositions(List<String> positionsSt)
-    {
+    private void setPositions(List<String> positionsSt) throws SQLException {
         for (String position:positionsSt)
         {
            PlayerPosition positionToAdd = PlayerPosition.valueOf(PlayerPosition.class, position );

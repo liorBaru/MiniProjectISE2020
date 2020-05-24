@@ -8,12 +8,10 @@ public class Field implements Asset {
 
     private String fieldName;
     private Team team;
-
     public Field(String fieldName)
     {
         this.fieldName=fieldName;
     }
-
     public Field (String name, Team team)
     {
         this.team=team;

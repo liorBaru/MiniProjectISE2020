@@ -7,7 +7,7 @@ import java.util.List;
 
 public class StaffMembersDaoSql implements DaoSql
 {
-    private DBconnector dBconnector;
+    private DBconnector dBconnector=DBconnector.getInstance();
     private static StaffMembersDaoSql staffMembersDaoSql = new StaffMembersDaoSql();
 
     public static StaffMembersDaoSql getInstance()
@@ -47,7 +47,7 @@ public class StaffMembersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -73,7 +73,7 @@ public class StaffMembersDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return list;
@@ -100,25 +100,20 @@ public class StaffMembersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
-        ResultSet resultSet;
-        String query="Select FROM staffmembers(user_name,type)"+
-                "values(?,?);";
+    public void update(String[] params) throws SQLException {
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
             PreparedStatement stmt = null;
             try {
                 conn.setCatalog("manageteams");
-                stmt = conn.prepareStatement(query);
-                stmt.setString(1,params[0]);
                 String update="Replace INTO staffmembers(user_name,type)" +"values(?,?);";
                 stmt=conn.prepareStatement(update);
                 stmt.setString(1,params[0]);
@@ -128,7 +123,8 @@ public class StaffMembersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 
@@ -136,8 +132,7 @@ public class StaffMembersDaoSql implements DaoSql
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query =" Delete from staffmembers where user_name=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -152,7 +147,8 @@ public class StaffMembersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 

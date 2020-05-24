@@ -46,7 +46,7 @@ public class AssetsDauSqlTest {
             message=e.getMessage();
             e.printStackTrace();
         }
-        assertEquals("Invalid team",message);
+        assertEquals("object not found",message);
     }
 
     @Test
@@ -60,12 +60,20 @@ public class AssetsDauSqlTest {
         {
             assetsDauSql.save(key1);
             assetsDauSql.save(key2);
+
         }
         catch (Exception e)
         {
             message=e.getMessage();
         }
-        assertEquals("team already as asset by this name",message);
-        assetsDauSql.delete(key1);
+        try {
+            assertEquals("wrong parameters",message);
+            assetsDauSql.delete(key1);
+        }
+        catch (Exception e)
+        {
+
+        }
+
     }
 }

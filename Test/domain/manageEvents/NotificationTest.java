@@ -29,6 +29,7 @@ public class NotificationTest {
     @Category({UnitTests.class})
     public void compareToNullInput()
     {
+
         try {
             Notification n1=new Notification("Team Close");
             n1.compareTo(null);

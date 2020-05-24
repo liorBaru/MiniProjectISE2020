@@ -10,7 +10,7 @@ import java.util.List;
 public class AssetsDauSql implements DaoSql
 {
 
-    private DBconnector dBconnector;
+    private DBconnector dBconnector =DBconnector.getInstance();
     private static AssetsDauSql assetsDauSql=new AssetsDauSql();
     public static AssetsDauSql getInstance()
     {
@@ -59,7 +59,7 @@ public class AssetsDauSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -92,7 +92,7 @@ public class AssetsDauSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -127,7 +127,7 @@ public class AssetsDauSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -154,23 +154,19 @@ public class AssetsDauSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
-                if(e.getMessage().contains("foreign key"))
-                    throw new SQLException("Invalid team");
-                else
-                    throw new SQLException("team already as asset by this name");
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
+    public void update(String[] params) throws SQLException
     {
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query ="Delete from assets where team=? and name=?;";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
@@ -188,7 +184,8 @@ public class AssetsDauSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

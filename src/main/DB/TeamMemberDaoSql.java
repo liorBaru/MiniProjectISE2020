@@ -7,7 +7,7 @@ import java.util.List;
 
 class TeamMemberDaoSql implements DaoSql
 {
-    private DBconnector dBconnector;
+    private DBconnector dBconnector=DBconnector.getInstance();
     private static TeamMemberDaoSql teamMemberDaoSql = new TeamMemberDaoSql();
 
     public static TeamMemberDaoSql getInstance()
@@ -46,7 +46,7 @@ class TeamMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -71,7 +71,7 @@ class TeamMemberDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return list;
@@ -97,28 +97,21 @@ class TeamMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
-        ResultSet resultSet;
-        String query="Select FROM teammember(user_name)"+
-                "values(?);";
+    public void update(String[] params) throws SQLException {
+
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
             PreparedStatement stmt = null;
             try {
-                conn.setCatalog("manageteams");
-                stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
-                //resultSet=stmt.executeQuery();
-                //  String type=resultSet.getString(4);
-                //  BigDecimal big =resultSet.getBigDecimal(3);
                 String update="Replace INTO teammember(user_name)" +"values(?);";
                 stmt=conn.prepareStatement(update);
                 stmt.setString(1,params[0]);
@@ -127,7 +120,8 @@ class TeamMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 
@@ -135,8 +129,7 @@ class TeamMemberDaoSql implements DaoSql
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query =" Delete from teammember where user_name=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -151,7 +144,8 @@ class TeamMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 

@@ -2,6 +2,8 @@ package main.DB;
 
 import org.junit.Test;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 
 
@@ -27,8 +29,7 @@ public class SystemManagerDaoSqlTest
 
 
     @Test
-    public void save()
-    {
+    public void save() throws SQLException {
         String [] key = new String[2];
         key[0]="SMTest";
         key[1]="smName";
@@ -54,8 +55,7 @@ public class SystemManagerDaoSqlTest
     }
 
     @Test
-    public void update()
-    {
+    public void update() throws SQLException {
         String [] key = new String[2];
         key[0]="SMTest";
         key[1]="SMNewName";

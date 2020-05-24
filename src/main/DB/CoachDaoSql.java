@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CoachDaoSql implements DaoSql {
-    private DBconnector dBconnector;
+
+    private DBconnector dBconnector =DBconnector.getInstance();
     private static CoachDaoSql coachDaoSql = new CoachDaoSql();
 
     public static CoachDaoSql getInstance() {
@@ -59,7 +60,7 @@ public class CoachDaoSql implements DaoSql {
                 }
                 return list;
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -95,7 +96,7 @@ public class CoachDaoSql implements DaoSql {
                 conn.close();
                 return list;
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -127,7 +128,7 @@ public class CoachDaoSql implements DaoSql {
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
       return null;
     }
@@ -156,18 +157,14 @@ public class CoachDaoSql implements DaoSql {
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
-                if(e.getMessage().contains("foreign key"))
-                    throw new SQLException("wrong parameters");
-                else
-                    throw new SQLException("this coach is already coach");
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         String query = "Update coach set user_name=?,team=?,pageID=?,training=?,job=? where user_name=?;";
         Connection conn = dBconnector.getConnection();
         if (conn != null) {
@@ -187,13 +184,14 @@ public class CoachDaoSql implements DaoSql {
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void delete(String[] key) {
+    public void delete(String[] key) throws SQLException {
         String query = " Delete from coach where user_name=?;";
         Connection conn = dBconnector.getConnection();
         if (conn != null) {
@@ -205,7 +203,8 @@ public class CoachDaoSql implements DaoSql {
                 stmt.execute();
                 stmt.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 

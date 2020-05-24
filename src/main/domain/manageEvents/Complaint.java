@@ -25,14 +25,21 @@ public class Complaint
     private static ComplaintDaoSql complaintDaoSql;
 
 
-    public Complaint (User user, String details)
-    {
+    public Complaint (User user, String details) throws SQLException {
         this.user=user;
         this.details=details;
         status=true;
         createdDate=new Date();
         ID++;
         complaintID=ID;
+        String [] complaintString = new String[5];
+        complaintString[0]=String.valueOf(complaintID);
+        complaintString[1]=user.getAccount().getUserName();
+        complaintString[2]=String.valueOf(status);
+        complaintString[3]=details;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        complaintString[4]=simpleDateFormat.format(createdDate);
+        complaintDaoSql.save(complaintString);
     }
     public Complaint (User user, int id, boolean status,String details,String answer, Date createdDate,Date answerDate)
     {

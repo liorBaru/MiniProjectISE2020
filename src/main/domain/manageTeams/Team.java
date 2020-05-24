@@ -30,7 +30,8 @@ public class Team implements pageable
     private static TeamManagerDaoSql teamManagerDaoSql;
     private static AssetsDauSql assetsDauSql;
 
-    public Team (List<Owner> owners, String name) throws Exception {
+    public Team (List<Owner> owners, String name) throws Exception
+    {
         if (owners == null || owners.isEmpty()) {
             throw new Exception("cant open a team without a owner");
         }
@@ -221,8 +222,7 @@ public class Team implements pageable
         }
     }
 
-    public void removeTeamManger(TeamManager teamManager)
-    {
+    public void removeTeamManger(TeamManager teamManager) throws SQLException {
         if(teamManager.team.getName().equals(name))
         {
             String[] key={teamManager.getAccount().getUserName()};
@@ -234,12 +234,11 @@ public class Team implements pageable
         }
     }
 
-    public void removeStaffMember(StaffMember member)
+    public void removeStaffMember(StaffMember member) throws Exception
     {
         if (member != null)
         {
-            String[] key ={member.getAccount().getUserName()};
-            staffMembersDaoSql.delete(key);
+            member.removeTeam(this);
         }
     }
 

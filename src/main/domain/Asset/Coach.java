@@ -5,14 +5,13 @@ import main.DB.System;
 import main.domain.managePages.Page;
 import main.domain.manageTeams.Team;
 import main.domain.manageUsers.Account;
-import main.domain.manageUsers.User;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class Coach extends TeamMember
 {
-    private static CoachDaoSql coachDaoSql;
+    private static CoachDaoSql coachDaoSql=CoachDaoSql.getInstance();
     private String training;
     private String job;
 
@@ -84,21 +83,18 @@ public class Coach extends TeamMember
         return "Coach";
     }
 
-    public void setJob(String job)
-    {
+    public void setJob(String job) throws SQLException {
         this.job=job;
         update();
     }
 
-    public void setTraining(String training)
-    {
+    public void setTraining(String training) throws SQLException {
         this.training=training;
         update();
     }
 
     @Override
-    protected void update()
-    {
+    protected void update() throws SQLException {
         String [] params = new String[6];
         params[0]=account.getUserName();
         params[1]="";

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class OwnersDaoSql implements DaoSql
 {
-    private DBconnector dBconnector;
+    private DBconnector dBconnector =DBconnector.getInstance();
     private static OwnersDaoSql ownerDaoSql = new OwnersDaoSql();
 
     public static  OwnersDaoSql getInstance()
@@ -61,7 +61,7 @@ public class OwnersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -96,7 +96,7 @@ public class OwnersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -126,7 +126,7 @@ public class OwnersDaoSql implements DaoSql
             }
             return list;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -154,18 +154,14 @@ public class OwnersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
-                if(e.getMessage().contains("foreign key"))
-                    throw new SQLException("wrong parameters");
-                else
-                    throw new SQLException("this owner is already owner");
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         String update="Replace INTO owners (user_name,name,team,anotherJob)" +"values(?,?,?,?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -184,14 +180,14 @@ public class OwnersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query =" Delete from owners where user_name=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -206,7 +202,8 @@ public class OwnersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

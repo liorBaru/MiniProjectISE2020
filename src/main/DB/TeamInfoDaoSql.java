@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TeamInfoDaoSql implements DaoSql
 {
-    private DBconnector dBconnector;
+    private DBconnector dBconnector =DBconnector.getInstance();
     private static TeamInfoDaoSql teamInfoDaoSql = new TeamInfoDaoSql();
 
     public static TeamInfoDaoSql getInstance()
@@ -53,7 +53,7 @@ public class TeamInfoDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -88,7 +88,7 @@ public class TeamInfoDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return list;
@@ -122,14 +122,14 @@ public class TeamInfoDaoSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         ResultSet resultSet;
         String query="Select FROM teaminfo(team,season,league,points,goals,onGoals,losses,victories,draw,position)" +"values(?,?,?,?,?,?,?,?,?,?)";
         Connection conn = dBconnector.getConnection();
@@ -157,7 +157,8 @@ public class TeamInfoDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 
@@ -165,8 +166,7 @@ public class TeamInfoDaoSql implements DaoSql
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query =" Delete from teaminfo where team=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -181,7 +181,8 @@ public class TeamInfoDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 

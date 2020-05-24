@@ -11,8 +11,8 @@ public class SystemManagerDaoSql implements DaoSql
 {
 
     private DBconnector dBconnector=DBconnector.getInstance();
-    private static SystemManagerDaoSql systemManagerDaoSql=new SystemManagerDaoSql();
 
+    private static SystemManagerDaoSql systemManagerDaoSql=new SystemManagerDaoSql();
     public static SystemManagerDaoSql getInstance()
     {
         return systemManagerDaoSql;
@@ -52,7 +52,6 @@ public class SystemManagerDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -117,14 +116,13 @@ public class SystemManagerDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         String query="update systemmanager  set name=? where user_name=?;";
         Connection connection=dBconnector.getConnection();
         if(connection!=null)
@@ -144,14 +142,13 @@ public class SystemManagerDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query="delete from systemmanager  where user_name=?;";
         Connection connection=dBconnector.getConnection();
         if(connection!=null)
@@ -170,7 +167,7 @@ public class SystemManagerDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

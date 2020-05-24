@@ -20,8 +20,7 @@ public class MainRefree extends Refree
 
 
     @Override
-    protected void update()
-    {
+    protected void update() throws SQLException {
         String[]key={account.getUserName(),name,training,"Main"};
         refreesDaoSql.update(key);
     }

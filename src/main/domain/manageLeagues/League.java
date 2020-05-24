@@ -24,6 +24,7 @@ public class League
         refrees=new LinkedList<>();
     }
 
+
     public String getName() {
         return name;
     }

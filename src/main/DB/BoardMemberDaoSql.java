@@ -7,8 +7,7 @@ import java.util.List;
 
 class BoardMemberDaoSql implements DaoSql
 {
-    private DBconnector dBconnector;
-
+    private DBconnector dBconnector =DBconnector.getInstance();
     private static BoardMemberDaoSql boardMemberDaoSql = new BoardMemberDaoSql();
 
     public static BoardMemberDaoSql getInstance()
@@ -47,7 +46,7 @@ class BoardMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -71,7 +70,7 @@ class BoardMemberDaoSql implements DaoSql
                 list.add(results);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return list;
@@ -97,14 +96,14 @@ class BoardMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         ResultSet resultSet;
         String query="Select FROM boardmembers(user_name)"+
                 "values(?,?);";
@@ -124,7 +123,8 @@ class BoardMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 
@@ -132,8 +132,7 @@ class BoardMemberDaoSql implements DaoSql
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query =" Delete from boardmembers where user_name=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -148,7 +147,8 @@ class BoardMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 

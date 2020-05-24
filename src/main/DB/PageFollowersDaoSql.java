@@ -29,10 +29,11 @@ public class PageFollowersDaoSql implements DaoSql
         {
             return getByUserName(key);
         }
-        else
+        else if(key[0]=="Key")
         {
             return getByKey(key);
         }
+        return null;
     }
 
     private List<String[]> getByKey(String [] key)
@@ -63,7 +64,6 @@ public class PageFollowersDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -96,7 +96,6 @@ public class PageFollowersDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -129,7 +128,6 @@ public class PageFollowersDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -163,7 +161,6 @@ public class PageFollowersDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -191,7 +188,7 @@ public class PageFollowersDaoSql implements DaoSql
             {
                 logger.info("The username " + params[1] + " successfuly following the pageID " + params[0]);
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

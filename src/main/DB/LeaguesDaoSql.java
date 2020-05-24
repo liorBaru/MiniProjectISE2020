@@ -46,7 +46,6 @@ public class LeaguesDaoSql implements DaoSql
             catch (SQLException e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -80,7 +79,6 @@ public class LeaguesDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -108,14 +106,13 @@ public class LeaguesDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                throw new SQLException(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         String query ="Update leagues(name,level) values(?,?);";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
@@ -135,14 +132,14 @@ public class LeaguesDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
+
             }
         }
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query="DELETE from leagues where name=? ;";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
@@ -161,7 +158,7 @@ public class LeaguesDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

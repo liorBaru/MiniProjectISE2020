@@ -57,7 +57,7 @@ public class GamesDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -95,7 +95,7 @@ public class GamesDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return list;
@@ -136,14 +136,13 @@ public class GamesDaoSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         Date date=null;
         try {
             date= (Date) new SimpleDateFormat("dd/MM/yyyy").parse(params[4]);
@@ -161,11 +160,8 @@ public class GamesDaoSql implements DaoSql
                 conn.setCatalog("managmentleaggues");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
-                //TODO:1.change the name of colum_9
                 String update="Replace INTO  games(id,guest,host,field,date,score,league,column_8,mainRefree,lineRefree1,lineRefree2,extraRefree,var)" +"values(?,?,?,?,?,?,?,?,?,?,?,?,?);";
                 stmt=conn.prepareStatement(update);
-
-                //TODO:1.change the column to int from bigint
                 stmt.setInt(1, Integer.parseInt(params[0]));
                 stmt.setString(2,params[1]);
                 stmt.setString(3,params[2]);
@@ -178,14 +174,14 @@ public class GamesDaoSql implements DaoSql
                 stmt.setString(10,params[9]);
                 stmt.setString(11,params[10]);
                 stmt.setString(12,params[11]);
-                //TODO:1.change the column to bit from tinybit
                 stmt.setBoolean(13,Boolean.parseBoolean(params[12]));
                 stmt.execute();
                 stmt.close();
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 
@@ -193,8 +189,7 @@ public class GamesDaoSql implements DaoSql
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query =" Delete from games where id=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -209,7 +204,8 @@ public class GamesDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 

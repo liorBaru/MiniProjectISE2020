@@ -54,7 +54,7 @@ public class ApointmentsDaoSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -86,15 +86,15 @@ public class ApointmentsDaoSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
-
+                logger.error(e.getMessage());
             }
         }
         return null;
     }
 
     @Override
-    public List<String[]> getAll() {
+    public List<String[]> getAll()
+    {
         ResultSet resultaDb = null;
         List<String[]> results = new LinkedList<>();
         Connection conn = dBconnector.getConnection();
@@ -115,8 +115,10 @@ public class ApointmentsDaoSql implements DaoSql
                 resultaDb.close();
                 stmt.close();
                 return results;
-            } catch (SQLException e) {
-                e.printStackTrace();
+            }
+            catch (SQLException e)
+            {
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -138,39 +140,38 @@ public class ApointmentsDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The manager " + params[0]  + " successfuly appointed " +params[0]);
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
-                if(e.getMessage().contains("foreign key"))
-                    throw new SQLException("wrong usernames");
-                else
-                    throw new SQLException("employee already as owner");
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
+    public void update(String[] params) throws SQLException
     {
 
     }
 
     @Override
-    public void delete(String[] params)
-    {
+    public void delete(String[] params) throws SQLException {
         if(params[0].equals("Employee"))
         {
             deleteByEmployee(params[1]);
+            logger.info("The Employee " + params[1]  + " successfuly delete");
         }
         else if(params[0].equals("Manager"))
         {
             deleteByManager(params[1]);
+            logger.info("The manager " + params[1]  + " successfuly delete all apointments" );
         }
 
     }
-    private void deleteByEmployee(String employee)
-    {
+
+    private void deleteByEmployee(String employee) throws SQLException {
         String query =" Delete from apointments where employee=? ;";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -185,13 +186,13 @@ public class ApointmentsDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
-    private void deleteByManager(String manager)
-    {
+    private void deleteByManager(String manager) throws SQLException {
         String query =" Delete from apointments where manager=? ;";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -206,7 +207,8 @@ public class ApointmentsDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

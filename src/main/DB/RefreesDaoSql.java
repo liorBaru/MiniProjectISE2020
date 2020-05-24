@@ -43,7 +43,7 @@ public class RefreesDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -72,7 +72,7 @@ public class RefreesDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return list;
@@ -100,14 +100,13 @@ public class RefreesDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         ResultSet resultSet;
         String query="Select FROM refrees(user_name)"+
                 "values(?);";
@@ -132,7 +131,7 @@ public class RefreesDaoSql implements DaoSql
             catch (SQLException e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 
@@ -140,8 +139,7 @@ public class RefreesDaoSql implements DaoSql
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query =" Delete from refrees where user_name=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -158,7 +156,7 @@ public class RefreesDaoSql implements DaoSql
             catch (SQLException e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 

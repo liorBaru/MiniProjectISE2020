@@ -13,8 +13,9 @@ public class UserTest {
     @Test
     @Category({UnitTests.class})
     public void updatePassword1Unit(){
-        FanStub fanStub= new FanStub();
+
         try {
+            FanStub fanStub= new FanStub();
             fanStub.updatePassword("passFAN123","passFAN1234");
             fanStub.getAccount().accountVerification("passFAN1234");
         } catch (Exception e) {
@@ -25,8 +26,8 @@ public class UserTest {
     @Test
     @Category({IntegrationTests.class})
     public void updatePassword1Integration(){
-        Fan fan= new Fan("name", new Account("userName","passFAN123"));
         try {
+            Fan fan= new Fan("name", new Account("userName","passFAN123"));
             fan.updatePassword("passFAN123","passFAN1234");
             fan.getAccount().accountVerification("passFAN1234");
         } catch (Exception e) {

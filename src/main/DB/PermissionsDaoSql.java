@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PermissionsDaoSql implements DaoSql
 {
-    private DBconnector dBconnector;
+    private DBconnector dBconnector =DBconnector.getInstance();
     private static PermissionsDaoSql permissionsDaoSql = new PermissionsDaoSql();
 
     public static PermissionsDaoSql getInstance()
@@ -21,6 +21,18 @@ public class PermissionsDaoSql implements DaoSql
      * get coach
      */
     public List<String[]> get(String[] key)
+    {
+        if(key[0].equals("Key"))
+        {
+            return getByKey(key);
+        }
+        else if(key[0].equals("user_name"))
+        {
+            return getByUserName(key);
+        }
+      return null;
+    }
+    private List<String[]> getByKey(String[] key)
     {
         Connection conn = dBconnector.getConnection();
         ResultSet resultSet;
@@ -47,7 +59,39 @@ public class PermissionsDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+            }
+        }
+        return null;
+    }
+    private List<String[]> getByUserName(String [] key)
+    {
+        Connection conn = dBconnector.getConnection();
+        ResultSet resultSet;
+        String query="SELECT * FROM permissions where user_name =?";
+        String [] results;
+        List<String[]> list = new ArrayList<>();
+        if (conn != null)
+        {
+            PreparedStatement stmt = null;
+            try {
+                conn.setCatalog("manageteams");
+                stmt = conn.prepareStatement(query);
+                stmt.setString(1,key[0]);
+                resultSet=stmt.executeQuery();
+                results= new String[2];
+                if(resultSet.next())
+                {
+                    results[0]=resultSet.getString(1);
+                    results[1]=resultSet.getString(2);
+                    stmt.close();
+                    list.add(results);
+                    return list;
+                }
+            }
+            catch (SQLException e)
+            {
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -73,7 +117,7 @@ public class PermissionsDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return list;
@@ -100,7 +144,7 @@ public class PermissionsDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
@@ -108,9 +152,10 @@ public class PermissionsDaoSql implements DaoSql
     @Override
     public void update(String[] params)
     {
-        ResultSet resultSet;
-        String query="Select FROM permissions(user_name,permission)"+
-                "values(?,?);";
+    }
+
+    private void deleteByKey(String[] key) throws SQLException {
+        String query =" Delete from permissions where user_name=? AND permissions=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
@@ -118,42 +163,47 @@ public class PermissionsDaoSql implements DaoSql
             try {
                 conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
-                stmt.setString(1,params[0]);
-                String update="Replace INTO coach(user_name,permission)" +"values(?,?);";
-                stmt=conn.prepareStatement(update);
-                stmt.setString(1,params[0]);
-                stmt.setString(2,params[1]);
+                stmt.setString(1,key[1]);
+                stmt.setString(2,key[2]);
                 stmt.execute();
                 stmt.close();
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
-
-
     }
-
-    @Override
-    public void delete(String[] key)
-    {
+    private void deleteByUserName(String[] key) throws SQLException {
         String query =" Delete from permissions where user_name=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
             PreparedStatement stmt = null;
             try {
-                conn.setCatalog("managteams");
+                conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
-                stmt.setString(1,key[0]);
+                stmt.setString(1,key[1]);
                 stmt.execute();
                 stmt.close();
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
+        }
+    }
+    @Override
+    public void delete(String[] key) throws SQLException {
+        if(key[0].equals("Key"))
+        {
+            deleteByKey(key);
+        }
+        else if(key[0].equals("user_name"))
+        {
+            deleteByUserName(key);
         }
 
     }

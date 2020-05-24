@@ -65,7 +65,7 @@ public class FanController extends GuestController
      * send complaint to system manager
      * @param details
      */
-    public void sendComplaint(String details) throws SQLException
+    public void sendComplaint(String details) throws Exception
     {
         if(details.isEmpty()==false)
         {

@@ -79,7 +79,7 @@ public class PagesDaoSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -109,14 +109,14 @@ public class PagesDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                throw new SQLException(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
+
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         String query ="Update pages Set owner=?,page_name=? where id=?  ;";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
@@ -137,14 +137,13 @@ public class PagesDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query="DELETE from pages where id=? ;";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
@@ -163,7 +162,7 @@ public class PagesDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

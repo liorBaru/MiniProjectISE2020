@@ -9,7 +9,7 @@ import java.util.List;
 
 class FinancialDaoSql implements DaoSql
 {
-    private DBconnector dBconnector;
+    private DBconnector dBconnector=DBconnector.getInstance();
     private static FinancialDaoSql financialDaoSql = new FinancialDaoSql();
 
     public static FinancialDaoSql getInstance()
@@ -48,7 +48,8 @@ class FinancialDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -78,7 +79,7 @@ class FinancialDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return list;
@@ -111,14 +112,14 @@ class FinancialDaoSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         Date date=null;
         try {
             date= (Date) new SimpleDateFormat("dd/MM/yyyy").parse(params[1]);
@@ -148,7 +149,8 @@ class FinancialDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 
@@ -156,8 +158,7 @@ class FinancialDaoSql implements DaoSql
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query =" Delete from financialactions where team=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -172,7 +173,8 @@ class FinancialDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 

@@ -4,6 +4,7 @@ import main.DB.ComplaintDaoSql;
 import main.DB.SystemManagerDaoSql;
 import main.DB.TeamDaoSql;
 import main.domain.manageEvents.Notification;
+import main.domain.managePages.Page;
 import main.domain.manageTeams.Team;
 import main.domain.manageUsers.Account;
 import main.domain.manageEvents.Complaint;
@@ -108,7 +109,9 @@ public class SystemManager extends User
                 Team team=Team.createTeamFromDB(teamName);
                 team.setClose(notification);
                 String [] key={teamName};
+                Page page =team.getPage();
                 teamDaoSql.delete(key);
+                page.deletePage();
                 return;
             }
         }
@@ -143,8 +146,7 @@ public class SystemManager extends User
     }
 
     @Override
-    protected void update()
-    {
+    protected void update() throws SQLException {
         String []key ={account.getUserName(),name};
         systemManagerDaoSql.update(key);
     }

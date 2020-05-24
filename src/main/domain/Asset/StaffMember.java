@@ -27,6 +27,7 @@ public abstract class StaffMember extends User implements Asset
         super(name,account);
         this.team=team;
     }
+
     public StaffMember(Account account, String name)
     {
         super(name,account);
@@ -35,15 +36,19 @@ public abstract class StaffMember extends User implements Asset
     protected StaffMember() {
     }
 
-
-    public void setTeam(Team team)
+    public BoardMember getBoss()
     {
+        return boss;
+    }
+
+
+
+    public void setTeam(Team team) throws SQLException {
         this.team = team;
         update();
     }
 
-    public void setBoss(BoardMember boardMember)
-    {
+    public void setBoss(BoardMember boardMember) throws SQLException {
         this.boss=boardMember;
         update();
     }

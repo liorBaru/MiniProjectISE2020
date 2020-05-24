@@ -5,6 +5,7 @@ import main.domain.Asset.*;
 import main.domain.Asset.Refree.Refree;
 import main.domain.manageLeagues.IFA;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class AccountManager
@@ -228,8 +229,7 @@ public class AccountManager
      * @param account
      * @return
      */
-    public boolean removeAccount(Account account)
-    {
+    public boolean removeAccount(Account account) throws SQLException {
         if(account!=null)
         {
             String username=account.getUserName();

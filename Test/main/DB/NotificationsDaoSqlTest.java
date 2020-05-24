@@ -36,21 +36,22 @@ public class NotificationsDaoSqlTest {
         try
         {
             notificationsDaoSql.save(details);
+            boolean flag=false;
+            for (String[] rows:notificationsDaoSql.get(details))
+            {
+                if(rows[0].equals("new notification"))
+                {
+                    flag=true;
+                }
+            }
+            assertEquals(true,flag);
+            notificationsDaoSql.delete(details);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-        boolean flag=false;
-        for (String[] rows:notificationsDaoSql.get(details))
-        {
-            if(rows[0].equals("new notification"))
-            {
-                flag=true;
-            }
-        }
-        assertEquals(true,flag);
-        notificationsDaoSql.delete(details);
+
     }
 
 
@@ -86,13 +87,14 @@ public class NotificationsDaoSqlTest {
         try
         {
             notificationsDaoSql.save(details);
+            notificationsDaoSql.delete(details);
+            boolean flag =notificationsDaoSql.get(details).isEmpty();
+            assertEquals(true,flag);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-        notificationsDaoSql.delete(details);
-        boolean flag =notificationsDaoSql.get(details).isEmpty();
-        assertEquals(true,flag);
+
     }
 }

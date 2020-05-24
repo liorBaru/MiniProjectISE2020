@@ -12,22 +12,23 @@ public class GameFollwersDaoSqlTest
     public void get()
     {
         String [] key = new String[3];
-        key[0]="key";
+        key[0]="Key";
         key[1]="0";
         key[2]="fanTest";
-        assertEquals(false,gameFollwersDaoSql.get(key).isEmpty());
+        assertEquals(true,gameFollwersDaoSql.get(key).isEmpty());
     }
 
     @Test
     public void save()
     {
+
         String [] key = new String[3];
         key[0]="key";
         key[1]="0";
         key[2]="fanTest";
-        gameFollwersDaoSql.delete(key);
-        assertEquals(true,gameFollwersDaoSql.get(key).isEmpty());
         try {
+            gameFollwersDaoSql.delete(key);
+            assertEquals(true,gameFollwersDaoSql.get(key).isEmpty());
             key[0]="0";
             key[1]="fanTest";
             gameFollwersDaoSql.save(key);
@@ -35,6 +36,7 @@ public class GameFollwersDaoSqlTest
             key[1]="0";
             key[2]="fanTest";
             assertEquals(false,gameFollwersDaoSql.get(key).isEmpty());
+            gameFollwersDaoSql.delete(key);
         }
         catch (Exception e)
         {

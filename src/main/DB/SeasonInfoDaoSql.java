@@ -48,7 +48,6 @@ public class SeasonInfoDaoSql implements DaoSql
             catch (SQLException e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -84,7 +83,6 @@ public class SeasonInfoDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -114,14 +112,13 @@ public class SeasonInfoDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                throw new SQLException(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         String query ="Update seasoninfo(league,year,gameSchedule,leagueCalculator) values(?,?,?,?);";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
@@ -143,14 +140,13 @@ public class SeasonInfoDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query="DELETE from seasoninfo where name=? ;";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
@@ -169,7 +165,7 @@ public class SeasonInfoDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

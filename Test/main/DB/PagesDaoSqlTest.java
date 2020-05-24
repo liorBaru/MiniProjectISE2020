@@ -52,12 +52,11 @@ public class PagesDaoSqlTest {
         {
             message=e.getMessage();
         }
-        assertEquals("Duplicate entry '1' for key 'PRIMARY'",message);
+        assertEquals("wrong parameters",message);
     }
 
     @Test
-    public void update()
-    {
+    public void update() throws SQLException {
         String [] details= new  String[3];
         details[0]="1";
         details[1]="ownerUserName";

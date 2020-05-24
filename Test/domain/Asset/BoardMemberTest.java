@@ -2,81 +2,109 @@ package domain.Asset;
 
 
 
-import main.DB.IntegrationTests;
+import main.DB.PageMessagesDaoSql;
+import main.DB.RegressionTests;
 import main.DB.UnitTests;
 import main.domain.Asset.*;
-import main.domain.manageTeams.FinancialAction;
-import main.domain.manageTeams.Team;
-import main.domain.manageUsers.Account;
-import main.domain.manageUsers.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class BoardMemberTest
 {
     private BoardMember boardMember;
+    private Player player ;
+    private Coach coach;
 
-
-    public void createBoardMemberTest1() {
-
-    }
-
-    public void  createBoardMemberTest2(Account account, String name, Team team)
+    @Before
+    public void setUp()
     {
+        try
+        {
+            String [] ownerS ={"Key","ownerTest"};
+            String [] playerS={"Key","playerTest"};
+            String [] coachS={"Key","coachTest"};
+            boardMember=Owner.getOwnerFromDB(ownerS);
+            player=Player.getPlayerFromDB(playerS);
+            coach=Coach.getCoachFromDB(coachS);
+        }
+        catch (Exception e)
+        {
 
+        }
     }
 
-
-
+    @Test
+    @Category({UnitTests.class,RegressionTests.class})
     public void removePlayer()
     {
+        try
+        {
+            boardMember.removePlayer(player);
+            assertTrue(player.getTeam()==null);
+            boardMember.addPlayer(player);
+            assertEquals(player.getTeam().getName(),boardMember.team.getName());
+            assertFalse(boardMember.getAppointments().isEmpty());
+        }
+        catch (Exception e)
+        {
 
+        }
     }
 
-    public void addCouch() throws SQLException
-    {
-
-    }
-
-
+    @Test
+    @Category({UnitTests.class, RegressionTests.class})
     public void removeCoach()
     {
+        try
+        {
+            boardMember.removeCoach(coach);
+            assertTrue(coach.getTeam()==null);
+            boardMember.addCouch(coach);
+            assertEquals(coach.getTeam().getName(),boardMember.team.getName());
+        }
+        catch (Exception e)
+        {
 
+        }
     }
 
-    public void addAssets() throws SQLException {
-
-    }
-
-    public void removeAsset() throws Exception {
-
-    }
-
-
-    public void updateTeamPage () throws SQLException {
-
-    }
-
-    public void getAppointments() throws Exception {
-    }
-
-
-    public void removeTeam() throws Exception {
-
-    }
-
-    public void cleanPermission()
+    @Test
+    @Category(UnitTests.class)
+    public void addAssets()
     {
+        try
+        {
+            boardMember.addAssets("assetName","Field");
+            assertFalse(boardMember.team.getAssetsOfTeam().isEmpty());
+            boardMember.removeAsset("assetName");
+            assertTrue(boardMember.team.getAssetsOfTeam().isEmpty());
+        }
+        catch (Exception e)
+        {
 
+        }
+    }
+
+    @Test
+    @Category(UnitTests.class)
+    public void updateTeamPage ()
+    {
+        try
+        {
+            boardMember.updateTeamPage("new message from"+boardMember.getName());
+            PageMessagesDaoSql pageMessage=PageMessagesDaoSql.getInstance();
+            String [] key={String.valueOf(boardMember.getTeam().getPage().getPageID())};
+            String [] key2={"Page",String.valueOf(boardMember.getTeam().getPage().getPageID())};
+            assertFalse(pageMessage.get(key).isEmpty());
+            pageMessage.delete(key2);
+            assertTrue(pageMessage.get(key).isEmpty());
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
 

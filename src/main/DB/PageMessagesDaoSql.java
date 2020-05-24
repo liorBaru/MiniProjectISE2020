@@ -48,7 +48,7 @@ public class PageMessagesDaoSql implements DaoSql
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -88,7 +88,7 @@ public class PageMessagesDaoSql implements DaoSql
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 
@@ -101,8 +101,20 @@ public class PageMessagesDaoSql implements DaoSql
     }
 
     @Override
-    public void delete(String[] key)
+    public void delete(String[] key) throws SQLException
     {
+        if(key[0].equals("Key"))
+        {
+            deleteByKey(key);
+        }
+        else if(key[0].equals("Page"))
+        {
+            deleteByPage(key);
+        }
+
+    }
+
+    private void deleteByKey(String[] key) throws SQLException {
         String query="DELETE from pagemessages where pageID=? AND date=?;";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
@@ -112,20 +124,44 @@ public class PageMessagesDaoSql implements DaoSql
                 PreparedStatement stmt;
                 conn.setCatalog("managepages");
                 stmt = conn.prepareStatement(query);
-                stmt.setInt(1,Integer.valueOf(key[0]));
+                stmt.setInt(1,Integer.valueOf(key[1]));
                 SimpleDateFormat datetimeFormatter1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                Date date = datetimeFormatter1.parse(key[1]);
+                Date date = datetimeFormatter1.parse(key[2]);
                 Timestamp fromTS1 = new Timestamp(date.getTime());
                 stmt.setTimestamp(2,fromTS1);
                 stmt.execute();
                 stmt.close();
                 conn.close();
-                logger.info("The message successfuly deleted");
+                logger.info("Page : "+key[1] + "has delete message from"+key[2]);
             }
             catch (Exception e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
+            }
+        }
+    }
+
+    private void deleteByPage(String [] key) throws SQLException {
+        String query="DELETE from pagemessages where pageID=?;";
+        Connection conn = dBconnector.getConnection();
+        if(conn!=null)
+        {
+            try
+            {
+                PreparedStatement stmt;
+                conn.setCatalog("managepages");
+                stmt = conn.prepareStatement(query);
+                stmt.setInt(1,Integer.valueOf(key[1]));
+                stmt.execute();
+                stmt.close();
+                conn.close();
+                logger.info("All messages at page: "+ key[1] +" has been deleted");
+            }
+            catch (Exception e)
+            {
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

@@ -23,11 +23,11 @@ public class GameFollwersDaoSql implements DaoSql {
         {
             return getByUserName(key[1]);
         }
-        else if(key[0].equals("gameID"))
+        else if(key[0].equals("GameID"))
         {
             return  getByGameID(key[1]);
         }
-        else if(key[0].equals("key"))
+        else if(key[0].equals("Key"))
         {
             return getByKey(key);
         }
@@ -61,7 +61,6 @@ public class GameFollwersDaoSql implements DaoSql {
                 return ans;
             } catch (Exception e) {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -94,7 +93,6 @@ public class GameFollwersDaoSql implements DaoSql {
                 return ans;
             } catch (Exception e) {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -128,7 +126,6 @@ public class GameFollwersDaoSql implements DaoSql {
                 return ans;
             } catch (Exception e) {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -184,7 +181,7 @@ public class GameFollwersDaoSql implements DaoSql {
                 logger.info("The username " + params[1] + " successfuly following the gameID " + params[0]);
             } catch (Exception e) {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
@@ -197,8 +194,7 @@ public class GameFollwersDaoSql implements DaoSql {
 
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         if(key[0].equals("user_name"))
         {
             deleteByUser_name(key[1]);
@@ -213,8 +209,7 @@ public class GameFollwersDaoSql implements DaoSql {
         }
     }
 
-    private void deleteByGameID(String gameID)
-    {
+    private void deleteByGameID(String gameID) throws SQLException {
         String query = "delete from gamefollwers where gameID=?;";
         Connection connection = dBconnector.getConnection();
         if (connection != null) {
@@ -229,13 +224,12 @@ public class GameFollwersDaoSql implements DaoSql {
                 logger.info("The gameID " + gameID + " succesfully delted");
             } catch (Exception e) {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
-    private void deleteByUser_name(String user_name)
-    {
+    private void deleteByUser_name(String user_name) throws SQLException {
         String query = "delete from gamefollwers where user_name=?;";
         Connection connection = dBconnector.getConnection();
         if (connection != null) {
@@ -250,13 +244,12 @@ public class GameFollwersDaoSql implements DaoSql {
                 logger.info("The username " + user_name + " succesfully unfollowing the all his games");
             } catch (Exception e) {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
-    private void deleteBykey(String[] key)
-    {
+    private void deleteBykey(String[] key) throws SQLException {
         String query = "delete from gamefollwers where gameID=? and user_name=?;";
         Connection connection = dBconnector.getConnection();
         if (connection != null) {
@@ -272,7 +265,7 @@ public class GameFollwersDaoSql implements DaoSql {
                 logger.info("The username " + key[0] + " succesfully unfollowing the game" + key[1]);
             } catch (Exception e) {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }

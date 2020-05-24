@@ -1,6 +1,5 @@
 package main.Demo;
 
-import main.DB.FansDaoSql;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,5 +11,15 @@ public class Lo4jDemo {
     {
         return logger;
     }
+
+    public static void writeError(String error)
+    {
+        logger.error(error);
+    }
+    public static void writeAction(String action)
+    {
+        logger.info(action);
+    }
+
 
 }

@@ -20,19 +20,27 @@ public class IfaDaoSqlTest {
     @Test
     public void save()
     {
-        String[] key = new String[2];
-        key[0]="IFATest";
-        key[1]="ifaName";
-        ifaDaoSql.delete(key);
-        boolean flag=true;
-        for (String [] raw:ifaDaoSql.getAll())
-        {
-            if(raw[0].equals("IFATest"))
+        try {
+            String[] key = new String[2];
+            key[0]="IFATest";
+            key[1]="ifaName";
+            ifaDaoSql.delete(key);
+            boolean flag=true;
+            for (String [] raw:ifaDaoSql.getAll())
             {
-                flag=false;
+                if(raw[0].equals("IFATest"))
+                {
+                    flag=false;
+                }
             }
+            assertEquals(true,flag);
+            ifaDaoSql.save(key);
         }
-        assertEquals(true,flag);
+        catch (Exception e)
+        {
+
+        }
+
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UsersDaoSql implements DaoSql
 {
-    private DBconnector dBconnector;
+    private DBconnector dBconnector= DBconnector.getInstance();
     private static UsersDaoSql usersDaoSql = new UsersDaoSql();
 
     public static UsersDaoSql getInstance()
@@ -48,7 +48,6 @@ public class UsersDaoSql implements DaoSql
             catch (SQLException e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -70,21 +69,21 @@ public class UsersDaoSql implements DaoSql
                 conn.setCatalog("accounts");
                 stmt = conn.prepareStatement(query);
                 resultSet=stmt.executeQuery();
-
                 while (resultSet.next())
                 {
                     results= new String[2];
                     results[0]=resultSet.getString(1);
                     results[1]=resultSet.getString(2);
-                    stmt.close();
                     list.add(results);
                 }
+                resultSet.close();
+                stmt.close();
+                conn.close();
                 return list;
             }
             catch (SQLException e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
         return null;
@@ -112,14 +111,12 @@ public class UsersDaoSql implements DaoSql
             catch (SQLException e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
+    public void update(String[] params) throws SQLException {
         String query = "Update users set password=?,salt=?,UserType=? where user_name=?;";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -140,14 +137,13 @@ public class UsersDaoSql implements DaoSql
             catch (SQLException e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query =" Delete from users where user_name=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
@@ -164,7 +160,7 @@ public class UsersDaoSql implements DaoSql
             catch (SQLException e)
             {
                 logger.error(e.getMessage());
-                e.printStackTrace();
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 

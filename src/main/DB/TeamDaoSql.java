@@ -1,16 +1,11 @@
 package main.DB;
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 public class TeamDaoSql implements DaoSql
 {
-    private DBconnector dBconnector;
+    private DBconnector dBconnector =DBconnector.getInstance();
     private static TeamDaoSql teamDaoSql = new TeamDaoSql();
 
     public static  TeamDaoSql getInstance()
@@ -38,20 +33,20 @@ public class TeamDaoSql implements DaoSql
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
                 resultSet=stmt.executeQuery();
-                results= new String[4];
+                results= new String[3];
                 if(resultSet.next())
                 {
                     results[0]=resultSet.getString(1);
-                    results[2]=String.valueOf(resultSet.getInt(2));
-                    results[3]=String.valueOf(resultSet.getBoolean(3));
+                    results[1]=String.valueOf(resultSet.getInt(2));
+                    results[2]=String.valueOf(resultSet.getBoolean(3));
                     stmt.close();
                     list.add(results);
-                    return list;
                 }
+                return list;
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return null;
@@ -75,13 +70,12 @@ public class TeamDaoSql implements DaoSql
                 results[2]=String.valueOf(resultSet.getInt(2));
                 results[3]=String.valueOf(resultSet.getBoolean(3));
                 list.add(results);
-
             }
+            return list;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
-
-        return list;
+        return null;
     }
     /**
      * David
@@ -103,31 +97,24 @@ public class TeamDaoSql implements DaoSql
                 stmt.setBoolean(3, Boolean.parseBoolean(params[2]));
                 stmt.execute();
                 stmt.close();
+                conn.close();
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
     }
 
     @Override
-    public void update(String[] params)
-    {
-        ResultSet resultSet;
-        String query="Select FROM team(name,pageID,status)"+
-                "values(?,?,?);";
+    public void update(String[] params) throws SQLException {
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
             PreparedStatement stmt = null;
             try {
                 conn.setCatalog("manageteams");
-                stmt = conn.prepareStatement(query);
-                stmt.setString(1,params[0]);
-                //resultSet=stmt.executeQuery();
-                //  String type=resultSet.getString(4);
-                //  BigDecimal big =resultSet.getBigDecimal(3);
                 String update="Replace INTO team(name,pageID,status)" +"values(?,?,?);";
                 stmt=conn.prepareStatement(update);
                 stmt.setString(1,params[0]);
@@ -139,23 +126,21 @@ public class TeamDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
-
-
     }
 
     @Override
-    public void delete(String[] key)
-    {
+    public void delete(String[] key) throws SQLException {
         String query =" Delete from team where name=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
             PreparedStatement stmt = null;
             try {
-                conn.setCatalog("managteams");
+                conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
                 stmt.execute();
@@ -163,7 +148,8 @@ public class TeamDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
-                e.printStackTrace();
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
             }
         }
 

@@ -26,12 +26,14 @@ public class teammemberDaoSqlTest
         try
         {
             teamMemberDaoSql.save(details);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            List<String []> checks= teamMemberDaoSql.get(details);
+            assertEquals("galborabia",checks.get(0)[0]);
+            teamMemberDaoSql.delete(details);
         }
-        List<String []> checks= teamMemberDaoSql.get(details);
-        assertEquals("galborabia",checks.get(0)[0]);
-        teamMemberDaoSql.delete(details);
+        catch (SQLException e) {
+
+        }
+
     }
 
     @Test
@@ -41,10 +43,11 @@ public class teammemberDaoSqlTest
         details[0]="galborabia";
         try {
             teamMemberDaoSql.save(details);
+            details[1]="galNewPass1";
+            teamMemberDaoSql.update(details);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        details[1]="galNewPass1";
-        teamMemberDaoSql.update(details);
+
     }
 }

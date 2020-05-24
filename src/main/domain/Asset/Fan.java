@@ -1,41 +1,49 @@
 package main.domain.Asset;
 
-import main.DB.ComplaintDaoSql;
 import main.DB.FansDaoSql;
 import main.DB.PageFollowersDaoSql;
 import main.DB.PagesDaoSql;
+import main.DB.System;
+import main.Demo.Lo4jDemo;
 import main.domain.manageEvents.Complaint;
-import main.domain.managePages.Page;
 import main.domain.manageUsers.Account;
 import main.domain.manageUsers.User;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
 
 public class Fan extends User
 {
 
-    private static PageFollowersDaoSql pageFollowersDaoSql;
-    private static FansDaoSql fansDaoSql;
-    private static ComplaintDaoSql complaintDaoSql;
-    private static PagesDaoSql pagesDaoSql;
+    private static PageFollowersDaoSql pageFollowersDaoSql =PageFollowersDaoSql.getInstance();
+    private static FansDaoSql fansDaoSql =FansDaoSql.getInstance();
+    private static PagesDaoSql pagesDaoSql =PagesDaoSql.getInstance();
 
 
-    public Fan(String name, Account account)
-    {
+    public Fan(String name, Account account) throws SQLException {
         super(name,account);
+        String [] key={account.getUserName(),name};
+        fansDaoSql.save(key);
+    }
+
+    public Fan(String [] data,Account account)
+    {
+        super(data[0],account);
+        name=data[0];
+        this.account=account;
     }
 
     public static Fan createFanFromDB(String[]data) throws Exception {
-        Account account = new Account(data[0],data[1]);
+        System system= main.DB.System.getInstance();
+        Account account = system.getAccountManager().getAccount(data[0]);
         List<String[]> fanData=fansDaoSql.get(data);
         if(fanData.isEmpty()==false)
         {
-            Fan fan = new Fan(fanData.get(0)[1],account);
+            Fan fan = new Fan(fanData.get(0),account);
             return fan;
         }
+        Lo4jDemo.writeError("username not found"+data[0]);
         throw new Exception("username not found");
     }
 
@@ -53,6 +61,26 @@ public class Fan extends User
         params[2]=this.account.getUserName();
         pageFollowersDaoSql.delete(params);
         return true;
+    }
+
+    public TreeMap<Integer,String> getFollwingPages()
+    {
+        TreeMap<Integer,String > pagesMap= new TreeMap<>();
+        String [] key ={"user_name",this.account.getUserName()};
+        List<String[]> pages= pageFollowersDaoSql.get(key);
+        for (String [] pageData:pages)
+        {
+           pagesMap.put(Integer.valueOf(pageData[0]),"");
+        }
+        TreeMap<Integer,String > allPages=showPages();
+        for (int pageID:allPages.keySet())
+        {
+            if(pagesMap.containsKey(pageID))
+            {
+                pagesMap.replace(pageID,allPages.get(pageID));
+            }
+        }
+        return getFollwingPages();
     }
 
     /**
@@ -86,26 +114,16 @@ public class Fan extends User
      * get fan following pages
      * @return
      */
-    public List<String> showPages()
+    public TreeMap<Integer, String> showPages()
     {
-        String[] params = new String[3];
-        params[0]="user_name";
-        params[1]=this.account.getUserName();
-        List<String[]> pagesFollows =pageFollowersDaoSql.get(params);
-        if(pagesFollows.isEmpty()==false)
+        TreeMap<Integer,String> pagesMap=new TreeMap<>();
+        List<String []> allpages=pagesDaoSql.getAll();
+        for (String[] allpage:allpages)
         {
-            List<String> pages = new LinkedList<>();
-            for (String [] pageDetailes:pagesFollows)
-            {
-
-                for (String [] pageName: pagesDaoSql.get(pageDetailes))
-                {
-                    pages.add(pageName[1]);
-                }
-            }
-            return pages;
+            int id=Integer.valueOf(allpage[0]);
+            pagesMap.put(id,allpage[1]);
         }
-        return null;
+        return pagesMap;
     }
 
 
@@ -115,20 +133,14 @@ public class Fan extends User
      * writing complaint to system manager
      * @param deatails
      */
-    public void fillingComplaint(String deatails) throws SQLException {
-        if(deatails.isEmpty())
+    public void fillingComplaint(String deatails) throws Exception
+    {
+        if(deatails==null || deatails.isEmpty())
         {
-            return ;
+            Lo4jDemo.writeError("cant write empty complaint");
+            throw new Exception("cant write empty complaint");
         }
         Complaint complaint = new Complaint(this,deatails);
-        String [] complaintString = new String[5];
-        complaintString[0]=String.valueOf(complaint.getComplaintID());
-        complaintString[1]=complaint.getUser().getAccount().getUserName();
-        complaintString[2]=String.valueOf(complaint.getStatus());
-        complaintString[3]=complaint.getDetails();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        complaintString[4]=simpleDateFormat.format(complaint.getCreatedDate());
-        complaintDaoSql.save(complaintString);
     }
 
     /**
@@ -142,7 +154,11 @@ public class Fan extends User
         List<String> userDetails = super.showPersonalDetails();
         String pageString =" pages:";
         userDetails.add(pageString);
-        userDetails.addAll(showPages());
+        for (String s:showPages().values())
+        {
+            pageString=pageString+", "+s;
+        }
+        userDetails.add(pageString);
         return userDetails;
     }
 
@@ -152,8 +168,7 @@ public class Fan extends User
     }
 
     @Override
-    protected void update()
-    {
+    protected void update() throws SQLException {
         String[] params={account.getUserName(),name};
         fansDaoSql.update(params);
     }
