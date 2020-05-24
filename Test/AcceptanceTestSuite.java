@@ -1,5 +1,5 @@
-import main.DB.AcceptanceTests;
-import DB.SystemTest;
+import DataAccess.AcceptanceTests;
+import DataAccess.SystemTest;
 import domain.Asset.BoardMemberTest;
 import domain.Asset.FanTest;
 import domain.Asset.Refree.RefreeTest;

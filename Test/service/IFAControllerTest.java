@@ -1,19 +1,4 @@
 package service;
-import main.DB.AcceptanceTests;
-import main.DB.RegressionTests;
-import main.domain.manageUsers.Account;
-import main.domain.manageLeagues.IFA;
-import main.domain.Asset.Owner;
-import main.DB.System;
-import main.domain.manageLeagues.League;
-import main.domain.manageLeagues.Season;
-import main.domain.manageTeams.Team;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import java.util.*;
-
-import static org.junit.Assert.*;
 
 public class IFAControllerTest {
 

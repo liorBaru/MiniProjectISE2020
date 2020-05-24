@@ -1,7 +1,6 @@
 package domain.manageEvents;
 
-import main.DB.UnitTests;
-import main.domain.manageEvents.Notification;
+import DataAccess.UnitTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 

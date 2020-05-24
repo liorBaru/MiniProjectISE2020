@@ -2,10 +2,9 @@ package domain.Asset;
 
 
 
-import main.DB.PageMessagesDaoSql;
-import main.DB.RegressionTests;
-import main.DB.UnitTests;
-import main.domain.Asset.*;
+import DataAccess.PageMessagesDaoSql;
+import DataAccess.RegressionTests;
+import DataAccess.UnitTests;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

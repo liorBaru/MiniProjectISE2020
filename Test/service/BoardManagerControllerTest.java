@@ -1,21 +1,5 @@
 package service;
 
-import main.DB.AcceptanceTests;
-import main.DB.RegressionTests;
-import main.domain.Asset.*;
-import main.domain.manageUsers.Account;
-import main.domain.manageTeams.FinancialAction;
-import main.domain.manageTeams.Team;
-import main.domain.manageUsers.Guest;
-import main.service.BoardManagerController;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
-
 public class BoardManagerControllerTest
 {
     /**

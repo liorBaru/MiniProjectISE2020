@@ -1,20 +1,5 @@
 package service;
 
-import main.DB.IntegrationTests;
-import main.DB.RegressionTests;
-import main.domain.Asset.Fan;
-import main.domain.Asset.Owner;
-import main.domain.Asset.SystemManager;
-import main.domain.manageEvents.Notification;
-import org.junit.Before;
-import org.junit.Test;
-import main.DB.System;
-import org.junit.experimental.categories.Category;
-
-import java.util.*;
-
-import static org.junit.Assert.*;
-
 public class SystemManagerControllerTest
 {
 

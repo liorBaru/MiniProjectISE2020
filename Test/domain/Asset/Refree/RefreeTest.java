@@ -1,12 +1,10 @@
 package domain.Asset.Refree;
 
-import main.DB.IntegrationTests;
-import main.DB.System;
-import main.domain.Asset.Refree.Refree;
-import main.domain.Asset.SystemManager;
-import main.domain.manageEvents.Notification;
-import main.domain.manageLeagues.IFA;
-import main.domain.manageUsers.User;
+import DataAccess.IntegrationTests;
+import DataAccess.System;
+import domain.Asset.SystemManager;
+import domain.manageLeagues.IFA;
+import domain.manageUsers.User;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 

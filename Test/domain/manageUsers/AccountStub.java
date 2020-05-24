@@ -1,8 +1,5 @@
 package domain.manageUsers;
 
-import main.domain.manageUsers.Account;
-import main.domain.manageUsers.User;
-
 public class AccountStub extends Account
 {
     private String userName;

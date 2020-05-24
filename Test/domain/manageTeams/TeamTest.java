@@ -1,29 +1,10 @@
 package domain.manageTeams;
 
-import main.DB.IntegrationTests;
-import main.DB.RegressionTests;
-import main.DB.UnitTests;
-import domain.Asset.*;
-import main.domain.Asset.*;
-import main.domain.manageEvents.Notification;
-import main.domain.manageTeams.FinancialAction;
-import main.domain.manageTeams.Team;
-import main.domain.manageUsers.Account;
-import domain.manageUsers.AccountStub;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import static org.junit.Assert.*;
-
 public class TeamTest {
 
     /**
     private Team team;
-    private main.domain.Asset.Owner Owner;
+    private Owner Owner;
     private StaffMember staffMember;
 
     public void setUpUnit()  {

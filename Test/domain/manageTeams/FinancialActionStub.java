@@ -1,7 +1,6 @@
 package domain.manageTeams;
 
-import main.domain.Asset.BoardMember;
-import main.domain.manageTeams.FinancialAction;
+import domain.Asset.BoardMember;
 
 public class FinancialActionStub extends FinancialAction {
 

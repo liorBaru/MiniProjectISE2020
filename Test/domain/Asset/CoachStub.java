@@ -1,7 +1,6 @@
 package domain.Asset;
 
-import main.domain.Asset.Coach;
-import main.domain.manageTeams.Team;
+import domain.manageTeams.Team;
 import domain.manageUsers.AccountStub;
 
 import java.sql.SQLException;

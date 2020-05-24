@@ -1,6 +1,6 @@
 
-import main.DB.RegressionTests;
-import DB.SystemTest;
+import DataAccess.RegressionTests;
+import DataAccess.SystemTest;
 
 import domain.Asset.BoardMemberTest;
 import domain.Asset.FanTest;

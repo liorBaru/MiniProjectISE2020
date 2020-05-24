@@ -1,10 +1,9 @@
 package domain.manageUsers;
 
-import main.DB.IntegrationTests;
-import main.DB.UnitTests;
-import main.domain.Asset.Fan;
+import DataAccess.IntegrationTests;
+import DataAccess.UnitTests;
+import domain.Asset.Fan;
 import domain.Asset.FanStub;
-import main.domain.manageUsers.Account;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 

@@ -1,14 +1,5 @@
 package domain.manageLeagues;
 
-import main.DB.IntegrationTests;
-import main.DB.RegressionTests;
-import main.DB.UnitTests;
-import main.domain.manageLeagues.*;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import java.util.HashMap;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

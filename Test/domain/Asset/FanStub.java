@@ -1,7 +1,6 @@
 package domain.Asset;
 
-import main.domain.Asset.Fan;
-import main.domain.manageUsers.Account;
+import domain.manageUsers.Account;
 
 import java.sql.SQLException;
 

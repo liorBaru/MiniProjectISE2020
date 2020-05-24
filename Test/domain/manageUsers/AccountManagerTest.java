@@ -1,10 +1,7 @@
 package domain.manageUsers;
 
-import main.DB.RegressionTests;
-import main.DB.UnitTests;
-import main.domain.manageUsers.Account;
-import main.domain.manageUsers.AccountManager;
-import main.domain.manageUsers.User;
+import DataAccess.RegressionTests;
+import DataAccess.UnitTests;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

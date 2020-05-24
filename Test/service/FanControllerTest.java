@@ -1,21 +1,4 @@
 package service;
-import main.DB.AcceptanceTests;
-import main.DB.RegressionTests;
-import main.domain.Asset.Coach;
-import main.domain.Asset.Fan;
-import main.domain.Asset.Owner;
-import main.domain.Asset.TeamMember;
-import main.DB.System;
-import main.domain.manageUsers.Guest;
-import main.domain.manageUsers.User;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import java.sql.SQLException;
-import java.util.Random;
-
-import static org.junit.Assert.*;
 
 public class FanControllerTest {
 

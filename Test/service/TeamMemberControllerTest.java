@@ -1,14 +1,4 @@
 package service;
-import main.DB.AcceptanceTests;
-import main.DB.RegressionTests;
-import main.DB.System;
-import main.domain.Asset.Coach;
-import main.domain.Asset.Fan;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import static org.junit.Assert.*;
 
 public class TeamMemberControllerTest
 {

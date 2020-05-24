@@ -1,10 +1,9 @@
 package domain.Asset;
 
 
-import main.DB.ComplaintDaoSql;
-import main.DB.IntegrationTests;
-import main.DB.UnitTests;
-import main.domain.Asset.Fan;
+import DataAccess.ComplaintDaoSql;
+import DataAccess.IntegrationTests;
+import DataAccess.UnitTests;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
