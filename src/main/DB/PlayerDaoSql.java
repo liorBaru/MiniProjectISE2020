@@ -53,6 +53,7 @@ public class PlayerDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -88,6 +89,7 @@ public class PlayerDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
 
@@ -105,6 +107,7 @@ public class PlayerDaoSql implements DaoSql
             try {
                 date= (Date) new SimpleDateFormat("dd/MM/yyyy").parse(params[4]);
             } catch (ParseException e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
             PreparedStatement stmt = null;
@@ -123,9 +126,11 @@ public class PlayerDaoSql implements DaoSql
                 stmt.setInt(10,Integer.parseInt(params[9]));
                 stmt.execute();
                 stmt.close();
+                logger.info("The player " +params[0] + " is succesufully saved");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -138,6 +143,7 @@ public class PlayerDaoSql implements DaoSql
         try {
             date= (Date) new SimpleDateFormat("dd/MM/yyyy").parse(params[4]);
         } catch (ParseException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
         ResultSet resultSet;
@@ -165,9 +171,11 @@ public class PlayerDaoSql implements DaoSql
                 stmt.setInt(10,Integer.parseInt(params[9]));
                 stmt.execute();
                 stmt.close();
+                logger.info("The player " +params[0] + " is succesufully update");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -189,9 +197,11 @@ public class PlayerDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The player " +key[0] + " is succesufully deleted");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

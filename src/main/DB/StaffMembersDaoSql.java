@@ -47,6 +47,7 @@ public class StaffMembersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -72,7 +73,9 @@ public class StaffMembersDaoSql implements DaoSql
                 list.add(results);
 
             }
+
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
 
@@ -97,9 +100,11 @@ public class StaffMembersDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The staffmember " + params[0] + "succesfully saved");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -125,9 +130,11 @@ public class StaffMembersDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The staffmember " + params[0] + "succesfully updated");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -149,9 +156,11 @@ public class StaffMembersDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The staffmember " + key[0] + "succesfully delelted");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

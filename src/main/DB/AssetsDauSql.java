@@ -52,6 +52,7 @@ public class AssetsDauSql implements DaoSql
             }
             catch (Exception e)
             {
+               logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -84,6 +85,7 @@ public class AssetsDauSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -117,6 +119,7 @@ public class AssetsDauSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -156,6 +159,7 @@ public class AssetsDauSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

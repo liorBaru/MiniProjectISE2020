@@ -46,6 +46,7 @@ class TeamMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -94,6 +95,7 @@ class TeamMemberDaoSql implements DaoSql
                 stmt.setString(1,params[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("team member " + params[0] + "successfuly save");
             }
             catch (SQLException e)
             {
@@ -124,6 +126,7 @@ class TeamMemberDaoSql implements DaoSql
                 stmt.setString(1,params[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("team member " + params[0] + "successfuly updated");
             }
             catch (SQLException e)
             {
@@ -148,9 +151,11 @@ class TeamMemberDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("team member " + key[0] + "successfuly deleted");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

@@ -51,6 +51,7 @@ public class TeamDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -78,6 +79,7 @@ public class TeamDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
 
@@ -103,9 +105,11 @@ public class TeamDaoSql implements DaoSql
                 stmt.setBoolean(3, Boolean.parseBoolean(params[2]));
                 stmt.execute();
                 stmt.close();
+                logger.info("The team " + params[0] + "succesfully saved");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -133,13 +137,14 @@ public class TeamDaoSql implements DaoSql
                 stmt.setString(1,params[0]);
                 stmt.setInt(2,Integer.parseInt(params[1]));
                 stmt.setBoolean(3, Boolean.parseBoolean(params[2]));
-
                 stmt.execute();
                 stmt.close();
+                logger.info("The team " + params[0] + "succesfully updated");
             }
             catch (SQLException e)
             {
                 e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
 
@@ -160,9 +165,11 @@ public class TeamDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The team " + key[0] + "succesfully deleted");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

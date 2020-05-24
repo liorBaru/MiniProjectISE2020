@@ -49,6 +49,7 @@ public class ApointmentsDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -81,6 +82,7 @@ public class ApointmentsDaoSql implements DaoSql
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -110,6 +112,7 @@ public class ApointmentsDaoSql implements DaoSql
                 stmt.close();
                 return results;
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -132,9 +135,11 @@ public class ApointmentsDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The manager " + params[0]  + " successfuly appointed");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -162,9 +167,11 @@ public class ApointmentsDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The appointment succesfuly deleted");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

@@ -49,6 +49,7 @@ public class OwnersDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -77,6 +78,7 @@ public class OwnersDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
 
@@ -103,9 +105,11 @@ public class OwnersDaoSql implements DaoSql
                 stmt.setString(4,params[3]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The owner " +params[0] +" is succsufully saved");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -134,12 +138,13 @@ public class OwnersDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.setString(3,params[2]);
                 stmt.setString(4,params[3]);
-
                 stmt.execute();
                 stmt.close();
+                logger.info("The owner " +params[0] + " is succsufully update");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -161,9 +166,11 @@ public class OwnersDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The owner " +key[0] + " is succsufully deleted");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

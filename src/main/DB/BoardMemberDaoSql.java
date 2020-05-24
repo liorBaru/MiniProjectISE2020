@@ -46,6 +46,7 @@ class BoardMemberDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -71,6 +72,7 @@ class BoardMemberDaoSql implements DaoSql
 
             }
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
 
@@ -94,9 +96,11 @@ class BoardMemberDaoSql implements DaoSql
                 stmt.setString(1,params[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("board member " + params[0] + "successfuly saved");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -121,9 +125,11 @@ class BoardMemberDaoSql implements DaoSql
                 stmt.setString(1,params[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("board member " + params[0] + "successfuly saved");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -145,9 +151,12 @@ class BoardMemberDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("board member " + key[0] + "successfuly deleted");
             }
+
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

@@ -97,9 +97,11 @@ public class PermissionsDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The permission " +params[1] + " is succesufully saved");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -125,9 +127,11 @@ public class PermissionsDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.execute();
                 stmt.close();
+                logger.info("The permission " +params[0] + " is succesufully updated");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -152,6 +156,8 @@ public class PermissionsDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.info("The permission is succesufully deleted");
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

@@ -43,6 +43,7 @@ public class CoachDaoSql implements DaoSql {
                     return list;
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -70,6 +71,7 @@ public class CoachDaoSql implements DaoSql {
 
             }
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
 
@@ -97,7 +99,9 @@ public class CoachDaoSql implements DaoSql {
                 stmt.setString(5, params[4]);
                 stmt.execute();
                 stmt.close();
+                logger.info("coach " + params[0] + "successfuly saved");
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -126,10 +130,11 @@ public class CoachDaoSql implements DaoSql {
                 stmt.setBigDecimal(3, big);
                 stmt.setString(4, params[3]);
                 stmt.setString(5, params[4]);
-
                 stmt.execute();
                 stmt.close();
+                logger.info("board member " + params[0] + "successfuly updated");
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -149,7 +154,9 @@ public class CoachDaoSql implements DaoSql {
                 stmt.setString(1, key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("board member " + key[0] + "successfuly deleted");
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

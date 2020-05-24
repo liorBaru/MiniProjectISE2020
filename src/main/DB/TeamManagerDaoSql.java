@@ -48,6 +48,7 @@ public class TeamManagerDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -100,6 +101,7 @@ public class TeamManagerDaoSql implements DaoSql
                 stmt.setString(3,params[2]);
                 stmt.execute();
                 stmt.close();
+                logger.info("team manager " + params[0] + "successfuly saved");
             }
             catch (SQLException e)
             {
@@ -129,6 +131,7 @@ public class TeamManagerDaoSql implements DaoSql
                 stmt.setString(3,params[2]);
                 stmt.execute();
                 stmt.close();
+                logger.info("team manager " + params[0] + "successfuly updated");
             }
             catch (SQLException e)
             {
@@ -153,6 +156,7 @@ public class TeamManagerDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("team manager " + key[0] + "successfuly deleted");
             }
             catch (SQLException e)
             {

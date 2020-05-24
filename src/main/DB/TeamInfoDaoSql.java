@@ -53,6 +53,7 @@ public class TeamInfoDaoSql implements DaoSql
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -86,8 +87,10 @@ public class TeamInfoDaoSql implements DaoSql
                 statement.close();
                 list.add(results);
 
+
             }
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
 
@@ -119,9 +122,11 @@ public class TeamInfoDaoSql implements DaoSql
                 stmt.setInt(10,Integer.parseInt(params[9]));
                 stmt.execute();
                 stmt.close();
+                logger.info("team information of " + params[0] + " successfuly saved");
             }
             catch (Exception e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -154,9 +159,11 @@ public class TeamInfoDaoSql implements DaoSql
                 stmt.setInt(10,Integer.parseInt(params[9]));
                 stmt.execute();
                 stmt.close();
+                logger.info("team information of " + params[0] + " successfuly updated");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -178,9 +185,11 @@ public class TeamInfoDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                logger.info("team information of " + key[0] + " successfuly deleted");
             }
             catch (SQLException e)
             {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }
