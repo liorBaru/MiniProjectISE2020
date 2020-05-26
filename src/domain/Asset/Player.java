@@ -180,17 +180,8 @@ public class Player extends TeamMember
 
     public void setGoals(int goals) throws SQLException {
         this.goals += goals;
-        update();
     }
 
-    public int getGames() {
-        return games;
-    }
-
-    public void setGames(int games) throws SQLException {
-        this.games += games;
-        update();
-    }
 
     public int getYellowCards() {
         return yellowCards;
@@ -198,7 +189,6 @@ public class Player extends TeamMember
 
     public void setYellowCards(int yellowCards) throws SQLException {
         this.yellowCards += yellowCards;
-        update();
     }
 
     public int getRedCards() {
@@ -207,7 +197,6 @@ public class Player extends TeamMember
 
     public void setRedCards(int redCards) throws SQLException {
         this.redCards += redCards;
-        update();
     }
 
     public List<PlayerPosition> getPositions() {
@@ -223,6 +212,10 @@ public class Player extends TeamMember
                 this.positions.add(positionToAdd);
             }
         }
+        update();
+    }
+
+    public void updateByRefree() throws SQLException {
         update();
     }
 

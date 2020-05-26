@@ -102,4 +102,6 @@ public abstract class StaffMember extends User implements Asset
         }
         return false;
     }
+
+
 }

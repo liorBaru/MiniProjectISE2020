@@ -103,12 +103,6 @@ public class System
         return externalTaxSystem.getTaxRate(revenueAmount);
     }
 
-
-    public void sendFinancialAction(BoardMember boardMember, FinancialAction financialAction)
-    {
-
-    }
-
     public void sendNotificationToSystemManager(Notification notification) throws SQLException {
         SystemManagerDaoSql systemManagerDaoSql=SystemManagerDaoSql.getInstance();
         for (String [] manager:systemManagerDaoSql.getAll())

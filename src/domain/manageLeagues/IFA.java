@@ -130,11 +130,28 @@ public class IFA extends User
         seasonInfoDaoSql.save(key);
     }
 
-    public void updatePolicyToLeague(String league, int season , LeagueCalculator leaguePolicy) throws Exception {
-        if(leaguePolicy==null||season<yearMin || league.isEmpty())
+    public void updatePolicyToLeague(String league, int season , String leaguePolicy) throws Exception {
+        if(GameSchedualeEnum.valueOf(leaguePolicy)!=null ||season<yearMin || league==null || league.isEmpty() )
             throw new Exception("Invalid arguments");
-        String [] key={league,String.valueOf(season),leaguePolicy.getName()};
-        seasonInfoDaoSql.update(key);
+        String[] seasons={league};
+        String gamePolicy="";
+        for (String [] s :seasonInfoDaoSql.get(seasons))
+        {
+            if(Integer.valueOf(s[1])==season)
+            {
+                gamePolicy=s[1];
+            }
+        }
+        if(gamePolicy!="")
+        {
+            String [] key={league,String.valueOf(season),gamePolicy,leaguePolicy};
+            seasonInfoDaoSql.update(key);
+        }
+        else
+        {
+            throw new Exception("Invalid season");
+        }
+
     }
 
 
@@ -210,5 +227,60 @@ public class IFA extends User
         Team team = new Team(owners, TName);
         owner.setTeam(team);
     }
+
+    public List<String> getCalculatorPolicy()
+    {
+        List<String> policies =new LinkedList<>();
+        for (CalculatorPolicy calc:CalculatorPolicy.values())
+        {
+            policies.add(calc.name());
+        }
+        return policies;
+    }
+
+    public List<String> getGamePolicies()
+    {
+        List<String> policies =new LinkedList<>();
+        for (GameSchedualeEnum gs:GameSchedualeEnum.values())
+        {
+            policies.add(gs.name());
+        }
+        return policies;
+    }
+
+    public void updateGamePolicy(String league, int season, String gamePolicy) throws Exception
+    {
+        if(GameSchedualeEnum.valueOf(gamePolicy)!=null ||season<yearMin || league==null || league.isEmpty() )
+            throw new Exception("Invalid arguments");
+        String[] seasons={league};
+        String calcPolicy="";
+        for (String [] s :seasonInfoDaoSql.get(seasons))
+        {
+            if(Integer.valueOf(s[1])==season)
+            {
+                calcPolicy=s[3];
+            }
+        }
+        if(calcPolicy!="")
+        {
+            String [] key={league,String.valueOf(season),gamePolicy,calcPolicy};
+            seasonInfoDaoSql.update(key);
+        }
+        else
+        {
+            throw new Exception("Invalid season");
+        }
+
+    }
+}
+
+enum CalculatorPolicy
+{
+    Regular , Special
+}
+
+enum GameSchedualeEnum
+{
+    Three_Rounds, Playoffs
 }
 

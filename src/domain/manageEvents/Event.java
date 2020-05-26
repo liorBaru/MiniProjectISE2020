@@ -19,24 +19,9 @@ public class Event
         time=date;
     }
 
-    public void setTime(Date time)
-    {
-        this.time = time;
-    }
 
-    public void setMinute(int minute)
-    {
-        this.minute = minute;
-    }
 
-    public void setTeamMember(TeamMember teamMember)
-    {
-        this.teamMember = teamMember;
-    }
 
-    public void setType(EventType type) {
-        this.type = type;
-    }
 
     public Date getTime() {
         return time;
@@ -51,9 +36,9 @@ public class Event
         return teamMember;
     }
 
-    public EventType getType()
+    public String getType()
     {
-        return type;
+        return type.name();
     }
 }
 

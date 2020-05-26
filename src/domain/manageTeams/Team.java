@@ -264,4 +264,11 @@ public class Team implements pageable
     }
 
 
+    public List<TeamMember> getTeamMembers()
+    {
+        List<TeamMember> teamMembers =new LinkedList<>();
+        teamMembers.addAll(getCoach());
+        teamMembers.addAll(getPlayers());
+        return teamMembers;
+    }
 }

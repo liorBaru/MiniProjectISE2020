@@ -11,6 +11,9 @@ import DataAccess.PermissionsDaoSql;
 import DataAccess.StaffMembersDaoSql;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -124,7 +127,9 @@ public abstract class BoardMember extends StaffMember
         if(permissions.contains(permission.addFinancial)&&team!=null)
         {
             FinancialAction financialAction = new FinancialAction(description,price,this);
-            system.sendFinancialAction(this,financialAction);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String sDate=dateFormat.format(financialAction.getDate());
+            system.addPaymentToPaymentSystem(this.team.getName(),sDate,price);
         }
         Lo4jDemo.writeError("Invalid operation - addCouch "+this.account.getUserName());
         throw new Exception("Invalid operation");

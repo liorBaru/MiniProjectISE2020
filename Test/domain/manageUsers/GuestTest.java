@@ -53,11 +53,11 @@ public class GuestTest {
     {
         try
         {
-            User u=(guest.register("matanGad2020","matan2020Gad2020", "passUser123"));
-            assertNotNull(u);
+            boolean bool=(guest.register("matanGad2020","matan2020Gad2020", "passUser123"));
+            assertTrue(bool);
             System system=System.getInstance();
             AccountManager accountManger=system.getAccountManager();
-            accountManger.removeAccount(u.getAccount());
+            accountManger.removeAccount(accountManger.getAccount("matan2020Gad2020"));
         }
         catch (Exception e)
         {

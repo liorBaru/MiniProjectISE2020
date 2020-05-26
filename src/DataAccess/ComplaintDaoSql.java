@@ -154,7 +154,6 @@ public class ComplaintDaoSql implements DaoSql
             PreparedStatement statement;
             try
             {
-
                 connection.setCatalog("events");
                 statement=connection.prepareStatement(query);
                 boolean bool =Boolean.valueOf(params[0]);

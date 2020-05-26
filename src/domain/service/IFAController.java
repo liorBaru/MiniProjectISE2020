@@ -12,7 +12,7 @@ public class IFAController extends GuestController
 {
 
 
-    private IFA Ifa;
+    private IFA ifa;
 
     public IFAController(Guest guest) {
         super(guest);
@@ -23,7 +23,7 @@ public class IFAController extends GuestController
      * @desc: setIfa
      */
     public void setIfa(IFA ifa) {
-        Ifa = ifa;
+        this.ifa = ifa;
     }
 
     /**
@@ -35,7 +35,7 @@ public class IFAController extends GuestController
     public void newLeague(String name, int level) {
         try
         {
-            Ifa.addLeague(name, level);
+            ifa.addLeague(name, level);
         }
         catch (Exception e)
         {
@@ -54,18 +54,19 @@ public class IFAController extends GuestController
         //TODO:
         // 1.add to U.C 9.2.2 the functionality of adding seasonInfo
         try {
-            Ifa.addSeasonToLeague(league, season);
+            ifa.addSeasonToLeague(league, season);
         } catch (Exception e) {
             throw new InputMismatchException("Wrong input");
         }
     }
 
-    public String[]setLeagueCalculator (String league, int season, LeagueCalculator leaguePolicy)
+    public String[]setLeagueCalculator (String league, int season, String leaguePolicy)
     {
+
         String[] message=new String[2];
         try
         {
-            Ifa.updatePolicyToLeague(league, season,leaguePolicy);
+            ifa.updatePolicyToLeague(league, season,leaguePolicy);
             message[0]="Respond";
             message[1]="Success operation";
         }
@@ -73,6 +74,50 @@ public class IFAController extends GuestController
         {
             message[0]="Fail";
             message[1]=e.getMessage();
+        }
+        return message;
+    }
+
+    public String [] getCalculatorPolicy()
+    {
+        List<String> policies=ifa.getCalculatorPolicy();
+        String []message=new String[policies.size()+1];
+        message[0]="Respond";
+        int index=1;
+        for (String policy :policies)
+        {
+            message[index]=policy;
+        }
+        return message;
+    }
+
+
+    public String[]setGamesScedualsPolicy (String league, int season, String gamePolicy)
+    {
+        String[] message=new String[2];
+        try
+        {
+            ifa.updateGamePolicy(league,season,gamePolicy);
+            message[0]="Respond";
+            message[1]="Success operation";
+        }
+        catch (Exception e)
+        {
+            message[0]="Fail";
+            message[1]=e.getMessage();
+        }
+        return message;
+    }
+
+    public String [] getGamesScedualsPolicy()
+    {
+        List<String> policies=ifa.getGamePolicies();
+        String []message=new String[policies.size()+1];
+        message[0]="Respond";
+        int index=1;
+        for (String policy :policies)
+        {
+            message[index]=policy;
         }
         return message;
     }
@@ -85,7 +130,7 @@ public class IFAController extends GuestController
     public void addPlayer(String pName, Date birthDay, String password, String userName, List<String> positions) throws Exception{
         if( pName!=null && birthDay!=null && password!=null && userName!=null && positions!=null && positions.isEmpty()==false)
         {
-            Ifa.addPlayer(pName,birthDay,password, userName,positions);
+            ifa.addPlayer(pName,birthDay,password, userName,positions);
         }
     }
 
@@ -98,7 +143,7 @@ public class IFAController extends GuestController
     public void addCoach(String cName,String password, String userName, String training) throws Exception{
         if(cName!=null && password!=null && userName!=null && training!=null)
         {
-            Ifa.addCoach(cName,password, userName,training);
+            ifa.addCoach(cName,password, userName,training);
         }
     }
 
@@ -111,7 +156,7 @@ public class IFAController extends GuestController
     public boolean addReferee( String rName,String password, String userName, String type,String training) throws Exception{
         if( rName!=null  && password!=null && userName!=null && type!=null)
         {
-            Ifa.addReferee(rName,password, userName, type,training);
+            ifa.addReferee(rName,password, userName, type,training);
         }
         return false;
     }
@@ -125,7 +170,7 @@ public class IFAController extends GuestController
     public void addIFA( String ifaName, String password, String userName) throws Exception{
         if( ifaName!=null && password!=null && userName!=null)
         {
-            Ifa.addNewIFA( ifaName, password, userName);
+            ifa.addNewIFA( ifaName, password, userName);
         }
     }
 
@@ -142,7 +187,7 @@ public class IFAController extends GuestController
         {
             if( OwnerName!=null && password!=null && userName!=null)
             {
-                Ifa.addOwner(OwnerName, password, userName);
+                ifa.addOwner(OwnerName, password, userName);
                 message = new String[2];
                 message[0]="Respond";
                 message[1]="Success operation";
@@ -170,7 +215,7 @@ public class IFAController extends GuestController
         {
             if( teamName!=null && teamName.isEmpty()==false  && ownerUserName!=null && ownerUserName.isEmpty()==false)
             {
-                Ifa.addTeam( ownerUserName, teamName);
+                ifa.addTeam( ownerUserName, teamName);
                 message = new String[2];
                 message[0]="Respond";
                 message[1]="Success operation";
