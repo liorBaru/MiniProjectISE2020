@@ -38,7 +38,7 @@ public class SystemTest
     {
         try {
             Notification notification = new Notification("details");
-            system.sendNotification("fanTest",notification);
+           // system.sendNotification("fanTest",notification);
             User user=system.getAccountManager().login("fanTest","Galb1234");
             assertTrue(user.readNotification().contains(notification));
         }
@@ -55,7 +55,7 @@ public class SystemTest
         String message="";
         try {
             Notification notification = new Notification("details");
-            system.sendNotification("fanTestW",notification);
+            //system.sendNotification("fanTestW",notification);
             User user=system.getAccountManager().login("fanTest","Galb1234");
         }
         catch (Exception e)
@@ -73,7 +73,7 @@ public class SystemTest
         String message="";
         try {
             Notification notification = new Notification("");
-            system.sendNotification("fanTest",notification);
+            //system.sendNotification("fanTest",notification);
             User user=system.getAccountManager().login("fanTest","Galb1234");
         }
         catch (Exception e)

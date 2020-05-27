@@ -186,7 +186,7 @@ public class Team implements pageable
             for (StaffMember staffMember : getStaffMembers())
             {
                 System system=System.getInstance();
-                system.sendNotification(staffMember.getAccount().getUserName(),notification);
+                //system.sendNotification(staffMember.getAccount().getUserName(),notification);
             }
             //todo acknowledge the system and archive the history of the team
         }
@@ -216,7 +216,7 @@ public class Team implements pageable
             if(staffMember[1].equals("Owner") || staffMember[1].equals("TeamManager"))
             {
                 System system= System.getInstance();
-                system.sendNotification(staffMember[0],notification);
+                //system.sendNotification(staffMember[0],notification);
             }
         }
     }

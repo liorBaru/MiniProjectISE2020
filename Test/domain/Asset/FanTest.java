@@ -32,6 +32,34 @@ public class FanTest
 
     @Test
     @Category({IntegrationTests.class})
+    public void followGame2Integration()
+    {
+        String message="";
+        TreeMap<Integer,String> pages =fan.showPages();
+        int id=pages.firstKey();
+        try
+        {
+            fan.followGame(id);
+            fan.followGame(id);
+        }
+        catch (Exception e)
+        {
+            message=e.getMessage();
+        }
+        try
+        {
+            fan.unfollowGame(id);
+            assertEquals("wrong parameters",message);
+        }
+        catch (Exception e)
+        {
+
+        }
+
+    }
+
+    @Test
+    @Category({IntegrationTests.class})
     public void followPageAlreadyFollower1Integration()
     {
         String message="";

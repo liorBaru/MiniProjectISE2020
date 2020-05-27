@@ -11,8 +11,9 @@ import domain.manageUsers.Account;
 import domain.manageUsers.User;
 import domain.manageLeagues.Game;
 import domain.manageEvents.*;
+
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -199,6 +200,7 @@ public abstract class Refree extends User
                     playersEvents.put(p,playerEvent);
                 }
             }
+
         }
         return playersEvents;
     }
@@ -213,6 +215,7 @@ public abstract class Refree extends User
         }
         // add check if refree is refree in the game
         String[]gameData=games.get(0);
+        Game.notifyEvent(gameID,event,date);
         TeamMember teamMember =TeamMember.createTeamMemberFromDB(teamMemberUserName);
         if(gameData[1].equals(teamMember.team.getName())|| gameData[2].equals(teamMember.team.getName()))
         {
