@@ -114,7 +114,7 @@ public class Page extends Subject
         {
             System system =System.getInstance();
             try {
-                system.sendNotification(fan[0],notification);
+                //system.sendNotification(fan[0],notification);
             }
             catch (Exception e)
             {

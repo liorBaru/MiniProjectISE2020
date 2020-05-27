@@ -47,6 +47,15 @@ public class FanController extends GuestController
         return userFan.followPage(pageID);
     }
 
+    public boolean followGame(int gameID) throws Exception {
+        return userFan.followGame(gameID);
+    }
+
+
+    public boolean unFollowGame(int gameID) throws Exception
+    {
+        return userFan.unfollowGame(gameID);
+    }
     /**
      * gal
      * un follow page

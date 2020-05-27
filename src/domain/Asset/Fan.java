@@ -1,8 +1,6 @@
 package domain.Asset;
 
-import DataAccess.FansDaoSql;
-import DataAccess.PageFollowersDaoSql;
-import DataAccess.PagesDaoSql;
+import DataAccess.*;
 import DataAccess.System;
 import domain.manageEvents.Complaint;
 import domain.manageUsers.Account;
@@ -20,6 +18,7 @@ public class Fan extends User
     private static PageFollowersDaoSql pageFollowersDaoSql =PageFollowersDaoSql.getInstance();
     private static FansDaoSql fansDaoSql =FansDaoSql.getInstance();
     private static PagesDaoSql pagesDaoSql =PagesDaoSql.getInstance();
+    private static GameFollwersDaoSql    gameFollowersDaoSql = GameFollwersDaoSql.getInstance();
 
 
     public Fan(String name, Account account) throws SQLException {
@@ -39,7 +38,7 @@ public class Fan extends User
         System system= System.getInstance();
         Account account = system.getAccountManager().getAccount(data[0]);
         List<String[]> fanData=fansDaoSql.get(data);
-        if(fanData.size()==0)
+        if(fanData.size()!=0)
         {
             String[] newData={account.getUserName(),"Gal"};
             Fan fan = new Fan(newData,account);
@@ -100,11 +99,28 @@ public class Fan extends User
         return true;
     }
 
+    public boolean followGame(int gameID) throws Exception
+    {
+        String [] params= new String[2];
+        params[0]=String.valueOf(gameID);
+        params[1]=this.account.getUserName();
+        gameFollowersDaoSql.save(params);
+        return true;
+    }
     /**
      * watch search history
      * @return
      */
 
+    public boolean unfollowGame(int gameID) throws Exception
+    {
+        String [] params= new String[3];
+        params[0]="key";
+        params[1]=String.valueOf(gameID);
+        params[2]=this.account.getUserName();
+        gameFollowersDaoSql.delete(params);
+        return true;
+    }
     public List<String> watchHistory()
     {
         return null;

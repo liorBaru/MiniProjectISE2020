@@ -2,8 +2,9 @@ package domain.service;
 
 import domain.Asset.Refree.MainRefree;
 import domain.Asset.Refree.Refree;
+import domain.manageLeagues.Game;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.TreeMap;
 
 public class RefreeController
@@ -33,14 +34,15 @@ public class RefreeController
         return message;
     }
 
-    public String[] addEvent(String teamMemberUserName, int gameID, String event, int minute)
+    public String[] addEvent(String teamMemberUserName, int gameID, String event, int minute , Date date)
     {
         String [] message=new String[2];
         try
         {
-            if(teamMemberUserName.isEmpty()|| event.isEmpty() || minute<0)
+            if(!(teamMemberUserName.isEmpty()|| event.isEmpty() || minute<0))
             {
-                refree.addEvent(teamMemberUserName,gameID,event,minute);
+                refree.addEvent(teamMemberUserName,gameID,event,minute, date);
+
                 message[0]="Respond";
                 message[1]="Success operation";
             }

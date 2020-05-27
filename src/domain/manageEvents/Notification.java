@@ -49,6 +49,11 @@ public class Notification implements Comparable
         return sDate;
     }
 
+    public void setDate(Date date )
+    {
+        this.date=date;
+    }
+
     @Override
     public boolean equals(Object object)
     {

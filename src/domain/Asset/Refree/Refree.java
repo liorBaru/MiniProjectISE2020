@@ -11,8 +11,8 @@ import domain.manageUsers.User;
 import domain.manageLeagues.Game;
 import domain.manageEvents.*;
 
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -37,7 +37,7 @@ public abstract class Refree extends User
     {
         return null;
     }
-    public static Refree getRefreeFromDB(String params)
+    public static Refree getRefreeFromDB(String key)
     {
         return null;
     }
@@ -50,7 +50,7 @@ public abstract class Refree extends User
         {
             try
             {
-                system.sendNotification(ifa[0],notification);
+               // system.sendNotification(ifa[0],notification);
             }
             catch (Exception e)
             {
@@ -162,6 +162,7 @@ public abstract class Refree extends User
             throw new Exception("Invalid game");
         }
         String[]gameData=games.get(0);
+        Game.notifyEvent(gameID,event,date);
         TeamMember teamMember =TeamMember.createTeamMemberFromDB(teamMemberUserName);
         if(gameData[1].equals(teamMember.team.getName())|| gameData[2].equals(teamMember.team.getName()))
         {

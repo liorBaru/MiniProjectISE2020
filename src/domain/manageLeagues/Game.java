@@ -1,17 +1,23 @@
 package domain.manageLeagues;
 
-import DataAccess.GamesDaoSql;
+import DataAccess.System;
+import com.sun.deploy.security.CertStore;
 import domain.Asset.Field;
+import DataAccess.*;
 import domain.Asset.Refree.Refree;
+import domain.Asset.SystemManager;
 import domain.manageEvents.Event;
 import domain.manageEvents.GameEventLog;
 import domain.managePages.Subject;
 import domain.manageTeams.Team;
 import domain.manageUsers.User;
 import domain.manageEvents.Notification;
+import Logger.*;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +36,8 @@ public class Game extends Subject
     private boolean reported;
 
     private static GamesDaoSql gamesDaoSql;
+    private static GameFollwersDaoSql gameFollwersDaoSql;
+    private static  NotificationsDaoSql notificationsDaoSql;
 
     public Game (Team guest, Team host)
     {
@@ -157,5 +165,37 @@ public class Game extends Subject
 
     public List<Event> getEvents() throws Exception {
         return eventsLog.createEventsFromDB(host,guest);
+    }
+
+    public static void notifyEvent(int gameId, String event, java.sql.Date date) throws SQLException {
+        if(gameId<0 && event!=null && date!=null)
+        {
+            String[] gameDetails = {"gameID" , String.valueOf(gameId)};
+            List<String[] > gameFollower =gameFollwersDaoSql.get(gameDetails);
+            if(gameFollower==null)
+            {
+                Logger.Lo4jDemo.writeError("no users has follow after this game");
+                throw new NullPointerException();
+            }
+            else
+            {
+                for (String[] userdetails : gameFollower) {
+                    Notification notification=null;
+                    try {
+                        Logger.Lo4jDemo.writeError("Invalid notifications arguments");
+                        notification = new Notification(event);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    notification.setDate(date);
+                    String username = userdetails[1];
+                    String [] key ={username,notification.getDetails(),notification.getDate()};
+                    System system =System.getInstance();
+                    system.sendNotification(username,notification);
+                }
+            }
+
+        }
+
     }
 }

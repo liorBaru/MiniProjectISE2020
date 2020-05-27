@@ -202,7 +202,7 @@ public class AccountManager
         }
         else if(type.equals("Refree"))
         {
-            user= Refree.getRefreeFromDB(key);
+            user= Refree.getRefreeFromDB(key[0]);
         }
         else if(type.equals("Player"))
         {

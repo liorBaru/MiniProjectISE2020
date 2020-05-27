@@ -11,10 +11,13 @@ import domain.manageUsers.Account;
 import domain.manageUsers.AccountManager;
 import domain.manageUsers.User;
 import domain.manageEvents.Notification;
+
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Observable;
 
 
-public class System
+public class System extends Observable
 {
 
     private static System system = new System();
@@ -87,9 +90,13 @@ public class System
         return this.accountManager;
     }
 
-    public void sendNotification(String fanUserName,Notification notification) throws SQLException {
+
+    public void sendNotification(String fanUserName, Notification notification) throws SQLException {
+         String[] notify = {fanUserName,notification.getDetails()};
          String [] key ={fanUserName,notification.getDetails(),notification.getDate()};
          notificationsDaoSql.save(key);
+         setChanged();
+         notifyObservers(notify);
     }
 
     public boolean addPaymentToPaymentSystem(String teamName , String date , Double amount)
