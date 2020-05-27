@@ -103,66 +103,77 @@ public abstract class Refree extends User
         return userDetails;
     }
 
-    public void creareReport(int gameId) throws Exception {
+    public void creareReport(int gameId) throws Exception
+    {
+
         Game game =Game.getGameFromDB(gameId);
-        int host=0;
-        int guest=0;
-        if(this.account.getUserName().equals(game.getMainRefree().getAccount().getUserName()))
+        // check time 5 hours
+        if(game.getReported()==false)
         {
-            TreeMap<Player,LinkedList<Event>> playerEvents=getPlayerEvents(game.getEvents());
-            for (Player player: playerEvents.keySet())
+            if(this.account.getUserName().equals(game.getMainRefree().getAccount().getUserName()))
             {
-                boolean update=false;
-                for (Event event:playerEvents.get(player))
+                int host=0;
+                int guest=0;
+                TreeMap<Player,LinkedList<Event>> playerEvents=getPlayerEvents(game.getEvents());
+                for (Player player: playerEvents.keySet())
                 {
-                    if(event.getType().equals("Goal"))
+                    boolean update=false;
+                    for (Event event:playerEvents.get(player))
                     {
-                        player.setGoals(1);
-                        update=true;
-                        if(game.getHost().equals(player.getTeam()))
+                        if(event.getType().equals("Goal"))
                         {
-                            host++;
+                            player.setGoals(1);
+                            update=true;
+                            if(game.getHost().equals(player.getTeam()))
+                            {
+                                host++;
+                            }
+                            else
+                            {
+                                guest++;
+                            }
                         }
-                        else
+                        else if(event.getType().equals("YellowCard"))
                         {
-                            guest++;
+                            player.setYellowCards(1);
+                            update=true;
+                        }
+                        else if(event.getType().equals("RedCard"))
+                        {
+                            player.setRedCards(1);
+                            update=true;
+                        }
+                        else if(event.getType().equals("OwnGoal"))
+                        {
+                            if(game.getHost().equals(player.getTeam()))
+                            {
+                                guest++;
+                            }
+                            else
+                            {
+                                host++;
+                            }
                         }
                     }
-                    else if(event.getType().equals("YellowCard"))
+                    if(update==true)
                     {
-                        player.setYellowCards(1);
-                        update=true;
-                    }
-                    else if(event.getType().equals("RedCard"))
-                    {
-                        player.setRedCards(1);
-                        update=true;
-                    }
-                    else if(event.getType().equals("OwnGoal"))
-                    {
-                        if(game.getHost().equals(player.getTeam()))
-                        {
-                            guest++;
-                        }
-                        else
-                        {
-                            host++;
-                        }
+                        player.updateByRefree();
                     }
                 }
-                if(update==true)
-                {
-                   player.updateByRefree();
-                }
+                String result =game.getHost().getName()+": "+host+" "+game.getGuest().getName()+": "+guest;
+                game.SetResult(result);
+                return;
             }
-            String result =game.getHost().getName()+": "+host+" "+game.getGuest().getName()+": "+guest;
-            game.SetResult(result);
-            return;
+            else
+            {
+                throw new Exception("Invalid operation, this will be reported");
+            }
         }
         else
         {
-            throw new Exception("Invalid operation, this will be reported");
+            throw new Exception("Invalid operation, game already reported");
         }
+
     }
 
     private TreeMap<Player,LinkedList<Event>> getPlayerEvents(List<Event> events)
@@ -200,6 +211,7 @@ public abstract class Refree extends User
         {
             throw new Exception("Invalid game");
         }
+        // add check if refree is refree in the game
         String[]gameData=games.get(0);
         TeamMember teamMember =TeamMember.createTeamMemberFromDB(teamMemberUserName);
         if(gameData[1].equals(teamMember.team.getName())|| gameData[2].equals(teamMember.team.getName()))

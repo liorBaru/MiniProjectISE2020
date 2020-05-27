@@ -190,4 +190,8 @@ public class Game
     public List<Event> getEvents() throws Exception {
         return eventsLog.createEventsFromDB(host,guest);
     }
+    public boolean getReported()
+    {
+        return reported;
+    }
 }
