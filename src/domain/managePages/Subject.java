@@ -16,22 +16,9 @@ public abstract class Subject
         followers=new LinkedList<>();
     }
 
-    /**
-     * gal
-     * add follower to follower list if dont exists
-     * @param user
-     * @return
-     * @throws Exception
-     */
-    public boolean addFollower(User user)throws Exception
-    {
-        if(user!=null && followers.contains(user)==false)
-        {
-            followers.add(user);
-            return true;
-        }
-        throw new Exception(user.getName()+" is already following");
-    }
+
+
+
 
     /**
      * gal

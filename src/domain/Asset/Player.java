@@ -24,7 +24,7 @@ public class Player extends TeamMember
     private int yellowCards;
     private int redCards;
 
-    private static PlayerDaoSql playerDaoSql;
+    private static PlayerDaoSql playerDaoSql=PlayerDaoSql.getInstance();
 
 
     public Player(Account account, String name, Date birthDay, List<String> positionsSt) throws SQLException
@@ -42,7 +42,7 @@ public class Player extends TeamMember
         params[1]="";
         params[2]=name;
         params[3]=String.valueOf(this.page.getPageID());
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         params[4]=dateFormat.format(birthDay);
         for (String positon:positionsSt)
         {
@@ -83,8 +83,10 @@ public class Player extends TeamMember
         }
     }
 
-    public static Player getPlayerFromDB(String[] key) throws Exception {
-        List<String[]> players=playerDaoSql.get(key);
+    public static Player getPlayerFromDB(String[] key) throws Exception
+    {
+        String[]params={"Key",key[0]};
+        List<String[]> players=playerDaoSql.get(params);
         if(players==null || players.isEmpty())
         {
             throw new Exception("wrong username");
@@ -103,18 +105,19 @@ public class Player extends TeamMember
             team=Team.createTeamFromDB(player[1]);
         }
         Page page=Page.createPageFromDB(player[3]);
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date birthDate=null;
         if(player[4]!=null && player[4].isEmpty()==false)
         {
             birthDate =dateFormat.parse(player[4]);
         }
         String [] positions=player[5].split(",");
-        int goals=Integer.valueOf(6);
-        int redC=Integer.valueOf(7);
+        int goals=Integer.valueOf(player[6]);
+        int redC=Integer.valueOf( player[7]);
         int yellowC=Integer.valueOf(player[8]);
         int games=Integer.valueOf(player[9]);
         Player player1 = new Player(account,team,player[2],page,birthDate,positions,goals,redC,yellowC,games);
+        page.setOwner(player1);
         return player1;
     }
     /**
@@ -126,7 +129,7 @@ public class Player extends TeamMember
     {
        LinkedList<String> userDetails= super.showPersonalDetails();
        userDetails.addFirst("Player");
-       DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
        String birth =dateFormat.format(birthDay);
        userDetails.addLast(birth);
        String positionsS="";
@@ -146,9 +149,13 @@ public class Player extends TeamMember
         String [] params= new String[10];
         params[0]=account.getUserName();
         params[1]="";
+        if(team!=null)
+        {
+            params[1]=team.getName();
+        }
         params[2]=name;
         params[3]=String.valueOf(this.page.getPageID());
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         params[4]=dateFormat.format(birthDay);
         for (PlayerPosition positon:this.positions)
         {

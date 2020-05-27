@@ -45,13 +45,14 @@ public class CoachDaoSql implements DaoSql {
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1, key);
                 resultSet = stmt.executeQuery();
-                results = new String[5];
+                results = new String[6];
                 if (resultSet.next()) {
                     results[0] = resultSet.getString(1);
                     results[1] = resultSet.getString(2);
                     results[2] = String.valueOf(resultSet.getInt(3));
                     results[3] = resultSet.getString(4);
                     results[4] = resultSet.getString(5);
+                    results[5]=resultSet.getString(6);
                     resultSet.close();
                     stmt.close();
                     conn.close();
@@ -82,12 +83,13 @@ public class CoachDaoSql implements DaoSql {
 
                 while (resultSet.next())
                 {
-                    results = new String[5];
+                    results = new String[6];
                     results[0] = resultSet.getString(1);
                     results[1] = resultSet.getString(2);
                     results[2] = String.valueOf(resultSet.getInt(3));
                     results[3] = resultSet.getString(4);
                     results[4] = resultSet.getString(5);
+                    results[5]=resultSet.getString(6);
                     list.add(results);
                 }
                 resultSet.close();
@@ -112,12 +114,15 @@ public class CoachDaoSql implements DaoSql {
             conn.setCatalog("manageteams");
             Statement statement = conn.createStatement();
             resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
+            while (resultSet.next())
+            {
+                results= new String[6];
                 results[0] = resultSet.getString(1);
                 results[1] = resultSet.getString(2);
                 results[2] = String.valueOf(resultSet.getBigDecimal(3));
                 results[3] = resultSet.getString(4);
                 results[4] = resultSet.getString(5);
+                results[5]=resultSet.getString(6);
                 list.add(results);
             }
             resultSet.close();
@@ -138,7 +143,7 @@ public class CoachDaoSql implements DaoSql {
      */
     @Override
     public void save(String[] params) throws SQLException {
-        String query = "INSERT INTO coach(user_name,team,pageID,training,job)" + "values(?,?,?,?,?);";
+        String query = "INSERT INTO coach(user_name,team,pageID,training,job,name)" + "values(?,?,?,?,?,?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null) {
             PreparedStatement stmt = null;
@@ -150,6 +155,7 @@ public class CoachDaoSql implements DaoSql {
                 stmt.setInt(3, Integer.valueOf(params[2]));
                 stmt.setString(4, params[3]);
                 stmt.setString(5, params[4]);
+                stmt.setString(6, params[5]);
                 stmt.execute();
                 stmt.close();
                 conn.close();
@@ -166,7 +172,7 @@ public class CoachDaoSql implements DaoSql {
     @Override
     public void update(String[] params) throws SQLException
     {
-        String query = "Update coach set user_name=?,team=?,pageID=?,training=?,job=? where user_name=?;";
+        String query = "Update coach set user_name=?,team=?,pageID=?,training=?,job=?,name=? where user_name=?;";
         Connection conn = dBconnector.getConnection();
         if (conn != null) {
             PreparedStatement stmt = null;
@@ -179,6 +185,7 @@ public class CoachDaoSql implements DaoSql {
                 stmt.setInt(3, Integer.valueOf(params[2]));
                 stmt.setString(4, params[3]);
                 stmt.setString(5, params[4]);
+                stmt.setString(6, params[5]);
                 stmt.execute();
                 stmt.close();
                 conn.close();

@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public abstract class User extends Guest
+public abstract class User extends Guest implements Comparable<User>
 {
     protected String name;
     protected Account account;
@@ -17,6 +17,11 @@ public abstract class User extends Guest
 
     private static UsersDaoSql usersDaoSql;
     private static NotificationsDaoSql notificationsDaoSql;
+    @Override
+    public int compareTo(User user)
+    {
+        return this.account.getUserName().compareTo(user.account.getUserName());
+    }
 
     public User (String name,Account account)
     {
@@ -28,6 +33,8 @@ public abstract class User extends Guest
 
     protected User() {
     }
+
+
 
 
     public String getName() {

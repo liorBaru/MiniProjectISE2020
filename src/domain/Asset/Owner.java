@@ -72,11 +72,11 @@ public class Owner extends BoardMember
                 {
                         if(ownerDetails[3].equals("Coach"))
                         {
-                                anotherJob = Coach.createCoachFromDB(ownerDetails);
+                                anotherJob = Coach.getCoachFromDB(ownerDetails);
                         }
                         else if(ownerDetails[3].equals("Player"))
                         {
-                                anotherJob=Player.createPlayerFromDB(ownerDetails);
+                                anotherJob=Player.getPlayerFromDB(ownerDetails);
                         }
                 }
                 Owner owner = new Owner(account,name,team,anotherJob);

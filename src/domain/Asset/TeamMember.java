@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class TeamMember extends StaffMember implements pageable
 {
     protected Page page;
-    private static StaffMembersDaoSql staffMembersDaoSql;
+    private static StaffMembersDaoSql staffMembersDaoSql =StaffMembersDaoSql.getInstance();
 
     public TeamMember(Account account, String name) throws SQLException
     {
@@ -38,11 +38,11 @@ public abstract class TeamMember extends StaffMember implements pageable
         TeamMember teamMember1=null;
         if(teamMember[1].equals("Coach"))
         {
-            teamMember1=Coach.createCoachFromDB(key);
+            teamMember1=Coach.getCoachFromDB(key);
         }
         else if(teamMember[1].equals("Player"))
         {
-            teamMember1=Player.createPlayerFromDB(key);
+            teamMember1=Player.getPlayerFromDB(key);
         }
         else
         {

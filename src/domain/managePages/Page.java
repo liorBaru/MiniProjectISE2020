@@ -8,6 +8,7 @@ import domain.Asset.TeamMember;
 import domain.manageEvents.Notification;
 import domain.manageTeams.Team;
 
+import java.awt.print.Pageable;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,9 +19,9 @@ import java.util.PriorityQueue;
 public class Page extends Subject
 {
 
-    private static PagesDaoSql pagesDaoSql;
-    private static PageMessagesDaoSql pageMessagesDaoSql;
-    private static PageFollowersDaoSql pageFollowersDaoSql;
+    private static PagesDaoSql pagesDaoSql=PagesDaoSql.getInstance();
+    private static PageMessagesDaoSql pageMessagesDaoSql=PageMessagesDaoSql.getInstance();
+    private static PageFollowersDaoSql pageFollowersDaoSql=PageFollowersDaoSql.getInstance();
 
     private pageable owner;
     private PriorityQueue<String> messages;
@@ -37,9 +38,8 @@ public class Page extends Subject
         pagesDaoSql.save(key);
     }
 
-    public Page(pageable owner, int pageID, String pageName)
+    public Page(int pageID, String pageName)
     {
-        this.owner=owner;
         this.pageID=pageID;
         this.pageName=pageName;
     }
@@ -48,6 +48,10 @@ public class Page extends Subject
     {
         String [] key ={String.valueOf(this.pageID)};
         pagesDaoSql.delete(key);
+    }
+    public void setOwner(pageable owner)
+    {
+        this.owner=owner;
     }
 
     public static Page createPageFromDB(String pageID) throws Exception {
@@ -63,22 +67,7 @@ public class Page extends Subject
         {
             pageName=pageDetails[1];
         }
-        System system=System.getInstance();
-        int id=-1;
-        try
-        {
-            id=Integer.valueOf(pageID);
-            system.getAccountManager().getAccount(pageDetails[0]);
-
-        }
-        catch (Exception e)
-        {
-            Team team =Team.createTeamFromDB(pageDetails[0]);
-            Page page = new Page(team,id,pageName);
-            return page;
-        }
-        TeamMember teamMember = TeamMember.createTeamMemberFromDB(pageDetails[0]);
-        Page page = new Page(teamMember,id,pageName);
+        Page page = new Page(Integer.valueOf(pageID),pageName);
         return page;
     }
 
@@ -96,7 +85,8 @@ public class Page extends Subject
      * add new message to the page and send new notification to all followers
      * @param data
      */
-    public void addDataToPage(String data) throws Exception {
+    public void addDataToPage(String data) throws Exception
+    {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date = new Date();
         String sDate=dateFormat.format(date);

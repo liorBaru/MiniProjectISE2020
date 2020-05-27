@@ -17,6 +17,12 @@ public class LineRefree extends Refree
     public LineRefree(String name, String training, Account account) throws SQLException {
         super(name,account,training,"Line");
     }
+    public LineRefree(Account account,String [] params)
+    {
+        super(account,params);
+        kind="Line";
+    }
+
 
 
     @Override

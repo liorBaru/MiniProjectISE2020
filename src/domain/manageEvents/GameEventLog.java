@@ -16,7 +16,7 @@ public class GameEventLog
 {
     private List<Event> events;
     private int gameID;
-    private GameEventsDaoSql gameEventsDaoSql;
+    private GameEventsDaoSql gameEventsDaoSql =GameEventsDaoSql.getInstance();
 
     public  GameEventLog(int id)
     {
@@ -35,6 +35,7 @@ public class GameEventLog
             String[] key={String.valueOf(gameID),teamMember.getAccount().getUserName(),type,String.valueOf(minute),sDate};
             gameEventsDaoSql.save(key);
             events.add(event);
+            return;
         }
         throw new Exception("Invalid arguments");
     }

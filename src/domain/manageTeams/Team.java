@@ -20,13 +20,13 @@ public class Team implements pageable
    // private TreeMap<Season, TeamInfo> seasons;
   //  private Set<FinancialAction> financialActions;
 
-    private static TeamDaoSql teamDaoSql;
-    private static StaffMembersDaoSql staffMembersDaoSql;
-    private static OwnersDaoSql ownersDaoSql;
-    private static CoachDaoSql coachDaoSql;
-    private static PlayerDaoSql playerDaoSql;
-    private static TeamManagerDaoSql teamManagerDaoSql;
-    private static AssetsDauSql assetsDauSql;
+    private static TeamDaoSql teamDaoSql =TeamDaoSql.getInstance();
+    private static StaffMembersDaoSql staffMembersDaoSql =StaffMembersDaoSql.getInstance();
+    private static OwnersDaoSql ownersDaoSql=OwnersDaoSql.getInstance();
+    private static CoachDaoSql coachDaoSql=CoachDaoSql.getInstance();
+    private static PlayerDaoSql playerDaoSql=PlayerDaoSql.getInstance();
+    private static TeamManagerDaoSql teamManagerDaoSql=TeamManagerDaoSql.getInstance();
+    private static AssetsDauSql assetsDauSql=AssetsDauSql.getInstance();
 
     public Team (List<Owner> owners, String name) throws Exception
     {
@@ -66,6 +66,7 @@ public class Team implements pageable
         Page page =Page.createPageFromDB(teamDetails[1]);
         boolean teamStatus=Boolean.parseBoolean(teamDetails[2]);
         Team team = new Team(teamName,page,teamStatus);
+        page.setOwner(team);
         return team;
     }
 

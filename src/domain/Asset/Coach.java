@@ -57,6 +57,7 @@ public class Coach extends TeamMember
         }
         Page page=Page.createPageFromDB(coach[2]);
         Coach coach1 = new Coach(account,team,page,coach[3],coach[4],coach[5]);
+        page.setOwner(coach1);
         return coach1;
     }
 

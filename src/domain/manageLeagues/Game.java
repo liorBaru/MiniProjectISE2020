@@ -1,22 +1,20 @@
 package domain.manageLeagues;
 
+import DataAccess.GameFollwersDaoSql;
 import DataAccess.GamesDaoSql;
 import domain.Asset.Field;
 import domain.Asset.Refree.Refree;
 import domain.manageEvents.Event;
 import domain.manageEvents.GameEventLog;
-import domain.managePages.Subject;
 import domain.manageTeams.Team;
-import domain.manageUsers.User;
-import domain.manageEvents.Notification;
-
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Game extends Subject
+public class Game
 {
     private int gameID;
     private Team guest;
@@ -27,29 +25,36 @@ public class Game extends Subject
     private String score;
     private String league;
     private LinkedList<Refree> referees;
+    private boolean var;
     private boolean reported;
+    private static GamesDaoSql gamesDaoSql=GamesDaoSql.getInstance();
+    private static GameFollwersDaoSql gameFollwersDaoSql= GameFollwersDaoSql.getInstance();
 
-    private static GamesDaoSql gamesDaoSql;
-
-    public Game (Team guest, Team host)
+    public Game (Team guest, Team host, String league)
     {
         this.guest=guest;
         this.host=host;
         reported = false;
+        var=false;
+        eventsLog =new GameEventLog(gameID);
+        score="";
+        this.league=league;
     }
 
-    public Game(int gameId, Team guest, Team host, Field field, String score, Date date, LinkedList<Refree> refrees,boolean reported)
+    public Game(int gameId, Team guest, Team host, Field field,String league ,String score, Date date, LinkedList<Refree> refrees,boolean reported,boolean var)
     {
         this.gameID=gameId;
         this.guest=guest;
         this.host=host;
         this.field=field;
+        this.league=league;
         this.score=score;
         this.startDate=date;
         this.referees=refrees;
         this.reported=reported;
+        this.var=var;
+        eventsLog= new GameEventLog(gameId);
     }
-
 
     public static Game getGameFromDB(int gameId) throws Exception
     {
@@ -62,52 +67,44 @@ public class Game extends Subject
         String [] gameData=games.get(0);
         Team guest=Team.createTeamFromDB(gameData[1]);
         Team host=Team.createTeamFromDB(gameData[2]);
-        Field field = new Field(gameData[3]);
+        Field field=null;
+        if(gameData[3].isEmpty()==false)
+        {
+            field = new Field(gameData[3]);
+        }
         String score=gameData[5];
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date date=dateFormat.parse(gameData[4]);
+        Date date=null;
+        if(gameData[4].isEmpty()==false)
+        {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            date=dateFormat.parse(gameData[4]);
+        }
         String league=gameData[6];
-        Refree main=Refree.getRefreeFromDB(gameData[7]);
-        Refree line1=Refree.getRefreeFromDB(gameData[8]);
-        Refree line2=Refree.getRefreeFromDB(gameData[9]);
-        Refree extra =Refree.getRefreeFromDB(gameData[10]);
         LinkedList<Refree> refrees = new LinkedList<>();
-        refrees.addLast(main);
-        refrees.addLast(line1);
-        refrees.addLast(line2);
-        refrees.addLast(extra);
+        if(gameData[7].isEmpty()==false)
+        {
+            Refree main=Refree.getRefreeFromDB(gameData[7]);
+            Refree line1=Refree.getRefreeFromDB(gameData[8]);
+            Refree line2=Refree.getRefreeFromDB(gameData[9]);
+            Refree extra =Refree.getRefreeFromDB(gameData[10]);
+            refrees.addLast(main);
+            refrees.addLast(line1);
+            refrees.addLast(line2);
+            refrees.addLast(extra);
+        }
         // handle var refrees;
-        boolean reported=Boolean.valueOf(gameData[11]);
-        Game game = new Game(gameId,guest,host,field,score,date,refrees,reported);
+        boolean var=Boolean.valueOf(gameData[11]);
+        boolean reported=Boolean.valueOf(gameData[12]);
+        Game game = new Game(gameId,guest,host,field,league,score,date,refrees,reported,var);
         return game;
     }
-
-
 
     public Team getGuest() {
         return guest;
     }
 
-    public void setGuest(Team guest) {
-        this.guest = guest;
-    }
-
     public Team getHost() {
         return host;
-    }
-
-    public void setHost(Team host) {
-        this.host = host;
-    }
-
-
-
-
-
-    @Override
-    public void notifyObservers(Notification notification)
-    {
-
     }
 
     public Refree getMainRefree() throws Exception {
@@ -118,41 +115,76 @@ public class Game extends Subject
         throw new Exception("main refree is not set for the game");
     }
 
+    public void setField(Field field) throws Exception {
+        this.field = field;
+        update();
+    }
+
+    public void setStartDate(Date startDate) throws Exception {
+        this.startDate = startDate;
+        update();
+    }
+
+
     public void SetRefrees(LinkedList<Refree> refrees) throws Exception {
 
         if(refrees==null || refrees.size()<4)
         {
             throw new Exception("Invalid arguments");
         }
-        String[] key=new String[7];
-        key[0]="Refrees";
-        key[1]=String.valueOf(gameID);
-        key[2]=refrees.get(0).getAccount().getUserName();
-        key[3]=refrees.get(1).getAccount().getUserName();
-        key[4]=refrees.get(2).getAccount().getUserName();
-        key[5]=refrees.get(3).getAccount().getUserName();
-        boolean var=false;
+        this.referees=refrees;
         if(refrees.size()>4)
         {
             var=true;
             for (int i=4;i<refrees.size();i++)
             {
-                // GameVarRfree push DB
+                /// handle var refrees
             }
         }
-        key[6]=String.valueOf(var);
-        gamesDaoSql.update(key);
+        update();
+    }
+
+    private void setFollower(String username) throws SQLException {
+        String[] key ={String.valueOf(gameID),username};
+        gameFollwersDaoSql.save(key);
     }
 
 
     public void SetResult(String result) throws Exception {
         this.score=result;
-        String [] key ={"Result",result};
-        update(key);
+        reported=true;
+        update();
     }
 
-    private void update(String [] key) throws Exception {
-        gamesDaoSql.update(key);
+    private void update() throws Exception
+    {
+        String gameId=String.valueOf(gameID);
+        String guestS= guest.getName();
+        String hostS=host.getName();
+        String fieldS="";
+        if(field!=null)
+        {
+            fieldS=field.getName();
+        }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String date="";
+        if(startDate!=null)
+        {
+            date=dateFormat.format(startDate);
+        }
+        String mainR="";
+        String line1="";
+        String line2="";
+        String extra="";
+        if(referees.isEmpty()==false)
+        {
+            mainR=referees.get(0).getAccount().getUserName();
+            line1=referees.get(1).getAccount().getUserName();
+            line2=referees.get(2).getAccount().getUserName();
+            extra=referees.get(3).getAccount().getUserName();
+        }
+        String[] params={gameId,guestS,hostS,fieldS,date,score,league,mainR,line1,line2,extra,String.valueOf(var),String.valueOf(reported)};
+        gamesDaoSql.update(params);
     }
 
     public List<Event> getEvents() throws Exception {

@@ -87,7 +87,8 @@ public class System
         return this.accountManager;
     }
 
-    public void sendNotification(String fanUserName,Notification notification) throws SQLException {
+    public void sendNotification(String fanUserName,Notification notification) throws SQLException
+    {
          String [] key ={fanUserName,notification.getDetails(),notification.getDate()};
          notificationsDaoSql.save(key);
     }

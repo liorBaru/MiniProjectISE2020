@@ -3,6 +3,7 @@ package domain.Asset.Refree;
 import DataAccess.GamesDaoSql;
 import DataAccess.IfaDaoSql;
 import DataAccess.RefreesDaoSql;
+import DataAccess.System;
 import domain.Asset.Coach;
 import domain.Asset.Player;
 import domain.Asset.TeamMember;
@@ -10,7 +11,6 @@ import domain.manageUsers.Account;
 import domain.manageUsers.User;
 import domain.manageLeagues.Game;
 import domain.manageEvents.*;
-
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.LinkedList;
@@ -22,9 +22,9 @@ public abstract class Refree extends User
     protected List<Game> games;
     protected String training;
 
-    protected static RefreesDaoSql refreesDaoSql;
-    protected static IfaDaoSql ifaDaoSql;
-    protected static GamesDaoSql gamesDaoSql;
+    protected static RefreesDaoSql refreesDaoSql=RefreesDaoSql.getInstance();
+    protected static IfaDaoSql ifaDaoSql=IfaDaoSql.getInstance();
+    protected static GamesDaoSql gamesDaoSql=GamesDaoSql.getInstance();
 
     public Refree(String name, Account account, String trainig, String type) throws SQLException {
         super(name,account);
@@ -33,13 +33,47 @@ public abstract class Refree extends User
         refreesDaoSql.save(key);
     }
 
-    public static Refree createRefreeFromDB(String [] key)
+    public Refree(Account account,String [] params)
     {
-        return null;
+        super(params[1],account);
+        this.training=params[2];
     }
-    public static Refree getRefreeFromDB(String params)
-    {
-        return null;
+
+    public static Refree createRefreeFromDB(String [] key) throws Exception {
+        System system= System.getInstance();
+        Account account=system.getAccountManager().getAccount(key[0]);
+        Refree refree=null;
+        if(key[3].equals("Main"))
+        {
+            refree =new MainRefree(account,key);
+
+        }
+        else if(key[3].equals("Line"))
+        {
+            refree=new LineRefree(account,key);
+        }
+        else if(key[3].equals("Var"))
+        {
+            refree= new VarRefree(account,key);
+        }
+        else
+        {
+            throw new Exception("Invalid refree type");
+        }
+        return refree;
+    }
+
+    public static Refree getRefreeFromDB(String params) throws Exception {
+        if(params!=null && params.isEmpty()==false)
+        {
+            String [] key={params};
+            List<String[]> refrees =refreesDaoSql.get(key);
+            if(refrees!=null && refrees.isEmpty()==false)
+            {
+                return createRefreeFromDB(refrees.get(0));
+            }
+        }
+            throw new Exception("Invalid arguments, username not found");
     }
 
     @Override
@@ -73,9 +107,9 @@ public abstract class Refree extends User
         Game game =Game.getGameFromDB(gameId);
         int host=0;
         int guest=0;
-        if(this.account.getUserName().equals(game.getMainRefree()))
+        if(this.account.getUserName().equals(game.getMainRefree().getAccount().getUserName()))
         {
-            TreeMap<Player,List<Event>> playerEvents=getPlayerEvents(game.getEvents());
+            TreeMap<Player,LinkedList<Event>> playerEvents=getPlayerEvents(game.getEvents());
             for (Player player: playerEvents.keySet())
             {
                 boolean update=false;
@@ -84,6 +118,7 @@ public abstract class Refree extends User
                     if(event.getType().equals("Goal"))
                     {
                         player.setGoals(1);
+                        update=true;
                         if(game.getHost().equals(player.getTeam()))
                         {
                             host++;
@@ -96,10 +131,12 @@ public abstract class Refree extends User
                     else if(event.getType().equals("YellowCard"))
                     {
                         player.setYellowCards(1);
+                        update=true;
                     }
                     else if(event.getType().equals("RedCard"))
                     {
                         player.setRedCards(1);
+                        update=true;
                     }
                     else if(event.getType().equals("OwnGoal"))
                     {
@@ -118,17 +155,19 @@ public abstract class Refree extends User
                    player.updateByRefree();
                 }
             }
-            String result =game.getHost()+": "+host+game.getGuest()+": "+guest;
+            String result =game.getHost().getName()+": "+host+" "+game.getGuest().getName()+": "+guest;
             game.SetResult(result);
+            return;
         }
-        else {
+        else
+        {
             throw new Exception("Invalid operation, this will be reported");
         }
     }
 
-    private TreeMap<Player,List<Event>> getPlayerEvents(List<Event> events)
+    private TreeMap<Player,LinkedList<Event>> getPlayerEvents(List<Event> events)
     {
-        TreeMap<Player, List<Event>> playersEvents =new TreeMap<>();
+        TreeMap<Player, LinkedList<Event>> playersEvents =new TreeMap<>();
         for (Event event:events)
         {
             if(event.getTeamMember() instanceof Coach)
@@ -137,18 +176,18 @@ public abstract class Refree extends User
             }
             else
             {
-                if(playersEvents.containsKey((Player) event.getTeamMember()))
+                if(playersEvents.isEmpty()==false &&playersEvents.containsKey((Player) event.getTeamMember()))
                 {
-                    playersEvents.get((Player) event.getTeamMember()).add(event);
+                    playersEvents.get(event.getTeamMember()).add(event);
                 }
                 else
                 {
-                    List<Event> playerEvent = new LinkedList<>();
+                    LinkedList<Event> playerEvent = new LinkedList<>();
                     playerEvent.add(event);
-                    playersEvents.put((Player) event.getTeamMember(),playerEvent);
+                    Player p=(Player)  event.getTeamMember();
+                    playersEvents.put(p,playerEvent);
                 }
             }
-
         }
         return playersEvents;
     }
@@ -157,7 +196,7 @@ public abstract class Refree extends User
         GameEventLog gameEventLog = new GameEventLog(gameID);
         String[] key={"Key",String.valueOf(gameID)};
         List<String[]> games= gamesDaoSql.get(key);
-        if(games==null|| games.isEmpty())
+        if(games==null || games.isEmpty())
         {
             throw new Exception("Invalid game");
         }
@@ -168,6 +207,4 @@ public abstract class Refree extends User
             gameEventLog.createEvent(teamMember,event,minute,date);
         }
     }
-
-
 }

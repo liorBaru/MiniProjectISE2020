@@ -34,15 +34,17 @@ public class StaffMembersDaoSql implements DaoSql
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
                 resultSet=stmt.executeQuery();
-                results= new String[1];
+                results= new String[2];
                 if(resultSet.next())
                 {
                     results[0]=resultSet.getString(1);
                     results[1]=resultSet.getString(2);
-                    stmt.close();
                     list.add(results);
                     return list;
                 }
+                resultSet.close();
+                stmt.close();
+                conn.close();
             }
             catch (SQLException e)
             {
@@ -120,6 +122,7 @@ public class StaffMembersDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.execute();
                 stmt.close();
+                conn.close();
                 logger.info("The staffmember " + params[0] + "succesfully updated");
             }
             catch (SQLException e)
@@ -145,6 +148,7 @@ public class StaffMembersDaoSql implements DaoSql
                 stmt.setString(1,key[0]);
                 stmt.execute();
                 stmt.close();
+                conn.close();
                 logger.info("The staffmember " + key[0] + "succesfully delelted");
             }
             catch (SQLException e)

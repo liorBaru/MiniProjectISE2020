@@ -22,6 +22,13 @@ public class MainRefree extends Refree
         String[]key={account.getUserName(),name,training,"Main"};
         refreesDaoSql.update(key);
     }
+
+    public MainRefree(Account account,String [] params)
+    {
+        super(account,params);
+        kind="Main";
+    }
+
     @Override
     public String getKind()
     {

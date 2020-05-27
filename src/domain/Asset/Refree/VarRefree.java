@@ -17,6 +17,12 @@ public class VarRefree extends Refree
         super(name,account,training,"Var");
     }
 
+    public VarRefree(Account account,String [] params)
+    {
+        super(account,params);
+        kind="Var";
+    }
+
     @Override
     protected void update() throws SQLException {
         String[]key={account.getUserName(),name,training,"Var"};

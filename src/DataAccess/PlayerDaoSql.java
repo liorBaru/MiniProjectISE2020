@@ -198,9 +198,10 @@ public class PlayerDaoSql implements DaoSql
                 stmt.setString(2,params[1]);
                 stmt.setString(3,params[2]);
                 stmt.setInt(4,Integer.parseInt(params[3]));
-                Date date=null;
-                date= (Date) new SimpleDateFormat("yyyy-mm-dd").parse(params[4]);
-                stmt.setDate(5,date);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date date = simpleDateFormat.parse(params[4]);
+                java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+                stmt.setDate(5,sqlStartDate);
                 stmt.setString(6,params[5]);
                 stmt.setInt(7,Integer.parseInt(params[6]));
                 stmt.setInt(8,Integer.parseInt(params[7]));
