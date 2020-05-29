@@ -36,9 +36,9 @@ public class GuestController extends Observable
         }
         catch (Exception e)
         {
-            message = new String[2];
-            message[1]="Fail";
-            message[2]=e.getMessage();
+            message = new String[3];
+            message[0]="Fail";
+            message[1]=e.getMessage();
         }
         return message;
     }

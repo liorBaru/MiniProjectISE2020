@@ -64,7 +64,7 @@ public class AccountManager
                     String salt="1";
                     String newPasswod = BCrypt.hashpw(password, BCrypt.gensalt());
                     System.out.println(newPasswod);
-                    String[] params={userName,newPasswod,salt,type};
+                    String[] params={userName,newPasswod,type};
                     usersDaoSql.save(params);
                     Account account = new Account(userName,password);
                     return account;
@@ -180,7 +180,7 @@ public class AccountManager
                 boolean encryptSuccess= BCrypt.checkpw(password, userDetails[1]);
                 if(encryptSuccess)
                 {
-                    User user=getUser(userDetails[0],userDetails[3]);
+                    User user=getUser(userDetails[0],userDetails[2]);
                     return user;
                 }
             }

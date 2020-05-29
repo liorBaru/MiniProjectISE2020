@@ -29,11 +29,11 @@ public class RegisterView extends VerticalLayout  {
          valuePassword=passwordField.getValue();
          String[] user=service.register(valueName,valueUserName,valuePassword);
 
-            if(user!=null &&user[0].equalsIgnoreCase("respond")){
-                Notification.show("Success");
+            if(user!=null &&user[0].equalsIgnoreCase("Respond")){
+                Notification.show(user[1],10000, Notification.Position.MIDDLE);
             }
             else if(user!=null&& user[0].equalsIgnoreCase("Fail")){
-             Notification.show(user[1]);
+             Notification.show(user[1],5000, Notification.Position.MIDDLE);
          }
             else {
                 Notification.show("ERROR",10000, Notification.Position.MIDDLE);

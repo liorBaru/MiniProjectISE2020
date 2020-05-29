@@ -26,7 +26,7 @@ public class GuestApplication extends Observable implements Observer {
         Guest g=new Guest();
         GuestController controller=new GuestController(g);
 
-        String[] ans=new String[6];
+        String[] ans;
         ans= controller.login(username,pass);
 //        ans[0]="respond";
 //        ans[1]="Referee";
@@ -46,7 +46,13 @@ public class GuestApplication extends Observable implements Observer {
     //TODO: after double pass check (get from gal)
 
     public String[] register(String name, String username, String pass){
-        return null;
+        Guest g=new Guest();
+        GuestController controller=new GuestController(g);
+
+        String[] ans=new String[6];
+        ans= controller.register(name,username,pass);
+
+        return ans;
     }
 
 

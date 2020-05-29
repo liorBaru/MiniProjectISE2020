@@ -38,8 +38,7 @@ public class UsersDaoSql implements DaoSql
                 {
                     results[0]=resultSet.getString(1);
                     results[1]=resultSet.getString(2);
-                    results[2]=String.valueOf(resultSet.getInt(3));
-                    results[3]=resultSet.getString(4);
+                    results[2]=resultSet.getString(3);
                     stmt.close();
                     list.add(results);
                     return list;
@@ -92,7 +91,7 @@ public class UsersDaoSql implements DaoSql
     @Override
     public void save(String[] params) throws SQLException
     {
-        String query="INSERT INTO users(user_name,password,salt,UserType)" +"values(?,?,?,?);";
+        String query="INSERT INTO users(user_name,password,UserType)" +"values(?,?,?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
@@ -102,8 +101,7 @@ public class UsersDaoSql implements DaoSql
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
                 stmt.setString(2,params[1]);
-                stmt.setInt(3,Integer.valueOf(params[2]));
-                stmt.setString(4,params[3]);
+                stmt.setString(3,params[2]);
                 stmt.execute();
                 stmt.close();
                 logger.info("The user " + params[0] + "successfuly saved");
