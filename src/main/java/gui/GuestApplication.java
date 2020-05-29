@@ -45,7 +45,7 @@ public class GuestApplication extends Observable implements Observer {
      */
     //TODO: after double pass check (get from gal)
 
-    public String[] regiter (String name,String username, String pass){
+    public String[] register(String name, String username, String pass){
         return null;
     }
 

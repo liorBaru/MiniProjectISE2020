@@ -40,6 +40,7 @@ public class LoginView extends VerticalLayout {
                     mainLayout.getBtn_logout().setVisible(true);
                     mainLayout.getBtn_message().setVisible(true);
                     mainLayout.getBtn_login().setVisible(false);
+                    mainLayout.getBtn_register().setVisible(false);
                     passwordField.clear();
                     userName.clear();
                 } else if (respond.equalsIgnoreCase("Fail")) {
