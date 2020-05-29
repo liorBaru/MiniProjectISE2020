@@ -1,6 +1,7 @@
 package DataAccess;
 import org.apache.logging.log4j.Logger;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.*;
 import Logger.*;
 public interface DaoSql
@@ -16,7 +17,7 @@ public interface DaoSql
 
     List<String[]> get(String[] key );
     List<String[]> getAll();
-    void save(String[] params) throws SQLException;
+    void save(String[] params) throws SQLException, ParseException;
     void update(String[] params) throws SQLException;
     void delete(String []key)throws SQLException;
 

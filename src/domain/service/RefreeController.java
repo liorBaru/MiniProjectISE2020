@@ -36,28 +36,32 @@ public class RefreeController
 
 
     public String[] addEvent(String teamMemberUserName, int gameID, String event, int minute,Date date)
+{
+    String [] message=new String[2];
+    try
     {
-        String [] message=new String[2];
-        try
+        if(teamMemberUserName.isEmpty()==false&& event.isEmpty()==false && (minute>0 && minute<120) )
         {
-            if(teamMemberUserName.isEmpty()==false&& event.isEmpty()==false && minute>0 && minute<120)
-            {
-                refree.addEvent(teamMemberUserName,gameID,event,minute,date);
-                message[0]="Respond";
-                message[1]="Success operation";
-            }
-            else
-            {
-                throw new Exception("Invalid arguments");
-            }
+            refree.addEvent(teamMemberUserName,gameID,event,minute,date);
+            message[0]="Respond";
+            message[1]="Success operation";
         }
-        catch (Exception e)
+        else
         {
-            message[0]="Fail";
-            message[1]=e.getMessage();
+            throw new Exception("Invalid arguments");
         }
-       return message;
     }
+    catch (Exception e)
+    {
+        message[0]="Fail";
+        message[1]=e.getMessage();
+    }
+    return message;
+}
+
+
+
+
 
 
 }

@@ -1,10 +1,11 @@
 package DataAccess;
 
 import java.sql.*;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 
 class FinancialDaoSql implements DaoSql
 {
@@ -20,7 +21,7 @@ class FinancialDaoSql implements DaoSql
     public List<String[]> get(String[] key)
     {
         ResultSet resultSet;
-        String query="SELECT * FROM financialactions where user_name =?";
+        String query="SELECT * FROM financialactions where member =? AND date =?";
         Connection conn = dBconnector.getConnection();
         String [] results;
         List<String[]> list = new ArrayList<>();
@@ -31,6 +32,7 @@ class FinancialDaoSql implements DaoSql
                 conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
+                stmt.setString(2,key[1]);
                 resultSet=stmt.executeQuery();
                 results= new String[5];
                 if(resultSet.next())
@@ -85,24 +87,20 @@ class FinancialDaoSql implements DaoSql
     }
 
     @Override
-    public void save(String[] params) throws SQLException
-    {
-        Date date=null;
+    public void save(String[] params) throws SQLException, ParseException {
         String query="INSERT INTO financialactions(team,date,description,member,price)" +"values(?,?,?,?,?);";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
-            try {
-              date= (Date) new SimpleDateFormat("dd/MM/yyyy").parse(params[1]);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date = simpleDateFormat.parse(params[1]);
+            java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
             PreparedStatement stmt = null;
             try {
                 conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,params[0]);
-                stmt.setDate(2,date);
+                stmt.setDate(2,sqlStartDate);
                 stmt.setString(3,params[2]);
                 stmt.setString(4,params[3]);
                 stmt.setDouble(5,Double.parseDouble(params[4]));
@@ -120,7 +118,7 @@ class FinancialDaoSql implements DaoSql
 
     @Override
     public void update(String[] params) throws SQLException {
-        Date date=null;
+        java.sql.Date date=null;
         try {
             date= (Date) new SimpleDateFormat("dd/MM/yyyy").parse(params[1]);
         } catch (ParseException e) {
@@ -160,7 +158,7 @@ class FinancialDaoSql implements DaoSql
 
     @Override
     public void delete(String[] key) throws SQLException {
-        String query =" Delete from financialactions where team=?;" ;
+        String query =" Delete from financialactions where member =? AND date =?"; ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
@@ -169,6 +167,7 @@ class FinancialDaoSql implements DaoSql
                 conn.setCatalog("manageteams");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
+                stmt.setString(2,key[1]);
                 stmt.execute();
                 stmt.close();
                 logger.info("financial action succesfully deleted");

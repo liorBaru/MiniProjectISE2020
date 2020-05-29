@@ -58,7 +58,7 @@ public class GamesDaoSql implements DaoSql
                     results[4]="";
                     if(resultSet.getDate(5)!=null)
                     {
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         java.util.Date dateC = resultSet.getDate(5);
                         results[4]=dateFormat.format(dateC);
                     }
@@ -107,7 +107,7 @@ public class GamesDaoSql implements DaoSql
                     results[1]=resultSet.getString(2);
                     results[2]=resultSet.getString(3);
                     results[3]=resultSet.getString(4);
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     java.util.Date dateC = resultSet.getDate(5);
                     results[4]=dateFormat.format(dateC);
                     results[5]=resultSet.getString(6);
@@ -118,6 +118,8 @@ public class GamesDaoSql implements DaoSql
                     results[10]=resultSet.getString(11);
                     results[11]=String.valueOf(resultSet.getBoolean(12));
                     results[12]=String.valueOf(resultSet.getBoolean(13));
+                    results[13]=String.valueOf(resultSet.getTime(14));
+                    results[14]=String.valueOf(resultSet.getTime(15));
                     list.add(results);
                 }
                 return list;
@@ -153,7 +155,7 @@ public class GamesDaoSql implements DaoSql
                     results[1]=resultSet.getString(2);
                     results[2]=resultSet.getString(3);
                     results[3]=resultSet.getString(4);
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     java.util.Date dateC = resultSet.getDate(5);
                     results[4]=dateFormat.format(dateC);
                     results[5]=resultSet.getString(6);
@@ -164,6 +166,8 @@ public class GamesDaoSql implements DaoSql
                     results[10]=resultSet.getString(11);
                     results[11]=String.valueOf(resultSet.getBoolean(12));
                     results[12]=String.valueOf(resultSet.getBoolean(13));
+                    results[13]=String.valueOf(resultSet.getTime(14));
+                    results[14]=String.valueOf(resultSet.getTime(15));
                     list.add(results);
                 }
                 return list;
@@ -194,7 +198,7 @@ public class GamesDaoSql implements DaoSql
                 results[1]=resultSet.getString(2);
                 results[2]=resultSet.getString(3);
                 results[3]=resultSet.getString(4);
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 java.util.Date dateC = resultSet.getDate(5);
                 results[4]=dateFormat.format(dateC);
                 results[5]=resultSet.getString(6);
@@ -205,6 +209,8 @@ public class GamesDaoSql implements DaoSql
                 results[10]=resultSet.getString(11);
                 results[11]=String.valueOf(resultSet.getBoolean(12));
                 results[12]=String.valueOf(resultSet.getBoolean(13));
+                results[13]=String.valueOf(resultSet.getTime(14));
+                results[14]=String.valueOf(resultSet.getTime(15));
                 list.add(results);
             }
             resultSet.close();
@@ -226,13 +232,13 @@ public class GamesDaoSql implements DaoSql
         {
             PreparedStatement stmt = null;
             try {
-                conn.setCatalog("managmentleaggues");
+                conn.setCatalog("managmentleagues");
                 stmt = conn.prepareStatement(query);
                 stmt.setInt(1, Integer.parseInt(params[0]));
                 stmt.setString(2,params[1]);
                 stmt.setString(3,params[2]);
                 stmt.setString(4,params[3]);
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 java.util.Date date = dateFormat.parse(params[4]);
                 java.sql.Date sqlDate=new java.sql.Date(date.getTime());
                 stmt.setDate(5,sqlDate);
@@ -259,7 +265,7 @@ public class GamesDaoSql implements DaoSql
     @Override
     public void update(String[] params) throws SQLException
     {
-        String update="update games guest=?,host=?,field=?,date=?,score=?,league=?,mainRefree=?,lineRefree1=?,lineRefree2=?,extraRefree=?,var=?,reported=? where id=?;" ;
+        String update="update games guest=?,host=?,field=?,date=?,score=?,league=?,mainRefree=?,lineRefree1=?,lineRefree2=?,extraRefree=?,var=?,reported=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
@@ -271,7 +277,7 @@ public class GamesDaoSql implements DaoSql
                 stmt.setString(1,params[1]);
                 stmt.setString(2,params[2]);
                 stmt.setString(3,params[3]);
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 java.util.Date date = dateFormat.parse(params[4]);
                 java.sql.Date sqlDate=new java.sql.Date(date.getTime());
                 stmt.setDate(4,sqlDate);
@@ -303,7 +309,7 @@ public class GamesDaoSql implements DaoSql
         {
             PreparedStatement stmt = null;
             try {
-                conn.setCatalog("managmentleaggues");
+                conn.setCatalog("managmentleagues");
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1,key[0]);
                 stmt.execute();

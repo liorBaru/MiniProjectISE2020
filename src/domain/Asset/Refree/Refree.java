@@ -11,9 +11,12 @@ import domain.manageUsers.Account;
 import domain.manageUsers.User;
 import domain.manageLeagues.Game;
 import domain.manageEvents.*;
+import jdk.nashorn.internal.parser.DateParser;
 
-import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -47,7 +50,6 @@ public abstract class Refree extends User
         if(key[3].equals("Main"))
         {
             refree =new MainRefree(account,key);
-
         }
         else if(key[3].equals("Line"))
         {
@@ -108,7 +110,18 @@ public abstract class Refree extends User
     {
 
         Game game =Game.getGameFromDB(gameId);
-        // check time 5 hours
+
+        String[] key={"Key",String.valueOf(gameId)};
+        List<String[]> games= gamesDaoSql.get(key);
+
+        if(games==null || games.isEmpty())
+        {
+            Logger.Lo4jDemo.writeError("Invalid game");
+            throw new Exception("Invalid game");
+        }
+
+        checkLegacyOfEvents(games.get(0));
+
         if(game.getReported()==false)
         {
             if(this.account.getUserName().equals(game.getMainRefree().getAccount().getUserName()))
@@ -211,9 +224,16 @@ public abstract class Refree extends User
         List<String[]> games= gamesDaoSql.get(key);
         if(games==null || games.isEmpty())
         {
+            Logger.Lo4jDemo.writeError("Invalid game");
             throw new Exception("Invalid game");
         }
-        // add check if refree is refree in the game
+        if(Boolean.parseBoolean(games.get(0)[12])==true) {
+            Logger.Lo4jDemo.writeError("Cant update event after report");
+            throw new Exception("Cant update event after report");
+        }
+
+        checkLegacyOfEvents(games.get(0));
+
         String[]gameData=games.get(0);
         Game.notifyEvent(gameID,event,date);
         TeamMember teamMember =TeamMember.createTeamMemberFromDB(teamMemberUserName);
@@ -221,5 +241,53 @@ public abstract class Refree extends User
         {
             gameEventLog.createEvent(teamMember,event,minute,date);
         }
+    }
+
+    public boolean checkLegacyOfEvents(String[] game) throws Exception {
+        //Calculate match Day and hour
+        String[] date=new String[2];
+        date=game[4].split(" ");
+        String[] hoursEndGame=date[1].split(":");
+        int matchEndHour=Integer.parseInt(hoursEndGame[0])+2;
+        String[] MatchStringDay=date[0].split("-");
+        int matchDay = Integer.parseInt(MatchStringDay[2]);
+
+        //Calculate currentDay and hour
+        Date currentDate = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+
+        String[] current = ft.format(currentDate).split(" ");
+        String[] hoursCurrent=current[1].split(":");
+        int currentHour = Integer.parseInt(hoursCurrent[0]);
+
+        String[] currentDay=current[0].split("-");
+        int currenDay= Integer.parseInt(currentDay[2]);
+
+        if(currenDay==matchDay){
+            if(currentHour-5>matchEndHour)
+                {
+                    Logger.Lo4jDemo.writeError("The limit of event update passed");
+                    throw new Exception("The limit of event update passed");
+                }
+            else{
+                return true;
+            }
+        }
+        else{
+            if(currenDay-1==matchDay)
+            {
+                if(currentHour+24-matchEndHour>5)
+                {
+                    Logger.Lo4jDemo.writeError("The limit of event update passed");
+                    throw new Exception("The limit of event update passed");
+                }
+                else
+                    return true;
+            }
+        }
+
+        Logger.Lo4jDemo.writeError("The limit of event update passed");
+        throw new Exception("The limit of event update passed");
+
     }
 }

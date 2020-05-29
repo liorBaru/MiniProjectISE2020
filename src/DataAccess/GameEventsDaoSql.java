@@ -1,10 +1,8 @@
 package DataAccess;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +19,7 @@ public class GameEventsDaoSql implements DaoSql
     @Override
     public List<String[]> get(String[] key)
     {
-        String query ="select * from gameevents where gameID=?;";
+        String query ="select * from gameevents where gameID=?";
         Connection connection=dBconnector.getConnection();
         if(connection!=null)
         {
@@ -33,7 +31,7 @@ public class GameEventsDaoSql implements DaoSql
                 preparedStatement=connection.prepareStatement(query);
                 preparedStatement.setInt(1,Integer.valueOf(key[0]));
                 ResultSet resultSet=preparedStatement.executeQuery();
-                while (resultSet.next())
+                while(resultSet.next())
                 {
                     String [] event=new String[5];
                     event[0]=String.valueOf(resultSet.getInt(1));
@@ -111,7 +109,7 @@ public class GameEventsDaoSql implements DaoSql
                 preparedStatement.setString(2, params[1]);
                 preparedStatement.setString(3,params[2]);
                 preparedStatement.setInt(4,Integer.valueOf(params[3]));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date date = simpleDateFormat.parse(params[4]);
                 java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
                 preparedStatement.setDate(5,sqlStartDate);
@@ -134,6 +132,32 @@ public class GameEventsDaoSql implements DaoSql
 
     @Override
     public void delete(String[] key) throws SQLException {
-        throw new SQLException("Invalid operation");
+        String query =" Delete from gameevents where gameID=? and teamMember=? and EventType=? and gameMinute=? and date=?;";
+        Connection conn = dBconnector.getConnection();
+        if (conn != null)
+        {
+            PreparedStatement preparedStatement = null;
+            try {
+                conn.setCatalog("managmentleagues");
+                preparedStatement=conn.prepareStatement(query);
+                preparedStatement.setInt(1,Integer.valueOf(key[0]));
+                preparedStatement.setString(2, key[1]);
+                preparedStatement.setString(3,key[2]);
+                preparedStatement.setInt(4,Integer.valueOf(key[3]));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date date = simpleDateFormat.parse(key[4]);
+                java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+                preparedStatement.setDate(5,sqlStartDate);
+                preparedStatement.execute();
+                preparedStatement.close();
+                logger.info("event succesfully deleted");
+            }
+            catch (SQLException | ParseException e)
+            {
+                logger.error(e.getMessage());
+                throw new SQLException(DaoSql.getException(e.getMessage()));
+            }
+        }
+
     }
 }

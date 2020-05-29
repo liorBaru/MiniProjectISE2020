@@ -14,9 +14,11 @@ import domain.manageTeams.Team;
 import domain.manageUsers.User;
 import domain.manageEvents.Notification;
 import Logger.*;
+import javafx.scene.input.DataFormat;
 
 import java.sql.SQLException;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,7 +54,7 @@ public class Game
         this.league=league;
     }
 
-    public Game(int gameId, Team guest, Team host, Field field,String league ,String score, Date date, LinkedList<Refree> refrees,boolean reported,boolean var)
+    public Game(int gameId, Team guest, Team host, Field field, String league , String score, Date date, LinkedList<Refree> refrees, boolean reported, boolean var)
     {
         this.gameID=gameId;
         this.guest=guest;
@@ -106,6 +108,7 @@ public class Game
         // handle var refrees;
         boolean var=Boolean.valueOf(gameData[11]);
         boolean reported=Boolean.valueOf(gameData[12]);
+        Date endGame=new Date(gameData[13]);
         Game game = new Game(gameId,guest,host,field,league,score,date,refrees,reported,var);
         return game;
     }
@@ -206,7 +209,7 @@ public class Game
         return reported;
     }
 
-    public static void notifyEvent(int gameId, String event, java.sql.Date date) throws SQLException {
+    public static void notifyEvent(int gameId, String event, Date date) throws SQLException {
         if(gameId<0 && event!=null && date!=null)
         {
             String[] gameDetails = {"gameID" , String.valueOf(gameId)};

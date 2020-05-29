@@ -26,6 +26,23 @@ public class GameEventLog
 
     public void createEvent(TeamMember teamMember, String type, int minute, Date date) throws Exception
     {
+
+        if(teamMember!=null && type!=null && minute>0 && date!=null)
+        {
+            EventType eventType=EventType.valueOf(type);
+            Event event = new Event(teamMember,eventType,minute,date);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String sDate=dateFormat.format(date);
+            String[] key={String.valueOf(gameID),teamMember.getAccount().getUserName(),type,String.valueOf(minute),sDate};
+            gameEventsDaoSql.save(key);
+            events.add(event);
+            return;
+        }
+        throw new Exception("Invalid arguments");
+    }
+
+    public void editEvent(TeamMember teamMember, String type, int minute, Date date) throws Exception
+    {
         if(teamMember!=null && type!=null && minute>0 && date!=null)
         {
             EventType eventType=EventType.valueOf(type);
