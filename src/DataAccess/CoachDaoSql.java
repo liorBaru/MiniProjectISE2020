@@ -28,7 +28,7 @@ public class CoachDaoSql implements DaoSql {
         {
             return getByKey(key[1]);
         }
-       return null;
+        return null;
     }
 
     private List<String[]> getByKey(String key)
@@ -134,7 +134,7 @@ public class CoachDaoSql implements DaoSql {
         {
             logger.error(e.getMessage());
         }
-      return null;
+        return null;
     }
 
     /**

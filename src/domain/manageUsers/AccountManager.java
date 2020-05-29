@@ -1,12 +1,13 @@
 package domain.manageUsers;
 
-import DataAccess.UsersDaoSql;
+import DataAccess.*;
 import domain.Asset.*;
 import domain.Asset.*;
 import domain.Asset.Refree.Refree;
 import domain.manageLeagues.IFA;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.lang.System;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -63,7 +64,6 @@ public class AccountManager
                 {
                     String salt="1";
                     String newPasswod = BCrypt.hashpw(password, BCrypt.gensalt());
-                    System.out.println(newPasswod);
                     String[] params={userName,newPasswod,salt,type};
                     usersDaoSql.save(params);
                     Account account = new Account(userName,password);

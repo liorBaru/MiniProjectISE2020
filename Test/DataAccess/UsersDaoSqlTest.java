@@ -1,13 +1,14 @@
 package DataAccess;
 
 
+import DataAccess.UsersDaoSql;
 import org.junit.Test;
 import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class usersDaoSqlTest
+public class UsersDaoSqlTest
 {
     UsersDaoSql usersDaoSql=UsersDaoSql.getInstance();
 
@@ -15,12 +16,11 @@ public class usersDaoSqlTest
     @Test
     public void getAll()
     {
-        assertTrue(usersDaoSql.getAll().size()>5);
+
     }
 
     @Test
-    public void save()
-    {
+    public void save() throws SQLException {
         String [] details = new String[4];
         details[0]="galborabia";
         details[1]="galb1234";
@@ -29,18 +29,16 @@ public class usersDaoSqlTest
         try
         {
             usersDaoSql.save(details);
-            List<String []> checks=usersDaoSql.get(details);
-            assertEquals("galborabia",checks.get(0)[0]);
-            usersDaoSql.delete(details);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        List<String []> checks=usersDaoSql.get(details);
+        assertEquals("galborabia",checks.get(0));
+        usersDaoSql.delete(details);
     }
 
     @Test
-    public void update()
-    {
+    public void update() throws SQLException {
         String [] details = new String[4];
         details[0]="galborabia";
         details[1]="galb1234";
@@ -48,13 +46,10 @@ public class usersDaoSqlTest
         details[3]="Fan";
         try {
             usersDaoSql.save(details);
-            details[3]="Player";
-            usersDaoSql.update(details);
-            assertEquals("Player",usersDaoSql.get(details).get(0)[3]);
-            usersDaoSql.delete(details);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        details[1]="galNewPass1";
+        usersDaoSql.update(details);
     }
 }
