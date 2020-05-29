@@ -1,0 +1,36 @@
+/*
+   CSS styling examples for the Vaadin app.
+   Visit https://vaadin.com/docs/flow/theme/theming-overview.html and
+   https://vaadin.com/themes/lumo for more information.
+*/
+
+/* Example: CSS class name to center align the content . */
+.centered-content {
+  margin: 0 auto;
+  max-width: 250px;
+}
+.Header{
+  color: #0b8043;
+}
+.login{
+  position:absolute;
+  top:0;
+  right:5%;
+}
+.logo{
+  font-size: larger;
+  color: #2b81af;
+}
+.ifa-div{
+  position: absolute;
+  right: 50%;
+}
+.hidden{
+  visibility: hidden;
+}
+.comboBox{
+  background: #0b8043;
+
+}
+
+
