@@ -94,36 +94,39 @@ public class IFAView extends VerticalLayout
         TextField sessionName=new TextField("Session Name");
         TextField year=new TextField("League year");
         String activeUserName=(String) VaadinSession.getCurrent().getAttribute("user");
-        String[] policy= service.getCalculatorPolicy(activeUserName);
-
-        //TODO: add combobox
-        Select<String> labelSelect = new Select<>();
-        labelSelect.setItems("Option one", "Option two");
-        labelSelect.setLabel("Label");
+        String[] policyArray= service.getCalculatorPolicy(activeUserName);
+        Select<String> policySelect = new Select<>();
+        for (String policy:policyArray) {
+            policySelect.setItems(policy);
+        }
+        policySelect.setLabel("Policy");
 
         Button btn_set =new Button("Set",buttonClickEvent -> {
-            String[] ans=service.setLegueCalculator(sessionName.getValue(), Integer.parseInt(year.getValue()), policy[0],activeUserName);
+            String policySelectValue= policySelect.getValue();
+            String[] ans=service.setLegueCalculator(sessionName.getValue(), Integer.parseInt(year.getValue()),policySelectValue ,activeUserName);
             respondPolicy(ans);
 
         });
-        return new VerticalLayout(sessionName,year,labelSelect,btn_set);
+        return new VerticalLayout(sessionName,year,policySelect,btn_set);
     }
 
     private VerticalLayout calculatePointsAndPlaceLayout(GuestApplication service) {
         TextField leagueName=new TextField("League Name");
         TextField year=new TextField("League year");
         String activeUserName=(String) VaadinSession.getCurrent().getAttribute("user");
-        String[] policy= service.getGamesScedualsPolicy(activeUserName);
+        String[] policyArray= service.getGamesScedualsPolicy(activeUserName);
 
-        //TODO: add combobox
-        Select<String> labelSelect = new Select<>();
-        labelSelect.setItems("Option one", "Option two");
-        labelSelect.setLabel("Label");
+        Select<String> schedulePolicySelect = new Select<>();
+        for (String policy:policyArray) {
+            schedulePolicySelect.setItems(policy);
+        }
+        schedulePolicySelect.setLabel("Schedule Policy");
         Button btn_set =new Button("Set",buttonClickEvent -> {
-            String[] ans=service.setGamesSceduals(leagueName.getValue(), Integer.parseInt(year.getValue()), policy[0],activeUserName);
+             String policySelectValue = schedulePolicySelect.getValue();
+            String[] ans=service.setGamesSceduals(leagueName.getValue(), Integer.parseInt(year.getValue()),policySelectValue,activeUserName);
             respondPolicy(ans);
         });
-        return new VerticalLayout(leagueName,year,labelSelect, btn_set);
+        return new VerticalLayout(leagueName,year,schedulePolicySelect, btn_set);
     }
 
     private void respondPolicy(String[] ans) {
