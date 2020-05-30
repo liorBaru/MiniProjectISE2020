@@ -251,7 +251,7 @@ public class IFA extends User
 
     public void updateGamePolicy(String league, int season, String gamePolicy) throws Exception
     {
-        if(GameSchedualeEnum.valueOf(gamePolicy)!=null ||season<yearMin || league==null || league.isEmpty() )
+        if(GameSchedualeEnum.valueOf(gamePolicy)==null ||season<yearMin || league==null || league.isEmpty() )
             throw new Exception("Invalid arguments");
         String[] seasons={league};
         String calcPolicy="";

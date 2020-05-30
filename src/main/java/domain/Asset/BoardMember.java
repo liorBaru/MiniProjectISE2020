@@ -1,14 +1,11 @@
 package domain.Asset;
 
+import DataAccess.*;
 import domain.manageTeams.FinancialAction;
 import domain.manageTeams.Team;
 import domain.manageUsers.Account;
 import domain.manageUsers.User;
 import Logger.Lo4jDemo;
-import DataAccess.ApointmentsDaoSql;
-import DataAccess.AssetsDauSql;
-import DataAccess.PermissionsDaoSql;
-import DataAccess.StaffMembersDaoSql;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -25,10 +22,14 @@ public abstract class BoardMember extends StaffMember
     protected static PermissionsDaoSql permissionsDaoSql =PermissionsDaoSql.getInstance();
     protected static StaffMembersDaoSql staffMembersDaoSql=StaffMembersDaoSql.getInstance();
     protected static AssetsDauSql assetsDauSql=AssetsDauSql.getInstance();
+    private static BoardMemberDaoSql boardMemberDaoSql=BoardMemberDaoSql.getInstance();
+
 
     public BoardMember (Account account, String name, Team team, BoardMember boss, String type) throws SQLException {
         super(account,name,team,boss,type);
         permissions= new LinkedList<>();
+        String[] key={account.getUserName()};
+        boardMemberDaoSql.save(key);
     }
 
     public BoardMember(Account account, String name, Team team)

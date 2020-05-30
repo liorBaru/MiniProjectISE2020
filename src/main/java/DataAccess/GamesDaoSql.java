@@ -259,7 +259,7 @@ public class GamesDaoSql implements DaoSql
     @Override
     public void update(String[] params) throws SQLException
     {
-        String update="update games guest=?,host=?,field=?,date=?,score=?,league=?,mainRefree=?,lineRefree1=?,lineRefree2=?,extraRefree=?,var=?,reported=? where id=?;" ;
+        String update="update games set guest=?,host=?,field=?,date=?,score=?,league=?,mainRefree=?,lineRefree1=?,lineRefree2=?,extraRefree=?,var=?,reported=? where id=?;" ;
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {

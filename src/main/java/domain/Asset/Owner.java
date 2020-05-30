@@ -23,9 +23,12 @@ public class Owner extends BoardMember
                     anotherJobS=anotherJob.getType();
                 }
                 String []params={account.getUserName(),name,team.getName(),team.getName(),anotherJobS};
-                ownersDauSql.save(params);
                 this.anotherJob = anotherJob;
+                ownersDauSql.save(params);
+                String[]key ={boss.getAccount().getUserName(),account.getUserName()};
+                apointmentsDaoSql.save(key);
                 setPermissions();
+
         }
 
 
@@ -33,8 +36,8 @@ public class Owner extends BoardMember
                 super(account,name,null);
                 String[] params={account.getUserName(),name,"",""};
                 String[] key={account.getUserName(),account.getUserName()};
-                apointmentsDaoSql.save(key);
                 ownersDauSql.save(params);
+                apointmentsDaoSql.save(key);
         }
 
         public Owner(Account account,String name, Team team, StaffMember anotherJob)

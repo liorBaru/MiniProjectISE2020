@@ -62,7 +62,6 @@ public class AccountManager
                 if(checkPassword(password))
                 {
                     String newPasswod = BCrypt.hashpw(password, BCrypt.gensalt());
-                    System.out.println(newPasswod);
                     String[] params={userName,newPasswod,type};
                     usersDaoSql.save(params);
                     Account account = new Account(userName,password);

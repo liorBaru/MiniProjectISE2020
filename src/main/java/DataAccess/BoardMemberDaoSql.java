@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class BoardMemberDaoSql implements DaoSql
+public class BoardMemberDaoSql implements DaoSql
 {
     private DBconnector dBconnector =DBconnector.getInstance();
     private static BoardMemberDaoSql boardMemberDaoSql = new BoardMemberDaoSql();

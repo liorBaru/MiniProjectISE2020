@@ -13,7 +13,7 @@ public abstract class StaffMember extends User implements Asset
 {
     public Team team;
     protected BoardMember boss;
-    protected StaffMembersDaoSql staffMembersDaoSql;
+    protected StaffMembersDaoSql staffMembersDaoSql=StaffMembersDaoSql.getInstance();
 
     public StaffMember(Account account, String name, Team team, BoardMember boardMember, String type) throws SQLException {
         super(name,account);

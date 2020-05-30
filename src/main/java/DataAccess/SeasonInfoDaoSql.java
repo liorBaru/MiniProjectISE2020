@@ -20,7 +20,7 @@ public class SeasonInfoDaoSql implements DaoSql
     @Override
     public List<String[]> get(String[] key)
     {
-        String query ="SELECT * from seasoninfo where name=?;";
+        String query ="SELECT * from seasoninfo where league=?;";
         ResultSet resultSet;
         Connection conn = dBconnector.getConnection();
         String [] results;
@@ -119,19 +119,20 @@ public class SeasonInfoDaoSql implements DaoSql
 
     @Override
     public void update(String[] params) throws SQLException {
-        String query ="Update seasoninfo(league,year,gameSchedule,leagueCalculator) values(?,?,?,?);";
+        String query ="Update seasoninfo set gamesSchedule=?,leagueCalculator=? where (league=? and year=?) ;";
         Connection conn = dBconnector.getConnection();
         if(conn!=null)
         {
+
             try
             {
                 PreparedStatement stmt;
                 conn.setCatalog("managmentleagues");
                 stmt = conn.prepareStatement(query);
-                stmt.setString(1,params[0]);
-                stmt.setInt(2,Integer.parseInt(params[1]));
-                stmt.setString(3,params[2]);
-                stmt.setString(4,params[3]);
+                stmt.setString(3,params[0]);
+                stmt.setInt(4,Integer.parseInt(params[1]));
+                stmt.setString(1,params[2]);
+                stmt.setString(2,params[3]);
                 stmt.execute();
                 stmt.close();
                 conn.close();
@@ -144,7 +145,6 @@ public class SeasonInfoDaoSql implements DaoSql
             }
         }
     }
-
     @Override
     public void delete(String[] key) throws SQLException {
         String query="DELETE from seasoninfo where name=? ;";

@@ -158,9 +158,8 @@ public class IFAView extends VerticalLayout
             else
                 Notification.show("could not add a group");
 
-            add(mainIFA);
-            createTeamExistUser.addClassName("hidden");
-            mainIFA.removeClassName("hidden");
+            this.getChildren().forEach(x-> x.setVisible(false));
+            mainIFA.setVisible(true);
         });
         return new VerticalLayout(ownerName,groupName, btn_set);
 
@@ -183,9 +182,8 @@ public class IFAView extends VerticalLayout
             else
                 Notification.show("could not add a Owner");
 
-            add(mainIFA);
-            createTeamAddOwner.addClassName("hidden");
-            mainIFA.removeClassName("hidden");
+            this.getChildren().forEach(x-> x.setVisible(false));
+            mainIFA.setVisible(true);
         });
         return new VerticalLayout(ownerName,userName,password, btn_set);
     }
