@@ -1,7 +1,8 @@
-package domain.service;
+package domain.controller;
 
 import domain.manageUsers.Guest;
 import domain.manageUsers.User;
+import service.GuestApplication;
 
 import java.util.List;
 import java.util.Observable;

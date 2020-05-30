@@ -1,9 +1,9 @@
-package domain.service;
+package service;
 
 import Logger.NotificationSystem;
-import domain.service.GuestController;
-import domain.service.IFAController;
-import domain.service.RefreeController;
+import domain.controller.GuestController;
+import domain.controller.IFAController;
+import domain.controller.RefreeController;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,7 +11,7 @@ import java.util.*;
 @Service
 public class GuestApplication implements Observer
 {
-    private TreeMap<String,GuestController> users;
+    private TreeMap<String, GuestController> users;
     public GuestApplication()
     {
         users=new TreeMap<>();

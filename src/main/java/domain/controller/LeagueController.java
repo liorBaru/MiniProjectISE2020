@@ -1,4 +1,4 @@
-package domain.service;
+package domain.controller;
 
 public class LeagueController {
 }

@@ -11,7 +11,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.spring.annotation.UIScope;
-import domain.service.GuestApplication;
+import service.GuestApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +45,7 @@ public class MainLayout extends AppLayout {
      * <p>
      * Build the initial UI state for the user accessing the application.
      *
-     * @param service The message service. Automatically injected Spring managed bean.
+     * @param service The message controller. Automatically injected Spring managed bean.
      */
     public MainLayout(@Autowired GuestApplication service) {
         createHeader();

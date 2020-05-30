@@ -1,7 +1,6 @@
-package domain.service;
+package domain.controller;
 
 import domain.Asset.Fan;
-import domain.manageUsers.Guest;
 import domain.manageUsers.User;
 
 import java.util.List;

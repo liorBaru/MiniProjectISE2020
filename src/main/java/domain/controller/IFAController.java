@@ -1,7 +1,5 @@
-package domain.service;
-import domain.manageUsers.Guest;
+package domain.controller;
 import domain.manageLeagues.IFA;
-import domain.manageLeagues.LeagueCalculator;
 import domain.manageUsers.User;
 
 import java.util.Date;

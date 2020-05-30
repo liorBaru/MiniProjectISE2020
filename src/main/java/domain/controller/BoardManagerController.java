@@ -1,10 +1,9 @@
-package domain.service;
+package domain.controller;
 
 
 import domain.Asset.BoardMember;
 import domain.Asset.Owner;
 import domain.Asset.TeamManager;
-import domain.manageUsers.Guest;
 import domain.manageUsers.User;
 
 import java.sql.SQLException;

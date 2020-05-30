@@ -1,7 +1,6 @@
-package domain.service;
+package domain.controller;
 
 import domain.Asset.TeamMember;
-import domain.manageUsers.Guest;
 import domain.manageUsers.User;
 
 public class TeamMemberController extends GuestController
