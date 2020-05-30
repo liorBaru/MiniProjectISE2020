@@ -92,6 +92,7 @@ public class IFAController extends GuestController
         for (String policy :policies)
         {
             message[index]=policy;
+            index++;
         }
         return message;
     }
@@ -123,6 +124,7 @@ public class IFAController extends GuestController
         for (String policy :policies)
         {
             message[index]=policy;
+            index++;
         }
         return message;
     }

@@ -11,6 +11,8 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
+
 
 @Route(value = "IFA", layout = MainLayout.class)
 public class IFAView extends VerticalLayout
@@ -40,8 +42,8 @@ public class IFAView extends VerticalLayout
         createPolicy =new HorizontalLayout(btn_calculatePointsAndPlace,btn_calculateInlayPolicy);
         calculatePointsAndPlace= calculatePointsAndPlaceLayout(service);
         calculateInlayPolicy= calculateInlayPolicyLayout(service);
-        calculatePointsAndPlace.setAlignItems(Alignment.CENTER);
-        calculateInlayPolicy.setAlignItems(Alignment.CENTER);
+        calculatePointsAndPlace.setHorizontalComponentAlignment(Alignment.CENTER);
+        calculateInlayPolicy.setHorizontalComponentAlignment(Alignment.CENTER);
 
         add(mainIFA,calculateInlayPolicy,calculatePointsAndPlace,createTeam,createPolicy,createTeamAddOwner,createTeamExistUser);
 
@@ -96,11 +98,7 @@ public class IFAView extends VerticalLayout
         String activeUserName=(String) VaadinSession.getCurrent().getAttribute("user");
         String[] policyArray= service.getCalculatorPolicy(activeUserName);
         Select<String> policySelect = new Select<>();
-        for (String policy:policyArray) {
-            if(policy==null){continue;}
-            if(policy.equalsIgnoreCase("Respond")){continue;}
-            policySelect.setItems(policy);
-        }
+        policySelect.setItems(Arrays.stream(policyArray).filter(x->!(x.equalsIgnoreCase("Respond"))));
         policySelect.setLabel("Policy");
 
         Button btn_set =new Button("Set",buttonClickEvent -> {
@@ -119,11 +117,7 @@ public class IFAView extends VerticalLayout
         String[] policyArray= service.getGamesScedualsPolicy(activeUserName);
 
         Select<String> schedulePolicySelect = new Select<>();
-        for (String policy:policyArray) {
-            if(policy==null){continue;}
-            if(policy.equalsIgnoreCase("Respond")){continue;}
-            schedulePolicySelect.setItems(policy);
-        }
+        schedulePolicySelect.setItems(Arrays.stream(policyArray).filter(x->!(x.equalsIgnoreCase("Respond"))));
         schedulePolicySelect.setLabel("Schedule Policy");
         Button btn_set =new Button("Set",buttonClickEvent -> {
              String policySelectValue = schedulePolicySelect.getValue();
