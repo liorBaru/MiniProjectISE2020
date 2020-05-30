@@ -1,4 +1,4 @@
-package gui;
+package presentation;
 
 
 import com.vaadin.flow.component.button.Button;
@@ -9,6 +9,7 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
+import domain.service.GuestApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -30,6 +31,7 @@ public class IFAView extends VerticalLayout
         //create team layer
         Button btn_existsOwner=new Button("existsOwner");
         Button btn_newOwner=new Button("New Owner");
+        btn_newOwner.setVisible(false);
 
         createTeam =new HorizontalLayout(btn_existsOwner,btn_newOwner);
         createTeam.addClassName("ifa-div");
@@ -169,9 +171,11 @@ public class IFAView extends VerticalLayout
         TextField ownerName=new TextField("Owner Name");
         TextField userName=new TextField("User Name");
         TextField password=new TextField("Password");
+        TextField teamName=new TextField("Team Name");
         Button btn_set =new Button("Set",buttonClickEvent -> {
             String activeUserName=(String) VaadinSession.getCurrent().getAttribute("user");
-            String[] ans=service.addOwner(ownerName.getValue(),userName.getValue(),password.getValue(),activeUserName );
+            String[] ans=service.addOwnerAndTeam(ownerName.getValue(),userName.getValue(),
+                    password.getValue(),activeUserName,teamName.getValue());
             if(ans!=null) {
                 if (ans[0].equalsIgnoreCase("respond")) {
                     Notification.show("Owner added");
@@ -185,6 +189,6 @@ public class IFAView extends VerticalLayout
             this.getChildren().forEach(x-> x.setVisible(false));
             mainIFA.setVisible(true);
         });
-        return new VerticalLayout(ownerName,userName,password, btn_set);
+        return new VerticalLayout(ownerName,userName,password,teamName, btn_set);
     }
 }

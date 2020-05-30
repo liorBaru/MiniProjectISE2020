@@ -27,7 +27,7 @@ public class Page extends Subject
     private PriorityQueue<String> messages;
     private String pageName;
     private int pageID;
-    private static int ID;
+    private static int ID=15;
 
     public Page (pageable owner) throws SQLException {
         this.owner=owner;

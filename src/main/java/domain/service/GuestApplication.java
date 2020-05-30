@@ -1,4 +1,4 @@
-package gui;
+package domain.service;
 
 import Logger.NotificationSystem;
 import domain.service.GuestController;
@@ -225,8 +225,26 @@ public class GuestApplication implements Observer
             String userName=(String)arg ;
             if(users.containsKey(userName))
             {
-                // update gui with message to user
+                // update presentation with message to user
             }
         }
+    }
+
+    public String[] addOwnerAndTeam(String name,String username, String pass,String ifaUserName,String teamName)
+    {
+        if(users.containsKey(ifaUserName))
+        {
+            IFAController ifaController=(IFAController)users.get(ifaUserName);
+            String [] ans =ifaController.addOwner(name,username,pass);
+            if(ans!=null &&ans[0].equals("Respond"))
+            {
+                return ifaController.addTeam(teamName,username);
+            }
+            else
+            {
+                return ans;
+            }
+        }
+        return null;
     }
 }

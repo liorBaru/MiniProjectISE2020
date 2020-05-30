@@ -162,7 +162,7 @@ public class OwnersDaoSql implements DaoSql
 
     @Override
     public void update(String[] params) throws SQLException {
-        String update="Replace INTO owners (user_name,name,team,anotherJob)" +"values(?,?,?,?);";
+        String update="UPDATE owners set name=?,team=?,anotherJob=? where user_name=?;";
         Connection conn = dBconnector.getConnection();
         if (conn != null)
         {
@@ -170,10 +170,10 @@ public class OwnersDaoSql implements DaoSql
             try {
                 conn.setCatalog("manageteams");
                 stmt=conn.prepareStatement(update);
-                stmt.setString(1,params[0]);
-                stmt.setString(2,params[1]);
-                stmt.setString(3,params[2]);
-                stmt.setString(4,params[3]);
+                stmt.setString(4,params[0]);
+                stmt.setString(1,params[1]);
+                stmt.setString(2,params[2]);
+                stmt.setString(3,params[3]);
                 stmt.execute();
                 stmt.close();
                 conn.close();

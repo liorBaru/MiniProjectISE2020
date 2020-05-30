@@ -2,7 +2,6 @@ package domain.service;
 
 import domain.manageUsers.Guest;
 import domain.manageUsers.User;
-import gui.GuestApplication;
 
 import java.util.List;
 import java.util.Observable;

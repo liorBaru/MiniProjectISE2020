@@ -1,4 +1,4 @@
-package gui;
+package presentation;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -9,6 +9,7 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
+import domain.service.GuestApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -16,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route(value = "login", layout = MainLayout.class)
 public class LoginView extends VerticalLayout {
 
-       public LoginView(@Autowired GuestApplication service,@Autowired MainLayout mainLayout )
+       public LoginView(@Autowired GuestApplication service, @Autowired MainLayout mainLayout )
        {
         FormLayout loginForm=new FormLayout();
         TextField userName=new TextField("Username");
@@ -35,7 +36,9 @@ public class LoginView extends VerticalLayout {
                     VaadinSession.getCurrent().setAttribute("user", userName.getValue());
                     VaadinSession.getCurrent().setAttribute("name", name);
                     VaadinSession.getCurrent().setAttribute("type", userType);
-                    UI.getCurrent().navigate(userType);
+                    if(userType!=null) {
+                        UI.getCurrent().navigate(userType);
+                    }
                     mainLayout.getBtn_logout().setVisible(true);
                     mainLayout.getBtn_message().setVisible(true);
                     mainLayout.getBtn_login().setVisible(false);

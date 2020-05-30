@@ -1,6 +1,7 @@
 package DataAccess;
 
 
+import Logger.Lo4jDemo;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class ApointmentsDaoSqlTest {
         {
             String [] key1 ={"ownerTest","coachTest"};
             String [] key2 ={"ownerTest","managerTest"};
+            Lo4jDemo.getInstance().error("Hello world ");
             apointmentsDaoSql.save(key1);
             apointmentsDaoSql.save(key2);
             String [] params={"Manager","ownerTest"};

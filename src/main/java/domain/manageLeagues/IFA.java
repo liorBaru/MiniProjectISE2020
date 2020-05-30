@@ -217,7 +217,7 @@ public class IFA extends User
      */
     public void addTeam(String ownerName, String TName)throws Exception
     {
-        String [] key={ownerName};
+        String [] key={"Key",ownerName};
         Owner owner=Owner.getOwnerFromDB(key);
         if(owner.getTeam()!=null)
         {
