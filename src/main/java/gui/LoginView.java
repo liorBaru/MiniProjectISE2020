@@ -16,9 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route(value = "login", layout = MainLayout.class)
 public class LoginView extends VerticalLayout {
 
-
-       public LoginView(@Autowired GuestApplication service,@Autowired MainLayout mainLayout ) {
-
+       public LoginView(@Autowired GuestApplication service,@Autowired MainLayout mainLayout )
+       {
         FormLayout loginForm=new FormLayout();
         TextField userName=new TextField("Username");
         PasswordField passwordField=new PasswordField("password");
@@ -44,12 +43,11 @@ public class LoginView extends VerticalLayout {
                     passwordField.clear();
                     userName.clear();
                 } else if (respond.equalsIgnoreCase("Fail")) {
-                    Notification.show("ERROR " + user[1]);
+                    Notification.show("ERROR " + user[1],1000, Notification.Position.MIDDLE);
                 }
             }
             else {
-                Notification.show("ERROR");
-
+                Notification.show("ERROR",1000, Notification.Position.MIDDLE);
             }
         });
     }

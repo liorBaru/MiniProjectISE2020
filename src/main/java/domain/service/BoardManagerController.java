@@ -5,6 +5,7 @@ import domain.Asset.BoardMember;
 import domain.Asset.Owner;
 import domain.Asset.TeamManager;
 import domain.manageUsers.Guest;
+import domain.manageUsers.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,14 +14,14 @@ public class BoardManagerController extends GuestController {
 
     private BoardMember boardMember;
 
-    public BoardManagerController(Guest guest) {
-        super(guest);
+    public BoardManagerController(User user)
+    {
+        if(user.getKind().equals("Owner") || user.getKind().equals("TeamManager"))
+        {
+            this.boardMember=(BoardMember)user;
+        }
     }
 
-    public void BoardManagerController(BoardMember boardMember)
-    {
-        this.boardMember=boardMember;
-    }
     /**
      * @author matan
      * add assets to the owner's team

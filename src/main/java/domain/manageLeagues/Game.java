@@ -205,7 +205,7 @@ public class Game
         return reported;
     }
 
-    public static void notifyEvent(int gameId, String event, java.sql.Date date) throws SQLException {
+    public static void notifyEvent(int gameId, String event, Date date) throws SQLException {
         if(gameId<0 && event!=null && date!=null)
         {
             String[] gameDetails = {"gameID" , String.valueOf(gameId)};

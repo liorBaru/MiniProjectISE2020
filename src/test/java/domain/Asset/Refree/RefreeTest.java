@@ -27,7 +27,7 @@ public class RefreeTest {
     {
         try {
             System system=System.getInstance();
-            User user=system.getAccountManager().getUser("refreeTest","Refree");
+            User user=system.getAccountManager().getUser("refreeTest","Referee");
             SystemManager systemManager=(SystemManager)user;
             assertTrue(systemManager.removeUserFromSystem("RefreeTest"));
             user=system.getAccountManager().getUser("IFATest","IFA");
@@ -47,7 +47,7 @@ public class RefreeTest {
         try
         {
             System system =System.getInstance();
-            MainRefree refree =(MainRefree) system.getAccountManager().getUser("refreeTest","Refree");
+            MainRefree refree =(MainRefree) system.getAccountManager().getUser("refreeTest","Referee");
             String teamMemberUserName ="playerTest";
             int gameID=0;
             String event="Goal";
@@ -72,7 +72,7 @@ public class RefreeTest {
         try
         {
             System system =System.getInstance();
-            MainRefree refree =(MainRefree) system.getAccountManager().getUser("refreeTest","Refree");
+            MainRefree refree =(MainRefree) system.getAccountManager().getUser("refreeTest","Referee");
             int gameID=0;
             refree.creareReport(gameID);
             GamesDaoSql gamesDaoSql=GamesDaoSql.getInstance();

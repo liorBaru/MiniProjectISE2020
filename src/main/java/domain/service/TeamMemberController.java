@@ -2,13 +2,18 @@ package domain.service;
 
 import domain.Asset.TeamMember;
 import domain.manageUsers.Guest;
+import domain.manageUsers.User;
 
 public class TeamMemberController extends GuestController
 {
-    TeamMember teamMember;
+    private TeamMember teamMember;
 
-    public TeamMemberController(Guest guest) {
-        super(guest);
+    public TeamMemberController(User user)
+    {
+        if(user.getKind().equals("Coach") || user.getKind().equals("Player"))
+        {
+            this.teamMember=(TeamMember)user;
+        }
     }
 
     public void setUser(TeamMember teamMember) {

@@ -61,7 +61,6 @@ public class AccountManager
             {
                 if(checkPassword(password))
                 {
-                    String salt="1";
                     String newPasswod = BCrypt.hashpw(password, BCrypt.gensalt());
                     System.out.println(newPasswod);
                     String[] params={userName,newPasswod,type};
@@ -200,7 +199,7 @@ public class AccountManager
         {
             user= Coach.getCoachFromDB(key);
         }
-        else if(type.equals("Refree"))
+        else if(type.equals("Referee"))
         {
             user= Refree.getRefreeFromDB(key[0]);
         }

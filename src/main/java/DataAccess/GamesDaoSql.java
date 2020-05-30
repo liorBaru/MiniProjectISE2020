@@ -279,7 +279,7 @@ public class GamesDaoSql implements DaoSql
                 stmt.setString(6,params[6]);
                 stmt.setString(7,params[7]);
                 stmt.setString(8,params[8]);
-                stmt.setString(8,params[9]);
+                stmt.setString(9,params[9]);
                 stmt.setString(10,params[10]);
                 stmt.setBoolean(11,Boolean.parseBoolean(params[11]));
                 stmt.setBoolean(12,Boolean.parseBoolean(params[12]));

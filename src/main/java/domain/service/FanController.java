@@ -2,6 +2,7 @@ package domain.service;
 
 import domain.Asset.Fan;
 import domain.manageUsers.Guest;
+import domain.manageUsers.User;
 
 import java.util.List;
 
@@ -10,8 +11,12 @@ public class FanController extends GuestController
 
     private Fan userFan;
 
-    public FanController(Guest guest) {
-        super(guest);
+    public FanController(User user)
+    {
+        if(user.getKind().equals("Fan"))
+        {
+            this.userFan=(Fan)user;
+        }
     }
 
     public void setUserFan(Fan userFan) {

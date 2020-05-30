@@ -14,7 +14,7 @@ import domain.manageEvents.*;
 
 
 import java.sql.SQLException;
-import java.sql.Date;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -101,7 +101,7 @@ public abstract class Refree extends User
     {
         LinkedList<String> userDetails= super.showPersonalDetails();
         userDetails.addLast(training);
-        userDetails.addFirst(getKind());
+        userDetails.addFirst("Referee");
         return userDetails;
     }
 
@@ -207,20 +207,35 @@ public abstract class Refree extends User
     }
 
     public void addEvent(String teamMemberUserName, int gameID, String event, int minute, Date date) throws Exception {
-        GameEventLog gameEventLog = new GameEventLog(gameID);
         String[] key={"Key",String.valueOf(gameID)};
         List<String[]> games= gamesDaoSql.get(key);
         if(games==null || games.isEmpty())
         {
             throw new Exception("Invalid game");
         }
-        // add check if refree is refree in the game
         String[]gameData=games.get(0);
-        Game.notifyEvent(gameID,event,date);
-        TeamMember teamMember =TeamMember.createTeamMemberFromDB(teamMemberUserName);
-        if(gameData[1].equals(teamMember.team.getName())|| gameData[2].equals(teamMember.team.getName()))
+        if(isRefreeInGame(gameData))
         {
-            gameEventLog.createEvent(teamMember,event,minute,date);
+            GameEventLog gameEventLog = new GameEventLog(gameID);
+            TeamMember teamMember =TeamMember.createTeamMemberFromDB(teamMemberUserName);
+            if(gameData[1].equals(teamMember.team.getName())|| gameData[2].equals(teamMember.team.getName()))
+            {
+                gameEventLog.createEvent(teamMember,event,minute,date);
+            }
+            Game.notifyEvent(gameID,event,date);
         }
+    }
+
+    private boolean isRefreeInGame(String[] gameData)
+    {
+        if(gameData[7].equals(this.getAccount().getUserName()) || gameData[8].equals(this.getAccount().getUserName()))
+        {
+            return true;
+        }
+        if(gameData[9].equals(this.getAccount().getUserName()) || gameData[10].equals(this.getAccount().getUserName()))
+        {
+            return true;
+        }
+        return false;
     }
 }

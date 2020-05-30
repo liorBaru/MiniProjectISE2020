@@ -2,6 +2,7 @@ package domain.service;
 import domain.manageUsers.Guest;
 import domain.manageLeagues.IFA;
 import domain.manageLeagues.LeagueCalculator;
+import domain.manageUsers.User;
 
 import java.util.Date;
 import java.util.InputMismatchException;
@@ -14,8 +15,12 @@ public class IFAController extends GuestController
 
     private IFA ifa;
 
-    public IFAController(Guest guest) {
-        super(guest);
+    public IFAController(User user)
+    {
+        if(user.getKind().equals("IFA"))
+        {
+            this.ifa=(IFA)user;
+        }
     }
 
     /**
@@ -208,7 +213,7 @@ public class IFAController extends GuestController
      * @param
      * @param
      */
-    public void addTeam(String teamName, String ownerUserName)
+    public String []addTeam(String teamName, String ownerUserName)
     {
         String [] message=null;
         try
@@ -231,7 +236,7 @@ public class IFAController extends GuestController
             message[0]="Fail";
             message[1]=e.getMessage();
         }
-
+        return message;
     }
 
 

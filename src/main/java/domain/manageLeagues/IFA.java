@@ -23,10 +23,10 @@ import java.util.List;
 
 public class IFA extends User
 {
-    private static TeamDaoSql teamDauSql;
-    private static IfaDaoSql ifaDaoSql;
-    private static LeaguesDaoSql leaguesDaoSql;
-    private static SeasonInfoDaoSql seasonInfoDaoSql;
+    private static TeamDaoSql teamDauSql=TeamDaoSql.getInstance();
+    private static IfaDaoSql ifaDaoSql=IfaDaoSql.getInstance();
+    private static LeaguesDaoSql leaguesDaoSql=LeaguesDaoSql.getInstance();
+    private static SeasonInfoDaoSql seasonInfoDaoSql=SeasonInfoDaoSql.getInstance();
     private static int yearMin=2019;
 
     public IFA(String name, Account account) throws SQLException {
@@ -174,7 +174,7 @@ public class IFA extends User
      * @param
      */
     public void addReferee(String rName,String password, String userName, String type,String training) throws Exception{
-        Account account=system.getAccountManager().createAccount(userName,password,"Refree");
+        Account account=system.getAccountManager().createAccount(userName,password,"Referee");
         Refree refree=null;
         if(type.equals("Var"))
         {

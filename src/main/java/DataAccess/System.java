@@ -1,4 +1,5 @@
 package DataAccess;
+import Logger.NotificationSystem;
 import domain.Asset.BoardMember;
 import domain.Asset.Fan;
 import domain.Asset.SystemManager;
@@ -22,11 +23,15 @@ public class System extends Observable
 
     private static System system = new System();
     private static AccountManager accountManager;
-    private NotificationsDaoSql notificationsDaoSql;
-    static PaymentSystem externalPaymentsSystem;
-    static TaxSystem externalTaxSystem;
+    private NotificationsDaoSql notificationsDaoSql =NotificationsDaoSql.getInstance();
+    private static PaymentSystem externalPaymentsSystem;
+    private static TaxSystem externalTaxSystem;
+    private static NotificationSystem notificationSystem;
+
+
     private System ()
     {
+        notificationSystem =new NotificationSystem();
         accountManager = new AccountManager();
     }
 
@@ -92,11 +97,9 @@ public class System extends Observable
 
 
     public void sendNotification(String fanUserName, Notification notification) throws SQLException {
-         String[] notify = {fanUserName,notification.getDetails()};
          String [] key ={fanUserName,notification.getDetails(),notification.getDate()};
          notificationsDaoSql.save(key);
-         setChanged();
-         notifyObservers(notify);
+         notificationSystem.sendNotificationToUser(fanUserName);
     }
 
     public boolean addPaymentToPaymentSystem(String teamName , String date , Double amount)

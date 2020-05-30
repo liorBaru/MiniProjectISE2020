@@ -7,6 +7,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -18,22 +19,21 @@ public class RefereeCreateReportView extends VerticalLayout {
         Button btn_set =new Button("Set",buttonClickEvent -> {
 
             if (!isLegalNum(idGameName.getValue())) {
-                Notification.show("id need to be number");
+                Notification.show("id need to be number",1000, Notification.Position.MIDDLE);
             } else {
+                String activeUserName=(String) VaadinSession.getCurrent().getAttribute("user");
                 String[] ans = service.createReport(
-                        Integer.parseInt(idGameName.getValue()));
+                        Integer.parseInt(idGameName.getValue()),activeUserName);
                 if (ans != null) {
                     if (ans[0].equalsIgnoreCase("respond")) {
                         Notification.show("The action was successful");
-                        UI.getCurrent().navigate("Refree");
+                        UI.getCurrent().navigate("Referee");
 
                     } else {
-                        Notification.show(ans[1]);
+                        Notification.show(ans[1],1000, Notification.Position.MIDDLE);
                     }
                 } else
-                    Notification.show("could not add policy");
-
-
+                    Notification.show("could not add policy",1000, Notification.Position.MIDDLE);
             }
         });
 

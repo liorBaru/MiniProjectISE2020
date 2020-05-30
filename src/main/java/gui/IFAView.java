@@ -8,11 +8,13 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Route(value = "IFA", layout = MainLayout.class)
-public class IFAView extends VerticalLayout {
+public class IFAView extends VerticalLayout
+{
     HorizontalLayout mainIFA, createTeam, createPolicy;
     VerticalLayout createTeamAddOwner, createTeamExistUser;
     VerticalLayout calculatePointsAndPlace, calculateInlayPolicy;
@@ -26,9 +28,6 @@ public class IFAView extends VerticalLayout {
         //create team layer
         Button btn_existsOwner=new Button("existsOwner");
         Button btn_newOwner=new Button("New Owner");
-
-
-
 
         createTeam =new HorizontalLayout(btn_existsOwner,btn_newOwner);
         createTeam.addClassName("ifa-div");
@@ -94,7 +93,8 @@ public class IFAView extends VerticalLayout {
     private VerticalLayout calculateInlayPolicyLayout(GuestApplication service) {
         TextField sessionName=new TextField("Session Name");
         TextField year=new TextField("League year");
-        String[] policy= service.getCalculatorPolicy();
+        String activeUserName=(String) VaadinSession.getCurrent().getAttribute("user");
+        String[] policy= service.getCalculatorPolicy(activeUserName);
 
         //TODO: add combobox
         Select<String> labelSelect = new Select<>();
@@ -102,8 +102,7 @@ public class IFAView extends VerticalLayout {
         labelSelect.setLabel("Label");
 
         Button btn_set =new Button("Set",buttonClickEvent -> {
-
-            String[] ans=service.setLegueCalculator(sessionName.getValue(), Integer.parseInt(year.getValue()), policy[0]);
+            String[] ans=service.setLegueCalculator(sessionName.getValue(), Integer.parseInt(year.getValue()), policy[0],activeUserName);
             respondPolicy(ans);
 
         });
@@ -113,14 +112,15 @@ public class IFAView extends VerticalLayout {
     private VerticalLayout calculatePointsAndPlaceLayout(GuestApplication service) {
         TextField leagueName=new TextField("League Name");
         TextField year=new TextField("League year");
-        String[] policy= service.getGamesScedualsPolicy();
+        String activeUserName=(String) VaadinSession.getCurrent().getAttribute("user");
+        String[] policy= service.getGamesScedualsPolicy(activeUserName);
 
         //TODO: add combobox
         Select<String> labelSelect = new Select<>();
         labelSelect.setItems("Option one", "Option two");
         labelSelect.setLabel("Label");
         Button btn_set =new Button("Set",buttonClickEvent -> {
-            String[] ans=service.setGamesSceduals(leagueName.getValue(), Integer.parseInt(year.getValue()), policy[0]);
+            String[] ans=service.setGamesSceduals(leagueName.getValue(), Integer.parseInt(year.getValue()), policy[0],activeUserName);
             respondPolicy(ans);
         });
         return new VerticalLayout(leagueName,year,labelSelect, btn_set);
@@ -145,8 +145,8 @@ public class IFAView extends VerticalLayout {
         TextField ownerName=new TextField("Owner Name");
         TextField groupName=new TextField("Group Name");
         Button btn_set =new Button("Set",buttonClickEvent -> {
-
-            String[] ans=service.addTeam(groupName.getValue(),ownerName.getValue());
+            String activeUserName=(String) VaadinSession.getCurrent().getAttribute("user");
+            String[] ans=service.addTeam(groupName.getValue(),ownerName.getValue(),activeUserName);
             if(ans!=null) {
                 if (ans[0].equalsIgnoreCase("respond")) {
                     Notification.show("group added");
@@ -170,8 +170,8 @@ public class IFAView extends VerticalLayout {
         TextField userName=new TextField("User Name");
         TextField password=new TextField("Password");
         Button btn_set =new Button("Set",buttonClickEvent -> {
-
-            String[] ans=service.addOwner(ownerName.getValue(),userName.getValue(),password.getValue() );
+            String activeUserName=(String) VaadinSession.getCurrent().getAttribute("user");
+            String[] ans=service.addOwner(ownerName.getValue(),userName.getValue(),password.getValue(),activeUserName );
             if(ans!=null) {
                 if (ans[0].equalsIgnoreCase("respond")) {
                     Notification.show("Owner added");

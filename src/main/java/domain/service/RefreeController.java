@@ -3,18 +3,20 @@ package domain.service;
 import domain.Asset.Refree.MainRefree;
 import domain.Asset.Refree.Refree;
 import domain.manageLeagues.Game;
+import domain.manageUsers.User;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.TreeMap;
 
-public class RefreeController
+public class RefreeController extends GuestController
 {
 
     private Refree refree;
 
-    public RefreeController(Refree refree)
+    public RefreeController(User user)
     {
-        this.refree=refree;
+            this.refree= (Refree) user;
+
     }
 
     public String[] createReport(int gameId)
@@ -35,7 +37,7 @@ public class RefreeController
     }
 
 
-    public String[] addEvent(String teamMemberUserName, int gameID, String event, int minute,Date date)
+    public String[] addEvent(String teamMemberUserName, int gameID, String event, int minute, Date date)
     {
         String [] message=new String[2];
         try

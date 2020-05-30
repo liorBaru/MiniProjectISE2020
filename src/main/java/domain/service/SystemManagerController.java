@@ -1,14 +1,19 @@
 package domain.service;
 import DataAccess.System;
 import domain.Asset.SystemManager;
+import domain.manageUsers.User;
 
-public class SystemManagerController
+public class SystemManagerController extends GuestController
 {
-    SystemManager systemManager;
+    private SystemManager systemManager;
 
-    public SystemManagerController(SystemManager systemManager)
+    public SystemManagerController(User user)
     {
-        this.systemManager=systemManager;
+        if(user.getKind().equals("SystemManager"))
+        {
+            this.systemManager=(SystemManager)user;
+        }
+
     }
 
     public boolean initSystem(String userName, String password, String name) throws Exception {
