@@ -40,6 +40,7 @@ public class IFA extends User
     {
         this.account=system.getAccountManager().getAccount(params[0]);
         this.name=params[1];
+        this.kind="IFA";
     }
 
     @Override

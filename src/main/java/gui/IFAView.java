@@ -97,6 +97,8 @@ public class IFAView extends VerticalLayout
         String[] policyArray= service.getCalculatorPolicy(activeUserName);
         Select<String> policySelect = new Select<>();
         for (String policy:policyArray) {
+            if(policy==null){continue;}
+            if(policy.equalsIgnoreCase("Respond")){continue;}
             policySelect.setItems(policy);
         }
         policySelect.setLabel("Policy");
@@ -118,6 +120,8 @@ public class IFAView extends VerticalLayout
 
         Select<String> schedulePolicySelect = new Select<>();
         for (String policy:policyArray) {
+            if(policy==null){continue;}
+            if(policy.equalsIgnoreCase("Respond")){continue;}
             schedulePolicySelect.setItems(policy);
         }
         schedulePolicySelect.setLabel("Schedule Policy");
