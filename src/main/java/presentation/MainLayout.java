@@ -11,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.spring.annotation.UIScope;
+import org.springframework.context.annotation.ComponentScan;
 import service.GuestApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,8 @@ import org.springframework.stereotype.Component;
         enableInstallPrompt = false)
 @CssImport("./styles/shared-styles.css")
 @CssImport(value = "./styles/vaadin-text-field-styles.css", themeFor = "vaadin-text-field")
-@Component @UIScope
+@ComponentScan(basePackages = "service")
+@Component  @UIScope
 public class MainLayout extends AppLayout {
     private Button btn_login;
     private Button btn_logout;

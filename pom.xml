@@ -131,11 +131,11 @@
             <artifactId>vaadin-server</artifactId>
             <version>8.3.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-server</artifactId>
-            <version>8.3.0</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.vaadin</groupId>-->
+            <!--<artifactId>vaadin-server</artifactId>-->
+            <!--<version>8.3.0</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-dialog-flow</artifactId>
